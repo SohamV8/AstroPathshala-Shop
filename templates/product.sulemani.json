@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-sulemani": {
+      "type": "main-sulemani",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-sulemani"
+  ]
+}

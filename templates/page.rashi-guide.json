@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "astro-rashi-guide": {
+      "type": "astro-rashi-guide",
+      "settings": {}
+    }
+  },
+  "order": [
+    "astro-rashi-guide"
+  ]
+}

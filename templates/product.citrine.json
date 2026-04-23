@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-citrine": {
+      "type": "main-citrine",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-citrine"
+  ]
+}

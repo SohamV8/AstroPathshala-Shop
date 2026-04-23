@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-mahe-mariam": {
+      "type": "main-mahe-mariam",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-mahe-mariam"
+  ]
+}

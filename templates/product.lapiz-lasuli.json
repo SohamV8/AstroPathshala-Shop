@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-lapiz-lazuli": {
+      "type": "main-lapiz-lazuli",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-lapiz-lazuli"
+  ]
+}

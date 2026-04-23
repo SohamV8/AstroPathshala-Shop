@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-silver-square": {
+      "type": "main-silver-square",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-silver-square"
+  ]
+}

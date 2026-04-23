@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-feeroza": {
+      "type": "main-feeroza",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-feeroza"
+  ]
+}

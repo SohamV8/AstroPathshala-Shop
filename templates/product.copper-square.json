@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-copper-square": {
+      "type": "main-copper-square",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-copper-square"
+  ]
+}

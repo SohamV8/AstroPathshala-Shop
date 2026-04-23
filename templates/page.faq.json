@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "astro-faq": {
+      "type": "astro-faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "astro-faq"
+  ]
+}
+
+
+
+
+
+
+

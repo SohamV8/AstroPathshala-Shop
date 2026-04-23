@@ -1,0 +1,988 @@
+{% comment %}
+  Astro PathShala — Kundli Report Page (Enhanced)
+  File: sections/astro-kundli.liquid
+{% endcomment %}
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#FFFDF5;--black:#1A1208;--gold:#B8860B;--saffron:#D4860A;
+  --gold-lt:#C9A84C;--gold-pale:#F5E6C8;--cream:#FDF8E8;--border:#E8D48A;
+  --muted:#7A6535;--dark:rgba(44,32,5,0.65);
+}
+.akr{font-family:var(--font-body);color:var(--black);background:transparent;}
+.akr *{box-sizing:border-box;}
+
+/* ── BREADCRUMB ── */
+.akr-crumb{padding:14px 48px;background:var(--cream);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.akr-crumb a{color:var(--muted);text-decoration:none;}
+.akr-crumb a:hover{color:var(--gold);}
+.akr-crumb-sep{color:var(--border);}
+.akr-crumb-cur{color:var(--gold);font-weight:500;}
+
+/* ── HERO INTRO SECTION ── */
+.akr-hero-intro{background:var(--dark);padding:72px 48px;text-align:center;position:relative;overflow:hidden;}
+.akr-hero-intro::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(184,134,11,0.08);pointer-events:none;}
+.akr-hero-intro-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+.akr-hero-intro-label{font-size:10px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.akr-hero-intro-label::before,.akr-hero-intro-label::after{content:'';width:24px;height:1px;background:var(--gold-lt);}
+.akr-hero-intro-title{font-family:var(--font-heading);font-size:56px;font-weight:500;color:var(--gold-pale);line-height:1.08;margin-bottom:18px;}
+.akr-hero-intro-title em{font-style:italic;color:var(--gold);}
+.akr-hero-intro-sub{font-size:15px;color:var(--gold-lt);font-weight:300;line-height:1.85;margin-bottom:36px;}
+.akr-hero-intro-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 36px;background:var(--gold);color:var(--ivory);
+  font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  border-radius:2px;text-decoration:none;font-family:var(--font-body);
+  transition:background 0.2s;
+}
+.akr-hero-intro-cta:hover{background:var(--saffron);}
+
+/* ── WHAT IS KUNDLI SECTION ── */
+.akr-explain{background:transparent;padding:72px 48px;border-bottom:1px solid var(--border);}
+.akr-explain-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.akr-explain-left{}
+.akr-explain-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.akr-explain-label::before{content:'';width:20px;height:1px;background:var(--gold);}
+.akr-explain-title{font-family:var(--font-heading);font-size:40px;font-weight:500;color:var(--black);line-height:1.15;margin-bottom:18px;}
+.akr-explain-desc{font-size:14px;color:var(--muted);line-height:1.9;font-weight:300;margin-bottom:14px;}
+.akr-explain-desc strong{color:var(--black);font-weight:500;}
+.akr-explain-right{}
+.akr-explain-subtitle{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.akr-feature-list{display:flex;flex-direction:column;gap:12px;}
+.akr-feature-item{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--cream);border:1px solid var(--border);border-radius:3px;transition:border-color 0.2s;}
+.akr-feature-item:hover{border-color:var(--gold);}
+.akr-feature-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.akr-feature-title{font-size:13px;font-weight:500;color:var(--black);margin-bottom:3px;}
+.akr-feature-desc{font-size:12px;color:var(--muted);font-weight:300;line-height:1.6;}
+
+/* ── WHAT YOU GET SECTION ── */
+.akr-inside{background:var(--cream);padding:72px 48px;border-bottom:1px solid var(--border);}
+.akr-inside-inner{max-width:1100px;margin:0 auto;}
+.akr-inside-hdr{text-align:center;margin-bottom:52px;}
+.akr-inside-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+.akr-inside-title{font-family:var(--font-heading);font-size:40px;font-weight:500;color:var(--black);margin-bottom:10px;}
+.akr-inside-sub{font-size:14px;color:var(--muted);font-weight:300;line-height:1.75;max-width:560px;margin:0 auto;}
+.akr-inside-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.akr-inside-card{background:transparent;border:1px solid var(--border);border-radius:4px;padding:28px 24px;transition:border-color 0.2s,transform 0.2s;}
+.akr-inside-card:hover{border-color:var(--gold);transform:translateY(-4px);}
+.akr-inside-card-num{font-family:var(--font-heading);font-size:36px;color:var(--gold);font-weight:400;line-height:1;margin-bottom:12px;}
+.akr-inside-card-title{font-family:var(--font-heading);font-size:19px;color:var(--black);font-weight:500;margin-bottom:8px;}
+.akr-inside-card-desc{font-size:12px;color:var(--muted);font-weight:300;line-height:1.75;}
+/* Bullet points inside card */
+.akr-inside-card-bullets{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+.akr-inside-card-bullets li{font-size:12px;color:var(--muted);font-weight:300;display:flex;align-items:flex-start;gap:8px;}
+.akr-inside-card-bullets li::before{content:'✦';color:var(--gold);font-size:8px;flex-shrink:0;margin-top:3px;}
+
+/* ── BENEFITS SECTION ── */
+.akr-benefits{background:var(--dark);padding:72px 48px;}
+.akr-benefits-inner{max-width:1100px;margin:0 auto;}
+.akr-benefits-hdr{text-align:center;margin-bottom:52px;}
+.akr-benefits-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:12px;display:block;}
+.akr-benefits-title{font-family:var(--font-heading);font-size:40px;color:var(--gold-pale);font-weight:500;margin-bottom:10px;}
+.akr-benefits-sub{font-size:14px;color:var(--gold-lt);font-weight:300;max-width:520px;margin:0 auto;line-height:1.75;}
+.akr-benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.akr-benefit-item{display:flex;align-items:flex-start;gap:16px;padding:20px;background:rgba(255,253,245,0.05);border:1px solid rgba(184,134,11,0.18);border-radius:4px;transition:border-color 0.2s;}
+.akr-benefit-item:hover{border-color:var(--gold);}
+.akr-benefit-icon{font-size:24px;flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(184,134,11,0.12);display:flex;align-items:center;justify-content:center;}
+.akr-benefit-title{font-size:14px;font-weight:500;color:var(--gold-pale);margin-bottom:4px;}
+.akr-benefit-desc{font-size:12px;color:var(--gold-lt);font-weight:300;line-height:1.7;}
+
+/* ── TRUST STRIP ── */
+.akr-trust-strip{background:transparent;padding:48px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.akr-trust-strip-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+.akr-trust-strip-item{display:flex;align-items:center;gap:14px;}
+.akr-trust-strip-icon{width:48px;height:48px;border-radius:50%;border:1px solid var(--border);background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.akr-trust-strip-num{font-family:var(--font-heading);font-size:26px;color:var(--saffron);font-weight:400;line-height:1;}
+.akr-trust-strip-label{font-size:12px;color:var(--muted);font-weight:300;margin-top:2px;}
+
+/* ── HOW IT WORKS ── */
+.akr-how{background:var(--cream);padding:72px 48px;border-bottom:1px solid var(--border);}
+.akr-how-inner{max-width:1100px;margin:0 auto;}
+.akr-how-hdr{text-align:center;margin-bottom:52px;}
+.akr-how-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+.akr-how-title{font-family:var(--font-heading);font-size:40px;font-weight:500;color:var(--black);margin-bottom:10px;}
+.akr-how-sub{font-size:14px;color:var(--muted);font-weight:300;max-width:520px;margin:0 auto;line-height:1.75;}
+.akr-how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.akr-how-step{text-align:center;padding:28px 20px;background:transparent;border:1px solid var(--border);border-radius:4px;position:relative;}
+.akr-how-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;z-index:1;}
+.akr-how-num{width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--ivory);font-family:var(--font-heading);font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.akr-how-step-icon{font-size:28px;margin-bottom:12px;}
+.akr-how-step-title{font-family:var(--font-heading);font-size:17px;color:var(--black);margin-bottom:8px;font-weight:500;}
+.akr-how-step-text{font-size:12px;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* ── PAGE LAYOUT (existing) ── */
+.akr-page{display:grid;grid-template-columns:1fr 1.1fr;min-height:calc(100vh - 80px);}
+
+/* ── LEFT PANEL ── */
+.akr-left{background:var(--dark);padding:56px 52px;display:flex;flex-direction:column;gap:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.akr-left::-webkit-scrollbar{width:4px;}
+.akr-left::-webkit-scrollbar-thumb{background:rgba(184,134,11,0.3);border-radius:2px;}
+.akr-left-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.akr-left-label::before{content:'';width:20px;height:1px;background:var(--gold-lt);}
+.akr-left-title{font-family:var(--font-heading);font-size:44px;font-weight:500;color:var(--gold-pale);line-height:1.1;margin-bottom:10px;}
+.akr-left-title em{font-style:italic;color:var(--gold);}
+.akr-left-sub{font-size:13px;color:var(--gold-lt);font-weight:300;line-height:1.8;margin-bottom:36px;}
+.akr-reports-list{display:flex;flex-direction:column;gap:12px;margin-bottom:36px;}
+.akr-report-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:rgba(255,253,245,0.05);border:1px solid rgba(184,134,11,0.18);border-radius:4px;}
+.akr-report-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.akr-report-name{font-size:13px;font-weight:500;color:var(--gold-pale);margin-bottom:3px;}
+.akr-report-desc{font-size:11px;color:var(--gold-lt);font-weight:300;line-height:1.6;}
+.akr-report-price{font-family:var(--font-heading);font-size:16px;color:var(--gold);font-weight:400;margin-top:4px;}
+.akr-trust-list{display:flex;flex-direction:column;gap:10px;padding-top:28px;border-top:1px solid rgba(184,134,11,0.15);}
+.akr-trust-item{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--gold-lt);font-weight:300;}
+.akr-trust-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.akr-delivery-badge{margin-top:28px;padding:14px 18px;background:rgba(184,134,11,0.1);border:1px solid rgba(184,134,11,0.3);border-radius:4px;display:flex;align-items:center;gap:14px;}
+.akr-delivery-icon{font-size:24px;flex-shrink:0;}
+.akr-delivery-text strong{display:block;font-size:13px;color:var(--gold-pale);font-weight:500;margin-bottom:2px;}
+.akr-delivery-text span{font-size:11px;color:var(--gold-lt);font-weight:300;}
+
+/* ── RIGHT PANEL ── */
+.akr-right{padding:56px 52px;background:transparent;overflow-y:auto;}
+.akr-form-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.akr-form-label::before{content:'';width:20px;height:1px;background:var(--gold);}
+.akr-form-title{font-family:var(--font-heading);font-size:36px;color:var(--black);font-weight:500;margin-bottom:6px;}
+.akr-form-sub{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7;margin-bottom:36px;}
+.akr-form{display:flex;flex-direction:column;gap:20px;}
+.akr-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.akr-field{display:flex;flex-direction:column;gap:6px;}
+.akr-field-label{font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);}
+.akr-field-label span{color:var(--saffron);}
+.akr-input{padding:13px 16px;border:1px solid var(--border);background:var(--cream);font-size:13px;font-family:var(--font-body);color:var(--black);border-radius:2px;outline:none;transition:border-color 0.2s;width:100%;}
+.akr-input:focus{border-color:var(--gold);}
+.akr-input::placeholder{color:#C0A870;}
+.akr-select{padding:13px 16px;border:1px solid var(--border);background:var(--cream);font-size:13px;font-family:var(--font-body);color:var(--black);border-radius:2px;outline:none;cursor:pointer;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237A6535' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.akr-select:focus{border-color:var(--gold);}
+.akr-textarea{padding:13px 16px;border:1px solid var(--border);background:var(--cream);font-size:13px;font-family:var(--font-body);color:var(--black);border-radius:2px;outline:none;transition:border-color 0.2s;width:100%;resize:vertical;min-height:88px;line-height:1.6;}
+.akr-textarea:focus{border-color:var(--gold);}
+.akr-section-title{font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.akr-report-checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.akr-check-label{display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:var(--cream);}
+.akr-check-label:hover{border-color:var(--gold);}
+.akr-check-label.selected{border-color:var(--gold);background:var(--gold-pale);}
+.akr-check-label input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;margin-top:2px;}
+.akr-check-info{}
+.akr-check-name{font-size:12px;font-weight:500;color:var(--black);margin-bottom:2px;}
+.akr-check-price{font-family:var(--font-heading);font-size:15px;color:var(--saffron);}
+.akr-summary{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:20px;}
+.akr-summary-title{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.akr-summary-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.akr-summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-weight:300;}
+.akr-summary-row.total{font-weight:500;color:var(--black);border-top:1px solid var(--border);padding-top:10px;margin-top:4px;}
+.akr-summary-row.total .akr-summary-price{font-family:var(--font-heading);font-size:20px;color:var(--saffron);}
+.akr-summary-empty{font-size:12px;color:var(--muted);font-weight:300;text-align:center;padding:8px 0;}
+.akr-submit-wrap{display:flex;flex-direction:column;gap:10px;}
+.akr-submit{padding:16px 32px;background:var(--black);color:var(--ivory);border:none;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:var(--font-body);transition:background 0.2s;text-align:center;width:100%;}
+.akr-submit:hover{background:var(--gold);}
+.akr-submit-note{font-size:11px;color:var(--muted);font-weight:300;text-align:center;line-height:1.6;}
+.akr-divider{height:1px;background:var(--border);}
+.akr-success{display:none;text-align:center;padding:40px 20px;}
+.akr-success-icon{font-size:52px;margin-bottom:16px;}
+.akr-success-title{font-family:var(--font-heading);font-size:32px;color:var(--black);margin-bottom:10px;}
+.akr-success-sub{font-size:14px;color:var(--muted);font-weight:300;line-height:1.7;}
+
+/* ── TESTIMONIALS ── */
+.akr-testi{background:transparent;padding:72px 48px;border-top:1px solid var(--border);}
+.akr-testi-inner{max-width:1100px;margin:0 auto;}
+.akr-testi-hdr{text-align:center;margin-bottom:48px;}
+.akr-testi-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+.akr-testi-title{font-family:var(--font-heading);font-size:38px;font-weight:500;color:var(--black);}
+.akr-testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.akr-testi-card{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:28px;transition:border-color 0.2s;}
+.akr-testi-card:hover{border-color:var(--gold);}
+.akr-testi-stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:14px;}
+.akr-testi-text{font-size:14px;color:#4A3A10;line-height:1.8;font-family:var(--font-heading);font-style:italic;margin-bottom:16px;}
+.akr-testi-author{font-size:11px;font-weight:500;color:var(--black);letter-spacing:.8px;text-transform:uppercase;}
+.akr-testi-detail{font-size:11px;color:var(--muted);font-weight:300;margin-top:2px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .akr-hero-intro,.akr-explain,.akr-inside,.akr-benefits,.akr-trust-strip,.akr-how,.akr-testi{padding-left:28px;padding-right:28px;}
+  .akr-page{grid-template-columns:1fr 1fr;}
+  .akr-left,.akr-right{padding:40px 36px;}
+  .akr-left-title{font-size:36px;}
+  .akr-inside-grid{grid-template-columns:1fr 1fr;}
+  .akr-how-steps{grid-template-columns:1fr 1fr;gap:16px;}
+  .akr-how-step:not(:last-child)::after{display:none;}
+}
+@media(max-width:768px){
+  .akr-crumb{padding:12px 20px;}
+  .akr-hero-intro{padding:52px 20px;}
+  .akr-hero-intro-title{font-size:38px;}
+  .akr-explain,.akr-inside,.akr-benefits,.akr-trust-strip,.akr-how,.akr-testi{padding-left:20px;padding-right:20px;}
+  .akr-explain-inner{grid-template-columns:1fr;}
+  .akr-inside-grid{grid-template-columns:1fr;}
+  .akr-benefits-grid{grid-template-columns:1fr;}
+  .akr-how-steps{grid-template-columns:1fr 1fr;}
+  .akr-trust-strip-inner{gap:28px;}
+  .akr-testi-grid{grid-template-columns:1fr;}
+  .akr-page{grid-template-columns:1fr;}
+  .akr-left{position:relative;height:auto;padding:40px 24px;}
+  .akr-right{padding:40px 24px;}
+  .akr-row{grid-template-columns:1fr;}
+  .akr-report-checks{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .akr-hero-intro-title{font-size:30px;}
+  .akr-left-title{font-size:30px;}
+  .akr-form-title{font-size:28px;}
+  .akr-how-steps{grid-template-columns:1fr;}
+  .akr-how-step::after{display:none;}
+}
+</style>
+
+<div class="akr">
+
+{%- comment -%} BREADCRUMB {%- endcomment -%}
+<div class="akr-crumb">
+  <a href="{{ routes.root_url }}">Home</a>
+  <span class="akr-crumb-sep">›</span>
+  <span class="akr-crumb-cur">{{ section.settings.page_title | default: 'Kundli Report' }}</span>
+</div>
+
+{%- comment -%} ── HERO INTRO ── {%- endcomment -%}
+<div class="akr-hero-intro">
+  <div class="akr-hero-intro-inner">
+    <div class="akr-hero-intro-label">{{ section.settings.intro_label | default: 'Vedic Astrology' }}</div>
+    <h1 class="akr-hero-intro-title">{{ section.settings.intro_title | default: 'Your Complete' }}<br><em>{{ section.settings.intro_title_italic | default: 'Kundli Report' }}</em></h1>
+    <p class="akr-hero-intro-sub">{{ section.settings.intro_sub | default: "A deeply personalised Vedic birth chart analysis prepared by our expert astrologers — revealing the blueprint of your destiny written in the stars at the moment of your birth." }}</p>
+    <a href="{{ section.settings.intro_cta_link | default: '#akr-order-form' }}" class="akr-hero-intro-cta">
+      {{ section.settings.intro_cta_text | default: 'Order Your Report Now' }} &#8594;
+    </a>
+  </div>
+</div>
+
+{%- comment -%} ── WHAT IS KUNDLI ── {%- endcomment -%}
+<div class="akr-explain">
+  <div class="akr-explain-inner">
+    <div class="akr-explain-left">
+      <div class="akr-explain-label">{{ section.settings.explain_label | default: 'Sacred Science' }}</div>
+      <h2 class="akr-explain-title">{{ section.settings.explain_title | default: 'What is a Kundli Report?' }}</h2>
+      <p class="akr-explain-desc">{{ section.settings.explain_p1 | default: "A Kundli — also known as a Janam Patrika or birth chart — is a precise astrological map of the sky at the exact moment and place of your birth. In Vedic astrology, this chart is considered the <strong>blueprint of your soul's journey</strong> in this lifetime." }}</p>
+      <p class="akr-explain-desc">{{ section.settings.explain_p2 | default: "Every planet's position at your birth moment influences your personality, health, career, relationships, finances and spiritual path. Our expert astrologers analyse all 12 houses, 9 planets and 27 nakshatras to provide you with a complete, deeply accurate life reading." }}</p>
+      <p class="akr-explain-desc">{{ section.settings.explain_p3 | default: "Unlike generic computer-generated reports, every Astro PathShala Kundli is personally studied and written by a qualified Jyotish practitioner — giving you insights that are truly specific to you." }}</p>
+    </div>
+    <div class="akr-explain-right">
+      <div class="akr-explain-subtitle">{{ section.settings.features_label | default: 'What Makes Our Report Different' }}</div>
+      <div class="akr-feature-list">
+        <div class="akr-feature-item">
+          <div class="akr-feature-icon">&#128221;</div>
+          <div>
+            <div class="akr-feature-title">{{ section.settings.feat1_title | default: 'Personally Prepared by Expert Astrologers' }}</div>
+            <div class="akr-feature-desc">{{ section.settings.feat1_desc | default: 'Not auto-generated. Every report is individually studied and written by our Vedic Jyotish experts.' }}</div>
+          </div>
+        </div>
+        <div class="akr-feature-item">
+          <div class="akr-feature-icon">&#127757;</div>
+          <div>
+            <div class="akr-feature-title">{{ section.settings.feat2_title | default: 'Traditional Vedic Calculations' }}</div>
+            <div class="akr-feature-desc">{{ section.settings.feat2_desc | default: 'Based on classical Parashari Jyotish system with Lahiri Ayanamsha for maximum accuracy.' }}</div>
+          </div>
+        </div>
+        <div class="akr-feature-item">
+          <div class="akr-feature-icon">&#127462;&#127466;</div>
+          <div>
+            <div class="akr-feature-title">{{ section.settings.feat3_title | default: 'Available in Hindi & English' }}</div>
+            <div class="akr-feature-desc">{{ section.settings.feat3_desc | default: 'Choose your preferred language — Hindi or English — for a comfortable reading experience.' }}</div>
+          </div>
+        </div>
+        <div class="akr-feature-item">
+          <div class="akr-feature-icon">&#9993;</div>
+          <div>
+            <div class="akr-feature-title">{{ section.settings.feat4_title | default: 'Delivered to Your Email in 1–2 Days' }}</div>
+            <div class="akr-feature-desc">{{ section.settings.feat4_desc | default: 'Receive your complete PDF report within 1–2 working days with WhatsApp support after delivery.' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── WHAT'S INSIDE ── {%- endcomment -%}
+<div class="akr-inside">
+  <div class="akr-inside-inner">
+    <div class="akr-inside-hdr">
+      <span class="akr-inside-label">{{ section.settings.inside_label | default: 'Inside Your Report' }}</span>
+      <div class="akr-inside-title">{{ section.settings.inside_title | default: 'What You Will Receive' }}</div>
+      <div class="akr-inside-sub">{{ section.settings.inside_sub | default: 'A comprehensive, multi-chapter Vedic analysis covering every important area of your life' }}</div>
+    </div>
+    <div class="akr-inside-grid">
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">01</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside1_title | default: 'Birth Chart & Planetary Positions' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside1_desc | default: 'Your complete Kundli diagram with all 12 houses and 9 planet placements explained in detail.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Lagna (Ascendant) analysis</li>
+          <li>Planet signs &amp; degrees</li>
+          <li>Nakshatra placements</li>
+          <li>Yoga formations in chart</li>
+        </ul>
+      </div>
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">02</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside2_title | default: 'Dasha & Timeline Predictions' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside2_desc | default: 'Detailed Mahadasha and Antardasha timeline showing key periods of opportunity and challenge.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Current Mahadasha analysis</li>
+          <li>Upcoming planetary periods</li>
+          <li>Best time for major decisions</li>
+          <li>Favourable years ahead</li>
+        </ul>
+      </div>
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">03</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside3_title | default: 'Career & Finance Guidance' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside3_desc | default: 'Analysis of your 2nd, 6th and 10th houses to reveal your ideal career path and wealth potential.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Ideal profession &amp; field</li>
+          <li>Business vs. job suitability</li>
+          <li>Wealth accumulation timing</li>
+          <li>Financial dos &amp; don'ts</li>
+        </ul>
+      </div>
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">04</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside4_title | default: 'Marriage & Relationships' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside4_desc | default: '7th house analysis for marriage timing, partner characteristics and relationship compatibility.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Marriage timing prediction</li>
+          <li>Ideal partner traits</li>
+          <li>Mangal Dosh assessment</li>
+          <li>Family life analysis</li>
+        </ul>
+      </div>
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">05</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside5_title | default: 'Health & Wellbeing' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside5_desc | default: 'Planetary influences on your physical and mental health with preventive guidance.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Health-prone areas analysis</li>
+          <li>Weak planetary remedies</li>
+          <li>Favourable lifestyle tips</li>
+          <li>Mental wellbeing insights</li>
+        </ul>
+      </div>
+      <div class="akr-inside-card">
+        <div class="akr-inside-card-num">06</div>
+        <div class="akr-inside-card-title">{{ section.settings.inside6_title | default: 'Remedies & Recommendations' }}</div>
+        <div class="akr-inside-card-desc">{{ section.settings.inside6_desc | default: 'Personalised Vedic remedies — gemstones, mantras, charity days and lifestyle practices.' }}</div>
+        <ul class="akr-inside-card-bullets">
+          <li>Gemstone recommendations</li>
+          <li>Mantra &amp; pooja guidance</li>
+          <li>Fasting &amp; charity days</li>
+          <li>Colour &amp; direction guidance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── BENEFITS ── {%- endcomment -%}
+<div class="akr-benefits">
+  <div class="akr-benefits-inner">
+    <div class="akr-benefits-hdr">
+      <span class="akr-benefits-label">{{ section.settings.benefits_label | default: 'Why Get a Kundli Report' }}</span>
+      <div class="akr-benefits-title">{{ section.settings.benefits_title | default: 'Life Guidance Rooted in Ancient Wisdom' }}</div>
+      <div class="akr-benefits-sub">{{ section.settings.benefits_sub | default: 'A personalised Kundli gives you clarity on your path when life feels uncertain' }}</div>
+    </div>
+    <div class="akr-benefits-grid">
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#127775;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben1_title | default: 'Know Your Life Purpose' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben1_desc | default: 'Understand the deeper meaning of your journey — your natural talents, soul mission and the lessons you are here to learn in this lifetime.' }}</div>
+        </div>
+      </div>
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#128188;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben2_title | default: 'Make Better Career Decisions' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben2_desc | default: "Know which profession aligns with your planetary strengths, the right time to change jobs or start a business, and when financial success is most likely to come." }}</div>
+        </div>
+      </div>
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#10084;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben3_title | default: 'Navigate Relationships Wisely' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben3_desc | default: 'Understand your marriage timing, what kind of partner is best suited for you and how to strengthen your personal relationships using Vedic wisdom.' }}</div>
+        </div>
+      </div>
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#9889;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben4_title | default: 'Turn Challenges Into Opportunities' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben4_desc | default: 'Identify difficult planetary periods in advance and use the recommended remedies to reduce their impact and transform obstacles into growth.' }}</div>
+        </div>
+      </div>
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#127774;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben5_title | default: 'Protect Your Health Proactively' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben5_desc | default: 'Know which health areas need attention based on your planetary placements and take preventive action through lifestyle, diet and Vedic remedies.' }}</div>
+        </div>
+      </div>
+      <div class="akr-benefit-item">
+        <div class="akr-benefit-icon">&#9737;</div>
+        <div>
+          <div class="akr-benefit-title">{{ section.settings.ben6_title | default: 'Deepen Your Spiritual Journey' }}</div>
+          <div class="akr-benefit-desc">{{ section.settings.ben6_desc | default: 'Discover the spiritual lessons written in your chart and receive guidance on practices, pilgrimages and disciplines that align with your soul path.' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── TRUST STRIP ── {%- endcomment -%}
+<div class="akr-trust-strip">
+  <div class="akr-trust-strip-inner">
+    <div class="akr-trust-strip-item">
+      <div class="akr-trust-strip-icon">&#11088;</div>
+      <div>
+        <div class="akr-trust-strip-num">{{ section.settings.trust1_num | default: '12,000+' }}</div>
+        <div class="akr-trust-strip-label">{{ section.settings.trust1_label | default: 'Customers Served' }}</div>
+      </div>
+    </div>
+    <div class="akr-trust-strip-item">
+      <div class="akr-trust-strip-icon">&#128221;</div>
+      <div>
+        <div class="akr-trust-strip-num">{{ section.settings.trust2_num | default: '8+ Years' }}</div>
+        <div class="akr-trust-strip-label">{{ section.settings.trust2_label | default: 'Trusted Experience' }}</div>
+      </div>
+    </div>
+    <div class="akr-trust-strip-item">
+      <div class="akr-trust-strip-icon">&#127757;</div>
+      <div>
+        <div class="akr-trust-strip-num">{{ section.settings.trust3_num | default: '100%' }}</div>
+        <div class="akr-trust-strip-label">{{ section.settings.trust3_label | default: 'Vedic Calculations' }}</div>
+      </div>
+    </div>
+    <div class="akr-trust-strip-item">
+      <div class="akr-trust-strip-icon">&#128100;</div>
+      <div>
+        <div class="akr-trust-strip-num">{{ section.settings.trust4_num | default: 'Personal' }}</div>
+        <div class="akr-trust-strip-label">{{ section.settings.trust4_label | default: 'Expert-Prepared' }}</div>
+      </div>
+    </div>
+    <div class="akr-trust-strip-item">
+      <div class="akr-trust-strip-icon">&#127462;&#127466;</div>
+      <div>
+        <div class="akr-trust-strip-num">{{ section.settings.trust5_num | default: 'Hindi &' }}</div>
+        <div class="akr-trust-strip-label">{{ section.settings.trust5_label | default: 'English Available' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── HOW IT WORKS ── {%- endcomment -%}
+<div class="akr-how">
+  <div class="akr-how-inner">
+    <div class="akr-how-hdr">
+      <span class="akr-how-label">{{ section.settings.how_label | default: 'Simple Process' }}</span>
+      <div class="akr-how-title">{{ section.settings.how_title | default: 'How It Works' }}</div>
+      <div class="akr-how-sub">{{ section.settings.how_sub | default: 'Get your complete Kundli report in 4 simple steps' }}</div>
+    </div>
+    <div class="akr-how-steps">
+      <div class="akr-how-step">
+        <div class="akr-how-num">1</div>
+        <div class="akr-how-step-icon">&#128221;</div>
+        <div class="akr-how-step-title">{{ section.settings.step1_title | default: 'Fill the Form' }}</div>
+        <div class="akr-how-step-text">{{ section.settings.step1_text | default: 'Enter your name, date of birth, exact time and place of birth in the order form below.' }}</div>
+      </div>
+      <div class="akr-how-step">
+        <div class="akr-how-num">2</div>
+        <div class="akr-how-step-icon">&#128241;</div>
+        <div class="akr-how-step-title">{{ section.settings.step2_title | default: 'Receive Payment Link' }}</div>
+        <div class="akr-how-step-text">{{ section.settings.step2_text | default: 'Our team contacts you on WhatsApp within 2 hours with the payment link for your selected reports.' }}</div>
+      </div>
+      <div class="akr-how-step">
+        <div class="akr-how-num">3</div>
+        <div class="akr-how-step-icon">&#9997;</div>
+        <div class="akr-how-step-title">{{ section.settings.step3_title | default: 'Astrologer Prepares Report' }}</div>
+        <div class="akr-how-step-text">{{ section.settings.step3_text | default: 'After payment, our expert astrologer personally studies your chart and prepares a detailed report.' }}</div>
+      </div>
+      <div class="akr-how-step">
+        <div class="akr-how-num">4</div>
+        <div class="akr-how-step-icon">&#9993;</div>
+        <div class="akr-how-step-title">{{ section.settings.step4_title | default: 'Receive Your Report' }}</div>
+        <div class="akr-how-step-text">{{ section.settings.step4_text | default: 'Your complete PDF report is delivered to your email within 1–2 working days with WhatsApp support.' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── ORDER FORM SECTION ── {%- endcomment -%}
+<div id="akr-order-form">
+<div class="akr-page">
+
+  {%- comment -%} LEFT PANEL {%- endcomment -%}
+  <div class="akr-left">
+    <div class="akr-left-label">Astro PathShala</div>
+    <h2 class="akr-left-title">{{ section.settings.hero_title | default: 'Your Personal' }}<br><em>{{ section.settings.hero_italic | default: 'Kundli Report' }}</em></h2>
+    <p class="akr-left-sub">{{ section.settings.hero_sub | default: 'Get your detailed Vedic birth chart analysis prepared by our expert astrologers. Delivered to your email within 1–2 working days.' }}</p>
+
+    <div class="akr-reports-list">
+      <div class="akr-report-item"><div class="akr-report-icon">&#127775;</div><div><div class="akr-report-name">{{ section.settings.r1_name | default: 'Kundli Report' }}</div><div class="akr-report-desc">{{ section.settings.r1_desc | default: 'Complete birth chart with all 12 houses, planetary positions, Dasha analysis and life predictions.' }}</div><div class="akr-report-price">{{ section.settings.r1_price | default: '₹499' }}</div></div></div>
+      <div class="akr-report-item"><div class="akr-report-icon">&#128142;</div><div><div class="akr-report-name">{{ section.settings.r2_name | default: 'Gemstone Report' }}</div><div class="akr-report-desc">{{ section.settings.r2_desc | default: 'Personalised gemstone recommendation based on your Kundli — right stone, right finger, right metal.' }}</div><div class="akr-report-price">{{ section.settings.r2_price | default: '₹399' }}</div></div></div>
+      <div class="akr-report-item"><div class="akr-report-icon">&#128212;</div><div><div class="akr-report-name">{{ section.settings.r3_name | default: 'Lal Kitaab Report' }}</div><div class="akr-report-desc">{{ section.settings.r3_desc | default: 'Lal Kitaab based remedies for your planetary doshas — simple, effective and practical.' }}</div><div class="akr-report-price">{{ section.settings.r3_price | default: '₹349' }}</div></div></div>
+      <div class="akr-report-item"><div class="akr-report-icon">&#9670;</div><div><div class="akr-report-name">{{ section.settings.r4_name | default: 'Career & Finance Report' }}</div><div class="akr-report-desc">{{ section.settings.r4_desc | default: 'In-depth analysis of your career path, financial prospects and right timing.' }}</div><div class="akr-report-price">{{ section.settings.r4_price | default: '₹449' }}</div></div></div>
+      <div class="akr-report-item"><div class="akr-report-icon">&#10084;</div><div><div class="akr-report-name">{{ section.settings.r5_name | default: 'Marriage & Compatibility' }}</div><div class="akr-report-desc">{{ section.settings.r5_desc | default: 'Marriage timing, partner traits, compatibility analysis and Mangal Dosh assessment.' }}</div><div class="akr-report-price">{{ section.settings.r5_price | default: '₹449' }}</div></div></div>
+      <div class="akr-report-item"><div class="akr-report-icon">&#11088;</div><div><div class="akr-report-name">{{ section.settings.r6_name | default: 'Full Life Report (Bundle)' }}</div><div class="akr-report-desc">{{ section.settings.r6_desc | default: 'Complete Kundli + Gemstone + Lal Kitaab + Career + Marriage — all five at the best price.' }}</div><div class="akr-report-price">{{ section.settings.r6_price | default: '₹999' }}</div></div></div>
+    </div>
+
+    <div class="akr-delivery-badge">
+      <div class="akr-delivery-icon">&#9993;</div>
+      <div class="akr-delivery-text">
+        <strong>{{ section.settings.delivery_title | default: 'Email Delivery in 1–2 Days' }}</strong>
+        <span>{{ section.settings.delivery_sub | default: 'Our astrologers personally prepare every report' }}</span>
+      </div>
+    </div>
+
+    <div class="akr-trust-list">
+      <div class="akr-trust-item"><span class="akr-trust-dot"></span>Prepared by certified Vedic astrologers</div>
+      <div class="akr-trust-item"><span class="akr-trust-dot"></span>100% personalised — not auto-generated</div>
+      <div class="akr-trust-item"><span class="akr-trust-dot"></span>Available in Hindi &amp; English</div>
+      <div class="akr-trust-item"><span class="akr-trust-dot"></span>Secure payment — your data is private</div>
+      <div class="akr-trust-item"><span class="akr-trust-dot"></span>WhatsApp support after delivery</div>
+    </div>
+  </div>
+
+  {%- comment -%} RIGHT PANEL — FORM {%- endcomment -%}
+  <div class="akr-right">
+    <div class="akr-form-label">Order Your Report</div>
+    <h2 class="akr-form-title">{{ section.settings.form_title | default: 'Enter Your Birth Details' }}</h2>
+    <p class="akr-form-sub">{{ section.settings.form_sub | default: 'All details are required to prepare an accurate Vedic birth chart. Your information is kept completely private.' }}</p>
+
+    {%- assign kundli_product = all_products[section.settings.kundli_product] -%}
+    {%- assign gemstone_product = all_products[section.settings.gemstone_product] -%}
+    {%- assign kundli_variant_id = '' -%}
+    {%- assign gemstone_variant_id = '' -%}
+    {%- if kundli_product != blank and kundli_product.selected_or_first_available_variant != blank -%}
+      {%- assign kundli_variant_id = kundli_product.selected_or_first_available_variant.id -%}
+    {%- endif -%}
+    {%- if gemstone_product != blank and gemstone_product.selected_or_first_available_variant != blank -%}
+      {%- assign gemstone_variant_id = gemstone_product.selected_or_first_available_variant.id -%}
+    {%- endif -%}
+
+    <form method="post" action="{{ routes.cart_add_url }}" id="kundli-form" class="akr-form" data-kundli-variant-id="{{ kundli_variant_id }}" data-gemstone-variant-id="{{ gemstone_variant_id }}">
+      <div class="akr-form" id="akr-form-inner">
+          <input type="hidden" name="id" id="variant-id-input" value="{{ kundli_variant_id }}">
+          <div class="akr-row">
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-name">Full Name <span>*</span></label>
+              <input class="akr-input" type="text" id="akr-name" name="properties[Full Name]" placeholder="Rahul Sharma" required>
+            </div>
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-email">Email Address <span>*</span></label>
+              <input class="akr-input" type="email" id="akr-email" name="properties[Email Address]" placeholder="rahul@email.com" required>
+            </div>
+          </div>
+          <div class="akr-field">
+            <label class="akr-field-label" for="akr-whatsapp">WhatsApp Number <span>*</span></label>
+            <input class="akr-input" type="tel" id="akr-whatsapp" name="properties[WhatsApp Number]" placeholder="+91 98765 43210" required>
+          </div>
+          <div class="akr-divider"></div>
+          <div class="akr-section-title">Birth Details</div>
+          <div class="akr-row">
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-dob">Date of Birth <span>*</span></label>
+              <input class="akr-input" type="date" id="akr-dob" name="properties[Date of Birth]" required>
+            </div>
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-tob">Time of Birth <span>*</span></label>
+              <input class="akr-input" type="time" id="akr-tob" name="properties[Time of Birth]" required>
+            </div>
+          </div>
+          <div class="akr-field">
+            <label class="akr-field-label" for="akr-pob">Place of Birth <span>*</span></label>
+            <input class="akr-input" type="text" id="akr-pob" name="properties[Place of Birth]" placeholder="City, State, Country (e.g. Delhi, India)" required>
+          </div>
+          <div class="akr-row">
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-gender">Gender</label>
+              <select class="akr-select" id="akr-gender" name="properties[Gender]">
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="akr-field">
+              <label class="akr-field-label" for="akr-lang">Report Language <span>*</span></label>
+              <select class="akr-select" id="akr-lang" name="properties[Report Language]" required>
+                <option value="">Select language</option>
+                <option value="Hindi">Hindi</option>
+                <option value="English">English</option>
+              </select>
+            </div>
+          </div>
+          <div class="akr-divider"></div>
+          <div class="akr-section-title">{{ section.settings.report_type_label | default: 'Select Report Type' }} <span style="color:var(--saffron)">*</span></div>
+          <div class="akr-report-checks" id="akr-report-checks">
+            <label class="akr-check-label" id="lbl-r1" onclick="akrToggle('r1')">
+              <input type="radio" name="report_type" id="r1" value="kundli" data-price="{{ section.settings.r1_price_num | default: '499' }}" data-label="{{ section.settings.r1_name | default: 'Kundli Report' }}" onchange="akrUpdateSummary()" checked>
+              <div class="akr-check-info"><div class="akr-check-name">{{ section.settings.r1_name | default: 'Kundli Report' }}</div><div class="akr-check-price">{{ section.settings.r1_price | default: '₹499' }}</div></div>
+            </label>
+            <label class="akr-check-label" id="lbl-r2" onclick="akrToggle('r2')">
+              <input type="radio" name="report_type" id="r2" value="gemstone" data-price="{{ section.settings.r2_price_num | default: '399' }}" data-label="{{ section.settings.r2_name | default: 'Gemstone Report' }}" onchange="akrUpdateSummary()">
+              <div class="akr-check-info"><div class="akr-check-name">{{ section.settings.r2_name | default: 'Gemstone Report' }}</div><div class="akr-check-price">{{ section.settings.r2_price | default: '₹399' }}</div></div>
+            </label>
+          </div>
+          <div class="akr-field">
+            <label class="akr-check-label" id="lbl-r3" onclick="akrToggle('r3')">
+              <input type="checkbox" name="both_reports" id="r3" value="both" onchange="akrUpdateSummary()">
+              <div class="akr-check-info">
+                <div class="akr-check-name">{{ section.settings.bundle_label | default: 'I want both Kundli + Gemstone Report (Bundle Offer)' }}</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="akr-summary">
+            <div class="akr-summary-title">Order Summary</div>
+            <div class="akr-summary-rows" id="akr-summary-rows">
+              <div class="akr-summary-empty" id="akr-summary-empty">No reports selected yet</div>
+            </div>
+            <div class="akr-summary-row total" id="akr-total-row" style="display:none;">
+              <span>Total Amount</span>
+              <span class="akr-summary-price" id="akr-total">₹0</span>
+            </div>
+          </div>
+
+          <div class="akr-field">
+            <label class="akr-field-label" for="akr-notes">Additional Notes (optional)</label>
+            <textarea class="akr-textarea" id="akr-notes" name="properties[Additional Notes]" placeholder="Any specific questions or areas you want the astrologer to focus on..."></textarea>
+          </div>
+
+          <input type="hidden" id="akr-selected-reports" name="properties[Selected Reports]" value="">
+          <input type="hidden" name="quantity" value="1">
+
+          <div class="akr-submit-wrap">
+            <button type="submit" class="akr-submit" id="akr-submit-btn">
+              {{ section.settings.submit_text | default: 'Proceed to Payment' }} &#8594;
+            </button>
+            <div class="akr-submit-note">{{ section.settings.submit_note | default: 'After submitting, you will be redirected to secure checkout.' }}</div>
+          </div>
+        </div>
+    </form>
+  </div>
+
+</div>
+</div>
+
+{%- comment -%} ── TESTIMONIALS ── {%- endcomment -%}
+<div class="akr-testi">
+  <div class="akr-testi-inner">
+    <div class="akr-testi-hdr">
+      <span class="akr-testi-label">{{ section.settings.testi_label | default: 'Real Stories' }}</span>
+      <div class="akr-testi-title">{{ section.settings.testi_title | default: 'What Our Customers Say' }}</div>
+    </div>
+    <div class="akr-testi-grid">
+      <div class="akr-testi-card">
+        <div class="akr-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="akr-testi-text">{{ section.settings.testi1_text | default: '"The Kundli report from Astro PathShala was incredibly detailed and accurate. The astrologer correctly identified key events in my past and gave me clarity about my career path. Worth every rupee."' }}</div>
+        <div class="akr-testi-author">{{ section.settings.testi1_author | default: 'Rohan Sharma' }}</div>
+        <div class="akr-testi-detail">{{ section.settings.testi1_detail | default: 'Kundli + Career Report · Delhi' }}</div>
+      </div>
+      <div class="akr-testi-card">
+        <div class="akr-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="akr-testi-text">{{ section.settings.testi2_text | default: '"I was confused about marriage timing. The report explained my 7th house so clearly and gave me a timeline that matched what my family astrologer had also said. Very trustworthy service."' }}</div>
+        <div class="akr-testi-author">{{ section.settings.testi2_author | default: 'Priya Mehta' }}</div>
+        <div class="akr-testi-detail">{{ section.settings.testi2_detail | default: 'Marriage & Compatibility Report · Mumbai' }}</div>
+      </div>
+      <div class="akr-testi-card">
+        <div class="akr-testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="akr-testi-text">{{ section.settings.testi3_text | default: '"Ordered the Full Life Bundle and I am amazed at the depth. The remedies given were practical and simple. The WhatsApp support after delivery was also very helpful. Highly recommend."' }}</div>
+        <div class="akr-testi-author">{{ section.settings.testi3_author | default: 'Vikram Singh' }}</div>
+        <div class="akr-testi-detail">{{ section.settings.testi3_detail | default: 'Full Life Report Bundle · Jaipur' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function akrToggle(id) {
+  if (id === 'r1' || id === 'r2') { return; }
+  var lbl = document.getElementById('lbl-r3');
+  var check = document.getElementById('r3');
+  if (lbl && check) { lbl.classList.toggle('selected', check.checked); }
+}
+function akrUpdateSummary() {
+  var reportInputs = document.querySelectorAll('#akr-report-checks input[name=report_type]');
+  var selectedReport = document.querySelector('#akr-report-checks input[name=report_type]:checked');
+  var bundleCheck = document.getElementById('r3');
+  var rows = document.getElementById('akr-summary-rows');
+  var totalRow = document.getElementById('akr-total-row');
+  var totalEl = document.getElementById('akr-total');
+  var hiddenReports = document.getElementById('akr-selected-reports');
+  var variantInput = document.getElementById('variant-id-input');
+  var formEl = document.getElementById('kundli-form');
+  var kundliVariantId = formEl ? formEl.getAttribute('data-kundli-variant-id') : '';
+  var gemstoneVariantId = formEl ? formEl.getAttribute('data-gemstone-variant-id') : '';
+  var total = 0;
+  var selectedNames = [];
+  var html = '';
+
+  reportInputs.forEach(function(radio) {
+    var wrap = radio.closest('.akr-check-label');
+    if (wrap) wrap.classList.toggle('selected', radio.checked);
+  });
+
+  if (selectedReport) {
+    var selectedPrice = parseInt(selectedReport.dataset.price) || 0;
+    var selectedLabel = selectedReport.dataset.label || selectedReport.value;
+    total += selectedPrice;
+    selectedNames.push(selectedLabel + ' (₹' + selectedPrice + ')');
+    html += '<div class="akr-summary-row"><span>' + selectedLabel + '</span><span>₹' + selectedPrice + '</span></div>';
+    if (variantInput) {
+      variantInput.value = selectedReport.value === 'gemstone' ? gemstoneVariantId : kundliVariantId;
+    }
+  }
+
+  if (bundleCheck && bundleCheck.checked) {
+    var kundliRadio = document.getElementById('r1');
+    var gemstoneRadio = document.getElementById('r2');
+    var kundliPrice = kundliRadio ? (parseInt(kundliRadio.dataset.price) || 0) : 0;
+    var gemstonePrice = gemstoneRadio ? (parseInt(gemstoneRadio.dataset.price) || 0) : 0;
+    var bundleTotal = kundliPrice + gemstonePrice;
+    total = bundleTotal;
+    selectedNames = [
+      (kundliRadio ? kundliRadio.dataset.label : 'Kundli Report') + ' (₹' + kundliPrice + ')',
+      (gemstoneRadio ? gemstoneRadio.dataset.label : 'Gemstone Report') + ' (₹' + gemstonePrice + ')'
+    ];
+    html = '<div class="akr-summary-row"><span>' + (kundliRadio ? kundliRadio.dataset.label : 'Kundli Report') + '</span><span>₹' + kundliPrice + '</span></div>';
+    html += '<div class="akr-summary-row"><span>' + (gemstoneRadio ? gemstoneRadio.dataset.label : 'Gemstone Report') + '</span><span>₹' + gemstonePrice + '</span></div>';
+  }
+
+  if (html) {
+    rows.innerHTML = html + '<div id="akr-summary-empty" style="display:none;"></div>';
+    totalRow.style.display = 'flex';
+    totalEl.textContent = '₹' + total;
+  } else {
+    rows.innerHTML = '<div class="akr-summary-empty" id="akr-summary-empty">No reports selected yet</div>';
+    totalRow.style.display = 'none';
+  }
+  if (hiddenReports) hiddenReports.value = selectedNames.join(', ');
+}
+document.getElementById('kundli-form') && document.getElementById('kundli-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var formEl = this;
+  var submitBtn = document.getElementById('akr-submit-btn');
+  var selectedReport = document.querySelector('#akr-report-checks input[name=report_type]:checked');
+  var bundleCheck = document.getElementById('r3');
+  var kundliVariantId = formEl.getAttribute('data-kundli-variant-id');
+  var gemstoneVariantId = formEl.getAttribute('data-gemstone-variant-id');
+
+  if (!selectedReport) {
+    alert('Please select a report before submitting.');
+    return;
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+  }
+
+  var formData = new FormData(formEl);
+  var baseProperties = {};
+  formData.forEach(function(value, key) {
+    if (key.indexOf('properties[') === 0) {
+      var propName = key.replace('properties[', '').replace(']', '');
+      baseProperties[propName] = value;
+    }
+  });
+
+  var items = [];
+  if (bundleCheck && bundleCheck.checked) {
+    if (kundliVariantId) items.push({ id: kundliVariantId, quantity: 1, properties: baseProperties });
+    if (gemstoneVariantId) items.push({ id: gemstoneVariantId, quantity: 1, properties: baseProperties });
+  } else {
+    var targetVariantId = selectedReport.value === 'gemstone' ? gemstoneVariantId : kundliVariantId;
+    if (targetVariantId) items.push({ id: targetVariantId, quantity: 1, properties: baseProperties });
+  }
+
+  if (items.length === 0) {
+    window.location.href = '/checkout';
+    return;
+  }
+
+  function addSingleItem(item) {
+    var body = new URLSearchParams();
+    body.append('id', item.id);
+    body.append('quantity', item.quantity || 1);
+    Object.keys(item.properties || {}).forEach(function(key) {
+      body.append('properties[' + key + ']', item.properties[key]);
+    });
+    return fetch('{{ routes.cart_add_url }}.js', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: body.toString()
+    }).then(function(response) {
+      if (!response.ok) throw new Error('Failed to add item');
+      return response.json();
+    });
+  }
+
+  var addRequests = items.map(addSingleItem);
+  Promise.all(addRequests)
+    .then(function() {
+      window.location.href = '/checkout';
+    })
+    .catch(function() {
+      window.location.href = '{{ routes.cart_url }}';
+    });
+});
+akrUpdateSummary();
+</script>
+
+{% schema %}
+{
+  "name": "Kundli Report Page",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Hero Intro Section" },
+    { "type": "text", "id": "intro_label", "label": "Intro label", "default": "Vedic Astrology" },
+    { "type": "text", "id": "intro_title", "label": "Intro title line 1", "default": "Your Complete" },
+    { "type": "text", "id": "intro_title_italic", "label": "Intro italic word", "default": "Kundli Report" },
+    { "type": "textarea", "id": "intro_sub", "label": "Intro subtitle" },
+    { "type": "text", "id": "intro_cta_text", "label": "Intro CTA button text", "default": "Order Your Report Now" },
+    { "type": "url", "id": "intro_cta_link", "label": "Intro CTA button link" },
+    { "type": "header", "content": "What is Kundli Section" },
+    { "type": "text", "id": "explain_label", "label": "Section label", "default": "Sacred Science" },
+    { "type": "text", "id": "explain_title", "label": "Section title", "default": "What is a Kundli Report?" },
+    { "type": "textarea", "id": "explain_p1", "label": "Paragraph 1" },
+    { "type": "textarea", "id": "explain_p2", "label": "Paragraph 2" },
+    { "type": "textarea", "id": "explain_p3", "label": "Paragraph 3" },
+    { "type": "text", "id": "features_label", "label": "Features column label", "default": "What Makes Our Report Different" },
+    { "type": "text", "id": "feat1_title", "label": "Feature 1 title", "default": "Personally Prepared by Expert Astrologers" },
+    { "type": "text", "id": "feat1_desc", "label": "Feature 1 description" },
+    { "type": "text", "id": "feat2_title", "label": "Feature 2 title", "default": "Traditional Vedic Calculations" },
+    { "type": "text", "id": "feat2_desc", "label": "Feature 2 description" },
+    { "type": "text", "id": "feat3_title", "label": "Feature 3 title", "default": "Available in Hindi & English" },
+    { "type": "text", "id": "feat3_desc", "label": "Feature 3 description" },
+    { "type": "text", "id": "feat4_title", "label": "Feature 4 title", "default": "Delivered to Your Email in 1-2 Days" },
+    { "type": "text", "id": "feat4_desc", "label": "Feature 4 description" },
+    { "type": "header", "content": "What You Get Section" },
+    { "type": "text", "id": "inside_label", "label": "Section label", "default": "Inside Your Report" },
+    { "type": "text", "id": "inside_title", "label": "Section title", "default": "What You Will Receive" },
+    { "type": "text", "id": "inside_sub", "label": "Section subtitle" },
+    { "type": "text", "id": "inside1_title", "label": "Card 1 title", "default": "Birth Chart & Planetary Positions" },
+    { "type": "textarea", "id": "inside1_desc", "label": "Card 1 description" },
+    { "type": "text", "id": "inside2_title", "label": "Card 2 title", "default": "Dasha & Timeline Predictions" },
+    { "type": "textarea", "id": "inside2_desc", "label": "Card 2 description" },
+    { "type": "text", "id": "inside3_title", "label": "Card 3 title", "default": "Career & Finance Guidance" },
+    { "type": "textarea", "id": "inside3_desc", "label": "Card 3 description" },
+    { "type": "text", "id": "inside4_title", "label": "Card 4 title", "default": "Marriage & Relationships" },
+    { "type": "textarea", "id": "inside4_desc", "label": "Card 4 description" },
+    { "type": "text", "id": "inside5_title", "label": "Card 5 title", "default": "Health & Wellbeing" },
+    { "type": "textarea", "id": "inside5_desc", "label": "Card 5 description" },
+    { "type": "text", "id": "inside6_title", "label": "Card 6 title", "default": "Remedies & Recommendations" },
+    { "type": "textarea", "id": "inside6_desc", "label": "Card 6 description" },
+    { "type": "header", "content": "Benefits Section" },
+    { "type": "text", "id": "benefits_label", "label": "Section label", "default": "Why Get a Kundli Report" },
+    { "type": "text", "id": "benefits_title", "label": "Section title", "default": "Life Guidance Rooted in Ancient Wisdom" },
+    { "type": "text", "id": "benefits_sub", "label": "Section subtitle" },
+    { "type": "text", "id": "ben1_title", "label": "Benefit 1 title", "default": "Know Your Life Purpose" },
+    { "type": "textarea", "id": "ben1_desc", "label": "Benefit 1 description" },
+    { "type": "text", "id": "ben2_title", "label": "Benefit 2 title", "default": "Make Better Career Decisions" },
+    { "type": "textarea", "id": "ben2_desc", "label": "Benefit 2 description" },
+    { "type": "text", "id": "ben3_title", "label": "Benefit 3 title", "default": "Navigate Relationships Wisely" },
+    { "type": "textarea", "id": "ben3_desc", "label": "Benefit 3 description" },
+    { "type": "text", "id": "ben4_title", "label": "Benefit 4 title", "default": "Turn Challenges Into Opportunities" },
+    { "type": "textarea", "id": "ben4_desc", "label": "Benefit 4 description" },
+    { "type": "text", "id": "ben5_title", "label": "Benefit 5 title", "default": "Protect Your Health Proactively" },
+    { "type": "textarea", "id": "ben5_desc", "label": "Benefit 5 description" },
+    { "type": "text", "id": "ben6_title", "label": "Benefit 6 title", "default": "Deepen Your Spiritual Journey" },
+    { "type": "textarea", "id": "ben6_desc", "label": "Benefit 6 description" },
+    { "type": "header", "content": "Trust Strip" },
+    { "type": "text", "id": "trust1_num", "label": "Trust 1 number", "default": "12,000+" },
+    { "type": "text", "id": "trust1_label", "label": "Trust 1 label", "default": "Customers Served" },
+    { "type": "text", "id": "trust2_num", "label": "Trust 2 number", "default": "8+ Years" },
+    { "type": "text", "id": "trust2_label", "label": "Trust 2 label", "default": "Trusted Experience" },
+    { "type": "text", "id": "trust3_num", "label": "Trust 3 number", "default": "100%" },
+    { "type": "text", "id": "trust3_label", "label": "Trust 3 label", "default": "Vedic Calculations" },
+    { "type": "text", "id": "trust4_num", "label": "Trust 4 number", "default": "Personal" },
+    { "type": "text", "id": "trust4_label", "label": "Trust 4 label", "default": "Expert-Prepared" },
+    { "type": "text", "id": "trust5_num", "label": "Trust 5 number", "default": "Hindi &" },
+    { "type": "text", "id": "trust5_label", "label": "Trust 5 label", "default": "English Available" },
+    { "type": "header", "content": "How It Works" },
+    { "type": "text", "id": "how_label", "label": "Section label", "default": "Simple Process" },
+    { "type": "text", "id": "how_title", "label": "Section title", "default": "How It Works" },
+    { "type": "text", "id": "how_sub", "label": "Section subtitle" },
+    { "type": "text", "id": "step1_title", "label": "Step 1 title", "default": "Fill the Form" },
+    { "type": "textarea", "id": "step1_text", "label": "Step 1 description" },
+    { "type": "text", "id": "step2_title", "label": "Step 2 title", "default": "Receive Payment Link" },
+    { "type": "textarea", "id": "step2_text", "label": "Step 2 description" },
+    { "type": "text", "id": "step3_title", "label": "Step 3 title", "default": "Astrologer Prepares Report" },
+    { "type": "textarea", "id": "step3_text", "label": "Step 3 description" },
+    { "type": "text", "id": "step4_title", "label": "Step 4 title", "default": "Receive Your Report" },
+    { "type": "textarea", "id": "step4_text", "label": "Step 4 description" },
+    { "type": "header", "content": "Order Form Panel" },
+    { "type": "product", "id": "kundli_product", "label": "Kundli report product" },
+    { "type": "product", "id": "gemstone_product", "label": "Gemstone report product" },
+    { "type": "text", "id": "report_type_label", "label": "Report type heading", "default": "Select Report Type" },
+    { "type": "text", "id": "bundle_label", "label": "Bundle checkbox label", "default": "I want both Kundli + Gemstone Report (Bundle Offer)" },
+    { "type": "text", "id": "page_title", "label": "Breadcrumb title", "default": "Kundli Report" },
+    { "type": "text", "id": "hero_title", "label": "Left panel title", "default": "Your Personal" },
+    { "type": "text", "id": "hero_italic", "label": "Left panel italic word", "default": "Kundli Report" },
+    { "type": "textarea", "id": "hero_sub", "label": "Left panel subtitle" },
+    { "type": "text", "id": "delivery_title", "label": "Delivery badge title", "default": "Email Delivery in 1-2 Days" },
+    { "type": "text", "id": "delivery_sub", "label": "Delivery badge subtitle", "default": "Our astrologers personally prepare every report" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "default": "+91 98765 43210" },
+    { "type": "header", "content": "Report 1 — Kundli" },
+    { "type": "text", "id": "r1_name", "label": "Report 1 name", "default": "Kundli Report" },
+    { "type": "textarea", "id": "r1_desc", "label": "Report 1 description" },
+    { "type": "text", "id": "r1_price", "label": "Report 1 display price", "default": "₹499" },
+    { "type": "text", "id": "r1_price_num", "label": "Report 1 numeric price", "default": "499" },
+    { "type": "header", "content": "Report 2 — Gemstone" },
+    { "type": "text", "id": "r2_name", "label": "Report 2 name", "default": "Gemstone Report" },
+    { "type": "textarea", "id": "r2_desc", "label": "Report 2 description" },
+    { "type": "text", "id": "r2_price", "label": "Report 2 display price", "default": "₹399" },
+    { "type": "text", "id": "r2_price_num", "label": "Report 2 numeric price", "default": "399" },
+    { "type": "header", "content": "Report 3 — Lal Kitaab" },
+    { "type": "text", "id": "r3_name", "label": "Report 3 name", "default": "Lal Kitaab Report" },
+    { "type": "textarea", "id": "r3_desc", "label": "Report 3 description" },
+    { "type": "text", "id": "r3_price", "label": "Report 3 display price", "default": "₹349" },
+    { "type": "text", "id": "r3_price_num", "label": "Report 3 numeric price", "default": "349" },
+    { "type": "header", "content": "Report 4 — Career" },
+    { "type": "text", "id": "r4_name", "label": "Report 4 name", "default": "Career & Finance Report" },
+    { "type": "textarea", "id": "r4_desc", "label": "Report 4 description" },
+    { "type": "text", "id": "r4_price", "label": "Report 4 display price", "default": "₹449" },
+    { "type": "text", "id": "r4_price_num", "label": "Report 4 numeric price", "default": "449" },
+    { "type": "header", "content": "Report 5 — Marriage" },
+    { "type": "text", "id": "r5_name", "label": "Report 5 name", "default": "Marriage & Compatibility" },
+    { "type": "textarea", "id": "r5_desc", "label": "Report 5 description" },
+    { "type": "text", "id": "r5_price", "label": "Report 5 display price", "default": "₹449" },
+    { "type": "text", "id": "r5_price_num", "label": "Report 5 numeric price", "default": "449" },
+    { "type": "header", "content": "Report 6 — Bundle" },
+    { "type": "text", "id": "r6_name", "label": "Report 6 name", "default": "Full Life Report (Bundle)" },
+    { "type": "textarea", "id": "r6_desc", "label": "Report 6 description" },
+    { "type": "text", "id": "r6_price", "label": "Report 6 display price", "default": "₹999" },
+    { "type": "text", "id": "r6_price_num", "label": "Report 6 numeric price", "default": "999" },
+    { "type": "header", "content": "Form" },
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Enter Your Birth Details" },
+    { "type": "textarea", "id": "form_sub", "label": "Form subtitle" },
+    { "type": "text", "id": "submit_text", "label": "Submit button text", "default": "Submit Order & Proceed to Payment" },
+    { "type": "textarea", "id": "submit_note", "label": "Submit note below button", "default": "After submitting, our team will contact you on WhatsApp with payment details within 2 hours." },
+    { "type": "header", "content": "Testimonials" },
+    { "type": "text", "id": "testi_label", "label": "Section label", "default": "Real Stories" },
+    { "type": "text", "id": "testi_title", "label": "Section title", "default": "What Our Customers Say" },
+    { "type": "textarea", "id": "testi1_text", "label": "Review 1 text" },
+    { "type": "text", "id": "testi1_author", "label": "Review 1 author", "default": "Rohan Sharma" },
+    { "type": "text", "id": "testi1_detail", "label": "Review 1 detail", "default": "Kundli + Career Report · Delhi" },
+    { "type": "textarea", "id": "testi2_text", "label": "Review 2 text" },
+    { "type": "text", "id": "testi2_author", "label": "Review 2 author", "default": "Priya Mehta" },
+    { "type": "text", "id": "testi2_detail", "label": "Review 2 detail", "default": "Marriage & Compatibility Report · Mumbai" },
+    { "type": "textarea", "id": "testi3_text", "label": "Review 3 text" },
+    { "type": "text", "id": "testi3_author", "label": "Review 3 author", "default": "Vikram Singh" },
+    { "type": "text", "id": "testi3_detail", "label": "Review 3 detail", "default": "Full Life Report Bundle · Jaipur" }
+  ],
+  "presets": [{ "name": "Kundli Report Page" }]
+}
+{% endschema %}
+
+
+

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-amethyst": {
+      "type": "main-amethyst",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-amethyst"
+  ]
+}

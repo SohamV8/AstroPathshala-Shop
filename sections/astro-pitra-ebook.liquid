@@ -1,0 +1,1633 @@
+{% comment %}
+  E-Book Product Page Template - sections/main-product.liquid
+  Shopify 2.0 Compatible | Astro PathShala
+  Book: Pitra Tumhe Pukarte Hai - Guide to Pitra Dosh & Ancestral Healing
+{% endcomment %}
+
+<div class="aps-product" data-product-json="{{ product | json | escape }}" data-section-id="{{ section.id }}">
+  <div class="aps-product-container">
+    <div class="aps-product-gallery">
+      <div class="aps-product-gallery-main">
+        {%- if product.media.size > 0 -%}
+          {%- for media in product.media -%}
+            <div class="aps-product-gallery-slide {% if forloop.first %}active{% endif %}" data-media-id="{{ media.id }}">
+              {%- if media.media_type == 'image' -%}
+                <img src="{{ media | image_url: width: 800, height: 800, crop: 'center' }}"
+                     alt="{{ media.alt | default: product.title }}"
+                     width="800" height="800"
+                     loading="lazy">
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="aps-product-gallery-slide active">
+            <div class="aps-product-placeholder">पितृ तुम्हें पुकारते हैं</div>
+          </div>
+        {%- endif -%}
+      </div>
+      
+      {%- if product.media.size > 1 -%}
+        <div class="aps-product-thumbnails">
+          {%- for media in product.media -%}
+            <div class="aps-product-thumbnail {% if forloop.first %}active{% endif %}" data-media-id="{{ media.id }}">
+              {%- if media.media_type == 'image' -%}
+                <img src="{{ media | image_url: width: 100, height: 100, crop: 'center' }}"
+                     alt="{{ media.alt | default: product.title }}"
+                     width="100" height="100"
+                     loading="lazy">
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="aps-product-info">
+      <div class="aps-product-breadcrumbs">
+        <a href="{{ routes.root_url }}">Home</a> / 
+        <a href="{{ routes.collections_url | append: '/e-books' }}">E-Books</a> / 
+        <span>पितृ तुम्हें पुकारते हैं</span>
+      </div>
+      
+      <h1 class="aps-product-title">पितृ तुम्हें पुकारते हैं</h1>
+      <div class="aps-product-subtitle">Pitra Tumhe Pukarte Hai: Complete Guide to Pitra Dosh & Ancestral Healing</div>
+      
+      <div class="aps-product-price">
+        <span class="aps-product-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+          <span class="aps-product-price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+          <span class="aps-product-price-save">Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}</span>
+        {%- endif -%}
+      </div>
+      
+      <div class="aps-product-stock">
+        {%- if product.selected_or_first_available_variant.available -%}
+          <span class="aps-stock-badge in-stock">● Instant Download Available</span>
+        {%- else -%}
+          <span class="aps-stock-badge out-of-stock">● Currently Unavailable</span>
+        {%- endif -%}
+      </div>
+      
+      <div class="aps-product-variants">
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="aps-variant-option" data-option-name="{{ option.name }}">
+              <label class="aps-variant-label">{{ option.name }}</label>
+              <div class="aps-variant-values">
+                {%- for value in option.values -%}
+                  <button class="aps-variant-value {% if option.selected_value == value %}active{% endif %}"
+                          data-option-index="{{ forloop.parentloop.index0 }}"
+                          data-value="{{ value }}">
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+      </div>
+      
+      <div class="aps-product-quantity">
+        <label class="aps-quantity-label">Quantity</label>
+        <div class="aps-quantity-selector">
+          <button class="aps-quantity-btn minus" type="button" aria-label="Decrease quantity">−</button>
+          <input type="number" class="aps-quantity-input" value="1" min="1" max="10" step="1" id="quantity-input">
+          <button class="aps-quantity-btn plus" type="button" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+      
+      <div class="aps-product-actions">
+        <button class="aps-add-to-cart-btn" data-add-to-cart id="add-to-cart-btn">
+          <span class="btn-text">Add to Cart</span>
+          <span class="btn-icon">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+        </button>
+        <button class="aps-buy-now-btn" data-buy-now id="buy-now-btn">
+          Buy Now
+        </button>
+      </div>
+      
+      <div class="aps-product-badges">
+        <div class="aps-badge-item">
+          <span class="badge-icon">{{ 'icon-lightning-bolt.svg' | inline_asset_content }}</span>
+          <span class="badge-text">Instant Download</span>
+        </div>
+        <div class="aps-badge-item">
+          <span class="badge-icon">{{ 'icon-clipboard.svg' | inline_asset_content }}</span>
+          <span class="badge-text">Read on Any Device</span>
+        </div>
+        <div class="aps-badge-item">
+          <span class="badge-icon">{{ 'icon-lock.svg' | inline_asset_content }}</span>
+          <span class="badge-text">Secure Payment</span>
+        </div>
+        <div class="aps-badge-item">
+          <span class="badge-icon">{{ 'icon-heart.svg' | inline_asset_content }}</span>
+          <span class="badge-text">Ancestral Blessings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="aps-product-details">
+    <div class="aps-details-tabs">
+      <button class="aps-tab-btn active" data-tab="about">About This Book</button>
+      <button class="aps-tab-btn" data-tab="benefits">Benefits of Reading</button>
+      <button class="aps-tab-btn" data-tab="author">About the Author</button>
+      <button class="aps-tab-btn" data-tab="instructions">How to Access</button>
+    </div>
+    
+    <div class="aps-tab-content active" data-tab-content="about">
+      <h3>पितृ तुम्हें पुकारते हैं</h3>
+      <h4>Pitra Tumhe Pukarte Hai: Complete Guide to Pitra Dosh & Ancestral Healing</h4>
+      
+      <div class="aps-metafield-content">
+        {%- assign product_description = product.metafields.custom.product_description -%}
+        {%- if product_description != blank -%}
+          {{ product_description }}
+        {%- else -%}
+          <p><strong>पितृ तुम्हें पुकारते हैं</strong> - एक अनोखी और दुर्लभ पुस्तक जो पितृ दोष के रहस्यों को उजागर करती है और पूर्वजों से जुड़ी समस्याओं के समाधान प्रदान करती है। यह पुस्तक उन सभी के लिए है जो अपने पूर्वजों की आत्माओं की शांति चाहते हैं और पारिवारिक कष्टों से मुक्ति पाना चाहते हैं।</p>
+          
+          <p>In Vedic astrology, Pitra Dosh is one of the most significant and often misunderstood afflictions that can affect multiple generations of a family. This comprehensive guide, written in simple Hindi with Sanskrit mantras, provides deep insights into the nature of ancestral debts and practical remedies to appease them.</p>
+          
+          <p>Whether you're experiencing unexplained obstacles in life, facing repeated failures, dealing with family conflicts, or seeking to honor your ancestors, this book offers the wisdom and tools you need for ancestral healing.</p>
+          
+          <div style="background: var(--cream); padding: 20px; border-left: 3px solid var(--gold); margin: 24px 0;">
+            <p style="margin: 0; font-style: italic;"><strong>Key Insight:</strong> "Pitra Dosh is not a curse but an invitation from your ancestors to acknowledge their existence and fulfill their unfulfilled desires. When you heal your ancestors, you heal your lineage and open doors to ancestral blessings."</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+    
+    <div class="aps-tab-content" data-tab-content="benefits">
+      <h3>Benefits of Reading This Book</h3>
+      <div class="aps-metafield-content">
+        {%- assign benefits = product.metafields.custom.benefits -%}
+        {%- if benefits != blank -%}
+          {{ benefits }}
+        {%- else -%}
+          <p>By studying this sacred text, you will gain profound insights and practical solutions for ancestral healing:</p>
+          
+          <ul>
+            <li><strong>Understand Pitra Dosh:</strong> Learn what Pitra Dosh really means, how it forms in your birth chart, and why it affects different family members differently</li>
+            
+            <li><strong>Identify Ancestral Issues:</strong> Discover how to recognize if you're suffering from Pitra Dosh through specific life patterns, recurring problems, and family history</li>
+            
+            <li><strong>Simple Remedies:</strong> Get step-by-step instructions for powerful yet simple remedies including Shradh, Tarpan, Pind Daan, and daily practices that can be done at home</li>
+            
+            <li><strong>Mantras & Rituals:</strong> Access authentic Sanskrit mantras with Hindi translations and detailed ritual procedures for appeasing ancestors</li>
+            
+            <li><strong>Festival Observances:</strong> Learn about Pitru Paksha, Amavasya, and other auspicious days for ancestor worship with complete ritual guides</li>
+            
+            <li><strong>Family Healing:</strong> Understand how Pitra Dosh affects family dynamics, relationships, and the birth of children, and how to break negative patterns</li>
+            
+            <li><strong>Financial Prosperity:</strong> Discover the connection between ancestral blessings and financial stability, and how to remove obstacles to wealth</li>
+            
+            <li><strong>Spiritual Growth:</strong> Learn how honoring ancestors accelerates spiritual evolution and brings peace to the entire family lineage</li>
+            
+            <li><strong>Real Case Studies:</strong> Read real-life examples of people who transformed their lives through Pitra Dosh remedies and ancestral healing</li>
+            
+            <li><strong>Preventive Practices:</strong> Discover how to maintain a healthy relationship with ancestors and prevent Pitra Dosh from affecting future generations</li>
+          </ul>
+          
+          <div style="background: linear-gradient(135deg, #FDF8E8 0%, transparent 100%); padding: 24px; border-radius: 4px; margin: 24px 0; text-align: center;">
+            <p style="margin: 0; font-size: 18px; font-family:var(--font-heading);"><strong>"When ancestors are at peace, blessings flow effortlessly into your life."</strong></p>
+            <p style="margin: 8px 0 0; font-size: 12px;">— Ancient Vedic Wisdom</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+    
+    <div class="aps-tab-content" data-tab-content="author">
+      <h3>About the Author</h3>
+      <div class="aps-metafield-content">
+        <div class="aps-author-info">
+          <div class="aps-author-image">
+            {%- if section.settings.author_image != blank -%}
+              {{
+                section.settings.author_image
+                | image_url: width: 480
+                | image_tag: loading: 'lazy', class: 'aps-author-image-tag', alt: 'Gurudev Sunil Vashist'
+              }}
+            {%- else -%}
+              <div class="aps-author-image-placeholder">SV</div>
+            {%- endif -%}
+          </div>
+          <div class="aps-author-details">
+            <h4>Gurudev Sunil Vashist</h4>
+            <p>Teaching people the science of Astrology for more than 2 decades, Gurudev Sunil Vashist is a seasoned astrologer and the master of various astrological practices like Vedic Astrology, Lal Kitab Astrology, Palmistry, Vastu, and many more.</p>
+            <p>18 years ago, Gurudev established "Astro Pathshala" with the aim of providing high-quality astrological education to every person who wishes to understand the secrets hidden in the planets and stars with the help of the ancient science of Jyotish.</p>
+            <p>With the vision of providing affordable education to all and making people aware of the secrets hidden among the planetary positions in their horoscopes, he is continuously working towards building a large community of students and teachers to help them expand their knowledge about the world of Astrology.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="aps-tab-content" data-tab-content="instructions">
+      <h3>How to Access Your E-Book</h3>
+      <div class="aps-metafield-content">
+        {%- assign instructions = product.metafields.custom.instructions -%}
+        {%- if instructions != blank -%}
+          {{ instructions }}
+        {%- else -%}
+          <p>Getting your copy of "Pitra Tumhe Pukarte Hai" is simple and instant:</p>
+          
+          <ol>
+            <li><strong>Complete Purchase:</strong> Add the e-book to your cart and complete the secure checkout process</li>
+            <li><strong>Instant Download:</strong> Immediately after payment confirmation, you'll receive a download link on the order confirmation page</li>
+            <li><strong>Email Delivery:</strong> A download link will also be sent to your registered email address within minutes</li>
+            <li><strong>Access Anywhere:</strong> Download the PDF file to your computer, tablet, or smartphone</li>
+            <li><strong>Read Anytime:</strong> Open the file using any PDF reader (Adobe Acrobat, Apple Books, Google Play Books, etc.)</li>
+          </ol>
+          
+          <h4 style="margin-top: 24px;">Book Details:</h4>
+          <ul>
+            <li><strong>Format:</strong> PDF Digital E-Book</li>
+            <li><strong>Pages:</strong> 186 Pages</li>
+            <li><strong>Language:</strong> Hindi (with Sanskrit Mantras)</li>
+            <li><strong>File Size:</strong> 4.2 MB</li>
+            <li><strong>Compatibility:</strong> All devices with PDF reader</li>
+          </ul>
+          
+          <div style="background: #FFF5E6; padding: 20px; border-radius: 4px; margin: 24px 0;">
+            <p style="margin: 0; color: var(--saffron);"><strong>Special Note:</strong> This e-book contains sacred mantras and ritual procedures. It is recommended to read with reverence and apply the remedies with faith and devotion for best results.</p>
+          </div>
+          
+          <h4 style="margin-top: 24px;">Need Help?</h4>
+          <p>If you don't receive your download link within 10 minutes of purchase, please contact our support team at <strong>support@astropathshala.com</strong> with your order number, and we'll assist you immediately.</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  
+  {%- if section.settings.show_reviews -%}
+    <div class="aps-product-reviews">
+      <h3 class="aps-reviews-title">Reader Testimonials</h3>
+      <div class="aps-reviews-grid">
+        {%- assign review_metafield = product.metafields.custom.reviews -%}
+        {%- if review_metafield != blank and review_metafield.value != blank and review_metafield.value.size > 0 -%}
+          {%- for review in review_metafield.value -%}
+            <div class="aps-review-card">
+              <div class="aps-review-stars">
+                {%- assign rating = review.rating | default: 5 -%}
+                {%- assign full_stars = rating | floor -%}
+                {%- for i in (1..full_stars) -%}★{%- endfor -%}
+                {%- assign empty_stars = 5 | minus: full_stars -%}
+                {%- for i in (1..empty_stars) -%}☆{%- endfor -%}
+              </div>
+              <p class="aps-review-text">"{{ review.content | default: review.text | default: 'This book transformed my understanding of Pitra Dosh. The remedies are practical and effective.' }}"</p>
+              <div class="aps-review-author">— {{ review.author | default: 'Verified Reader' }}</div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="aps-review-card">
+            <div class="aps-review-stars">★★★★★</div>
+            <p class="aps-review-text">"After following the remedies from this book for 3 months, I've seen remarkable improvements in my family's peace and prosperity. Our constant financial struggles have reduced significantly."</p>
+            <div class="aps-review-author">— Rajesh Kumar, Patna</div>
+          </div>
+          <div class="aps-review-card">
+            <div class="aps-review-stars">★★★★★</div>
+            <p class="aps-review-text">"Finally a book that explains Pitra Dosh in simple language with clear remedies. The mantras and rituals are authentic and easy to follow. Highly recommended for every Hindu household."</p>
+            <div class="aps-review-author">— Meera Sharma, Delhi</div>
+          </div>
+          <div class="aps-review-card">
+            <div class="aps-review-stars">★★★★★</div>
+            <p class="aps-review-text">"I was facing unexplained obstacles in my career and marriage. This book helped me understand the ancestral issues and perform proper remedies. My life has changed completely."</p>
+            <div class="aps-review-author">— Anjali Singh, Mumbai</div>
+          </div>
+          <div class="aps-review-card">
+            <div class="aps-review-stars">★★★★★</div>
+            <p class="aps-review-text">"A must-read for anyone interested in Vedic astrology and ancestral healing. The depth of knowledge shared is invaluable. Worth every rupee and more."</p>
+            <div class="aps-review-author">— Dr. Suresh Joshi, Varanasi</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+  
+  {%- if section.settings.show_faqs -%}
+    <div class="aps-product-faqs">
+      <h3 class="aps-faqs-title">Frequently Asked Questions</h3>
+      <div class="aps-faqs-accordion">
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">What is Pitra Dosh and how do I know if I have it?</button>
+          <div class="aps-faq-answer">Pitra Dosh is an ancestral affliction in Vedic astrology that occurs when ancestors are not at peace. Common signs include repeated obstacles in life, delay in marriage, difficulty in having children, financial instability, unexplained health issues, and recurring failures despite efforts. This book provides detailed guidance on identifying Pitra Dosh from your birth chart.</div>
+        </div>
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">Is this book suitable for beginners?</button>
+          <div class="aps-faq-answer">Yes, absolutely! This book is written in simple Hindi with clear explanations suitable for beginners. Even if you have no prior knowledge of astrology, you can understand the concepts and perform the recommended remedies with faith and devotion.</div>
+        </div>
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">Can the remedies be performed at home?</button>
+          <div class="aps-faq-answer">Yes, most remedies mentioned in this book can be performed at home with basic items like water, black sesame seeds, flowers, and incense. The book provides detailed step-by-step instructions for each remedy.</div>
+        </div>
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">How long does it take to see results?</button>
+          <div class="aps-faq-answer">Results vary depending on the severity of Pitra Dosh and the regularity of remedies. Some people experience positive changes within a few weeks, while for others it may take several months of consistent practice. The book explains how to measure progress and maintain spiritual discipline.</div>
+        </div>
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">How will I receive the book after purchase?</button>
+          <div class="aps-faq-answer">Immediately after payment confirmation, you'll receive a download link on the order confirmation page and via email. The book is in PDF format and can be downloaded instantly to your computer, tablet, or smartphone.</div>
+        </div>
+        <div class="aps-faq-item">
+          <button class="aps-faq-question">Can I get a refund if I'm not satisfied?</button>
+          <div class="aps-faq-answer">Yes, we offer a 30-day money-back guarantee. If you're not completely satisfied with your purchase, contact our support team for a full refund.</div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+  
+  <div class="aps-product-certification">
+    <div class="aps-certification-badges">
+      <div class="aps-cert-badge">
+        <span class="cert-icon">✓</span>
+        <span class="cert-text">Expert Authored</span>
+      </div>
+      <div class="aps-cert-badge">
+        <span class="cert-icon">{{ 'icon-clipboard.svg' | inline_asset_content }}</span>
+        <span class="cert-text">186 Pages</span>
+      </div>
+      <div class="aps-cert-badge">
+        <span class="cert-icon">{{ 'icon-star.svg' | inline_asset_content }}</span>
+        <span class="cert-text">Authentic Mantras</span>
+      </div>
+      <div class="aps-cert-badge">
+        <span class="cert-icon">{{ 'icon-heart.svg' | inline_asset_content }}</span>
+        <span class="cert-text">Ancestral Blessings</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="aps-sticky-cart">
+  <div class="aps-sticky-cart-container">
+    <div class="aps-sticky-cart-info">
+      <span class="aps-sticky-title">पितृ तुम्हें पुकारते हैं</span>
+      <span class="aps-sticky-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+    </div>
+    <button class="aps-sticky-add-btn" id="sticky-add-btn">
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<style>
+:root {
+  --ivory: #FFFDF5;
+  --black: #1A1208;
+  --gold: #B8860B;
+  --saffron: #D4860A;
+  --gold-lt: #C9A84C;
+  --gold-pale: #F5E6C8;
+  --cream: #FDF8E8;
+  --border: #E8D48A;
+  --muted: #7A6535;
+}
+
+.aps-product {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background:transparent;
+  font-family:var(--font-body);
+}
+
+.aps-product-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.aps-product-gallery {
+  position: sticky;
+  top: 100px;
+}
+
+.aps-product-gallery-main {
+  position: relative;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.aps-product-gallery-slide {
+  display: none;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+
+.aps-product-gallery-slide.active {
+  display: block;
+}
+
+.aps-product-gallery-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aps-product-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  text-align: center;
+  background: var(--cream);
+  font-family:var(--font-heading);
+  color: var(--gold);
+}
+
+.aps-product-thumbnails {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.aps-product-thumbnail {
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.aps-product-thumbnail.active {
+  border-color: var(--gold);
+}
+
+.aps-product-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aps-product-info {
+  padding: 0 24px;
+}
+
+.aps-product-breadcrumbs {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.aps-product-breadcrumbs a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.aps-product-breadcrumbs a:hover {
+  color: var(--gold);
+}
+
+.aps-product-title {
+  font-family:var(--font-heading);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.aps-product-subtitle {
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.aps-product-price {
+  margin-bottom: 20px;
+}
+
+.aps-product-price-current {
+  font-family:var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--saffron);
+}
+
+.aps-product-price-compare {
+  font-size: 16px;
+  color: #B0A060;
+  text-decoration: line-through;
+  margin-left: 12px;
+}
+
+.aps-product-price-save {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--ivory);
+  background: var(--saffron);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-left: 12px;
+}
+
+.aps-product-stock {
+  margin-bottom: 24px;
+}
+
+.aps-stock-badge {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.aps-stock-badge.in-stock {
+  color: #2E7D32;
+}
+
+.aps-stock-badge.out-of-stock {
+  color: #C62828;
+}
+
+.aps-product-variants {
+  margin-bottom: 24px;
+}
+
+.aps-variant-option {
+  margin-bottom: 20px;
+}
+
+.aps-variant-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aps-variant-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.aps-variant-value {
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--black);
+  font-size: 14px;
+  font-family:var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 2px;
+}
+
+.aps-variant-value.active {
+  background: var(--gold);
+  color: var(--ivory);
+  border-color: var(--gold);
+}
+
+.aps-variant-value:hover:not(.active) {
+  border-color: var(--gold);
+}
+
+.aps-product-quantity {
+  margin-bottom: 24px;
+}
+
+.aps-quantity-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aps-quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 140px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background:transparent;
+}
+
+.aps-quantity-btn {
+  width: 40px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--black);
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aps-quantity-btn:hover {
+  color: var(--gold);
+}
+
+.aps-quantity-input {
+  width: 60px;
+  height: 44px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  font-size: 16px;
+  font-family:var(--font-body);
+  background: transparent;
+  color: var(--black);
+}
+
+.aps-quantity-input:focus {
+  outline: none;
+}
+
+.aps-product-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.aps-add-to-cart-btn,
+.aps-buy-now-btn {
+  flex: 1;
+  padding: 14px 24px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family:var(--font-body);
+  border: none;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.aps-add-to-cart-btn {
+  background: var(--black);
+  color: var(--ivory);
+}
+
+.aps-add-to-cart-btn:hover {
+  background: var(--gold);
+}
+
+.aps-buy-now-btn {
+  background: transparent;
+  color: var(--black);
+  border: 1.5px solid var(--black);
+}
+
+.aps-buy-now-btn:hover {
+  background: var(--black);
+  color: var(--ivory);
+}
+
+.aps-product-badges {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.aps-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.badge-icon {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-icon svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.aps-product-details {
+  margin-top: 64px;
+}
+
+.aps-details-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.aps-tab-btn {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family:var(--font-body);
+  position: relative;
+}
+
+.aps-tab-btn.active {
+  color: var(--gold);
+}
+
+.aps-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+
+.aps-tab-content {
+  display: none;
+  padding: 20px 0;
+}
+
+.aps-tab-content.active {
+  display: block;
+}
+
+.aps-tab-content h3,
+.aps-tab-content h4 {
+  font-family:var(--font-heading);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.aps-tab-content p,
+.aps-tab-content li {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.aps-tab-content ul,
+.aps-tab-content ol {
+  padding-left: 24px;
+  margin-bottom: 20px;
+}
+
+.aps-author-info {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: linear-gradient(135deg, transparent 0%, #FDF8E8 100%);
+}
+
+.aps-author-image {
+  width: 170px;
+  min-width: 170px;
+}
+
+.aps-author-image-tag {
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.aps-author-image-placeholder {
+  width: 170px;
+  height: 170px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--gold);
+  color: var(--ivory);
+  font-family:var(--font-heading);
+  font-size: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aps-author-details {
+  flex: 1;
+}
+
+.aps-author-details h4 {
+  margin-bottom: 14px;
+  font-family:var(--font-heading);
+  font-size: 32px;
+  color: var(--black);
+}
+
+.aps-author-details p {
+  margin-bottom: 14px;
+  line-height: 1.9;
+}
+
+.aps-author-details p:last-child {
+  margin-bottom: 0;
+}
+
+.aps-product-reviews {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.aps-reviews-title,
+.aps-faqs-title {
+  font-family:var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--black);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.aps-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.aps-review-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  transition: border-color 0.2s;
+}
+
+.aps-review-card:hover {
+  border-color: var(--gold);
+}
+
+.aps-review-stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.aps-review-text {
+  font-size: 15px;
+  color: var(--black);
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.aps-review-author {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aps-product-faqs {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.aps-faqs-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.aps-faq-item {
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.aps-faq-question {
+  width: 100%;
+  padding: 20px 24px;
+  background: var(--cream);
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family:var(--font-body);
+  position: relative;
+}
+
+.aps-faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.aps-faq-item.active .aps-faq-question::after {
+  content: '-';
+}
+
+.aps-faq-answer {
+  display: none;
+  padding: 0 24px 20px;
+  background:transparent;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.aps-faq-item.active .aps-faq-answer {
+  display: block;
+}
+
+.aps-product-certification {
+  margin-top: 64px;
+  padding: 48px 24px;
+  background: var(--cream);
+  border-radius: 4px;
+}
+
+.aps-certification-badges {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.aps-cert-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.cert-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:transparent;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-size: 24px;
+  color: var(--gold);
+}
+
+.cert-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.cert-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  letter-spacing: 0.5px;
+}
+
+.aps-sticky-cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background:transparent;
+  border-top: 1px solid var(--border);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: none;
+}
+
+.aps-sticky-cart.visible {
+  transform: translateY(0);
+  display: block;
+}
+
+.aps-sticky-cart-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.aps-sticky-cart-info {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.aps-sticky-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.aps-sticky-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--saffron);
+}
+
+.aps-sticky-add-btn {
+  padding: 10px 32px;
+  background: var(--black);
+  color: var(--ivory);
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family:var(--font-body);
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+
+.aps-sticky-add-btn:hover {
+  background: var(--gold);
+}
+
+@media (max-width: 1024px) {
+  .aps-product-container {
+    gap: 32px;
+  }
+  
+  .aps-product-info {
+    padding: 0;
+  }
+  
+  .aps-details-tabs {
+    gap: 4px;
+  }
+  
+  .aps-tab-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .aps-product {
+    padding: 24px 16px;
+  }
+  
+  .aps-product-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .aps-product-gallery {
+    position: relative;
+    top: 0;
+  }
+  
+  .aps-product-title {
+    font-size: 28px;
+  }
+  
+  .aps-details-tabs {
+    flex-direction: column;
+    border-bottom: none;
+  }
+  
+  .aps-tab-btn {
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .aps-tab-btn.active::after {
+    display: none;
+  }
+  
+  .aps-tab-btn.active {
+    background: var(--gold);
+    color: var(--ivory);
+  }
+  
+  .aps-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aps-certification-badges {
+    gap: 24px;
+  }
+  
+  .aps-author-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .aps-author-image,
+  .aps-author-image-tag,
+  .aps-author-image-placeholder {
+    width: 100%;
+    min-width: 0;
+    max-width: 260px;
+  }
+  
+  .aps-sticky-cart-container {
+    padding: 12px 16px;
+  }
+  
+  .aps-sticky-title {
+    font-size: 12px;
+  }
+  
+  .aps-sticky-price {
+    font-size: 14px;
+  }
+  
+  .aps-sticky-add-btn {
+    padding: 8px 20px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get DOM elements
+  const quantityInput = document.getElementById('quantity-input');
+  const minusBtn = document.querySelector('.aps-quantity-btn.minus');
+  const plusBtn = document.querySelector('.aps-quantity-btn.plus');
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+  const buyNowBtn = document.getElementById('buy-now-btn');
+  const stickyAddBtn = document.getElementById('sticky-add-btn');
+  
+  // Get product data
+  const productDataElement = document.querySelector('.aps-product');
+  let productData = null;
+  let currentVariant = null;
+  
+  if (productDataElement && productDataElement.dataset.productJson) {
+    try {
+      productData = JSON.parse(productDataElement.dataset.productJson);
+      currentVariant = productData.variants[0];
+    } catch(e) {
+      console.log('Error parsing product JSON:', e);
+    }
+  }
+  
+  // Quantity selector functionality
+  function updateQuantity(value) {
+    let newValue = value;
+    const min = parseInt(quantityInput.min) || 1;
+    const max = parseInt(quantityInput.max) || 99;
+    
+    if (newValue < min) newValue = min;
+    if (newValue > max) newValue = max;
+    
+    quantityInput.value = newValue;
+  }
+  
+  if (minusBtn && quantityInput) {
+    minusBtn.addEventListener('click', function() {
+      let currentValue = parseInt(quantityInput.value);
+      updateQuantity(currentValue - 1);
+    });
+  }
+  
+  if (plusBtn && quantityInput) {
+    plusBtn.addEventListener('click', function() {
+      let currentValue = parseInt(quantityInput.value);
+      updateQuantity(currentValue + 1);
+    });
+  }
+  
+  if (quantityInput) {
+    quantityInput.addEventListener('change', function() {
+      let value = parseInt(this.value);
+      if (isNaN(value)) value = 1;
+      updateQuantity(value);
+    });
+  }
+  
+  // Add to Cart functionality
+  function addToCart() {
+    const quantity = parseInt(quantityInput.value) || 1;
+    
+    if (!currentVariant) {
+      console.error('No variant found');
+      return;
+    }
+    
+    // Build cart item data
+    const cartItem = {
+      id: currentVariant.id,
+      quantity: quantity
+    };
+    
+    // Show loading state
+    if (addToCartBtn) {
+      addToCartBtn.textContent = 'Adding...';
+      addToCartBtn.disabled = true;
+    }
+    
+    if (stickyAddBtn) {
+      stickyAddBtn.textContent = 'Adding...';
+      stickyAddBtn.disabled = true;
+    }
+    
+    // Add to cart via Shopify AJAX API
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(cartItem)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Show success message
+      showNotification('Added to cart successfully!', 'success');
+      
+      // Update cart count in header (if exists)
+      updateCartCount();
+      
+      // Reset button text
+      if (addToCartBtn) {
+        addToCartBtn.textContent = 'Add to Cart';
+        addToCartBtn.disabled = false;
+      }
+      if (stickyAddBtn) {
+        stickyAddBtn.textContent = 'Add to Cart';
+        stickyAddBtn.disabled = false;
+      }
+    })
+    .catch(error => {
+      console.error('Error adding to cart:', error);
+      showNotification('Error adding to cart. Please try again.', 'error');
+      
+      // Reset button text
+      if (addToCartBtn) {
+        addToCartBtn.textContent = 'Add to Cart';
+        addToCartBtn.disabled = false;
+      }
+      if (stickyAddBtn) {
+        stickyAddBtn.textContent = 'Add to Cart';
+        stickyAddBtn.disabled = false;
+      }
+    });
+  }
+  
+  // Buy Now functionality
+  function buyNow() {
+    const quantity = parseInt(quantityInput.value) || 1;
+    
+    if (!currentVariant) {
+      console.error('No variant found');
+      return;
+    }
+    
+    // Build cart item data
+    const cartItem = {
+      id: currentVariant.id,
+      quantity: quantity
+    };
+    
+    // Show loading state
+    if (buyNowBtn) {
+      buyNowBtn.textContent = 'Processing...';
+      buyNowBtn.disabled = true;
+    }
+    
+    // Add to cart and redirect to checkout
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(cartItem)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Redirect to checkout
+      window.location.href = '/checkout';
+    })
+    .catch(error => {
+      console.error('Error processing buy now:', error);
+      showNotification('Error processing your request. Please try again.', 'error');
+      
+      // Reset button text
+      if (buyNowBtn) {
+        buyNowBtn.textContent = 'Buy Now';
+        buyNowBtn.disabled = false;
+      }
+    });
+  }
+  
+  // Update cart count in header
+  function updateCartCount() {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        const cartCountElements = document.querySelectorAll('.aps-cart-btn');
+        cartCountElements.forEach(element => {
+          element.textContent = `Cart (${cart.item_count})`;
+        });
+      })
+      .catch(error => console.error('Error updating cart count:', error));
+  }
+  
+  // Show notification
+  function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `aps-notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: ${type === 'success' ? '#2E7D32' : '#C62828'};
+      color: white;
+      border-radius: 4px;
+      z-index: 10000;
+      font-family:var(--font-body);
+      font-size: 14px;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 3000);
+  }
+  
+  // Add CSS animations for notification
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Attach event listeners
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', addToCart);
+  }
+  
+  if (buyNowBtn) {
+    buyNowBtn.addEventListener('click', buyNow);
+  }
+  
+  if (stickyAddBtn) {
+    stickyAddBtn.addEventListener('click', addToCart);
+  }
+  
+  // Product gallery thumbnails
+  const thumbnails = document.querySelectorAll('.aps-product-thumbnail');
+  const mainSlides = document.querySelectorAll('.aps-product-gallery-slide');
+  
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', function() {
+      const mediaId = this.dataset.mediaId;
+      
+      thumbnails.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      mainSlides.forEach(slide => {
+        if (slide.dataset.mediaId === mediaId) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+    });
+  });
+  
+  // Tab functionality
+  const tabBtns = document.querySelectorAll('.aps-tab-btn');
+  const tabContents = document.querySelectorAll('.aps-tab-content');
+  
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const tabId = this.dataset.tab;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      tabContents.forEach(content => {
+        if (content.dataset.tabContent === tabId) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    });
+  });
+  
+  // FAQ accordion
+  const faqItems = document.querySelectorAll('.aps-faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.aps-faq-question');
+    question.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+  
+  // Sticky cart
+  const stickyCart = document.querySelector('.aps-sticky-cart');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 600) {
+      stickyCart.classList.add('visible');
+    } else {
+      stickyCart.classList.remove('visible');
+    }
+  });
+  
+  // Variant selection
+  const variantOptions = document.querySelectorAll('.aps-variant-value');
+  
+  variantOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const optionIndex = this.dataset.optionIndex;
+      const optionValue = this.dataset.value;
+      const optionContainer = this.closest('.aps-variant-option');
+      
+      // Update active state
+      optionContainer.querySelectorAll('.aps-variant-value').forEach(opt => {
+        opt.classList.remove('active');
+      });
+      this.classList.add('active');
+      
+      // Collect selected values
+      const selectedValues = {};
+      document.querySelectorAll('.aps-variant-option').forEach(opt => {
+        const selected = opt.querySelector('.aps-variant-value.active');
+        if (selected) {
+          const optName = opt.dataset.optionName;
+          selectedValues[optName] = selected.dataset.value;
+        }
+      });
+      
+      if (productData) {
+        // Find matching variant
+        const matchingVariant = productData.variants.find(variant => {
+          return variant.options.every((opt, idx) => {
+            const optionName = productData.options[idx];
+            return opt === selectedValues[optionName];
+          });
+        });
+        
+        if (matchingVariant) {
+          currentVariant = matchingVariant;
+          
+          // Update price
+          const priceElement = document.querySelector('.aps-product-price-current');
+          const comparePriceElement = document.querySelector('.aps-product-price-compare');
+          const saveElement = document.querySelector('.aps-product-price-save');
+          
+          if (priceElement) {
+            priceElement.textContent = formatMoney(matchingVariant.price);
+          }
+          
+          if (comparePriceElement && matchingVariant.compare_at_price > matchingVariant.price) {
+            comparePriceElement.textContent = formatMoney(matchingVariant.compare_at_price);
+            comparePriceElement.style.display = 'inline-block';
+            if (saveElement) {
+              saveElement.textContent = 'Save ' + formatMoney(matchingVariant.compare_at_price - matchingVariant.price);
+              saveElement.style.display = 'inline-block';
+            }
+          } else {
+            if (comparePriceElement) comparePriceElement.style.display = 'none';
+            if (saveElement) saveElement.style.display = 'none';
+          }
+          
+          // Update stock
+          const stockElement = document.querySelector('.aps-stock-badge');
+          if (stockElement) {
+            if (matchingVariant.available) {
+              stockElement.textContent = '● Instant Download Available';
+              stockElement.classList.add('in-stock');
+              stockElement.classList.remove('out-of-stock');
+            } else {
+              stockElement.textContent = '● Currently Unavailable';
+              stockElement.classList.add('out-of-stock');
+              stockElement.classList.remove('in-stock');
+            }
+          }
+          
+          // Update sticky cart price
+          const stickyPrice = document.querySelector('.aps-sticky-price');
+          if (stickyPrice) {
+            stickyPrice.textContent = formatMoney(matchingVariant.price);
+          }
+        }
+      }
+    });
+  });
+  
+  function formatMoney(cents) {
+    if (typeof cents !== 'number') return '₹0';
+    return '₹' + (cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Pitra Dosh E-Book Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image",
+      "label": "Author image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show reader reviews",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_faqs",
+      "label": "Show FAQs",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+
+

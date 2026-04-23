@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-peridot": {
+      "type": "main-peridot",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-peridot"
+  ]
+}

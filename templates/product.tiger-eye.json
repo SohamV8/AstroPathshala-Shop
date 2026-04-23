@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-tiger-eye": {
+      "type": "main-tiger-eye",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-tiger-eye"
+  ]
+}

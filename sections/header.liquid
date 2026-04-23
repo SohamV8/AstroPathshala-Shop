@@ -1,0 +1,114 @@
+<style>
+:root{
+  --ivory:#FFFDF5;--black:#1A1208;--gold:#B8860B;--border:#E8D48A;--muted:#7A6535;
+}
+.aps-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid var(--border);background:transparent;position:sticky;top:0;z-index:100;min-height:80px;position:relative;}
+.aps-kundli-cta{
+  background:rgba(44,32,5,0.65);padding:10px 48px;
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  flex-wrap:wrap;border-bottom:1px solid rgba(184,134,11,0.25);
+}
+.aps-kundli-cta-text{font-size:13px;color:#C9A84C;font-weight:300;}
+.aps-kundli-cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 22px;background:var(--gold);color:var(--ivory);
+  font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;
+  border-radius:2px;text-decoration:none;font-family:var(--font-body);
+  transition:background 0.2s;white-space:nowrap;flex-shrink:0;
+}
+.aps-kundli-cta-btn:hover{background:#D4860A;}
+.aps-kundli-cta-icon{display:inline-flex;align-items:center;justify-content:center;}
+.aps-kundli-cta-icon svg{width:13px;height:13px;display:block;}
+.aps-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.aps-logo img{height:68px;width:auto;display:block;object-fit:contain;}
+.aps-logo-text{font-family:var(--font-heading);font-size:22px;font-weight:500;color:var(--black);}
+.aps-nav-links{display:flex;gap:32px;list-style:none;margin:0 auto;}
+.aps-nav-links a{text-decoration:none;font-size:12px;font-weight:400;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;transition:color 0.2s;padding:28px 0;display:block;border-bottom:2px solid transparent;}
+.aps-nav-links a:hover{color:var(--black);border-bottom-color:var(--gold);}
+.aps-nav-right{display:flex;gap:16px;align-items:center;flex-shrink:0;}
+.aps-nav-icon{font-size:16px;color:var(--muted);cursor:pointer;text-decoration:none;transition:color 0.2s;}
+.aps-nav-icon:hover{color:var(--black);}
+.aps-cart-btn{background:var(--black);color:var(--ivory);border:none;padding:9px 20px;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:var(--font-body);text-decoration:none;display:inline-block;transition:background 0.2s;}
+.aps-cart-btn:hover{background:var(--gold);}
+.aps-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.aps-burger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px;}
+.aps-mob{display:none;position:absolute;top:80px;left:0;right:0;background:transparent;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 24px;z-index:99;}
+.aps-mob.open{display:block;}
+.aps-mob ul{list-style:none;}
+.aps-mob ul li{border-bottom:1px solid var(--border);}
+.aps-mob ul li a{display:block;padding:13px 0;font-size:13px;color:var(--muted);text-decoration:none;letter-spacing:1px;text-transform:uppercase;}
+@media(max-width:768px){
+  .aps-kundli-cta{padding:10px 20px;flex-direction:column;gap:10px;text-align:center;}
+  .aps-nav{padding:0 20px;min-height:68px;}
+  .aps-nav-links{display:none;}
+  .aps-burger{display:flex;}
+  .aps-logo img{height:54px;}
+  .aps-mob{top:68px;}
+}
+</style>
+
+{%- assign main_menu = linklists[section.settings.menu] -%}
+<nav class="aps-nav">
+  <a href="{{ routes.root_url }}" class="aps-logo">
+    {%- if section.settings.logo_image != blank -%}
+      {{ section.settings.logo_image | image_url: width: 240 | image_tag: style: 'height:68px;width:auto;display:block;object-fit:contain;', alt: shop.name }}
+    {%- else -%}<span class="aps-logo-text">{{ shop.name }}</span>{%- endif -%}
+  </a>
+  <ul class="aps-nav-links">
+    {%- if main_menu != blank -%}
+      {%- for link in main_menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+    {%- else -%}
+      <li><a href="{{ routes.collections_url | append: '/gemstones' }}">Gemstones</a></li>
+      <li><a href="{{ routes.collections_url | append: '/e-books' }}">E-Books</a></li>
+      <li><a href="{{ routes.collections_url | append: '/lal-kitaab' }}">Lal Kitaab</a></li>
+      <li><a href="/pages/about">About</a></li>
+      <li><a href="/blogs/news">Blog</a></li>
+    {%- endif -%}
+  </ul>
+  <div class="aps-nav-right">
+    <a href="{{ routes.search_url }}" class="aps-nav-icon" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></a>
+    <a href="{{ routes.account_url }}" class="aps-nav-icon" aria-label="Account"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    <a href="{{ routes.cart_url }}" class="aps-cart-btn">Cart ({{ cart.item_count }})</a>
+    <div class="aps-burger" onclick="document.getElementById('aps-mob').classList.toggle('open')"><span></span><span></span><span></span></div>
+  </div>
+  <div class="aps-mob" id="aps-mob">
+    <ul>
+      {%- if main_menu != blank -%}
+        {%- for link in main_menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+      {%- else -%}
+        <li><a href="{{ routes.collections_url | append: '/gemstones' }}">Gemstones</a></li>
+        <li><a href="{{ routes.collections_url | append: '/e-books' }}">E-Books</a></li>
+        <li><a href="{{ routes.collections_url | append: '/lal-kitaab' }}">Lal Kitaab</a></li>
+        <li><a href="/pages/about">About</a></li>
+        <li><a href="/blogs/news">Blog</a></li>
+      {%- endif -%}
+    </ul>
+  </div>
+</nav>
+{%- if section.settings.show_kundli_cta -%}
+<div class="aps-kundli-cta">
+  <span class="aps-kundli-cta-text">{{ section.settings.kundli_cta_text | default: 'Discover what the stars say about your life - get your personalised Kundli report' }}</span>
+  <a href="{{ section.settings.kundli_cta_link | default: '#akr-order-form' }}" class="aps-kundli-cta-btn">
+    <span class="aps-kundli-cta-icon">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+    {{ section.settings.kundli_cta_btn_text | default: 'Get Your Personalised Kundli Report' }}
+  </a>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "header", "content": "Kundli CTA Banner" },
+    { "type": "checkbox", "id": "show_kundli_cta", "label": "Show Kundli CTA banner", "default": true },
+    { "type": "text", "id": "kundli_cta_text", "label": "CTA text", "default": "Discover what the stars say about your life - get your personalised Kundli report" },
+    { "type": "text", "id": "kundli_cta_btn_text", "label": "CTA button text", "default": "Get Your Personalised Kundli Report" },
+    { "type": "url", "id": "kundli_cta_link", "label": "CTA button link" },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image" },
+    { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}
+
+
+

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-silver-brick": {
+      "type": "main-silver-brick",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-silver-brick"
+  ]
+}

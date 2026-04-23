@@ -1,0 +1,471 @@
+{% comment %}
+  Astro PathShala — General FAQ Page
+  File: sections/astro-faq.liquid
+{% endcomment %}
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#FFFDF5;--black:#1A1208;--gold:#B8860B;--saffron:#D4860A;
+  --gold-lt:#C9A84C;--gold-pale:#F5E6C8;--cream:#FDF8E8;--border:#E8D48A;
+  --muted:#7A6535;--dark:rgba(44,32,5,0.65);
+}
+.afq{font-family:var(--font-body);color:var(--black);background:transparent;}
+.afq *{box-sizing:border-box;}
+
+/* HERO */
+.afq-hero{background:var(--dark);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
+.afq-hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(184,134,11,0.07);pointer-events:none;}
+.afq-hero::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:280px;border-radius:50%;border:1px solid rgba(184,134,11,0.1);pointer-events:none;}
+.afq-hero-inner{position:relative;z-index:1;}
+.afq-hero-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:14px;display:block;}
+.afq-hero-title{font-family:var(--font-heading);font-size:60px;font-weight:500;color:var(--gold-pale);line-height:1.08;margin-bottom:18px;}
+.afq-hero-title em{font-style:italic;color:var(--gold);}
+.afq-hero-desc{font-size:15px;color:var(--gold-lt);font-weight:300;line-height:1.8;max-width:560px;margin:0 auto 36px;}
+.afq-hero-search{display:flex;max-width:480px;margin:0 auto;}
+.afq-hero-search-input{flex:1;padding:14px 20px;background:rgba(255,253,245,0.08);border:1px solid rgba(184,134,11,0.35);border-right:none;font-size:13px;font-family:var(--font-body);color:var(--gold-pale);outline:none;border-radius:2px 0 0 2px;}
+.afq-hero-search-input::placeholder{color:rgba(201,168,76,0.5);}
+.afq-hero-search-input:focus{border-color:var(--gold);}
+.afq-hero-search-btn{padding:14px 20px;background:var(--gold);border:none;font-size:13px;color:var(--ivory);cursor:pointer;border-radius:0 2px 2px 0;font-family:var(--font-body);transition:background 0.2s;}
+.afq-hero-search-btn:hover{background:var(--saffron);}
+
+/* CATEGORY TABS */
+.afq-tabs{background:transparent;border-bottom:1px solid var(--border);padding:0 48px;}
+.afq-tabs-inner{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;max-width:1100px;margin:0 auto;}
+.afq-tabs-inner::-webkit-scrollbar{display:none;}
+.afq-tab-btn{padding:18px 24px;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;border:none;background:none;font-family:var(--font-body);border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
+.afq-tab-btn:hover{color:var(--black);}
+.afq-tab-btn.active{color:var(--black);border-bottom-color:var(--gold);}
+
+/* MAIN FAQ LAYOUT */
+.afq-main{padding:64px 48px;max-width:1100px;margin:0 auto;}
+.afq-layout{display:grid;grid-template-columns:240px 1fr;gap:52px;align-items:start;}
+
+/* SIDEBAR */
+.afq-sidebar{position:sticky;top:20px;}
+.afq-sidebar-title{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.afq-sidebar-links{display:flex;flex-direction:column;gap:4px;}
+.afq-sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:3px;font-size:13px;color:var(--muted);cursor:pointer;transition:background 0.2s,color 0.2s;font-family:var(--font-body);border:none;background:none;text-align:left;width:100%;}
+.afq-sidebar-link:hover,.afq-sidebar-link.active{background:var(--cream);color:var(--black);}
+.afq-sidebar-link.active{border-left:2px solid var(--gold);padding-left:12px;}
+.afq-sidebar-link-icon{font-size:14px;flex-shrink:0;}
+.afq-sidebar-count{margin-left:auto;font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;}
+
+/* FAQ SECTIONS */
+.afq-sections{display:flex;flex-direction:column;gap:48px;}
+.afq-section{}
+.afq-section-hdr{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--border);}
+.afq-section-icon{width:44px;height:44px;border-radius:50%;background:var(--gold-pale);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.afq-section-title{font-family:var(--font-heading);font-size:28px;color:var(--black);font-weight:500;}
+.afq-section-count{font-size:11px;color:var(--muted);font-weight:300;margin-top:2px;}
+
+/* ACCORDION */
+.afq-acc-list{display:flex;flex-direction:column;gap:0;}
+.afq-acc{border-bottom:1px solid var(--border);}
+.afq-acc:first-child{border-top:1px solid var(--border);}
+.afq-acc-head{display:flex;align-items:center;justify-content:space-between;padding:18px 0;cursor:pointer;user-select:none;gap:16px;}
+.afq-acc-q{font-size:14px;font-weight:500;color:var(--black);line-height:1.5;flex:1;}
+.afq-acc-arrow{width:28px;height:28px;border-radius:50%;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);flex-shrink:0;transition:transform 0.25s,background 0.2s;}
+.afq-acc.open .afq-acc-arrow{transform:rotate(45deg);background:var(--gold-pale);}
+.afq-acc-body{display:none;padding:0 36px 20px 0;}
+.afq-acc.open .afq-acc-body{display:block;}
+.afq-acc-body p{font-size:13px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:10px;}
+.afq-acc-body ul{list-style:none;margin-top:8px;}
+.afq-acc-body ul li{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7;padding:3px 0;display:flex;gap:10px;}
+.afq-acc-body ul li::before{content:'✦';color:var(--gold);font-size:8px;flex-shrink:0;margin-top:4px;}
+.afq-acc-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--border);transition:border-color 0.2s;}
+.afq-acc-body a:hover{border-color:var(--gold);}
+
+/* HELPFUL STRIP */
+.afq-helpful{background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 48px;}
+.afq-helpful-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.afq-helpful-text strong{display:block;font-size:15px;font-weight:500;color:var(--black);margin-bottom:4px;}
+.afq-helpful-text span{font-size:13px;color:var(--muted);font-weight:300;}
+.afq-helpful-btns{display:flex;gap:12px;}
+.afq-helpful-yes{padding:10px 24px;background:var(--black);color:var(--ivory);border:none;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:var(--font-body);transition:background 0.2s;}
+.afq-helpful-yes:hover{background:var(--gold);}
+.afq-helpful-no{padding:10px 24px;background:transparent;color:var(--muted);border:1px solid var(--border);font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:var(--font-body);transition:all 0.2s;}
+.afq-helpful-no:hover{border-color:var(--gold);color:var(--gold);}
+
+/* CONTACT STRIP */
+.afq-contact{padding:64px 48px;background:var(--dark);}
+.afq-contact-inner{max-width:1100px;margin:0 auto;text-align:center;}
+.afq-contact-label{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:14px;display:block;}
+.afq-contact-title{font-family:var(--font-heading);font-size:42px;color:var(--gold-pale);font-weight:500;margin-bottom:12px;}
+.afq-contact-sub{font-size:14px;color:var(--gold-lt);font-weight:300;margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75;}
+.afq-contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:36px;}
+.afq-contact-card{padding:24px 20px;background:rgba(255,253,245,0.05);border:1px solid rgba(184,134,11,0.2);border-radius:4px;text-align:center;transition:border-color 0.2s;}
+.afq-contact-card:hover{border-color:var(--gold);}
+.afq-contact-card-icon{font-size:28px;margin-bottom:12px;}
+.afq-contact-card-title{font-size:13px;font-weight:500;color:var(--gold-pale);margin-bottom:6px;}
+.afq-contact-card-text{font-size:12px;color:var(--gold-lt);font-weight:300;line-height:1.6;margin-bottom:12px;}
+.afq-contact-card-link{font-size:11px;color:var(--gold);font-weight:500;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(184,134,11,0.3);padding-bottom:1px;transition:border-color 0.2s;}
+.afq-contact-card-link:hover{border-color:var(--gold);}
+
+/* NO RESULTS */
+.afq-no-results{display:none;text-align:center;padding:48px 20px;}
+.afq-no-results-icon{font-size:40px;margin-bottom:14px;}
+.afq-no-results-text{font-size:15px;color:var(--muted);font-weight:300;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .afq-tabs,.afq-main,.afq-helpful,.afq-contact{padding-left:28px;padding-right:28px;}
+  .afq-contact-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .afq-hero{padding:56px 20px;}
+  .afq-hero-title{font-size:40px;}
+  .afq-tabs,.afq-main,.afq-helpful,.afq-contact{padding-left:20px;padding-right:20px;}
+  .afq-layout{grid-template-columns:1fr;}
+  .afq-sidebar{position:relative;top:0;display:flex;gap:8px;flex-wrap:wrap;}
+  .afq-sidebar-title{display:none;}
+  .afq-sidebar-links{flex-direction:row;flex-wrap:wrap;}
+  .afq-sidebar-link{padding:8px 14px;border:1px solid var(--border);border-radius:20px;font-size:11px;}
+  .afq-sidebar-link.active{border-color:var(--gold);background:var(--gold-pale);border-left:1px solid var(--gold);padding-left:14px;}
+  .afq-sidebar-count{display:none;}
+  .afq-contact-grid{grid-template-columns:1fr;}
+  .afq-helpful-inner{flex-direction:column;gap:16px;}
+}
+@media(max-width:480px){
+  .afq-hero-title{font-size:32px;}
+  .afq-contact-title{font-size:32px;}
+}
+</style>
+
+<div class="afq">
+
+{%- comment -%} HERO {%- endcomment -%}
+<div class="afq-hero">
+  <div class="afq-hero-inner">
+    <span class="afq-hero-label">{{ section.settings.hero_label | default: 'Help Centre' }}</span>
+    <h1 class="afq-hero-title">{{ section.settings.hero_title | default: 'Frequently Asked' }} <em>{{ section.settings.hero_italic | default: 'Questions' }}</em></h1>
+    <p class="afq-hero-desc">{{ section.settings.hero_desc | default: 'Find answers to the most common questions about our gemstones, e-books, Kundli reports, shipping, returns and more.' }}</p>
+    <div class="afq-hero-search">
+      <input class="afq-hero-search-input" type="text" id="afq-search" placeholder="{{ section.settings.search_placeholder | default: 'Search for an answer...' }}" oninput="afqSearch(this.value)">
+      <button class="afq-hero-search-btn" onclick="afqSearch(document.getElementById('afq-search').value)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} CATEGORY TABS {%- endcomment -%}
+<div class="afq-tabs">
+  <div class="afq-tabs-inner">
+    <button class="afq-tab-btn active" data-category="all" onclick="afqFilterCategory(this,'all')">All Questions</button>
+    <button class="afq-tab-btn" data-category="gemstones" onclick="afqFilterCategory(this,'gemstones')">&#128142; Gemstones</button>
+    <button class="afq-tab-btn" data-category="ebooks" onclick="afqFilterCategory(this,'ebooks')">&#128218; E-Books</button>
+    <button class="afq-tab-btn" data-category="kundli" onclick="afqFilterCategory(this,'kundli')">&#127775; Kundli Reports</button>
+    <button class="afq-tab-btn" data-category="orders" onclick="afqFilterCategory(this,'orders')">&#128666; Orders & Shipping</button>
+    <button class="afq-tab-btn" data-category="returns" onclick="afqFilterCategory(this,'returns')">&#8635; Returns & Refunds</button>
+    <button class="afq-tab-btn" data-category="payments" onclick="afqFilterCategory(this,'payments')">&#128274; Payments</button>
+  </div>
+</div>
+
+{%- comment -%} MAIN CONTENT {%- endcomment -%}
+<div class="afq-main">
+  <div class="afq-layout">
+
+    {%- comment -%} SIDEBAR {%- endcomment -%}
+    <div class="afq-sidebar">
+      <div class="afq-sidebar-title">Categories</div>
+      <div class="afq-sidebar-links">
+        <button class="afq-sidebar-link active" onclick="afqScrollTo('section-gemstones', this)"><span class="afq-sidebar-link-icon">&#128142;</span>Gemstones<span class="afq-sidebar-count">8</span></button>
+        <button class="afq-sidebar-link" onclick="afqScrollTo('section-ebooks', this)"><span class="afq-sidebar-link-icon">&#128218;</span>E-Books<span class="afq-sidebar-count">5</span></button>
+        <button class="afq-sidebar-link" onclick="afqScrollTo('section-kundli', this)"><span class="afq-sidebar-link-icon">&#127775;</span>Kundli Reports<span class="afq-sidebar-count">6</span></button>
+        <button class="afq-sidebar-link" onclick="afqScrollTo('section-orders', this)"><span class="afq-sidebar-link-icon">&#128666;</span>Orders &amp; Shipping<span class="afq-sidebar-count">6</span></button>
+        <button class="afq-sidebar-link" onclick="afqScrollTo('section-returns', this)"><span class="afq-sidebar-link-icon">&#8635;</span>Returns &amp; Refunds<span class="afq-sidebar-count">4</span></button>
+        <button class="afq-sidebar-link" onclick="afqScrollTo('section-payments', this)"><span class="afq-sidebar-link-icon">&#128274;</span>Payments<span class="afq-sidebar-count">4</span></button>
+      </div>
+    </div>
+
+    {%- comment -%} FAQ SECTIONS {%- endcomment -%}
+    <div class="afq-sections" id="afq-sections">
+
+      <div id="afq-no-results" class="afq-no-results">
+        <div class="afq-no-results-icon">&#128269;</div>
+        <div class="afq-no-results-text">No results found. Try a different search term.</div>
+      </div>
+
+      {%- comment -%} GEMSTONES {%- endcomment -%}
+      <div class="afq-section" id="section-gemstones" data-category="gemstones">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#128142;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat1_title | default: 'Gemstones' }}</div>
+            <div class="afq-section-count">8 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc open" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g1_q | default: 'Are your gemstones 100% natural and certified?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>{{ section.settings.g1_a | default: 'Yes, every gemstone from Astro PathShala is 100% natural and comes with a certificate from a trusted gemological laboratory. The certificate confirms the stone is natural, untreated and authentic. It is included in the package at no additional charge.' }}</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g2_q | default: 'How do I know which gemstone is right for me?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>The right gemstone depends on your birth chart (Kundali) and the planetary positions at your time of birth. We recommend consulting a qualified Vedic astrologer before wearing any gemstone. You can also <a href="/pages/kundli">order a personalised Gemstone Report</a> from us — our astrologers will analyse your chart and recommend the exact stone, metal and finger for maximum benefit.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g3_q | default: 'What ratti (carat) weight should I choose?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>The general guideline is 1 ratti per 10 kg of body weight, with a minimum of 2–3 ratti for any gemstone to be effective astrologically. However, the exact weight recommendation depends on your specific planetary position and should be confirmed by an astrologer. We offer multiple weight options for most stones.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g4_q | default: 'Can I wear multiple gemstones at the same time?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes, certain gemstones can be worn together — particularly those whose ruling planets are friendly to each other. For example, Ruby (Sun), Red Coral (Mars) and Yellow Sapphire (Jupiter) are compatible. However, some combinations like Ruby and Blue Sapphire are conflicting and should never be worn together. Always consult your astrologer before combining gemstones.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g5_q | default: 'How do I energize my gemstone before wearing?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Before first wear, soak the gemstone in raw milk or Ganga jal for 20–30 minutes, wash with clean water and wipe with silk cloth. Then chant the beej mantra of the ruling planet 108 times while holding the stone. Wear on the auspicious day and planetary hora associated with the ruling planet. Our <a href="/pages/gem-guide">Gem Guide</a> has detailed energization instructions.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g6_q | default: 'Do you offer synthetic or heat-treated gemstones?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>No. We only sell 100% natural, untreated gemstones. Synthetic or heat-treated stones have no astrological benefit and we do not carry them. Every stone is lab-certified to confirm it is natural and free from treatments. If you receive a stone that is not as described, we will replace it immediately.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g7_q | default: 'Which metal should I set my gemstone in?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>The metal depends on the ruling planet. Gold is recommended for Ruby (Sun), Yellow Sapphire (Jupiter) and Red Coral (Mars). Silver is best for Pearl (Moon), Blue Sapphire (Saturn), Hessonite and Cat's Eye. Emerald (Mercury) and Diamond (Venus) can be set in both gold or silver. The stone should always touch the skin — an open-back setting is ideal.</p></div></div>
+          <div class="afq-acc" data-category="gemstones"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.g8_q | default: 'How long does it take to see results from wearing a gemstone?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Most wearers begin to notice subtle positive changes within 7–30 days. Full effects typically manifest within 40–90 days of consistent daily wear. Results depend on the quality of the stone, the strength of the planet in your chart, and how consistently you wear it. If you experience any negative effects, remove the stone immediately and consult your astrologer.</p></div></div>
+        </div>
+      </div>
+
+      {%- comment -%} EBOOKS {%- endcomment -%}
+      <div class="afq-section" id="section-ebooks" data-category="ebooks">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#128218;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat2_title | default: 'E-Books' }}</div>
+            <div class="afq-section-count">5 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc" data-category="ebooks"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.e1_q | default: 'How do I receive my e-book after purchase?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>As soon as your payment is confirmed, Shopify automatically sends you an email with a secure download link. The PDF can be downloaded instantly and read on any device — phone, tablet or computer. The download link is valid for 30 days and can be accessed multiple times.</p></div></div>
+          <div class="afq-acc" data-category="ebooks"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.e2_q | default: 'In which language are the e-books available?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Most of our e-books are available in both Hindi and English. The language is clearly mentioned on each product page. We recommend choosing the language you are most comfortable reading in for the best experience. Some specialised titles are available in Hindi only.</p></div></div>
+          <div class="afq-acc" data-category="ebooks"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.e3_q | default: 'Can I get a refund on an e-book?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Due to the digital nature of e-books, we do not offer refunds once the download link has been accessed. However, if you experience any technical issues with the download or the file, please contact our support team immediately and we will resolve it promptly. Please read the product description carefully before purchasing.</p></div></div>
+          <div class="afq-acc" data-category="ebooks"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.e4_q | default: 'Who writes the e-books?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>All e-books are authored by our founder and a team of practising Vedic astrologers with years of study and practical experience. The books are not AI-generated or copied from other sources — they represent original astrological knowledge and guidance drawn from classical Jyotish texts and real consultation experience.</p></div></div>
+          <div class="afq-acc" data-category="ebooks"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.e5_q | default: 'Can I share or print the e-book?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>The e-books are for personal use only and are not to be shared, distributed or resold. You may print a copy for your own personal use. Our e-books are protected by copyright and unauthorised distribution is not permitted. Each purchase grants a single-user personal licence.</p></div></div>
+        </div>
+      </div>
+
+      {%- comment -%} KUNDLI REPORTS {%- endcomment -%}
+      <div class="afq-section" id="section-kundli" data-category="kundli">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#127775;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat3_title | default: 'Kundli Reports' }}</div>
+            <div class="afq-section-count">6 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k1_q | default: 'How long does it take to receive my Kundli report?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Our expert astrologers personally prepare every report, so delivery takes 1–2 working days after payment confirmation. We do not use automated or computer-generated reports. After submitting your order form, our team will contact you on WhatsApp within 2 hours with a payment link. Once paid, your report will be delivered to your email within 1–2 days.</p></div></div>
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k2_q | default: 'What birth details are required for the report?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>To prepare an accurate Vedic birth chart, we need your full name, exact date of birth, exact time of birth (as accurate as possible — even 5 minutes matters), and place of birth (city, state and country). The time of birth is especially important as the Ascendant (Lagna) changes every 2 hours. If you do not know your birth time, please mention this and we will prepare a Surya Kundli (based on date only) and note the limitation.</p></div></div>
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k3_q | default: 'Is my personal information kept private?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Absolutely. Your birth details and personal information are used solely to prepare your report and are never shared with any third party. We do not store your sensitive information beyond what is required for report preparation. Our privacy policy governs the handling of all customer data.</p></div></div>
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k4_q | default: 'Can I ask follow-up questions after receiving the report?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — we provide WhatsApp support after delivery so you can ask brief clarification questions about your report. For a detailed follow-up consultation or additional questions, we offer separate consultation services that your astrologer can schedule at a mutually convenient time.</p></div></div>
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k5_q | default: 'In which language will the report be prepared?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>You can choose between Hindi and English when filling the order form. Both are equally detailed and well-written. Hindi is popular for customers who prefer reading astrological content in their native language. English is recommended for customers outside India or those more comfortable with English.</p></div></div>
+          <div class="afq-acc" data-category="kundli"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.k6_q | default: 'Is the report computer-generated or written by a real astrologer?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Every report is personally studied and written by our qualified Jyotish astrologers — not auto-generated by software. This is what makes our reports genuinely valuable: they reflect real astrological analysis, personalised interpretation and specific guidance relevant to your unique birth chart. This is also why delivery takes 1–2 days rather than being instant.</p></div></div>
+        </div>
+      </div>
+
+      {%- comment -%} ORDERS AND SHIPPING {%- endcomment -%}
+      <div class="afq-section" id="section-orders" data-category="orders">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#128666;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat4_title | default: 'Orders & Shipping' }}</div>
+            <div class="afq-section-count">6 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o1_q | default: 'How long does delivery take?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Gemstones and physical products are shipped within 24 hours of order confirmation and delivered within 3–7 business days across India via tracked courier. E-books are delivered instantly to your email. Kundli reports are delivered within 1–2 working days by email.</p></div></div>
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o2_q | default: 'Do you offer free shipping?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — we offer free shipping on all orders above ₹999 within India. For orders below ₹999, a standard shipping charge applies which is displayed at checkout. We currently ship to all major pin codes across India. For international orders, please contact us via WhatsApp or email for a shipping quote.</p></div></div>
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o3_q | default: 'Can I track my order?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — once your order is shipped, you will receive an SMS and email with a tracking link. You can also contact our support team on WhatsApp with your order number and we will provide a real-time update on your shipment status.</p></div></div>
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o4_q | default: 'Do you offer Cash on Delivery (COD)?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — COD is available for gemstone orders across most pin codes in India. E-books and Kundli reports require prepayment as they are digital products delivered instantly or prepared specially for you. COD availability is shown at checkout based on your delivery pin code.</p></div></div>
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o5_q | default: 'How is the gemstone packaged?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Every gemstone is carefully packed in a premium velvet box with the lab certification document included. The outer packaging is discreet and well-protected for safe transit. We use courier partners with proven track records to ensure your gemstone arrives safely and on time.</p></div></div>
+          <div class="afq-acc" data-category="orders"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.o6_q | default: 'Do you ship internationally?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — we ship gemstones internationally to most countries. International shipping costs and delivery times vary by destination. Please contact us on WhatsApp or email before placing an international order so we can confirm availability, customs requirements and the exact shipping cost for your country.</p></div></div>
+        </div>
+      </div>
+
+      {%- comment -%} RETURNS {%- endcomment -%}
+      <div class="afq-section" id="section-returns" data-category="returns">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#8635;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat5_title | default: 'Returns & Refunds' }}</div>
+            <div class="afq-section-count">4 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc" data-category="returns"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.r1_q | default: 'What is your return policy for gemstones?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>We offer a 7-day easy return policy for all gemstone orders. The gemstone must be in its original, unworn condition along with the lab certificate and original packaging. To initiate a return, contact our support team within 7 days of delivery via WhatsApp or email. Once we receive and inspect the returned item, the refund will be processed within 5–7 business days.</p></div></div>
+          <div class="afq-acc" data-category="returns"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.r2_q | default: 'Can I return an e-book or Kundli report?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Due to the digital nature of e-books and Kundli reports, we do not offer refunds once the content has been accessed or delivered. Kundli reports involve personalised work by our astrologers and cannot be returned. E-books cannot be returned once the download link has been used. If you have a genuine technical issue, please contact us and we will help resolve it.</p></div></div>
+          <div class="afq-acc" data-category="returns"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.r3_q | default: 'What if I receive a damaged or incorrect item?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>If you receive a damaged product or the wrong item, please contact us within 48 hours of delivery with photos. We will arrange an immediate replacement at no cost to you. We take quality control very seriously and such incidents are rare, but we will make it right without any hassle if it occurs.</p></div></div>
+          <div class="afq-acc" data-category="returns"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.r4_q | default: 'Who pays for return shipping?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>If the return is due to a defective, damaged or incorrect product sent by us, we will cover the return shipping cost. If the return is due to a change of mind or personal reasons, the customer bears the return shipping cost. Please use a tracked courier for return shipments and share the tracking number with our team.</p></div></div>
+        </div>
+      </div>
+
+      {%- comment -%} PAYMENTS {%- endcomment -%}
+      <div class="afq-section" id="section-payments" data-category="payments">
+        <div class="afq-section-hdr">
+          <div class="afq-section-icon">&#128274;</div>
+          <div>
+            <div class="afq-section-title">{{ section.settings.cat6_title | default: 'Payments' }}</div>
+            <div class="afq-section-count">4 questions</div>
+          </div>
+        </div>
+        <div class="afq-acc-list">
+          <div class="afq-acc" data-category="payments"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.p1_q | default: 'What payment methods do you accept?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>We accept all major payment methods including UPI (GPay, PhonePe, Paytm), debit and credit cards (Visa, Mastercard, Rupay), net banking, wallets and Cash on Delivery for eligible orders. All online payments are processed securely through Shopify Payments and Razorpay with SSL encryption.</p></div></div>
+          <div class="afq-acc" data-category="payments"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.p2_q | default: 'Is it safe to pay online on your website?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Absolutely. Our website uses industry-standard SSL encryption and all payments are processed through secure, PCI-compliant payment gateways. We never store your card details on our servers. If you have any concerns, you can also pay via UPI or bank transfer — contact us via WhatsApp and we will share the payment details.</p></div></div>
+          <div class="afq-acc" data-category="payments"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.p3_q | default: 'Do you offer any discount codes?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Yes — first-time customers can use the code <strong>ASTRO10</strong> for 10% off their first order. We also run seasonal promotions and offer exclusive discounts to our newsletter subscribers. Follow us on Instagram and WhatsApp for the latest offers. Discount codes are applied at checkout and cannot be combined with other offers.</p></div></div>
+          <div class="afq-acc" data-category="payments"><div class="afq-acc-head" onclick="this.closest('.afq-acc').classList.toggle('open')"><span class="afq-acc-q">{{ section.settings.p4_q | default: 'I paid but did not receive a confirmation email — what should I do?' }}</span><span class="afq-acc-arrow">+</span></div><div class="afq-acc-body"><p>Please check your spam or junk folder first — confirmation emails sometimes land there. If you still cannot find it, contact us on WhatsApp with your phone number and the payment reference number. We will verify your payment and manually confirm your order within a few hours. Do not worry — if the payment was successful, your order is safe with us.</p></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{%- comment -%} WAS THIS HELPFUL {%- endcomment -%}
+<div class="afq-helpful">
+  <div class="afq-helpful-inner">
+    <div class="afq-helpful-text">
+      <strong>{{ section.settings.helpful_title | default: 'Did you find what you were looking for?' }}</strong>
+      <span>{{ section.settings.helpful_sub | default: 'Your feedback helps us improve our FAQ section' }}</span>
+    </div>
+    <div class="afq-helpful-btns">
+      <button class="afq-helpful-yes" onclick="afqFeedback(true)">&#10003; Yes, it helped</button>
+      <button class="afq-helpful-no" onclick="afqFeedback(false)">Contact Support</button>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} STILL NEED HELP {%- endcomment -%}
+<div class="afq-contact">
+  <div class="afq-contact-inner">
+    <span class="afq-contact-label">{{ section.settings.contact_label | default: 'Still need help?' }}</span>
+    <h2 class="afq-contact-title">{{ section.settings.contact_title | default: "We're Here for You" }}</h2>
+    <p class="afq-contact-sub">{{ section.settings.contact_sub | default: "Can't find the answer you're looking for? Our team is available 6 days a week to help you." }}</p>
+    <div class="afq-contact-grid">
+      <div class="afq-contact-card">
+        <div class="afq-contact-card-icon">&#128241;</div>
+        <div class="afq-contact-card-title">WhatsApp Support</div>
+        <div class="afq-contact-card-text">Chat with us directly on WhatsApp for the fastest response — usually within 1–2 hours.</div>
+        <a href="https://wa.me/{{ section.settings.whatsapp_number | default: '919876543210' | remove: '+' | remove: ' ' }}" class="afq-contact-card-link" target="_blank">Chat on WhatsApp &#8594;</a>
+      </div>
+      <div class="afq-contact-card">
+        <div class="afq-contact-card-icon">&#9993;</div>
+        <div class="afq-contact-card-title">Email Us</div>
+        <div class="afq-contact-card-text">Send us a detailed message and we will respond within 24 hours on working days.</div>
+        <a href="mailto:{{ section.settings.contact_email | default: 'support@astropathshala.com' }}" class="afq-contact-card-link">{{ section.settings.contact_email | default: 'support@astropathshala.com' }}</a>
+      </div>
+      <div class="afq-contact-card">
+        <div class="afq-contact-card-icon">&#128221;</div>
+        <div class="afq-contact-card-title">Contact Form</div>
+        <div class="afq-contact-card-text">Fill in our contact form with your query and our team will get back to you promptly.</div>
+        <a href="/pages/contact" class="afq-contact-card-link">Go to Contact Page &#8594;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function afqSearch(val) {
+  var q = val.toLowerCase().trim();
+  var items = document.querySelectorAll('.afq-acc');
+  var sections = document.querySelectorAll('.afq-section');
+  var noResults = document.getElementById('afq-no-results');
+  var found = 0;
+  sections.forEach(function(s){ s.style.display = 'block'; });
+  items.forEach(function(item) {
+    var text = item.textContent.toLowerCase();
+    var show = !q || text.indexOf(q) !== -1;
+    item.style.display = show ? 'block' : 'none';
+    if (show && q) found++;
+  });
+  if (q) {
+    sections.forEach(function(s) {
+      var visible = Array.from(s.querySelectorAll('.afq-acc')).some(function(i){ return i.style.display !== 'none'; });
+      s.style.display = visible ? 'block' : 'none';
+    });
+    noResults.style.display = found === 0 ? 'block' : 'none';
+  } else {
+    noResults.style.display = 'none';
+  }
+}
+function afqFilterCategory(btn, cat) {
+  document.querySelectorAll('.afq-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var sections = document.querySelectorAll('.afq-section');
+  sections.forEach(function(s) {
+    s.style.display = (cat === 'all' || s.dataset.category === cat) ? 'block' : 'none';
+  });
+}
+function afqScrollTo(id, button) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.afq-sidebar-link').forEach(function(l){ l.classList.remove('active'); });
+  if (button) button.classList.add('active');
+}
+function afqFeedback(helpful) {
+  var btn = document.querySelector('.afq-helpful-yes');
+  if (helpful) {
+    btn.textContent = '✓ Thank you!';
+    btn.style.background = 'var(--gold)';
+    btn.disabled = true;
+  } else {
+    window.location.href = '/pages/contact';
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_label", "label": "Hero label", "default": "Help Centre" },
+    { "type": "text", "id": "hero_title", "label": "Hero title", "default": "Frequently Asked" },
+    { "type": "text", "id": "hero_italic", "label": "Hero italic word", "default": "Questions" },
+    { "type": "textarea", "id": "hero_desc", "label": "Hero description" },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search for an answer..." },
+    { "type": "header", "content": "Category Section Titles" },
+    { "type": "text", "id": "cat1_title", "label": "Category 1 title", "default": "Gemstones" },
+    { "type": "text", "id": "cat2_title", "label": "Category 2 title", "default": "E-Books" },
+    { "type": "text", "id": "cat3_title", "label": "Category 3 title", "default": "Kundli Reports" },
+    { "type": "text", "id": "cat4_title", "label": "Category 4 title", "default": "Orders & Shipping" },
+    { "type": "text", "id": "cat5_title", "label": "Category 5 title", "default": "Returns & Refunds" },
+    { "type": "text", "id": "cat6_title", "label": "Category 6 title", "default": "Payments" },
+    { "type": "header", "content": "Gemstone Questions" },
+    { "type": "text", "id": "g1_q", "label": "G1 Question", "default": "Are your gemstones 100% natural and certified?" },
+    { "type": "textarea", "id": "g1_a", "label": "G1 Answer" },
+    { "type": "text", "id": "g2_q", "label": "G2 Question", "default": "How do I know which gemstone is right for me?" },
+    { "type": "text", "id": "g3_q", "label": "G3 Question", "default": "What ratti weight should I choose?" },
+    { "type": "text", "id": "g4_q", "label": "G4 Question", "default": "Can I wear multiple gemstones at the same time?" },
+    { "type": "text", "id": "g5_q", "label": "G5 Question", "default": "How do I energize my gemstone before wearing?" },
+    { "type": "text", "id": "g6_q", "label": "G6 Question", "default": "Do you offer synthetic or heat-treated gemstones?" },
+    { "type": "text", "id": "g7_q", "label": "G7 Question", "default": "Which metal should I set my gemstone in?" },
+    { "type": "text", "id": "g8_q", "label": "G8 Question", "default": "How long does it take to see results?" },
+    { "type": "header", "content": "E-Book Questions" },
+    { "type": "text", "id": "e1_q", "label": "E1 Question", "default": "How do I receive my e-book after purchase?" },
+    { "type": "text", "id": "e2_q", "label": "E2 Question", "default": "In which language are the e-books available?" },
+    { "type": "text", "id": "e3_q", "label": "E3 Question", "default": "Can I get a refund on an e-book?" },
+    { "type": "text", "id": "e4_q", "label": "E4 Question", "default": "Who writes the e-books?" },
+    { "type": "text", "id": "e5_q", "label": "E5 Question", "default": "Can I share or print the e-book?" },
+    { "type": "header", "content": "Kundli Questions" },
+    { "type": "text", "id": "k1_q", "label": "K1 Question", "default": "How long does it take to receive my Kundli report?" },
+    { "type": "text", "id": "k2_q", "label": "K2 Question", "default": "What birth details are required for the report?" },
+    { "type": "text", "id": "k3_q", "label": "K3 Question", "default": "Is my personal information kept private?" },
+    { "type": "text", "id": "k4_q", "label": "K4 Question", "default": "Can I ask follow-up questions after receiving the report?" },
+    { "type": "text", "id": "k5_q", "label": "K5 Question", "default": "In which language will the report be prepared?" },
+    { "type": "text", "id": "k6_q", "label": "K6 Question", "default": "Is the report computer-generated or written by a real astrologer?" },
+    { "type": "header", "content": "Orders Questions" },
+    { "type": "text", "id": "o1_q", "label": "O1 Question", "default": "How long does delivery take?" },
+    { "type": "text", "id": "o2_q", "label": "O2 Question", "default": "Do you offer free shipping?" },
+    { "type": "text", "id": "o3_q", "label": "O3 Question", "default": "Can I track my order?" },
+    { "type": "text", "id": "o4_q", "label": "O4 Question", "default": "Do you offer Cash on Delivery (COD)?" },
+    { "type": "text", "id": "o5_q", "label": "O5 Question", "default": "How is the gemstone packaged?" },
+    { "type": "text", "id": "o6_q", "label": "O6 Question", "default": "Do you ship internationally?" },
+    { "type": "header", "content": "Returns Questions" },
+    { "type": "text", "id": "r1_q", "label": "R1 Question", "default": "What is your return policy for gemstones?" },
+    { "type": "text", "id": "r2_q", "label": "R2 Question", "default": "Can I return an e-book or Kundli report?" },
+    { "type": "text", "id": "r3_q", "label": "R3 Question", "default": "What if I receive a damaged or incorrect item?" },
+    { "type": "text", "id": "r4_q", "label": "R4 Question", "default": "Who pays for return shipping?" },
+    { "type": "header", "content": "Payments Questions" },
+    { "type": "text", "id": "p1_q", "label": "P1 Question", "default": "What payment methods do you accept?" },
+    { "type": "text", "id": "p2_q", "label": "P2 Question", "default": "Is it safe to pay online on your website?" },
+    { "type": "text", "id": "p3_q", "label": "P3 Question", "default": "Do you offer any discount codes?" },
+    { "type": "text", "id": "p4_q", "label": "P4 Question", "default": "I paid but did not receive a confirmation email." },
+    { "type": "header", "content": "Was It Helpful Strip" },
+    { "type": "text", "id": "helpful_title", "label": "Helpful title", "default": "Did you find what you were looking for?" },
+    { "type": "text", "id": "helpful_sub", "label": "Helpful subtitle" },
+    { "type": "header", "content": "Contact Section" },
+    { "type": "text", "id": "contact_label", "label": "Contact label", "default": "Still need help?" },
+    { "type": "text", "id": "contact_title", "label": "Contact title", "default": "We're Here for You" },
+    { "type": "textarea", "id": "contact_sub", "label": "Contact subtitle" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "default": "+91 98765 43210" },
+    { "type": "text", "id": "contact_email", "label": "Email", "default": "support@astropathshala.com" }
+  ],
+  "presets": [{ "name": "FAQ Page" }]
+}
+{% endschema %}
+
+
+

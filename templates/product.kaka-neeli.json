@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main-kaka-neeli": {
+      "type": "main-kaka-neeli",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-kaka-neeli"
+  ]
+}
