@@ -1,8 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main-sulemani": {
       "type": "main-sulemani",
-      "settings": {}
+      "settings": {
+        "max_width": "1320",
+        "title_size": 42,
+        "add_to_cart_text": "Add to Cart",
+        "buy_now_text": "Buy Now",
+        "delivery_days": "3–5",
+        "success_message": "Added to cart!",
+        "error_message": "Error adding to cart. Please try again.",
+        "trust_1_text": "Lab Certified Natural",
+        "trust_2_text": "Free Shipping ₹999+",
+        "trust_3_text": "7-Day Easy Returns",
+        "trust_4_text": "Secure Payments",
+        "default_short_description": "Sulemani (banded agate) is a revered shield-stone absorbing heavy glance, mental static, and the whisper of pessimism. It clears the auric field so your path feels lighter and truer.",
+        "tab_1_content": "<p>Layered like night and dawn, Sulemani hakik has walked with mystics and householders alike as a touchstone of sober protection.</p><p>Each band tells a slow geological story; we choose pieces with striking contrast and solid durability for daily wear.</p>",
+        "tab_2_content": "<p>Associated with Ketu and Saturn’s disciplining, protective currents — ideal when subtle fears, recurring obstacles, or psychic clutter need cutting through with calm.</p><p>Often recommended during Ketu periods or for those with a turbulent 8th/12th-house emphasis by expert reading.</p>",
+        "show_reviews": true,
+        "reviews_title": "What Our Customers Say",
+        "review1_text": "",
+        "review1_author": "Priya Sharma",
+        "review1_location": "Verified Purchase · Delhi",
+        "review2_text": "",
+        "review2_author": "Vikram Nair",
+        "review2_location": "Verified Purchase · Mumbai",
+        "review3_text": "",
+        "review3_author": "Anjali Mehta",
+        "review3_location": "Verified Purchase · Jaipur",
+        "show_faqs": true,
+        "faqs_title": "Frequently Asked Questions",
+        "faq_1_question": "Is this gemstone 100% natural and certified?",
+        "faq_1_answer": "",
+        "faq_2_question": "How do I choose the right ratti weight?",
+        "faq_2_answer": "",
+        "faq_3_question": "What is your return policy?",
+        "faq_3_answer": "",
+        "faq_4_question": "How long does delivery take?",
+        "faq_4_answer": ""
+      }
     }
   },
   "order": [
