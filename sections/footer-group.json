@@ -1,1 +1,53 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","settings":{"color_scheme":"scheme-1","brand_description":"Astro Pathshala is a Gurugram-based platform blending traditional Vedic Astrology with practical modern guidance through consultations, courses, remedies, and spiritual products.","brand_trust_line":"11,000+ students guided across 20+ years of trusted astrology practice.","newsletter_enable":true,"newsletter_heading":"Get Weekly Astro Guidance","newsletter_copy":"Receive practical Vedic insights, workshop updates, and trusted remedial guidance from Astro Pathshala.","about_url":"\/pages\/about-us","courses_url":"\/collections\/e-books","consultations_url":"\/pages\/contact","reports_url":"\/collections\/lal-kitaab-remedies","blog_url":"\/blogs\/news","contact_url":"\/pages\/contact","privacy_url":"\/policies\/privacy-policy","terms_url":"\/policies\/terms-of-service","kundli_url":"\/pages\/contact","numerology_url":"\/pages\/contact","palmistry_url":"\/pages\/contact","vastu_url":"\/pages\/contact","gemstones_url":"\/collections\/gemstone","matchmaking_url":"\/pages\/contact","career_astrology_url":"\/pages\/contact","horoscope_url":"\/blogs\/news","contact_email":"support@astropathshala.com","whatsapp_number":"+91 98711-30487","location_text":"Gurugram, Haryana","support_timing":"Mon–Sat, 10am–7pm IST","show_social":true,"margin_top":0,"padding_top":80,"padding_bottom":52}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "brand_description": "Astro Pathshala is a Gurugram-based platform blending traditional Vedic Astrology with practical modern guidance through consultations, courses, remedies, and spiritual products.",
+        "brand_trust_line": "11,000+ students guided across 20+ years of trusted astrology practice.",
+        "newsletter_enable": true,
+        "newsletter_heading": "Get Weekly Astro Guidance",
+        "newsletter_copy": "Receive practical Vedic insights, workshop updates, and trusted remedial guidance from Astro Pathshala.",
+        "about_url": "/pages/about-us",
+        "courses_url": "/collections/e-books",
+        "consultations_url": "/pages/contact",
+        "reports_url": "/collections/lal-kitaab-remedies",
+        "blog_url": "/blogs/news",
+        "contact_url": "/pages/contact",
+        "privacy_url": "/policies/privacy-policy",
+        "terms_url": "/policies/terms-of-service",
+        "kundli_url": "/pages/contact",
+        "numerology_url": "/pages/contact",
+        "palmistry_url": "/pages/contact",
+        "vastu_url": "/pages/contact",
+        "gemstones_url": "/collections/gemstone",
+        "matchmaking_url": "/pages/contact",
+        "career_astrology_url": "/pages/contact",
+        "horoscope_url": "/blogs/news",
+        "contact_email": "support@astropathshala.com",
+        "whatsapp_number": "+91 98711-30487",
+        "location_text": "Gurugram, Haryana",
+        "support_timing": "Mon–Sat, 10am–7pm IST",
+        "show_social": true,
+        "margin_top": 0,
+        "padding_top": 80,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
