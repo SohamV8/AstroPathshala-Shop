@@ -6,8 +6,6 @@
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
 }
 
 .product-card-wrapper .card,
@@ -2934,18 +2932,9 @@ details-disclosure > details {
 }
 
 .gradient {
-  background-image: url('./bgmain.webp');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: rgb(var(--color-background));
+  background: var(--gradient-background);
   background-attachment: fixed;
-}
-
-@media screen and (max-width: 989px) {
-  .gradient {
-    background-attachment: scroll;
-    background-position: center top;
-  }
 }
 
 @media screen and (forced-colors: active) {
@@ -3521,6 +3510,138 @@ details-disclosure > details {
   display: inline-block;
 }
 
+/* Minimal Spiritual Luxury system */
+:root {
+  --lux-bg: 254, 254, 252;
+  --lux-surface: 255, 248, 238;
+  --lux-accent: 212, 175, 55;
+  --lux-accent-soft: 246, 215, 167;
+  --lux-text: 17, 17, 17;
+  --lux-text-muted: 95, 95, 95;
+  --lux-border: rgba(17, 17, 17, 0.08);
+}
+
+body {
+  color: rgb(var(--lux-text));
+  font-family: 'Cormorant Garamond', var(--font-body-family), serif;
+  letter-spacing: 0.02rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h0,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  font-family: Inter, var(--font-heading-family), sans-serif;
+  color: rgb(var(--lux-text));
+  letter-spacing: -0.015em;
+}
+
+.gradient {
+  background: rgb(var(--lux-bg));
+  background-attachment: scroll;
+}
+
+.section + .section {
+  margin-top: clamp(2.4rem, 3.2vw, 4.8rem);
+}
+
+.color-scheme-1,
+.color-scheme-2,
+.color-scheme-3,
+.color-scheme-4,
+.color-scheme-5 {
+  --color-background: var(--lux-bg);
+  --color-foreground: var(--lux-text);
+}
+
+.button,
+.shopify-challenge__button,
+.shopify-payment-button__button--unbranded,
+.customer button {
+  border-radius: 999px;
+  min-height: 4.4rem;
+  transition: transform 220ms ease, background-color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.button:not(.button--secondary) {
+  background-color: rgb(var(--lux-accent));
+  color: #1f1a10;
+  border: 1px solid rgba(var(--lux-accent), 0.88);
+}
+
+.button:not(.button--secondary):hover {
+  background-color: rgba(var(--lux-accent), 0.88);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.24);
+}
+
+.button--secondary {
+  background: transparent;
+  color: rgb(var(--lux-text));
+  border: 1px solid rgba(17, 17, 17, 0.18);
+}
+
+.button--secondary:hover {
+  background: rgba(var(--lux-accent-soft), 0.3);
+  border-color: rgba(var(--lux-accent), 0.7);
+}
+
+a {
+  color: rgb(var(--lux-text));
+}
+
+a:hover {
+  color: rgb(var(--lux-text));
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(var(--lux-accent), 0.9);
+  outline-offset: 2px;
+}
+
+.card--card,
+.card--standard .card__inner,
+.content-container,
+.shopify-policy__container {
+  border-color: rgba(17, 17, 17, 0.08);
+  border-radius: 1.6rem;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.field__input,
+.customer .field input,
+.select__select,
+textarea {
+  border-radius: 1.2rem;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.field__input:focus,
+.field__input:focus-visible,
+.select__select:focus,
+.select__select:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  border-color: rgba(var(--lux-accent), 0.9);
+  box-shadow: 0 0 0 2px rgba(var(--lux-accent-soft), 0.45);
+}
+
 .spinner {
   animation: rotator 1.4s linear infinite;
 }
@@ -3595,54 +3716,6 @@ details-disclosure > details {
   display: block;
 }
 
-* {
-  font-family: inherit;
-}
-
-body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-  color: #111;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
-}
-
-h1 {
-  font-size: clamp(40px, 6vw, 72px);
-}
-
-h2 {
-  font-size: clamp(28px, 4vw, 48px);
-}
-
-h3 {
-  font-size: clamp(22px, 2.5vw, 32px);
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.7;
-}
-
-button,
-input,
-textarea,
-select {
-  font-family: var(--font-body);
-}
-
 @keyframes indeterminateAnimation {
   0% {
     transform: translateX(-20%) scaleX(0);
@@ -3654,4 +3727,3 @@ select {
     transform: translateX(100%) scaleX(0);
   }
 }
-

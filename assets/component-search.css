@@ -73,3 +73,12 @@ input::-webkit-search-decoration {
   position: relative;
 }
 
+.search-modal {
+  border-bottom-color: rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.search__input.field__input {
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.92);
+}

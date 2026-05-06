@@ -224,3 +224,13 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   font-family: 'object-fit: contain';
 }
 
+/* Light luxury predictive panel */
+.predictive-search {
+  border-color: rgba(17, 17, 17, 0.1);
+  background-color: rgba(255, 255, 255, 0.98);
+  border-radius: 1.2rem;
+}
+
+.predictive-search__heading {
+  color: #5f5f5f;
+}

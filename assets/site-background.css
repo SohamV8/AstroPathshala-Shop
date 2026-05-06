@@ -1,0 +1,34 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  position: relative;
+  background-color: #fefefc;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--site-bg-image);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain; /* no stretch, no crop */
+  will-change: transform;
+}
+
+@media screen and (max-width: 749px) {
+  body::before {
+    background-position: center top;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    will-change: auto;
+  }
+}

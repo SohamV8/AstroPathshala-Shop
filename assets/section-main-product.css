@@ -1478,6 +1478,31 @@ a.product__text {
   text-transform: capitalize;
 }
 
+/* Light luxury product experience */
+.product__info-container {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 1.8rem;
+  background: rgba(255, 255, 255, 0.84);
+  padding: clamp(1.6rem, 2.6vw, 2.8rem);
+}
+
+.product__title h1,
+.product__title h2,
+.product__title h3 {
+  font-family: Inter, var(--font-heading-family), sans-serif;
+}
+
+.product__text,
+.product__description,
+.product__accordion .accordion__content {
+  color: #5f5f5f;
+}
+
+.product__media-item img,
+.product__media-item .media {
+  border-radius: 1.6rem;
+}
+
 @media screen and (forced-colors: active) {
   .recipient-fields > hr {
     border-top: 0.1rem solid rgb(var(--color-background));
@@ -1492,4 +1517,3 @@ a.product__text {
     border: none;
   }
 }
-

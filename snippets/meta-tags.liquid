@@ -19,6 +19,14 @@
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 
+{%- if request.page_type == 'article' and article -%}
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+  {%- if article.updated_at != blank -%}
+    <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+  {%- endif -%}
+  <meta property="article:section" content="{{ blog.title | escape }}">
+{%- endif -%}
+
 {%- if page_image -%}
   <meta property="og:image" content="http:{{ page_image | image_url }}">
   <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
@@ -37,4 +45,3 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
-

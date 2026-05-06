@@ -196,6 +196,18 @@ cart-items {
   text-align: center;
 }
 
+/* Light luxury cart layout */
+.cart__items {
+  border-bottom-color: rgba(17, 17, 17, 0.08);
+}
+
+.cart__footer {
+  border-radius: 1.6rem;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+  padding: 1.8rem;
+}
+
 @media screen and (min-width: 750px) {
   .cart-note {
     max-width: 35rem;
@@ -220,4 +232,3 @@ cart-items {
     gap: 1rem;
   }
 }
-

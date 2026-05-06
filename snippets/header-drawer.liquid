@@ -19,9 +19,13 @@
     <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
       <div class="menu-drawer__inner-container">
         <div class="menu-drawer__navigation-container">
-          <nav class="menu-drawer__navigation">
+          <nav class="menu-drawer__navigation" aria-label="Mobile menu">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
               {%- for link in section.settings.menu.links -%}
+                {%- liquid
+                  assign normalized_title = link.title | downcase | strip
+                -%}
+                {%- unless normalized_title == 'new arrivals' or normalized_title == 'contact us' or normalized_title == 'contact' -%}
                 <li>
                   {%- if link.links != blank -%}
                     <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
@@ -132,6 +136,7 @@
                     </a>
                   {%- endif -%}
                 </li>
+                {%- endunless -%}
               {%- endfor -%}
             </ul>
           </nav>
@@ -293,4 +298,3 @@
     </div>
   </details>
 </header-drawer>
-

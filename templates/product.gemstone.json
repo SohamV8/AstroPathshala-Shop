@@ -1,9 +1,0 @@
-{
-  "sections": {
-    "main-gemstone": {
-      "type": "main-gemstone",
-      "settings": {}
-    }
-  },
-  "order": ["main-gemstone"]
-}

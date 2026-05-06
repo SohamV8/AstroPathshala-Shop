@@ -5,9 +5,13 @@
   {% render 'header-dropdown-menu' %}
 {% endcomment %}
 
-<nav class="header__inline-menu">
+<nav class="header__inline-menu" aria-label="Primary">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
+      {%- liquid
+        assign normalized_title = link.title | downcase | strip
+      -%}
+      {%- unless normalized_title == 'new arrivals' or normalized_title == 'contact us' or normalized_title == 'contact' -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
@@ -98,7 +102,7 @@
           </a>
         {%- endif -%}
       </li>
+      {%- endunless -%}
     {%- endfor -%}
   </ul>
 </nav>
-

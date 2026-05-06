@@ -285,13 +285,16 @@
                         {%- assign skip_card_product_styles = true -%}
                       {%- when 'article' -%}
                         {% render 'article-card',
+                          blog: item.blog,
                           article: item,
                           show_image: true,
                           show_date: section.settings.article_show_date,
                           show_author: section.settings.article_show_author,
                           show_badge: true,
-                          media_aspect_ratio: 1,
-                          lazy_load: lazy_load
+                          media_aspect_ratio: 1.5,
+                          media_height: 'medium',
+                          lazy_load: lazy_load,
+                          image_sizes: '(min-width: 990px) min(400px, 32vw), calc(100vw - 3rem)'
                         %}
                       {%- when 'page' -%}
                         <div class="article-card-wrapper card-wrapper underline-links-hover">
@@ -527,7 +530,3 @@
   ]
 }
 {% endschema %}
-
-
-
-

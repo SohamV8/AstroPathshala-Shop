@@ -1,0 +1,93 @@
+{{ 'trust-strip.css' | asset_url | stylesheet_tag }}
+
+<section class="trust-strip color-{{ section.settings.color_scheme }}" role="region" aria-label="Store trust highlights">
+  <div class="page-width">
+    <ul class="trust-strip__list list-unstyled" role="list">
+      {%- for block in section.blocks -%}
+        <li class="trust-strip__item" {{ block.shopify_attributes }}>
+          <span class="trust-strip__icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'return' -%}
+                {{ 'icon-return.svg' | inline_asset_content }}
+              {%- when 'truck' -%}
+                {{ 'icon-truck.svg' | inline_asset_content }}
+              {%- when 'lock' -%}
+                {{ 'icon-lock.svg' | inline_asset_content }}
+              {%- when 'support' -%}
+                {{ 'icon-chat-bubble.svg' | inline_asset_content }}
+              {%- else -%}
+                {{ 'icon-checkmark.svg' | inline_asset_content }}
+            {%- endcase -%}
+          </span>
+          <div class="trust-strip__content">
+            <p class="trust-strip__title">{{ block.settings.title }}</p>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="trust-strip__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust strip",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "return",
+          "options": [
+            { "value": "return", "label": "Return" },
+            { "value": "truck", "label": "Shipping" },
+            { "value": "lock", "label": "Secure" },
+            { "value": "support", "label": "Support" },
+            { "value": "check", "label": "Check" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Above Rs 499"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Trust strip",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "return", "title": "Easy Return", "subtitle": "Quick & hassle free" } },
+        { "type": "badge", "settings": { "icon": "truck", "title": "Free Shipping", "subtitle": "Above Rs 499" } },
+        { "type": "badge", "settings": { "icon": "lock", "title": "Secure Payments", "subtitle": "COD/UPI/Cards" } },
+        { "type": "badge", "settings": { "icon": "support", "title": "24/7 Support", "subtitle": "Customer service" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

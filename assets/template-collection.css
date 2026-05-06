@@ -98,3 +98,16 @@
   margin-top: 1rem;
 }
 
+/* Light luxury collection rhythm */
+.collection__title.title-wrapper {
+  margin-bottom: 1.6rem;
+}
+
+.collection__description,
+.collection__description p {
+  color: #5f5f5f;
+}
+
+.collection .product-grid .grid__item {
+  padding-bottom: 0.8rem;
+}

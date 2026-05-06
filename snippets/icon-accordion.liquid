@@ -2,4 +2,3 @@
   {%- assign file = icon | replace: '_', '-' | prepend: 'icon-' | append: '.svg' -%}
   <span class="svg-wrapper">{{ file | inline_asset_content }}</span>
 {%- endif -%}
-

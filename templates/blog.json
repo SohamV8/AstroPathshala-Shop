@@ -1,1 +1,28 @@
-{"sections":{"blog-listing":{"type":"blog-listing","settings":{"logo_image":"shopify:\/\/shop_images\/astro-pathshala-Logo-Black-New.png","menu":"main-menu","hero_label":"Astro PathShala","hero_title":"Sacred","hero_title_italic":"Knowledge","hero_sub":"Ancient wisdom, modern guidance for your spiritual journey","blog_handle":"news","nl_sub":"","nl_placeholder":"Your email address","nl_btn":"Subscribe","social_instagram":"","social_youtube":"","social_facebook":"","social_whatsapp":"","contact_phone":"+91 9871130487","contact_email":"support@astropathshala.com"}}},"order":["blog-listing"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "intro": "Vedic astrology, Lal Kitab, gemstones, courses, and consultations — curated stories and guidance from Astro Pathshala, Gurugram.",
+        "search_placeholder": "Search articles…",
+        "search_button_label": "Search",
+        "tags_label": "Topics",
+        "tags_all_label": "All",
+        "show_spotlight": true,
+        "spotlight_eyebrow": "Featured",
+        "spotlight_cta_label": "Read article",
+        "posts_per_page": 12,
+        "show_image": true,
+        "image_height": "medium",
+        "show_date": true,
+        "show_author": false,
+        "show_reading_time": true,
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

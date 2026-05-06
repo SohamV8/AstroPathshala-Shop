@@ -60,3 +60,12 @@
   }
 }
 
+/* Editorial luxury reading layout */
+.blog-articles {
+  row-gap: clamp(1.8rem, 2.4vw, 3rem);
+}
+
+.blog-articles .article-card__info,
+.blog-articles .article-card__excerpt {
+  color: #5f5f5f;
+}

@@ -2,6 +2,7 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-featured-blog.css' | asset_url | stylesheet_tag }}
+{{ 'blog-editorial.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -72,10 +73,12 @@
                 blog: section.settings.blog,
                 article: article,
                 media_aspect_ratio: 1.66,
+                media_height: 'medium',
                 show_image: section.settings.show_image,
                 show_date: section.settings.show_date,
                 show_author: section.settings.show_author,
-                show_excerpt: true
+                show_excerpt: true,
+                image_sizes: '(min-width: 990px) min(42vw, 520px), calc(100vw - 3rem)'
               %}
             </li>
           {%- endfor -%}
@@ -327,6 +330,3 @@
   ]
 }
 {% endschema %}
-
-
-

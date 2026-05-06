@@ -1,87 +1,438 @@
-<style>
-:root{
-  --ivory:#FFFDF5;--black:#1A1208;--gold:#B8860B;--border:#E8D48A;--muted:#7A6535;--cream:#FDF8E8;--gold-pale:#F5E6C8;
-}
-.aps-footer{background:var(--cream);font-family:var(--font-body);}
-.aps-footer-main{padding:56px 48px 40px;}
-.aps-footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:52px;margin-bottom:48px;}
-.aps-footer-desc{font-size:13px;color:var(--muted);margin-top:14px;font-weight:300;line-height:1.8;max-width:240px;}
-.aps-footer-social{display:flex;gap:10px;margin-top:20px;}
-.aps-footer-social a{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);text-decoration:none;transition:border-color 0.2s,color 0.2s;}
-.aps-footer-social a:hover{border-color:var(--gold);color:var(--gold);}
-.aps-footer-divider{width:40px;height:2px;background:var(--gold);margin-bottom:20px;border-radius:1px;}
-.aps-footer-col h4{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--black);margin-bottom:20px;}
-.aps-footer-col ul{list-style:none;}
-.aps-footer-col ul li{margin-bottom:13px;display:flex;align-items:center;gap:8px;}
-.aps-footer-col ul li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;opacity:0.7;}
-.aps-footer-col ul li a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:300;transition:color 0.2s;}
-.aps-footer-col ul li a:hover{color:var(--gold);}
-.aps-footer-contact p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.8;display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
-.aps-footer-contact .lbl{color:var(--gold);font-weight:500;font-size:11px;min-width:20px;}
-.aps-footer-bottom{border-top:1px solid var(--border);padding:20px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.aps-footer-copy{font-size:12px;color:var(--muted);font-weight:300;}
-.aps-footer-india{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.aps-footer-india::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);}
-.aps-footer-legal{display:flex;gap:20px;}
-.aps-footer-legal a{font-size:12px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
-.aps-footer-legal a:hover{color:var(--gold);}
-@media(max-width:1024px){
-  .aps-footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
-  .aps-footer-main{padding:40px 28px;}
-  .aps-footer-bottom{padding:18px 28px;}
-}
-@media(max-width:768px){
-  .aps-footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
-  .aps-footer-bottom{flex-direction:column;gap:10px;text-align:center;}
-}
-@media(max-width:480px){
-  .aps-footer-grid{grid-template-columns:1fr;}
-}
-</style>
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 
-<footer class="aps-footer">
-  <div class="aps-footer-main">
-    <div class="aps-footer-grid">
-      <div>
-        <a href="{{ routes.root_url }}" style="display:block;margin-bottom:16px;text-decoration:none;">
-          {%- if section.settings.logo_image != blank -%}{{ section.settings.logo_image | image_url: width: 180 | image_tag: style: 'height:72px;width:auto;display:block;object-fit:contain;border-radius:4px;', alt: shop.name }}{%- else -%}<span style="font-family:var(--font-heading);font-size:20px;color:var(--gold-pale);">{{ shop.name }}</span>{%- endif -%}
+{%- style -%}
+  .footer {
+    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer {
+      margin-top: {{ section.settings.margin_top }}px;
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign has_social_icons = false
+  if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_tiktok_link != blank or settings.social_twitter_link != blank or settings.social_pinterest_link != blank
+    assign has_social_icons = true
+  endif
+-%}
+
+<footer class="footer premium-footer color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" role="contentinfo">
+  <div class="premium-footer__backdrop" aria-hidden="true"></div>
+  <div class="premium-footer__inner page-width">
+    <div class="premium-footer__top">
+      <section class="premium-footer__brand{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <a class="premium-footer__brand-link" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+          {%- if settings.brand_image != blank -%}
+            {%- assign brand_image_height = settings.brand_image_width | divided_by: settings.brand_image.aspect_ratio -%}
+            {{
+              settings.brand_image
+              | image_url: width: 460
+              | image_tag:
+                loading: 'lazy',
+                widths: '120, 180, 240, 320, 460',
+                height: brand_image_height,
+                width: settings.brand_image_width,
+                class: 'premium-footer__logo'
+            }}
+          {%- else -%}
+            <span class="premium-footer__brand-name">{{ shop.name }}</span>
+          {%- endif -%}
         </a>
-        <p class="aps-footer-desc">{{ section.settings.footer_desc | default: 'Authentic gemstones, Lal Kitaab remedies and Vedic astrology e-books — handpicked for your journey.' }}</p>
-        <div class="aps-footer-social">
-          <a href="{{ section.settings.social_instagram | default: '#' }}" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          <a href="{{ section.settings.social_youtube | default: '#' }}" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-          <a href="{{ section.settings.social_facebook | default: '#' }}" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-          <a href="{{ section.settings.social_whatsapp | default: '#' }}" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
-        </div>
-      </div>
-      <div class="aps-footer-col"><div class="aps-footer-divider"></div><h4>Shop</h4><ul><li><a href="{{ routes.collections_url | append: '/gemstone' }}">Gemstones</a></li><li><a href="{{ routes.collections_url | append: '/e-books' }}">E-Books</a></li><li><a href="{{ routes.collections_url | append: '/lal-kitaab-remedies' }}">Lal Kitaab</a></li><li><a href="{{ routes.all_products_collection_url }}">New Arrivals</a></li></ul></div>
-      <div class="aps-footer-col"><div class="aps-footer-divider"></div><h4>Learn</h4><ul><li><a href="/blogs/news">Blog</a></li><li><a href="/pages/gem-guide">Gem Guide</a></li><li><a href="/pages/rashi-guide">Rashi Guide</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/about">About Us</a></li></ul></div>
-      <div class="aps-footer-col"><div class="aps-footer-divider"></div><h4>Contact</h4><div class="aps-footer-contact"><p><span class="lbl">&#9990;</span>{{ section.settings.contact_phone | default: '+91 98765 43210' }}</p><p><span class="lbl">&#9993;</span>{{ section.settings.contact_email | default: 'support@astropathshala.com' }}</p><p><span class="lbl">&#9679;</span>{{ section.settings.contact_hours | default: 'Mon–Sat, 10am–7pm IST' }}</p></div><ul style="margin-top:16px;"><li><a href="/policies/shipping-policy">Shipping Policy</a></li><li><a href="/policies/refund-policy">Refund Policy</a></li></ul></div>
+        <p class="premium-footer__brand-description">{{ section.settings.brand_description }}</p>
+        <p class="premium-footer__brand-trust">{{ section.settings.brand_trust_line }}</p>
+      </section>
+
+      <nav class="premium-footer__links{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" aria-label="Footer quick links">
+        <h2 class="premium-footer__heading">Quick Links</h2>
+        <ul class="premium-footer__list list-unstyled" role="list">
+          <li><a href="{{ section.settings.about_url }}">About</a></li>
+          <li><a href="{{ section.settings.courses_url }}">Courses</a></li>
+          <li><a href="{{ section.settings.consultations_url }}">Consultations</a></li>
+          <li><a href="{{ section.settings.reports_url }}">Reports</a></li>
+          <li><a href="{{ section.settings.blog_url }}">Blog</a></li>
+          <li><a href="{{ section.settings.contact_url }}">Contact</a></li>
+          <li><a href="{{ section.settings.privacy_url }}">Privacy Policy</a></li>
+          <li><a href="{{ section.settings.terms_url }}">Terms</a></li>
+        </ul>
+      </nav>
+
+      <nav class="premium-footer__services{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" aria-label="Astrology services">
+        <h2 class="premium-footer__heading">Services</h2>
+        <ul class="premium-footer__list list-unstyled" role="list">
+          <li><a href="{{ section.settings.kundli_url }}">Kundli</a></li>
+          <li><a href="{{ section.settings.numerology_url }}">Numerology</a></li>
+          <li><a href="{{ section.settings.palmistry_url }}">Palmistry</a></li>
+          <li><a href="{{ section.settings.vastu_url }}">Vastu</a></li>
+          <li><a href="{{ section.settings.gemstones_url }}">Gemstones</a></li>
+          <li><a href="{{ section.settings.matchmaking_url }}">Matchmaking</a></li>
+          <li><a href="{{ section.settings.career_astrology_url }}">Career Astrology</a></li>
+          <li><a href="{{ section.settings.horoscope_url }}">Horoscope</a></li>
+        </ul>
+      </nav>
+
+      <section class="premium-footer__newsletter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" aria-label="Newsletter signup">
+        <h2 class="premium-footer__heading">{{ section.settings.newsletter_heading }}</h2>
+        <p class="premium-footer__newsletter-copy">{{ section.settings.newsletter_copy }}</p>
+        {%- if section.settings.newsletter_enable -%}
+          {%- form 'customer', id: 'PremiumFooterNewsletter', class: 'premium-footer__newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="premium-footer__newsletter-field">
+              <label class="visually-hidden" for="PremiumNewsletterForm--{{ section.id }}">{{ 'newsletter.label' | t }}</label>
+              <input
+                id="PremiumNewsletterForm--{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                class="premium-footer__input"
+                value="{{ form.email }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                {% if form.errors %}
+                  aria-invalid="true"
+                  aria-describedby="PremiumFooter-error"
+                {% elsif form.posted_successfully? %}
+                  aria-describedby="PremiumFooter-success"
+                {% endif %}
+                placeholder="{{ 'newsletter.label' | t }}"
+                required
+              >
+              <button type="submit" class="premium-footer__button" aria-label="{{ 'newsletter.button_label' | t }}">
+                {{ 'newsletter.button_label' | t }}
+              </button>
+            </div>
+            {%- if form.errors -%}
+              <small class="premium-footer__message premium-footer__message--error" id="PremiumFooter-error">
+                <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </small>
+            {%- endif -%}
+            {%- if form.posted_successfully? -%}
+              <p class="premium-footer__message premium-footer__message--success" id="PremiumFooter-success" tabindex="-1">
+                <span class="svg-wrapper">{{- 'icon-success.svg' | inline_asset_content -}}</span>
+                {{- 'newsletter.success' | t -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+        {%- endif -%}
+      </section>
     </div>
-  </div>
-  <div class="aps-footer-bottom">
-    <span class="aps-footer-copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
-    <span class="aps-footer-india">Made with care in India &#127470;&#127475;</span>
-    <div class="aps-footer-legal"><a href="/policies/privacy-policy">Privacy</a><a href="/policies/terms-of-service">Terms</a></div>
+
+    <div class="premium-footer__middle{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <section class="premium-footer__social" aria-label="Social media links">
+        <h2 class="premium-footer__heading premium-footer__heading--small">Follow</h2>
+        {%- if section.settings.show_social and has_social_icons -%}
+          <ul class="premium-footer__social-list list-unstyled" role="list">
+            {%- if settings.social_instagram_link != blank -%}
+              <li>
+                <a href="{{ settings.social_instagram_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
+                  <span class="svg-wrapper">{{ 'icon-instagram.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <li>
+                <a href="{{ settings.social_facebook_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">
+                  <span class="svg-wrapper">{{ 'icon-facebook.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}
+              <li>
+                <a href="{{ settings.social_youtube_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="YouTube">
+                  <span class="svg-wrapper">{{ 'icon-youtube.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}
+              <li>
+                <a href="{{ settings.social_tiktok_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="TikTok">
+                  <span class="svg-wrapper">{{ 'icon-tiktok.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_twitter_link != blank -%}
+              <li>
+                <a href="{{ settings.social_twitter_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="X">
+                  <span class="svg-wrapper">{{ 'icon-twitter.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}
+              <li>
+                <a href="{{ settings.social_pinterest_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Pinterest">
+                  <span class="svg-wrapper">{{ 'icon-pinterest.svg' | inline_asset_content }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+      </section>
+
+      <section class="premium-footer__contact" aria-label="Contact details">
+        <h2 class="premium-footer__heading premium-footer__heading--small">Contact</h2>
+        <ul class="premium-footer__contact-list list-unstyled" role="list">
+          <li>
+            <span class="svg-wrapper">{{ 'icon-chat-bubble.svg' | inline_asset_content }}</span>
+            <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+          </li>
+          <li>
+            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+            <a href="https://wa.me/{{ section.settings.whatsapp_number | replace: ' ', '' | replace: '+', '' }}" target="_blank" rel="noopener">
+              {{ section.settings.whatsapp_number }}
+            </a>
+          </li>
+          <li>
+            <span class="svg-wrapper">{{ 'icon-map-pin.svg' | inline_asset_content }}</span>
+            <span>{{ section.settings.location_text }}</span>
+          </li>
+          <li>
+            <span class="svg-wrapper">{{ 'icon-stopwatch.svg' | inline_asset_content }}</span>
+            <span>{{ section.settings.support_timing }}</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="premium-footer__divider" aria-hidden="true"></div>
+
+    <div class="premium-footer__bottom">
+      <small class="premium-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }}, {{ shop.name }}. Gurugram's trusted Vedic Astrology and Lal Kitab platform.
+      </small>
+      <nav class="premium-footer__legal" aria-label="Legal links">
+        <a href="{{ section.settings.privacy_url }}">Privacy</a>
+        <a href="{{ section.settings.terms_url }}">Terms</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "Premium Footer",
   "settings": [
-    { "type": "image_picker", "id": "logo_image", "label": "Logo image" },
-    { "type": "text", "id": "footer_desc", "label": "Footer description", "default": "Authentic gemstones, Lal Kitaab remedies and Vedic astrology e-books — handpicked for your journey." },
-    { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "social_youtube", "label": "YouTube URL" },
-    { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
-    { "type": "url", "id": "social_whatsapp", "label": "WhatsApp URL" },
-    { "type": "text", "id": "contact_phone", "label": "Phone number", "default": "+91 98765 43210" },
-    { "type": "text", "id": "contact_email", "label": "Email address", "default": "support@astropathshala.com" },
-    { "type": "text", "id": "contact_hours", "label": "Business hours", "default": "Mon–Sat, 10am–7pm IST" }
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Brand content"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_description",
+      "label": "Brand description",
+      "default": "A modern astrology and spiritual intelligence platform for clarity, confidence, and conscious growth."
+    },
+    {
+      "type": "text",
+      "id": "brand_trust_line",
+      "label": "Trust line",
+      "default": "Trusted guidance, modern experience, timeless wisdom."
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "default": true,
+      "label": "Enable newsletter"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "newsletter_heading",
+      "default": "Join Our Cosmic Journal",
+      "label": "Newsletter heading"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_copy",
+      "label": "Newsletter description",
+      "default": "Receive thoughtful insights, launch updates, and weekly astrological guidance."
+    },
+    {
+      "type": "header",
+      "content": "Quick links"
+    },
+    {
+      "type": "url",
+      "id": "about_url",
+      "label": "About URL"
+    },
+    {
+      "type": "url",
+      "id": "courses_url",
+      "label": "Courses URL"
+    },
+    {
+      "type": "url",
+      "id": "consultations_url",
+      "label": "Consultations URL"
+    },
+    {
+      "type": "url",
+      "id": "reports_url",
+      "label": "Reports URL"
+    },
+    {
+      "type": "url",
+      "id": "blog_url",
+      "label": "Blog URL"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact URL"
+    },
+    {
+      "type": "url",
+      "id": "privacy_url",
+      "label": "Privacy URL"
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "Terms URL"
+    },
+    {
+      "type": "header",
+      "content": "Service links"
+    },
+    {
+      "type": "url",
+      "id": "kundli_url",
+      "label": "Kundli URL"
+    },
+    {
+      "type": "url",
+      "id": "numerology_url",
+      "label": "Numerology URL"
+    },
+    {
+      "type": "url",
+      "id": "palmistry_url",
+      "label": "Palmistry URL"
+    },
+    {
+      "type": "url",
+      "id": "vastu_url",
+      "label": "Vastu URL"
+    },
+    {
+      "type": "url",
+      "id": "gemstones_url",
+      "label": "Gemstones URL"
+    },
+    {
+      "type": "url",
+      "id": "matchmaking_url",
+      "label": "Matchmaking URL"
+    },
+    {
+      "type": "url",
+      "id": "career_astrology_url",
+      "label": "Career astrology URL"
+    },
+    {
+      "type": "url",
+      "id": "horoscope_url",
+      "label": "Horoscope URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact details"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "support@example.com"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "default": "+91 90000 00000"
+    },
+    {
+      "type": "text",
+      "id": "location_text",
+      "label": "Location",
+      "default": "New Delhi, India"
+    },
+    {
+      "type": "text",
+      "id": "support_timing",
+      "label": "Support timing",
+      "default": "Mon - Sat, 10:00 AM to 7:00 PM IST"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": true,
+      "label": "Show social icons"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Footer"
+    }
   ]
 }
 {% endschema %}
-
-
-

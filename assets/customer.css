@@ -59,6 +59,19 @@
   margin-top: 0;
 }
 
+/* Account/customer premium clarity */
+.customer table,
+.addresses li[data-address] {
+  border-radius: 1.4rem;
+  border-color: rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.customer td::before,
+.customer thead th {
+  color: #5f5f5f;
+}
+
 /* Customer Table */
 .customer table {
   table-layout: auto;
@@ -752,4 +765,3 @@ li[data-address] > h2 {
 .addresses form > div:nth-of-type(7) + div[id] {
   margin-top: 1.5rem;
 }
-
