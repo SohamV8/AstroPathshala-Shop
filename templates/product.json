@@ -156,7 +156,7 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/1_4.webp",
+        "image": "{{ product.metafields.custom.image_banner.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -173,7 +173,7 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_May_7_2026_11_17_23_AM.webp",
+        "image": "{{ product.metafields.custom.turmuli_image.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -195,7 +195,7 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_May_7_2026_11_17_17_AM.webp",
+        "image": "{{ product.metafields.custom.image_03.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
