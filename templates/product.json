@@ -156,7 +156,7 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "{{ product.metafields.custom.image_banner.value }}",
+        "image": "{{ product.metafields.custom.image_03.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -190,7 +190,6 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "{{ product.metafields.custom.image_03.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
