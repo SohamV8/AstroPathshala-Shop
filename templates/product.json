@@ -152,28 +152,11 @@
         "padding_bottom": 36
       }
     },
-    "image_banner_eNeHCc": {
+    "image_banner_AFp4zg": {
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "{{ product.metafields.custom.image_banner.value }}",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
-    },
-    "image_banner_KppXjH": {
-      "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "{{ product.metafields.custom.turmuli_image.value }}",
+        "image": "{{ product.metafields.custom.zircon.value }}",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -190,23 +173,6 @@
       "type": "_blocks",
       "name": "Marquee",
       "settings": {}
-    },
-    "image_banner_aDUGhQ": {
-      "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "{{ product.metafields.custom.image_03.value }}",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
     },
     "related-products": {
       "type": "related-products",
@@ -254,10 +220,8 @@
   },
   "order": [
     "main",
-    "image_banner_eNeHCc",
-    "image_banner_KppXjH",
+    "image_banner_AFp4zg",
     "blocks_y69Wbp",
-    "image_banner_aDUGhQ",
     "related-products",
     "177787383347cadde0"
   ]
