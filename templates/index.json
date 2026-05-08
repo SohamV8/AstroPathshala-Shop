@@ -27,7 +27,7 @@
       "type": "image-banner",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_03_28_PM.webp",
-        "image_overlay_opacity": 10,
+        "image_overlay_opacity": 0,
         "image_height": "medium",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
@@ -37,6 +37,52 @@
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": false
+      }
+    },
+    "trust_strip_main": {
+      "type": "trust-strip",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "check",
+            "title": "11,000+ Students",
+            "subtitle": "Trusted learning community"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "support",
+            "title": "20+ Years Experience",
+            "subtitle": "Deep astrology practice"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "title": "Vedic + Lal Kitab",
+            "subtitle": "Authentic, practical guidance"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "title": "Gurugram Presence",
+            "subtitle": "On-ground consultations"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
       }
     },
     "rich_text": {
@@ -223,52 +269,6 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
-    },
-    "trust_strip_main": {
-      "type": "trust-strip",
-      "settings": {
-        "color_scheme": "scheme-1"
-      },
-      "blocks": {
-        "badge_1": {
-          "type": "badge",
-          "settings": {
-            "icon": "check",
-            "title": "11,000+ Students",
-            "subtitle": "Trusted learning community"
-          }
-        },
-        "badge_2": {
-          "type": "badge",
-          "settings": {
-            "icon": "support",
-            "title": "20+ Years Experience",
-            "subtitle": "Deep astrology practice"
-          }
-        },
-        "badge_3": {
-          "type": "badge",
-          "settings": {
-            "icon": "lock",
-            "title": "Vedic + Lal Kitab",
-            "subtitle": "Authentic, practical guidance"
-          }
-        },
-        "badge_4": {
-          "type": "badge",
-          "settings": {
-            "icon": "return",
-            "title": "Gurugram Presence",
-            "subtitle": "On-ground consultations"
-          }
-        }
-      },
-      "block_order": [
-        "badge_1",
-        "badge_2",
-        "badge_3",
-        "badge_4"
-      ]
     },
     "image_banner_MFnUnC": {
       "type": "image-banner",
