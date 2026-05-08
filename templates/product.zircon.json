@@ -32,6 +32,12 @@
             "show_inventory_quantity": true
           }
         },
+        "custom_liquid_Th3fUC": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": ""
+          }
+        },
         "custom_liquid_ngrpPf": {
           "type": "custom_liquid",
           "settings": {
@@ -148,6 +154,7 @@
         "price_dRR6Rm",
         "rating_AkB6V4",
         "inventory_xaiphP",
+        "custom_liquid_Th3fUC",
         "custom_liquid_ngrpPf",
         "variant_picker_69Tn4T",
         "quantity_selector_zYDphx",
