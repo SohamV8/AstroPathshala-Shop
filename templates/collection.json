@@ -22,7 +22,7 @@
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/a-luxurious-and-elegant-hero-image-for-an-ecommerce-website-selling-gemstones-and-ebooks-featuring-glowing-polished-gemstones-ruby-sapphire-emerald-amethyst-arranged-on-a-dark-black-r.png",
+        "image": "shopify://shop_images/banner.webp",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
