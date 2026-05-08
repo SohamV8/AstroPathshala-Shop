@@ -16,6 +16,10 @@
           "type": "title",
           "settings": {}
         },
+        "price_dRR6Rm": {
+          "type": "price",
+          "settings": {}
+        },
         "rating_AkB6V4": {
           "type": "rating",
           "settings": {}
@@ -111,6 +115,7 @@
       },
       "block_order": [
         "title",
+        "price_dRR6Rm",
         "rating_AkB6V4",
         "inventory_xaiphP",
         "custom_liquid_ngrpPf",
