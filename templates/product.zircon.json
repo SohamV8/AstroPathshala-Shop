@@ -37,10 +37,13 @@
           "settings": {
             "layout": "horizontal",
             "icon_1": "box",
-            "heading_1": "<strong>Free Shipping</strong>: above INR 499",
+            "image_1": "shopify://shop_images/AI_Generated_gift_box_Graphics-removebg-preview.png",
+            "heading_1": "<strong>Free Shipping: above INR 499</strong>",
             "icon_2": "price_tag",
+            "image_2": "shopify://shop_images/White_price_tag_icon_vector_image_on_VectorStock-removebg-preview.png",
             "heading_2": "<strong>COD </strong>Available",
             "icon_3": "truck",
+            "image_3": "shopify://shop_images/Fast_Delivery_Truck_Icon_Graphic_Design_Template_Vector__Delivery_Icons__Truck_Icons__Template_Icons_PNG_and_Vector_with_Transparent_Background_for_Free_Download-removebg-preview.png",
             "heading_3": "Delivery: <strong>3-5 days</strong>"
           }
         },
