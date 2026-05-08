@@ -1,6 +1,303 @@
+{% doc %}
+  @prompt
+    Create a price section showing sale price ₹500 in large bold text, original price ₹1,000 with strikethrough in gray, and a green rounded badge next to it saying "Save ₹500".
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-price-section-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-price-container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ai-price-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .ai-sale-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.sale_price_size }}px;
+    font-weight: {{ block.settings.sale_price_weight }};
+    color: {{ block.settings.sale_price_color }};
+    line-height: 1.2;
+  }
+
+  .ai-original-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.original_price_size }}px;
+    font-weight: {{ block.settings.original_price_weight }};
+    color: {{ block.settings.original_price_color }};
+    text-decoration: line-through;
+    line-height: 1.2;
+  }
+
+  .ai-savings-badge-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    padding: {{ block.settings.badge_padding_vertical }}px {{ block.settings.badge_padding_horizontal }}px;
+    background-color: {{ block.settings.badge_bg_color }};
+    color: {{ block.settings.badge_text_color }};
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: {{ block.settings.badge_font_weight }};
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-price-container-{{ ai_gen_id }} {
+      gap: 8px;
+    }
+
+    .ai-price-wrapper-{{ ai_gen_id }} {
+      gap: 8px;
+    }
+
+    .ai-sale-price-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.sale_price_size }}px * 0.85);
+    }
+
+    .ai-original-price-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.original_price_size }}px * 0.85);
+    }
+
+    .ai-savings-badge-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.badge_font_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-price-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-price-container-{{ ai_gen_id }}">
+    <div class="ai-price-wrapper-{{ ai_gen_id }}">
+      <span class="ai-sale-price-{{ ai_gen_id }}">{{ block.settings.sale_price }}</span>
+      <span class="ai-original-price-{{ ai_gen_id }}">{{ block.settings.original_price }}</span>
+    </div>
+    {% if block.settings.show_savings_badge %}
+      <span class="ai-savings-badge-{{ ai_gen_id }}">{{ block.settings.savings_text }}</span>
+    {% endif %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Price display",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sale price"
+    },
+    {
+      "type": "text",
+      "id": "sale_price",
+      "label": "Sale price",
+      "default": "₹500"
+    },
+    {
+      "type": "range",
+      "id": "sale_price_size",
+      "label": "Font size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "sale_price_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "sale_price_color",
+      "label": "Color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Original price"
+    },
+    {
+      "type": "text",
+      "id": "original_price",
+      "label": "Original price",
+      "default": "₹1,000"
+    },
+    {
+      "type": "range",
+      "id": "original_price_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "original_price_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "original_price_color",
+      "label": "Color",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Savings badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings_badge",
+      "label": "Show savings badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "savings_text",
+      "label": "Savings text",
+      "default": "Save ₹500"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Background color",
+      "default": "#22c55e"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "badge_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_vertical",
+      "label": "Vertical padding",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Price display"
+    }
+  ],
+  "tag": null
+}
 {% endschema %}
