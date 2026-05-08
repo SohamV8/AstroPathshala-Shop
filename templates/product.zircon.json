@@ -20,9 +20,11 @@
           "type": "rating",
           "settings": {}
         },
-        "price": {
-          "type": "price",
-          "settings": {}
+        "custom_liquid_wipm7U": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"price-section\">\n  <span class=\"sale-price\">Rs. 500</span>\n\n  <div class=\"price-info\">\n    <span class=\"original-price\">Rs/1,000</span>\n    <span class=\"save-badge\">Save Rs. 500</span>\n  </div>\n</div>\n\n<style>\n.price-section {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  font-family: Arial, sans-serif;\n  flex-wrap: wrap;\n}\n\n.sale-price {\n  font-size: 36px;\n  font-weight: 700;\n  color: #000;\n}\n\n.price-info {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n}\n\n.original-price {\n  font-size: 20px;\n  color: #888;\n  text-decoration: line-through;\n}\n\n.save-badge {\n  background: #16a34a;\n  color: #fff;\n  padding: 6px 14px;\n  border-radius: 999px;\n  font-size: 14px;\n  font-weight: 600;\n}\n</style>"
+          }
         },
         "inventory_xaiphP": {
           "type": "inventory",
@@ -32,19 +34,10 @@
             "show_inventory_quantity": true
           }
         },
-        "icon_with_text_q9fFyi": {
-          "type": "icon-with-text",
+        "custom_liquid_ngrpPf": {
+          "type": "custom_liquid",
           "settings": {
-            "layout": "horizontal",
-            "icon_1": "box",
-            "image_1": "shopify://shop_images/AI_Generated_gift_box_Graphics-removebg-preview.png",
-            "heading_1": "<strong>Free Shipping: above INR 499</strong>",
-            "icon_2": "price_tag",
-            "image_2": "shopify://shop_images/White_price_tag_icon_vector_image_on_VectorStock-removebg-preview.png",
-            "heading_2": "<strong>COD </strong>Available",
-            "icon_3": "truck",
-            "image_3": "shopify://shop_images/Fast_Delivery_Truck_Icon_Graphic_Design_Template_Vector__Delivery_Icons__Truck_Icons__Template_Icons_PNG_and_Vector_with_Transparent_Background_for_Free_Download-removebg-preview.png",
-            "heading_3": "Delivery: <strong>3-5 days</strong>"
+            "custom_liquid": "<div class=\"feature-grid\">\n  \n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      🚚\n    </div>\n    <p>Free shipping above ₹499</p>\n  </div>\n\n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      💵\n    </div>\n    <p>Cash on delivery</p>\n  </div>\n\n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      ⏰\n    </div>\n    <p>Ships in 3–5 days</p>\n  </div>\n\n</div>\n\n<style>\n.feature-grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 14px;\n  margin-top: 20px;\n}\n\n.feature-card {\n  background: #f5f5f5;\n  border-radius: 14px;\n  padding: 18px 12px;\n  text-align: center;\n}\n\n.feature-card .icon {\n  font-size: 28px;\n  color: #2563eb;\n  margin-bottom: 10px;\n  line-height: 1;\n}\n\n.feature-card p {\n  font-size: 13px;\n  color: #666;\n  margin: 0;\n  line-height: 1.5;\n  font-weight: 500;\n}\n\n/* Mobile Responsive */\n@media (max-width: 768px) {\n  .feature-grid {\n    grid-template-columns: 1fr;\n  }\n}\n</style>"
           }
         },
         "variant_picker_69Tn4T": {
@@ -125,9 +118,9 @@
       "block_order": [
         "title",
         "rating_AkB6V4",
-        "price",
+        "custom_liquid_wipm7U",
         "inventory_xaiphP",
-        "icon_with_text_q9fFyi",
+        "custom_liquid_ngrpPf",
         "variant_picker_69Tn4T",
         "quantity_selector_zYDphx",
         "complementary_BK9HWx",
