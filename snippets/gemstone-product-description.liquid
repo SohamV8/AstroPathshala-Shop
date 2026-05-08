@@ -1,0 +1,177 @@
+{%- liquid
+  assign title = product.title | downcase
+  assign gem_key = ''
+  if title contains 'zircon'
+    assign gem_key = 'zircon'
+  elsif title contains 'tourmaline'
+    assign gem_key = 'tourmaline'
+  elsif title contains 'tiger eye' or title contains 'tiger-eye'
+    assign gem_key = 'tiger-eye'
+  elsif title contains 'citrine'
+    assign gem_key = 'citrine'
+  elsif title contains 'sulemani hakik' or title contains 'sulemani'
+    assign gem_key = 'sulemani-hakik'
+  elsif title contains 'peridot'
+    assign gem_key = 'peridot'
+  elsif title contains 'moonstone'
+    assign gem_key = 'moonstone'
+  elsif title contains 'mahe mariam' or title contains 'mariam'
+    assign gem_key = 'mahe-mariam'
+  elsif title contains 'lapis lazuli' or title contains 'lapis'
+    assign gem_key = 'lapis-lazuli'
+  elsif title contains 'kaka neeli' or title contains 'iolite'
+    assign gem_key = 'kaka-neeli'
+  endif
+-%}
+
+{%- if gem_key != blank -%}
+  {%- capture specs_html -%}{%- endcapture -%}
+  {%- capture benefits_html -%}{%- endcapture -%}
+  {%- capture who_html -%}{%- endcapture -%}
+
+  {%- case gem_key -%}
+    {%- when 'zircon' -%}
+      {%- capture specs_html -%}<ul><li>Stone Name: Natural Zircon</li><li>Planet Association: Venus (Shukra)</li><li>Color: Premium Shine Finish</li><li>Shape: Designer Cut</li><li>Usage: Ring / Pendant</li><li>Certification: Available (Optional)</li><li>Origin: Natural Gemstone</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Attracts love, romance &amp; emotional harmony</li><li>Enhances wealth, luxury &amp; financial opportunities</li><li>Improves charm, confidence &amp; personality</li><li>Supports creativity, beauty &amp; artistic success</li><li>Helps strengthen Venus energy in astrology</li><li>Promotes positivity, peace &amp; attraction power</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>People facing relationship or love issues</li><li>Individuals seeking financial growth &amp; luxury</li><li>Artists, influencers, media &amp; creative professionals</li><li>Those with weak Venus placement in Kundali</li></ul>{%- endcapture -%}
+    {%- when 'tourmaline' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Tourmaline Stone</li><li>Category: Healing &amp; Protection Gemstone</li><li>Stone Type: Premium Natural Tourmaline</li><li>Color: Natural Multi-Tone / Dark Finish</li><li>Finish: Smooth &amp; Polished Shine</li><li>Shape: Designer Cut Stone</li><li>Usage: Ring, Pendant, Bracelet &amp; Spiritual Use</li><li>Energy Type: Protection, Grounding &amp; Positive Energy</li><li>Suitable For: Men &amp; Women</li><li>Packaging: Secure Premium Box Packaging</li><li>Quality: Handpicked Premium Grade Stone</li><li>Country of Origin: India</li><li>Ideal For: Daily Wear, Meditation &amp; Spiritual Practices</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Protects from negative energy &amp; unwanted vibrations</li><li>Promotes positivity, confidence &amp; mental clarity</li><li>Helps create emotional balance &amp; inner peace</li><li>Supports grounding and spiritual protection</li><li>Enhances focus, stability &amp; personal strength</li><li>Helps maintain a calm and peaceful aura</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>People seeking protection from negativity</li><li>Individuals facing stress or emotional imbalance</li><li>Meditation &amp; spiritual healing practitioners</li><li>Those wanting positivity and grounding energy</li><li>Professionals seeking confidence &amp; stability</li></ul>{%- endcapture -%}
+    {%- when 'tiger-eye' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Tiger Eye Stone</li><li>Category: Protection &amp; Confidence Gemstone</li><li>Stone Type: Natural Quartz Family Stone</li><li>Color: Golden Brown with Natural Stripes</li><li>Finish: Smooth Polished Shine</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Confidence, Focus &amp; Protection</li><li>Suitable For: Men &amp; Women</li><li>Quality: Premium Handpicked Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Boosts confidence, courage &amp; self-belief</li><li>Enhances focus, concentration &amp; mental clarity</li><li>Protects against negative energy &amp; stress</li><li>Encourages motivation and disciplined thinking</li><li>Supports emotional balance &amp; grounding</li><li>Helps improve decision-making abilities</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>Students seeking focus &amp; concentration</li><li>Professionals and business owners</li><li>People facing fear, stress, or self-doubt</li><li>Individuals wanting protection &amp; grounding</li><li>Anyone seeking confidence and positive energy</li></ul>{%- endcapture -%}
+    {%- when 'citrine' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Citrine Stone</li><li>Category: Wealth &amp; Success Crystal</li><li>Stone Type: Natural Quartz Crystal</li><li>Color: Golden Yellow / Honey Tone</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Wealth, Success &amp; Positivity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Attracts wealth, abundance &amp; prosperity</li><li>Enhances confidence, motivation &amp; success mindset</li><li>Promotes positivity, joy &amp; emotional balance</li><li>Helps improve focus, creativity &amp; decision-making</li><li>Supports manifestation and growth energy</li><li>Encourages optimism and personal power</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>Business owners &amp; entrepreneurs</li><li>Students and professionals seeking confidence</li><li>Individuals focused on financial growth</li><li>People wanting positivity &amp; motivation</li><li>Anyone seeking abundance and success energy</li></ul>{%- endcapture -%}
+    {%- when 'sulemani-hakik' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Sulemani Hakik Stone</li><li>Category: Protection &amp; Rahu Shanti Gemstone</li><li>Stone Type: Natural Black Agate</li><li>Color: Black / Brown Natural Patterns</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Protection, Grounding &amp; Positivity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Protects from evil eye &amp; negative energies</li><li>Supports Rahu Shanti &amp; spiritual protection</li><li>Helps reduce stress, fear &amp; overthinking</li><li>Promotes emotional balance &amp; grounding</li><li>Enhances confidence, focus &amp; inner stability</li><li>Encourages positivity and mental peace</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>People facing negativity or evil eye effects</li><li>Individuals seeking Rahu Shanti support</li><li>Those dealing with stress, fear, or overthinking</li><li>Spiritual seekers &amp; meditation practitioners</li><li>Professionals wanting focus and protection energy</li></ul>{%- endcapture -%}
+    {%- when 'peridot' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Peridot Stone</li><li>Category: Success &amp; Clarity Gemstone</li><li>Stone Type: Natural Olivine Mineral</li><li>Color: Light Green / Olive Green</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Success, Clarity &amp; Positivity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Enhances clarity, focus &amp; decision-making</li><li>Attracts success, prosperity &amp; positive opportunities</li><li>Promotes emotional balance &amp; inner peace</li><li>Encourages confidence, creativity &amp; motivation</li><li>Helps remove negativity and mental stress</li><li>Supports personal growth and positive energy</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>Students seeking concentration &amp; clarity</li><li>Professionals and business owners</li><li>People wanting positivity and emotional balance</li><li>Individuals focused on success &amp; self-growth</li><li>Anyone seeking peace, confidence &amp; prosperity</li></ul>{%- endcapture -%}
+    {%- when 'moonstone' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Moonstone</li><li>Category: Peace &amp; Healing Crystal</li><li>Stone Type: Natural Feldspar Mineral</li><li>Color: White / Milky Glow with Natural Shine</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Peace, Intuition &amp; Healing</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Promotes peace, calmness &amp; emotional balance</li><li>Enhances intuition, clarity &amp; inner wisdom</li><li>Supports emotional healing &amp; stress relief</li><li>Encourages positivity and spiritual growth</li><li>Helps improve focus, self-awareness &amp; mindfulness</li><li>Creates soothing and calming energy</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>People seeking emotional peace &amp; balance</li><li>Meditation and spiritual healing practitioners</li><li>Individuals wanting intuition &amp; mental clarity</li><li>Those facing stress, anxiety, or emotional confusion</li><li>Anyone seeking calm and positive energy</li></ul>{%- endcapture -%}
+    {%- when 'mahe-mariam' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Mahe Mariam Stone</li><li>Category: Emotional Healing &amp; Grounding Stone</li><li>Stone Type: Mariam Jasper / Calligraphy Stone</li><li>Color: Earthy Brown with Natural Patterns</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Healing, Grounding &amp; Positivity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Supports emotional healing &amp; inner peace</li><li>Helps reduce stress, anxiety &amp; emotional confusion</li><li>Promotes grounding, balance &amp; stability</li><li>Encourages confidence, courage &amp; positivity</li><li>Enhances focus, clarity &amp; decision-making</li><li>Protects from negative energy and emotional imbalance</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>People facing emotional stress or negativity</li><li>Individuals seeking inner peace &amp; healing</li><li>Meditation and spiritual healing practitioners</li><li>Students and professionals needing focus</li><li>Anyone seeking grounding and positive energy</li></ul>{%- endcapture -%}
+    {%- when 'lapis-lazuli' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Lapis Lazuli Stone</li><li>Category: Intuition &amp; Clarity Gemstone</li><li>Stone Type: Natural Lapis Lazuli</li><li>Color: Deep Royal Blue with Natural Golden Flecks</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Intuition, Confidence &amp; Clarity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Enhances intuition, wisdom &amp; inner clarity</li><li>Boosts confidence, communication &amp; self-expression</li><li>Supports focus, mental clarity &amp; decision-making</li><li>Promotes emotional balance &amp; positivity</li><li>Encourages spiritual awareness and mindfulness</li><li>Helps remove negativity and mental confusion</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>Students seeking focus and concentration</li><li>Professionals wanting confidence &amp; clarity</li><li>Meditation and spiritual healing practitioners</li><li>Individuals seeking emotional balance &amp; positivity</li><li>Anyone looking for wisdom, intuition &amp; inner strength</li></ul>{%- endcapture -%}
+    {%- when 'kaka-neeli' -%}
+      {%- capture specs_html -%}<ul><li>Product Name: Natural Kaka Neeli Stone</li><li>Category: Focus &amp; Protection Gemstone</li><li>Stone Type: Natural Iolite Gemstone</li><li>Color: Violet Blue / Deep Blue</li><li>Finish: Smooth Premium Polish</li><li>Usage: Ring, Pendant, Bracelet &amp; Meditation</li><li>Energy Type: Clarity, Protection &amp; Positivity</li><li>Suitable For: Men &amp; Women</li><li>Quality: Handpicked Premium Grade Stone</li><li>Packaging: Secure Premium Packaging</li><li>Country of Origin: India</li></ul>{%- endcapture -%}
+      {%- capture benefits_html -%}<ul><li>Enhances focus, clarity &amp; concentration</li><li>Supports confidence, discipline &amp; inner strength</li><li>Helps protect against negativity &amp; distractions</li><li>Encourages emotional balance &amp; calmness</li><li>Promotes intuition, wisdom &amp; spiritual awareness</li><li>Supports positive thinking and decision-making</li></ul>{%- endcapture -%}
+      {%- capture who_html -%}<ul><li>Students seeking focus &amp; concentration</li><li>Professionals wanting discipline &amp; clarity</li><li>Individuals facing confusion or stress</li><li>Meditation and spiritual healing practitioners</li><li>Anyone seeking protection and positive energy</li></ul>{%- endcapture -%}
+  {%- endcase -%}
+
+  <div class="gemstone-product-description quick-add-hidden" data-gemstone-description="{{ gem_key }}">
+    <style>
+      .gemstone-product-description {
+        margin-top: 2rem;
+        display: grid;
+        gap: 0.9rem;
+      }
+      .gemstone-product-description details {
+        border: 1px solid rgba(17, 17, 17, 0.1);
+        border-radius: 1.2rem;
+        background: #fffefc;
+        overflow: clip;
+        transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+      }
+      .gemstone-product-description details[open] {
+        border-color: rgba(212, 175, 55, 0.32);
+        box-shadow: 0 8px 24px rgba(17, 17, 17, 0.05);
+      }
+      .gemstone-product-description summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 1.35rem 1.4rem;
+        font-family: Inter, var(--font-heading-family), sans-serif;
+        font-size: clamp(1.45rem, 0.2vw + 1.35rem, 1.62rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: #111111;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background 220ms ease;
+      }
+      .gemstone-product-description summary::-webkit-details-marker { display: none; }
+      .gemstone-product-description summary:hover {
+        background: rgba(255, 248, 238, 0.7);
+      }
+      .gemstone-product-description summary:focus-visible {
+        outline: 2px solid rgba(212, 175, 55, 0.8);
+        outline-offset: -2px;
+      }
+      .gemstone-product-description summary::after {
+        content: '';
+        width: 1rem;
+        height: 1rem;
+        border-right: 2px solid #8a8a8a;
+        border-bottom: 2px solid #8a8a8a;
+        transform: rotate(45deg) translateY(-1px);
+        transition: transform 220ms ease, border-color 220ms ease;
+      }
+      .gemstone-product-description details[open] > summary::after {
+        transform: rotate(-135deg) translateX(-1px);
+        border-color: #d4af37;
+      }
+      .gemstone-product-description__content {
+        padding: 0.15rem 1.4rem 1.4rem;
+        animation: gemDropdown 240ms ease;
+      }
+      .gemstone-product-description__content ul {
+        margin: 0;
+        padding-left: 1.7rem;
+      }
+      .gemstone-product-description__content li {
+        margin: 0.5rem 0;
+        line-height: 1.72;
+        color: #4b4b4b;
+      }
+      @keyframes gemDropdown {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .gemstone-product-description details,
+        .gemstone-product-description summary::after,
+        .gemstone-product-description__content { transition: none !important; animation: none !important; }
+      }
+      @media screen and (max-width: 749px) {
+        .gemstone-product-description {
+          gap: 0.7rem;
+        }
+        .gemstone-product-description summary {
+          padding: 1.2rem 1.1rem;
+          font-size: clamp(1.35rem, 0.7vw + 1.2rem, 1.5rem);
+        }
+        .gemstone-product-description__content {
+          padding: 0.1rem 1.1rem 1.2rem;
+        }
+      }
+    </style>
+
+    <details open>
+      <summary>Product Specifications</summary>
+      <div class="gemstone-product-description__content rte">{{ specs_html }}</div>
+    </details>
+    <details>
+      <summary>Key Benefits</summary>
+      <div class="gemstone-product-description__content rte">{{ benefits_html }}</div>
+    </details>
+    <details>
+      <summary>Who Should Wear</summary>
+      <div class="gemstone-product-description__content rte">{{ who_html }}</div>
+    </details>
+  </div>
+{%- endif -%}
