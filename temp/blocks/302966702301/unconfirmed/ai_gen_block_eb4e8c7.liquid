@@ -1,6 +1,1150 @@
+{% doc %}
+  @prompt
+    Create a product card for a gemstone store with: a red "50% off" badge on top left of image area, a wishlist heart button on top right, a blue "CERTIFIED NATURAL GEMSTONE" label above the title, star rating showing 4.8 with review count, price row showing ₹500 sale price with ₹1,000 strikethrough and green "Save ₹500" badge, a 3-column trust badge grid with free shipping, COD, and delivery time, a carat weight selector with pill buttons for 5, 10, 15 carat, a quantity selector with stock count, a wishlist + add to cart button row, a full width green buy it now button, and an authenticity guarantee strip at the bottom.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-gemstone-card-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    background-color: {{ block.settings.card_bg_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-gemstone-card__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .ai-gemstone-card__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-gemstone-card__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-gemstone-card__image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .ai-gemstone-card__discount-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: {{ block.settings.discount_badge_bg }};
+    color: {{ block.settings.discount_badge_text }};
+    padding: 6px 12px;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .ai-gemstone-card__wishlist-btn-{{ ai_gen_id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    background-color: {{ block.settings.wishlist_btn_bg }};
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.2s ease;
+  }
+
+  .ai-gemstone-card__wishlist-btn-{{ ai_gen_id }}:hover {
+    transform: scale(1.1);
+  }
+
+  .ai-gemstone-card__wishlist-btn-{{ ai_gen_id }} svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: {{ block.settings.wishlist_icon_color }};
+    stroke-width: 2;
+    transition: fill 0.2s ease;
+  }
+
+  .ai-gemstone-card__wishlist-btn-{{ ai_gen_id }}.active svg {
+    fill: {{ block.settings.wishlist_icon_color }};
+  }
+
+  .ai-gemstone-card__content-{{ ai_gen_id }} {
+    padding: 16px;
+  }
+
+  .ai-gemstone-card__certified-label-{{ ai_gen_id }} {
+    display: inline-block;
+    background-color: {{ block.settings.certified_label_bg }};
+    color: {{ block.settings.certified_label_color }};
+    padding: 4px 10px;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .ai-gemstone-card__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .ai-gemstone-card__rating-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .ai-gemstone-card__stars-{{ ai_gen_id }} {
+    display: flex;
+    gap: 2px;
+  }
+
+  .ai-gemstone-card__star-{{ ai_gen_id }} {
+    width: 14px;
+    height: 14px;
+  }
+
+  .ai-gemstone-card__star-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    fill: {{ block.settings.star_color }};
+  }
+
+  .ai-gemstone-card__star-{{ ai_gen_id }}.empty svg {
+    fill: {{ block.settings.star_empty_color }};
+  }
+
+  .ai-gemstone-card__rating-text-{{ ai_gen_id }} {
+    font-size: 13px;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-gemstone-card__price-row-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .ai-gemstone-card__sale-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_font_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.sale_price_color }};
+  }
+
+  .ai-gemstone-card__original-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_font_size | times: 0.85 | round }}px;
+    color: {{ block.settings.original_price_color }};
+    text-decoration: line-through;
+  }
+
+  .ai-gemstone-card__save-badge-{{ ai_gen_id }} {
+    background-color: {{ block.settings.save_badge_bg }};
+    color: {{ block.settings.save_badge_text }};
+    padding: 4px 8px;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .ai-gemstone-card__trust-badges-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 12px 0;
+    border-top: 1px solid {{ block.settings.border_color }};
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-gemstone-card__trust-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .ai-gemstone-card__trust-icon-{{ ai_gen_id }} {
+    width: 24px;
+    height: 24px;
+    color: {{ block.settings.trust_icon_color }};
+  }
+
+  .ai-gemstone-card__trust-text-{{ ai_gen_id }} {
+    font-size: 10px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.2;
+  }
+
+  .ai-gemstone-card__carat-selector-{{ ai_gen_id }} {
+    margin-bottom: 16px;
+  }
+
+  .ai-gemstone-card__label-{{ ai_gen_id }} {
+    font-size: 13px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .ai-gemstone-card__carat-options-{{ ai_gen_id }} {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ai-gemstone-card__carat-btn-{{ ai_gen_id }} {
+    flex: 1;
+    padding: 8px 12px;
+    background-color: {{ block.settings.carat_btn_bg }};
+    color: {{ block.settings.carat_btn_text }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.pill_border_radius }}px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ai-gemstone-card__carat-btn-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.carat_btn_active_border }};
+  }
+
+  .ai-gemstone-card__carat-btn-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.carat_btn_active_bg }};
+    color: {{ block.settings.carat_btn_active_text }};
+    border-color: {{ block.settings.carat_btn_active_border }};
+  }
+
+  .ai-gemstone-card__quantity-selector-{{ ai_gen_id }} {
+    margin-bottom: 16px;
+  }
+
+  .ai-gemstone-card__quantity-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ai-gemstone-card__quantity-controls-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.pill_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-gemstone-card__qty-btn-{{ ai_gen_id }} {
+    width: 32px;
+    height: 32px;
+    background-color: {{ block.settings.qty_btn_bg }};
+    color: {{ block.settings.qty_btn_text }};
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: background-color 0.2s ease;
+  }
+
+  .ai-gemstone-card__qty-btn-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.qty_btn_hover_bg }};
+  }
+
+  .ai-gemstone-card__qty-input-{{ ai_gen_id }} {
+    width: 50px;
+    height: 32px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-gemstone-card__stock-text-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.stock_text_color }};
+  }
+
+  .ai-gemstone-card__button-row-{{ ai_gen_id }} {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .ai-gemstone-card__wishlist-add-btn-{{ ai_gen_id }} {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    background-color: {{ block.settings.wishlist_add_btn_bg }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.pill_border_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ai-gemstone-card__wishlist-add-btn-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.wishlist_add_btn_hover_bg }};
+  }
+
+  .ai-gemstone-card__wishlist-add-btn-{{ ai_gen_id }} svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: {{ block.settings.wishlist_add_icon_color }};
+    stroke-width: 2;
+  }
+
+  .ai-gemstone-card__wishlist-add-btn-{{ ai_gen_id }}.active svg {
+    fill: {{ block.settings.wishlist_add_icon_color }};
+  }
+
+  .ai-gemstone-card__add-to-cart-btn-{{ ai_gen_id }} {
+    flex: 1;
+    height: 44px;
+    background-color: {{ block.settings.add_to_cart_bg }};
+    color: {{ block.settings.add_to_cart_text_color }};
+    border: none;
+    border-radius: {{ block.settings.pill_border_radius }}px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .ai-gemstone-card__add-to-cart-btn-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.add_to_cart_hover_bg }};
+  }
+
+  .ai-gemstone-card__buy-now-btn-{{ ai_gen_id }} {
+    width: 100%;
+    height: 48px;
+    background-color: {{ block.settings.buy_now_bg }};
+    color: {{ block.settings.buy_now_text_color }};
+    border: none;
+    border-radius: {{ block.settings.pill_border_radius }}px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background-color 0.2s ease;
+  }
+
+  .ai-gemstone-card__buy-now-btn-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.buy_now_hover_bg }};
+  }
+
+  .ai-gemstone-card__authenticity-strip-{{ ai_gen_id }} {
+    background-color: {{ block.settings.authenticity_bg }};
+    color: {{ block.settings.authenticity_text_color }};
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .ai-gemstone-card__authenticity-icon-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-gemstone-card__trust-item-{{ ai_gen_id }} {
+      gap: 2px;
+    }
+
+    .ai-gemstone-card__trust-icon-{{ ai_gen_id }} {
+      width: 20px;
+      height: 20px;
+    }
+
+    .ai-gemstone-card__trust-text-{{ ai_gen_id }} {
+      font-size: 9px;
+    }
+  }
+{% endstyle %}
+
+<gemstone-product-card-{{ ai_gen_id }} class="ai-gemstone-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-gemstone-card__image-wrapper-{{ ai_gen_id }}">
+    {% if block.settings.product_image %}
+      <img
+        src="{{ block.settings.product_image | image_url: width: 800 }}"
+        alt="{{ block.settings.product_image.alt | escape }}"
+        loading="lazy"
+        width="{{ block.settings.product_image.width }}"
+        height="{{ block.settings.product_image.height }}"
+        class="ai-gemstone-card__image-{{ ai_gen_id }}"
+      >
+    {% else %}
+      <div class="ai-gemstone-card__image-placeholder-{{ ai_gen_id }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_discount_badge %}
+      <div class="ai-gemstone-card__discount-badge-{{ ai_gen_id }}">
+        {{ block.settings.discount_text }}
+      </div>
+    {% endif %}
+
+    <button
+      class="ai-gemstone-card__wishlist-btn-{{ ai_gen_id }}"
+      aria-label="Add to wishlist"
+      data-wishlist-toggle
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="ai-gemstone-card__content-{{ ai_gen_id }}">
+    {% if block.settings.show_certified_label %}
+      <span class="ai-gemstone-card__certified-label-{{ ai_gen_id }}">
+        {{ block.settings.certified_label }}
+      </span>
+    {% endif %}
+
+    <h3 class="ai-gemstone-card__title-{{ ai_gen_id }}">
+      {{ block.settings.product_title }}
+    </h3>
+
+    {% if block.settings.show_rating %}
+      <div class="ai-gemstone-card__rating-{{ ai_gen_id }}">
+        <div class="ai-gemstone-card__stars-{{ ai_gen_id }}">
+          {% assign rating = block.settings.rating_value %}
+          {% assign full_stars = rating | floor %}
+          {% assign has_half = rating | modulo: 1 %}
+          {% assign next_star = full_stars | plus: 1 %}
+          
+          {% for i in (1..5) %}
+            {% if i <= full_stars %}
+              <span class="ai-gemstone-card__star-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </span>
+            {% elsif i == next_star and has_half > 0 %}
+              <span class="ai-gemstone-card__star-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </span>
+            {% else %}
+              <span class="ai-gemstone-card__star-{{ ai_gen_id }} empty">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </span>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <span class="ai-gemstone-card__rating-text-{{ ai_gen_id }}">
+          {{ block.settings.rating_value }} ({{ block.settings.review_count }})
+        </span>
+      </div>
+    {% endif %}
+
+    <div class="ai-gemstone-card__price-row-{{ ai_gen_id }}">
+      <span class="ai-gemstone-card__sale-price-{{ ai_gen_id }}">
+        {{ block.settings.sale_price }}
+      </span>
+      <span class="ai-gemstone-card__original-price-{{ ai_gen_id }}">
+        {{ block.settings.original_price }}
+      </span>
+      <span class="ai-gemstone-card__save-badge-{{ ai_gen_id }}">
+        {{ block.settings.save_text }}
+      </span>
+    </div>
+
+    <div class="ai-gemstone-card__trust-badges-{{ ai_gen_id }}">
+      <div class="ai-gemstone-card__trust-item-{{ ai_gen_id }}">
+        <svg class="ai-gemstone-card__trust-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+        </svg>
+        <span class="ai-gemstone-card__trust-text-{{ ai_gen_id }}">{{ block.settings.trust_badge_1 }}</span>
+      </div>
+      <div class="ai-gemstone-card__trust-item-{{ ai_gen_id }}">
+        <svg class="ai-gemstone-card__trust-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span class="ai-gemstone-card__trust-text-{{ ai_gen_id }}">{{ block.settings.trust_badge_2 }}</span>
+      </div>
+      <div class="ai-gemstone-card__trust-item-{{ ai_gen_id }}">
+        <svg class="ai-gemstone-card__trust-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="ai-gemstone-card__trust-text-{{ ai_gen_id }}">{{ block.settings.trust_badge_3 }}</span>
+      </div>
+    </div>
+
+    <div class="ai-gemstone-card__carat-selector-{{ ai_gen_id }}">
+      <label class="ai-gemstone-card__label-{{ ai_gen_id }}">{{ block.settings.carat_label }}</label>
+      <div class="ai-gemstone-card__carat-options-{{ ai_gen_id }}">
+        <button class="ai-gemstone-card__carat-btn-{{ ai_gen_id }} active" data-carat="5">
+          {{ block.settings.carat_option_1 }}
+        </button>
+        <button class="ai-gemstone-card__carat-btn-{{ ai_gen_id }}" data-carat="10">
+          {{ block.settings.carat_option_2 }}
+        </button>
+        <button class="ai-gemstone-card__carat-btn-{{ ai_gen_id }}" data-carat="15">
+          {{ block.settings.carat_option_3 }}
+        </button>
+      </div>
+    </div>
+
+    <div class="ai-gemstone-card__quantity-selector-{{ ai_gen_id }}">
+      <label class="ai-gemstone-card__label-{{ ai_gen_id }}">{{ block.settings.quantity_label }}</label>
+      <div class="ai-gemstone-card__quantity-wrapper-{{ ai_gen_id }}">
+        <div class="ai-gemstone-card__quantity-controls-{{ ai_gen_id }}">
+          <button class="ai-gemstone-card__qty-btn-{{ ai_gen_id }}" data-qty-decrease aria-label="Decrease quantity">−</button>
+          <input
+            type="number"
+            class="ai-gemstone-card__qty-input-{{ ai_gen_id }}"
+            value="1"
+            min="1"
+            max="{{ block.settings.stock_count }}"
+            data-qty-input
+            aria-label="Quantity"
+          >
+          <button class="ai-gemstone-card__qty-btn-{{ ai_gen_id }}" data-qty-increase aria-label="Increase quantity">+</button>
+        </div>
+        <span class="ai-gemstone-card__stock-text-{{ ai_gen_id }}">
+          {{ block.settings.stock_count }} {{ block.settings.stock_text }}
+        </span>
+      </div>
+    </div>
+
+    <div class="ai-gemstone-card__button-row-{{ ai_gen_id }}">
+      <button
+        class="ai-gemstone-card__wishlist-add-btn-{{ ai_gen_id }}"
+        aria-label="Add to wishlist"
+        data-wishlist-toggle-bottom
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+      <button class="ai-gemstone-card__add-to-cart-btn-{{ ai_gen_id }}">
+        {{ block.settings.add_to_cart_label }}
+      </button>
+    </div>
+
+    <button class="ai-gemstone-card__buy-now-btn-{{ ai_gen_id }}">
+      {{ block.settings.buy_now_label }}
+    </button>
+
+    <div class="ai-gemstone-card__authenticity-strip-{{ ai_gen_id }}">
+      <svg class="ai-gemstone-card__authenticity-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+      </svg>
+      <span>{{ block.settings.authenticity_label }}</span>
+    </div>
+  </div>
+</gemstone-product-card-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class GemstoneProductCard{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupWishlistButtons();
+        this.setupCaratSelector();
+        this.setupQuantityControls();
+      }
+
+      setupWishlistButtons() {
+        const wishlistBtns = this.querySelectorAll('[data-wishlist-toggle], [data-wishlist-toggle-bottom]');
+        
+        wishlistBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            wishlistBtns.forEach(b => b.classList.toggle('active'));
+          });
+        });
+      }
+
+      setupCaratSelector() {
+        const caratBtns = this.querySelectorAll('.ai-gemstone-card__carat-btn-{{ ai_gen_id }}');
+        
+        caratBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            caratBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          });
+        });
+      }
+
+      setupQuantityControls() {
+        const qtyInput = this.querySelector('[data-qty-input]');
+        const decreaseBtn = this.querySelector('[data-qty-decrease]');
+        const increaseBtn = this.querySelector('[data-qty-increase]');
+        const maxQty = parseInt(qtyInput.getAttribute('max'));
+
+        decreaseBtn.addEventListener('click', () => {
+          const currentValue = parseInt(qtyInput.value);
+          if (currentValue > 1) {
+            qtyInput.value = currentValue - 1;
+          }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+          const currentValue = parseInt(qtyInput.value);
+          if (currentValue < maxQty) {
+            qtyInput.value = currentValue + 1;
+          }
+        });
+
+        qtyInput.addEventListener('input', () => {
+          let value = parseInt(qtyInput.value);
+          if (isNaN(value) || value < 1) {
+            qtyInput.value = 1;
+          } else if (value > maxQty) {
+            qtyInput.value = maxQty;
+          }
+        });
+      }
+    }
+
+    customElements.define('gemstone-product-card-{{ ai_gen_id }}', GemstoneProductCard{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Gemstone product card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "header",
+      "content": "Discount badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Discount text",
+      "default": "50% OFF"
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_bg",
+      "label": "Background",
+      "default": "#DC2626"
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_text",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Certified label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_certified_label",
+      "label": "Show certified label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "certified_label",
+      "label": "Label text",
+      "default": "CERTIFIED NATURAL GEMSTONE"
+    },
+    {
+      "type": "color",
+      "id": "certified_label_bg",
+      "label": "Background",
+      "default": "#2563EB"
+    },
+    {
+      "type": "color",
+      "id": "certified_label_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Product details"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product title",
+      "default": "Natural Blue Sapphire Gemstone"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_value",
+      "label": "Rating value",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.8
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "245 reviews"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#FFA500"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "text",
+      "id": "sale_price",
+      "label": "Sale price",
+      "default": "₹500"
+    },
+    {
+      "type": "text",
+      "id": "original_price",
+      "label": "Original price",
+      "default": "₹1,000"
+    },
+    {
+      "type": "text",
+      "id": "save_text",
+      "label": "Save text",
+      "default": "Save ₹500"
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Price size",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "sale_price_color",
+      "label": "Sale price color",
+      "default": "#DC2626"
+    },
+    {
+      "type": "color",
+      "id": "original_price_color",
+      "label": "Original price color",
+      "default": "#9CA3AF"
+    },
+    {
+      "type": "color",
+      "id": "save_badge_bg",
+      "label": "Save badge background",
+      "default": "#10B981"
+    },
+    {
+      "type": "color",
+      "id": "save_badge_text",
+      "label": "Save badge text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Trust badges"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_1",
+      "label": "Badge 1",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_2",
+      "label": "Badge 2",
+      "default": "COD Available"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_3",
+      "label": "Badge 3",
+      "default": "3-5 Days"
+    },
+    {
+      "type": "color",
+      "id": "trust_icon_color",
+      "label": "Icon color",
+      "default": "#2563EB"
+    },
+    {
+      "type": "header",
+      "content": "Carat selector"
+    },
+    {
+      "type": "text",
+      "id": "carat_label",
+      "label": "Label",
+      "default": "Select Carat Weight"
+    },
+    {
+      "type": "text",
+      "id": "carat_option_1",
+      "label": "Option 1",
+      "default": "5 Carat"
+    },
+    {
+      "type": "text",
+      "id": "carat_option_2",
+      "label": "Option 2",
+      "default": "10 Carat"
+    },
+    {
+      "type": "text",
+      "id": "carat_option_3",
+      "label": "Option 3",
+      "default": "15 Carat"
+    },
+    {
+      "type": "color",
+      "id": "carat_btn_bg",
+      "label": "Button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "carat_btn_text",
+      "label": "Button text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "carat_btn_active_bg",
+      "label": "Active background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "carat_btn_active_text",
+      "label": "Active text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "carat_btn_active_border",
+      "label": "Active border",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Quantity selector"
+    },
+    {
+      "type": "text",
+      "id": "quantity_label",
+      "label": "Label",
+      "default": "Quantity"
+    },
+    {
+      "type": "range",
+      "id": "stock_count",
+      "label": "Stock count",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "text",
+      "id": "stock_text",
+      "label": "Stock text",
+      "default": "in stock"
+    },
+    {
+      "type": "color",
+      "id": "stock_text_color",
+      "label": "Stock text color",
+      "default": "#10B981"
+    },
+    {
+      "type": "color",
+      "id": "qty_btn_bg",
+      "label": "Button background",
+      "default": "#F3F4F6"
+    },
+    {
+      "type": "color",
+      "id": "qty_btn_text",
+      "label": "Button text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "qty_btn_hover_bg",
+      "label": "Button hover background",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Buy now label",
+      "default": "BUY IT NOW"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_btn_bg",
+      "label": "Wishlist button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_icon_color",
+      "label": "Wishlist icon color",
+      "default": "#DC2626"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_add_btn_bg",
+      "label": "Wishlist add background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_add_btn_hover_bg",
+      "label": "Wishlist add hover background",
+      "default": "#F3F4F6"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_add_icon_color",
+      "label": "Wishlist add icon color",
+      "default": "#DC2626"
+    },
+    {
+      "type": "color",
+      "id": "add_to_cart_bg",
+      "label": "Add to cart background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "add_to_cart_text_color",
+      "label": "Add to cart text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "add_to_cart_hover_bg",
+      "label": "Add to cart hover background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "buy_now_bg",
+      "label": "Buy now background",
+      "default": "#10B981"
+    },
+    {
+      "type": "color",
+      "id": "buy_now_text_color",
+      "label": "Buy now text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "buy_now_hover_bg",
+      "label": "Buy now hover background",
+      "default": "#059669"
+    },
+    {
+      "type": "header",
+      "content": "Authenticity strip"
+    },
+    {
+      "type": "text",
+      "id": "authenticity_label",
+      "label": "Label",
+      "default": "100% AUTHENTIC GEMSTONE WITH CERTIFICATE"
+    },
+    {
+      "type": "color",
+      "id": "authenticity_bg",
+      "label": "Background",
+      "default": "#FEF3C7"
+    },
+    {
+      "type": "color",
+      "id": "authenticity_text_color",
+      "label": "Text color",
+      "default": "#92400E"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Badge border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "pill_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gemstone product card"
+    }
+  ]
+}
 {% endschema %}
