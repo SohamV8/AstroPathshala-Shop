@@ -32,16 +32,10 @@
             "show_inventory_quantity": true
           }
         },
-        "icon_with_text_q9fFyi": {
-          "type": "icon-with-text",
+        "custom_liquid_wAxYNk": {
+          "type": "custom_liquid",
           "settings": {
-            "layout": "horizontal",
-            "icon_1": "box",
-            "heading_1": "<strong>Free Shipping</strong>: above INR 499",
-            "icon_2": "price_tag",
-            "heading_2": "<strong>COD </strong>Available",
-            "icon_3": "truck",
-            "heading_3": "Delivery: <strong>3-5 days</strong>"
+            "custom_liquid": "<div class=\"feature-grid\">\n  \n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      🚚\n    </div>\n    <p>Free shipping above ₹499</p>\n  </div>\n\n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      💵\n    </div>\n    <p>Cash on delivery</p>\n  </div>\n\n  <div class=\"feature-card\">\n    <div class=\"icon\">\n      ⏰\n    </div>\n    <p>Ships in 3–5 days</p>\n  </div>\n\n</div>\n\n<style>\n.feature-grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 14px;\n  margin-top: 20px;\n}\n\n.feature-card {\n  background: #f5f5f5;\n  border-radius: 14px;\n  padding: 18px 12px;\n  text-align: center;\n}\n\n.feature-card .icon {\n  font-size: 28px;\n  color: #2563eb;\n  margin-bottom: 10px;\n  line-height: 1;\n}\n\n.feature-card p {\n  font-size: 13px;\n  color: #666;\n  margin: 0;\n  line-height: 1.5;\n  font-weight: 500;\n}\n\n/* Mobile Responsive */\n@media (max-width: 768px) {\n  .feature-grid {\n    grid-template-columns: 1fr;\n  }\n}\n</style>"
           }
         },
         "variant_picker_69Tn4T": {
@@ -124,7 +118,7 @@
         "rating_AkB6V4",
         "price",
         "inventory_xaiphP",
-        "icon_with_text_q9fFyi",
+        "custom_liquid_wAxYNk",
         "variant_picker_69Tn4T",
         "quantity_selector_zYDphx",
         "complementary_BK9HWx",
