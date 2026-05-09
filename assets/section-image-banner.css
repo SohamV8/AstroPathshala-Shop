@@ -490,3 +490,110 @@
     color: currentColor;
   }
 }
+
+/* ==========================================================================
+   Banner sizing override: ~100vh, no crop, no stretch, no top spacing
+   Applies to image-banner and slideshow sections (both use .banner classes).
+   ========================================================================== */
+
+main#MainContent,
+main.content-for-layout {
+  margin-block-start: 0;
+  padding-block-start: 0;
+}
+
+.shopify-section:has(> .banner),
+.shopify-section:has(> .slideshow),
+.shopify-section:has(slideshow-component) {
+  margin-block-start: 0;
+  padding-block-start: 0;
+}
+
+.shopify-section:has(> .banner) + .shopify-section:has(> .banner),
+.shopify-section:has(slideshow-component) + .shopify-section:has(> .banner) {
+  margin-block-start: 0;
+}
+
+.banner,
+.slideshow {
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  max-height: 100vh;
+  max-height: 100svh;
+  background-color: #000;
+}
+
+.banner.banner--small,
+.banner.banner--medium,
+.banner.banner--large,
+.banner.banner--adapt,
+.slideshow.banner--small,
+.slideshow.banner--medium,
+.slideshow.banner--large {
+  min-height: 100vh;
+  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
+}
+
+.banner::before,
+.banner__media::before,
+.slideshow::before,
+.slideshow .banner__media::before {
+  display: none !important;
+  content: none !important;
+  padding-bottom: 0 !important;
+}
+
+.banner__media,
+.slideshow__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+.banner__media > img,
+.banner__media > svg,
+.slideshow__media > img,
+.slideshow__media > svg,
+.banner__media-image-half {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100vh !important;
+  max-height: 100svh !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+.slideshow__slide,
+.slideshow .slider__slide {
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+@media screen and (max-width: 749px) {
+  .banner,
+  .slideshow,
+  .banner.banner--adapt,
+  .banner--mobile-bottom .banner__media,
+  .banner--stacked:not(.banner--mobile-bottom) .banner__media {
+    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
+    min-height: 100svh;
+    max-height: 100vh;
+    max-height: 100svh;
+  }
+
+  .banner__media,
+  .slideshow__media {
+    position: absolute !important;
+  }
+}
