@@ -46,18 +46,16 @@
     "header": {
       "type": "header",
       "settings": {
-        "logo_position": "middle-center",
-        "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
         "sticky_header_type": "always",
+        "mobile_logo_position": "center",
         "show_line_separator": false,
         "show_whatsapp_cta": true,
         "whatsapp_url": "https://wa.me/919871130487",
         "whatsapp_label": "Consult Now",
         "enable_country_selector": true,
         "enable_language_selector": true,
-        "enable_customer_avatar": true,
         "margin_bottom": 0,
         "padding_top": 0,
         "padding_bottom": 0
