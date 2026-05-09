@@ -47,7 +47,7 @@
     assign mobile_logo_left = true
   endif
 
-  assign sticky_mode = section.settings.sticky_header_type | default: 'always'
+  assign sticky_mode = 'always'
 -%}
 
 <header
@@ -501,7 +501,7 @@
     box-shadow: var(--lux-shadow);
   }
   .lux-header.is-hidden .lux-header__bar {
-    transform: translate3d(0, -100%, 0);
+    transform: none;
   }
 
   .lux-header__container {
@@ -1254,12 +1254,7 @@
         if (this.stickyMode === 'none') return;
         const y = window.scrollY;
         this.root.classList.toggle('is-compact', y > 8);
-        if (this.stickyMode === 'on-scroll-up') {
-          const goingDown = y > this.lastY && y > 140;
-          this.root.classList.toggle('is-hidden', goingDown);
-        } else {
-          this.root.classList.remove('is-hidden');
-        }
+        this.root.classList.remove('is-hidden');
         this.lastY = y;
       }
 
