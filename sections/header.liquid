@@ -169,7 +169,7 @@
         {%- if show_account -%}
           <a
             href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-            class="lux-icon-btn"
+            class="lux-icon-btn lux-icon-btn--desktop"
             aria-label="{% if customer %}Account{% else %}Sign in{% endif %}"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -181,7 +181,7 @@
         {%- endif -%}
 
         {%- if show_wishlist -%}
-          <a href="{{ wishlist_url }}" class="lux-icon-btn" aria-label="{{ wishlist_label | escape }}">
+          <a href="{{ wishlist_url }}" class="lux-icon-btn lux-icon-btn--desktop" aria-label="{{ wishlist_label | escape }}">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 9 6c1.7 0 2.6.9 3 1.7C12.4 6.9 13.3 6 15 6a4 4 0 0 1 4 4.4c0 5.2-7 9.6-7 9.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
             </svg>
@@ -196,15 +196,17 @@
             <circle cx="17" cy="19" r="1.4"/>
           </svg>
           <span class="lux-icon-btn__label">Cart</span>
-          <span class="lux-cart-count{% if cart.item_count > 0 %} is-active{% endif %}" data-cart-count aria-hidden="true">
-            {{ cart.item_count }}
-          </span>
+          {%- if cart.item_count > 0 -%}
+            <span class="lux-cart-count is-active" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
+          {%- else -%}
+            <span class="lux-cart-count" data-cart-count aria-hidden="true" hidden></span>
+          {%- endif -%}
         </a>
 
         {%- if show_whatsapp -%}
           <a
             href="{{ section.settings.whatsapp_url }}"
-            class="lux-cta"
+            class="lux-cta lux-cta--desktop"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="{{ whatsapp_label | escape }}"
@@ -599,23 +601,35 @@
     white-space: nowrap;
   }
 
+  .lux-icon-btn--cart {
+    position: relative;
+  }
+
   .lux-cart-count {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-end: 2px;
     min-inline-size: 18px;
     block-size: 18px;
     padding-inline: 5px;
     border-radius: 999px;
-    display: inline-flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 0.66rem;
     font-weight: 600;
-    background: var(--lux-soft);
-    color: var(--lux-muted);
-    transition: background-color 180ms ease, color 180ms ease;
-  }
-  .lux-cart-count.is-active {
     background: #1c1814;
     color: #fff;
+    line-height: 1;
+    border: 2px solid var(--lux-bg-solid, #fff);
+    box-shadow: 0 2px 4px rgba(20, 16, 12, 0.18);
+    pointer-events: none;
+  }
+  .lux-cart-count.is-active {
+    display: inline-flex;
+  }
+  .lux-cart-count[hidden] {
+    display: none !important;
   }
 
   .lux-cta {
@@ -1084,33 +1098,99 @@
   }
 
   @media (max-width: 989px) {
-    .lux-header__nav { display: none; }
-    .lux-header__center--mobile-left { justify-content: flex-start; }
-    .lux-logo__img {
-      max-inline-size: clamp(110px, 30vw, 170px);
-      max-block-size: clamp(32px, 7vw, 44px);
+    .lux-header__container {
+      grid-template-columns: 1fr auto 1fr;
+      column-gap: clamp(6px, 2vw, 14px);
+      padding-inline: clamp(12px, 4vw, 20px);
+      min-block-size: 60px;
     }
+    .lux-header__nav { display: none; }
+    .lux-header__left { justify-content: flex-start; }
+    .lux-header__center { justify-content: center; }
+    .lux-header__right { justify-content: flex-end; gap: 2px; }
+
+    .lux-header__center--mobile-left { justify-content: center; }
+
+    .lux-logo {
+      justify-content: center;
+    }
+    .lux-logo__img,
+    .lux-logo__text {
+      max-inline-size: clamp(120px, 38vw, 180px);
+      max-block-size: clamp(32px, 8vw, 44px);
+    }
+    .lux-logo__text {
+      font-size: clamp(1rem, 4.6vw, 1.25rem);
+      letter-spacing: 0.04em;
+    }
+
+    .lux-icon-btn--desktop,
+    .lux-cta--desktop {
+      display: none !important;
+    }
+
     .lux-header__app { display: none; }
+
+    .lux-icon-btn {
+      min-inline-size: 44px;
+      min-block-size: 44px;
+      padding-inline: 8px;
+    }
+    .lux-icon-btn svg {
+      inline-size: 22px;
+      block-size: 22px;
+    }
+    .lux-icon-btn__label {
+      display: none;
+    }
+
+    .lux-header__menu-btn {
+      min-inline-size: 44px;
+      min-block-size: 44px;
+    }
+
+    .lux-cart-count {
+      inset-block-start: 6px;
+      inset-inline-end: 4px;
+      min-inline-size: 17px;
+      block-size: 17px;
+      font-size: 0.62rem;
+      border-width: 2px;
+    }
+
+    .lux-header.is-compact .lux-header__container {
+      min-block-size: 56px;
+    }
   }
 
   @media (max-width: 479px) {
     .lux-header__container {
-      padding-inline: 10px;
-      column-gap: 6px;
+      padding-inline: 12px;
+      column-gap: 4px;
+      min-block-size: 58px;
     }
     .lux-icon-btn {
-      min-inline-size: 40px;
-      min-block-size: 40px;
+      min-inline-size: 42px;
+      min-block-size: 42px;
       padding-inline: 6px;
     }
-    .lux-cta {
-      min-inline-size: 40px;
-      padding-inline: 10px;
+    .lux-icon-btn svg {
+      inline-size: 21px;
+      block-size: 21px;
+    }
+    .lux-header__menu-btn {
+      min-inline-size: 42px;
+      min-block-size: 42px;
+      padding-inline: 6px;
+    }
+    .lux-logo__img,
+    .lux-logo__text {
+      max-inline-size: clamp(110px, 42vw, 160px);
+      max-block-size: clamp(28px, 7.5vw, 38px);
     }
     .lux-cart-count {
-      position: absolute;
-      inset-inline-end: 4px;
-      inset-block-start: 4px;
+      inset-block-start: 5px;
+      inset-inline-end: 3px;
     }
   }
 
