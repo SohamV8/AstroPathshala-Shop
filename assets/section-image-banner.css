@@ -514,7 +514,10 @@ main.content-for-layout {
   margin-block-start: 0;
 }
 
-.banner,
+/* Hero banners (large / adapt) → full-viewport height, white background.
+   Small / medium banners → keep their natural Dawn sizing for product pages. */
+.banner.banner--large,
+.banner.banner--adapt,
 .slideshow {
   height: 100vh;
   height: 100svh;
@@ -522,20 +525,13 @@ main.content-for-layout {
   min-height: 100svh;
   max-height: 100vh;
   max-height: 100svh;
-  background-color: #000;
 }
 
-.banner.banner--small,
-.banner.banner--medium,
-.banner.banner--large,
-.banner.banner--adapt,
-.slideshow.banner--small,
-.slideshow.banner--medium,
-.slideshow.banner--large {
-  min-height: 100vh;
-  min-height: 100svh;
-  height: 100vh;
-  height: 100svh;
+.banner,
+.slideshow,
+.banner__media,
+.slideshow__media {
+  background-color: #ffffff;
 }
 
 .banner::before,
@@ -553,7 +549,14 @@ main.content-for-layout {
   inset: 0;
   width: 100%;
   height: 100%;
-  background-color: #000;
+}
+
+.banner__media.media,
+.banner__media.scroll-trigger,
+.banner__media.animate--fade-in {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 .banner__media > img,
@@ -563,11 +566,21 @@ main.content-for-layout {
 .banner__media-image-half {
   width: 100% !important;
   height: 100% !important;
-  max-height: 100vh !important;
-  max-height: 100svh !important;
+  max-height: 100% !important;
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
+  background-color: #ffffff;
+}
+
+.banner.banner--large .banner__media > img,
+.banner.banner--large .banner__media > svg,
+.banner.banner--adapt .banner__media > img,
+.banner.banner--adapt .banner__media > svg,
+.slideshow .banner__media > img,
+.slideshow .banner__media > svg {
+  max-height: 100vh !important;
+  max-height: 100svh !important;
 }
 
 .slideshow__slide,
@@ -578,12 +591,44 @@ main.content-for-layout {
   min-height: 100svh;
 }
 
+/* Edge-to-edge banner section: no margin / padding wrapping the banner */
+.shopify-section:has(> .banner),
+.shopify-section:has(> .slideshow),
+.shopify-section:has(slideshow-component) {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #ffffff;
+}
+
+.shopify-section:has(> .banner) .color-background-1,
+.shopify-section:has(> .banner) .color-background-2,
+.shopify-section:has(> .banner) .gradient {
+  background: #ffffff !important;
+}
+
 @media screen and (max-width: 749px) {
+  /* Mobile: zero margin & padding on every banner section */
+  .shopify-section:has(> .banner),
+  .shopify-section:has(> .slideshow),
+  .shopify-section:has(slideshow-component) {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .banner,
   .slideshow,
+  .banner__media,
+  .slideshow__media,
+  .banner__media-half {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Hero only on mobile = 100vh; product-page banners stay natural */
+  .banner.banner--large,
   .banner.banner--adapt,
-  .banner--mobile-bottom .banner__media,
-  .banner--stacked:not(.banner--mobile-bottom) .banner__media {
+  .slideshow {
     height: 100vh;
     height: 100svh;
     min-height: 100vh;

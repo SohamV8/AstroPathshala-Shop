@@ -52,6 +52,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    <script>
+      (() => {
+        if (!['127.0.0.1', 'localhost'].includes(window.location.hostname)) return;
+
+        const PRIVATE_TOKEN_PATH = '/sf_private_access_tokens';
+
+        if (window.fetch) {
+          const nativeFetch = window.fetch.bind(window);
+          window.fetch = (resource, init) => {
+            const url = typeof resource === 'string' ? resource : resource?.url;
+            if (url) {
+              const parsedUrl = new URL(url, window.location.origin);
+              if (parsedUrl.pathname === PRIVATE_TOKEN_PATH) {
+                return Promise.resolve(
+                  new Response('{}', {
+                    status: 200,
+                    headers: { 'content-type': 'application/json' },
+                  })
+                );
+              }
+            }
+
+            return nativeFetch(resource, init);
+          };
+        }
+      })();
+    </script>
+
     {{ content_for_header }}
 
     {%- liquid
