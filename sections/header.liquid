@@ -1,1117 +1,1496 @@
-{% comment %}
-
-{% endcomment %}
-
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
-
-{%- if settings.predictive_search_enabled -%}
-  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- endif -%}
-
-<style>
-  :root {
-    --premium-header-bg: rgba(255, 255, 255, 0.96);
-    --premium-header-bg-solid: #ffffff;
-    --premium-header-border: rgba(17, 17, 17, 0.1);
-    --premium-header-text: #111111;
-    --premium-header-text-muted: rgba(17, 17, 17, 0.62);
-    --premium-header-accent: #d4af37;
-    --premium-header-surface: rgba(255, 248, 238, 0.75);
-    --premium-header-surface-strong: rgba(246, 215, 167, 0.3);
-    --premium-header-shadow: 0 10px 30px rgba(17, 17, 17, 0.08);
-    --premium-header-radius: 999px;
-    --premium-header-radius-lg: 24px;
-    --premium-header-max: 1440px;
-  }
-
-  .section-header {
-    position: sticky;
-    top: 0;
-    z-index: 60;
-    margin-bottom: {{ section.settings.margin_bottom | default: 0 }}px;
-  }
-
-  .premium-header-shell {
-    position: relative;
-    background: #ffffff;
-    border-bottom: 1px solid var(--premium-header-border);
-    transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease, transform 220ms ease;
-  }
-
-  .premium-header-shell.is-scrolled {
-    background: #ffffff;
-    border-bottom-color: var(--premium-header-border);
-    box-shadow: var(--premium-header-shadow);
-  }
-
-  .premium-header {
-    max-width: var(--premium-header-max);
-    margin: 0 auto;
-    min-height: clamp(92px, 9.2vw, 118px);
-    padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2.2vw, 34px);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(14px, 1.6vw, 24px);
-    color: var(--premium-header-text);
-    font-family: Inter, var(--font-body-family, system-ui), sans-serif;
-    transition: min-height 220ms ease, padding 220ms ease;
-  }
-
-  .premium-header-shell.is-scrolled .premium-header {
-    min-height: clamp(82px, 7.4vw, 102px);
-    padding-block: clamp(10px, 1.2vw, 14px);
-  }
-
-  .premium-header__left,
-  .premium-header__right {
-    display: flex;
-    align-items: center;
-    gap: clamp(12px, 1.1vw, 18px);
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .premium-header__left {
-    justify-content: flex-start;
-  }
-
-  .premium-header__right {
-    justify-content: flex-end;
-  }
-
-  .premium-header__logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: inherit;
-    line-height: 0;
-    min-width: 0;
-    transition: transform 180ms ease, opacity 180ms ease;
-  }
-
-  .premium-header__logo:hover {
-    transform: translateY(-1px);
-    opacity: 0.96;
-  }
-
-  .premium-header__logo img {
-    display: block;
-    width: auto;
-    max-height: clamp(58px, 5.4vw, 78px);
-    object-fit: contain;
-    transition: max-height 220ms ease;
-    will-change: transform;
-  }
-
-  .premium-header-shell.is-scrolled .premium-header__logo img {
-    max-height: clamp(50px, 4.4vw, 68px);
-  }
-
-  .premium-header__brand-text {
-    font-size: 1.05rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  .premium-header__nav {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .premium-header__nav-list {
-    list-style: none;
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(20px, 2vw, 34px);
-    padding: 0;
-    margin: 0;
-    flex-wrap: nowrap;
-    min-width: 0;
-  }
-
-  .premium-header__nav-item {
-    position: relative;
-  }
-
-  .premium-header__nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 14px 6px;
-    text-decoration: none;
-    color: var(--premium-header-text);
-    font-size: clamp(1.48rem, 0.24vw + 1.4rem, 1.68rem);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    position: relative;
-    transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
-    opacity: 0.92;
-    white-space: nowrap;
-  }
-
-  .premium-header__nav-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 8px;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--premium-header-accent), transparent);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 220ms ease;
-  }
-
-  .premium-header__nav-link:hover,
-  .premium-header__nav-link:focus-visible,
-  .premium-header__nav-link.is-active {
-    color: #111111;
-    opacity: 1;
-  }
-
-  .premium-header__nav-link:hover::after,
-  .premium-header__nav-link:focus-visible::after,
-  .premium-header__nav-link.is-active::after {
-    transform: scaleX(1);
-  }
-
-  .premium-header__nav-link:focus-visible,
-  .premium-header__icon-button:focus-visible,
-  .premium-header__menu-button:focus-visible,
-  .premium-header__drawer-close:focus-visible,
-  .premium-header__drawer-link:focus-visible,
-  .premium-header__drawer-summary:focus-visible {
-    outline: 2px solid rgba(212, 175, 55, 0.95);
-    outline-offset: 3px;
-    border-radius: 12px;
-  }
-
-  .premium-header__submenu {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    min-width: 230px;
-    padding: 12px;
-    margin: 0;
-    list-style: none;
-    border: 1px solid var(--premium-header-border);
-    border-radius: 18px;
-    background: #ffffff;
-    box-shadow: var(--premium-header-shadow);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
-    z-index: 80;
-  }
-
-  .premium-header__nav-item:hover .premium-header__submenu,
-  .premium-header__nav-item:focus-within .premium-header__submenu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .premium-header__submenu-item + .premium-header__submenu-item {
-    margin-top: 4px;
-  }
-
-  .premium-header__submenu-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 11px 12px;
-    border-radius: 14px;
-    text-decoration: none;
-    color: var(--premium-header-text);
-    font-size: 0.92rem;
-    line-height: 1.35;
-    transition: background 180ms ease, transform 180ms ease, color 180ms ease;
-  }
-
-  .premium-header__submenu-link:hover,
-  .premium-header__submenu-link:focus-visible {
-    background: #fff8ee;
-    transform: translateX(2px);
-    color: #111111;
-  }
-
-  .premium-header__utility {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 46px;
-    padding: 0 16px;
-    border-radius: var(--premium-header-radius);
-    text-decoration: none;
-    color: var(--premium-header-text);
-    background: var(--premium-header-surface);
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, color 180ms ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 1399px) {
-    .premium-header__nav-list {
-      gap: clamp(14px, 1.4vw, 22px);
-    }
-
-    .premium-header__nav-link {
-      font-size: clamp(1.38rem, 0.18vw + 1.3rem, 1.52rem);
-      padding: 12px 4px;
-    }
-  }
-
-  @media (max-width: 1240px) {
-    .premium-header {
-      gap: 12px;
-      padding-inline: clamp(12px, 1.4vw, 20px);
-    }
-
-    .premium-header__logo img {
-      max-height: clamp(52px, 4.3vw, 64px);
-    }
-
-    .premium-header__nav-list {
-      gap: 12px;
-    }
-
-    .premium-header__nav-link {
-      font-size: 1.34rem;
-      letter-spacing: 0.005em;
-    }
-
-    .premium-header__utility {
-      min-height: 42px;
-      padding: 0 12px;
-      gap: 8px;
-    }
-
-    .premium-header__utility-label {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 1100px) {
-    .premium-header__right .premium-header__utility--ghost.premium-header__desktop-only {
-      display: none;
-    }
-
-    .premium-header__right {
-      gap: 8px;
-    }
-  }
-
-  .premium-header__utility:hover,
-  .premium-header__utility:focus-visible {
-    background: var(--premium-header-surface-strong);
-    transform: translateY(-1px);
-    border-color: rgba(212, 175, 55, 0.24);
-    color: #111111;
-  }
-
-  .premium-header__utility--ghost {
-    padding: 0;
-    width: 46px;
-    min-width: 46px;
-  }
-
-  .premium-header__utility--cta {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(246, 215, 167, 0.12));
-    border-color: rgba(212, 175, 55, 0.22);
-  }
-
-  .premium-header__utility-label {
-    font-size: 1.34rem;
-    font-weight: 600;
-    letter-spacing: 0.005em;
-  }
-
-  .premium-header__icon {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-  }
-
-  .premium-header__menu-button {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 46px;
-    height: 46px;
-    border-radius: var(--premium-header-radius);
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    background: var(--premium-header-surface);
-    color: var(--premium-header-text);
-    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
-    cursor: pointer;
-  }
-
-  .premium-header__menu-button:hover {
-    transform: translateY(-1px);
-    background: var(--premium-header-surface-strong);
-    border-color: rgba(212, 175, 55, 0.24);
-  }
-
-  .premium-header__burger {
-    position: relative;
-    width: 18px;
-    height: 14px;
-    display: inline-block;
-  }
-
-  .premium-header__burger span {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 1.8px;
-    border-radius: 999px;
-    background: currentColor;
-    transition: transform 220ms ease, top 220ms ease, opacity 180ms ease;
-  }
-
-  .premium-header__burger span:nth-child(1) { top: 0; }
-  .premium-header__burger span:nth-child(2) { top: 6px; }
-  .premium-header__burger span:nth-child(3) { top: 12px; }
-
-  .premium-header__menu-button[aria-expanded="true"] .premium-header__burger span:nth-child(1) {
-    top: 6px;
-    transform: rotate(45deg);
-  }
-
-  .premium-header__menu-button[aria-expanded="true"] .premium-header__burger span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .premium-header__menu-button[aria-expanded="true"] .premium-header__burger span:nth-child(3) {
-    top: 6px;
-    transform: rotate(-45deg);
-  }
-
-  .premium-header__drawer-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(17, 17, 17, 0.24);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 220ms ease, visibility 220ms ease;
-    z-index: 70;
-  }
-
-  .premium-header__drawer {
-    position: fixed;
-    inset: 0 0 0 auto;
-    width: min(100vw, 420px);
-    height: 100dvh;
-    background: #ffffff;
-    color: var(--premium-header-text);
-    border-left: 1px solid var(--premium-header-border);
-    transform: translateX(102%);
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 75;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .premium-header__drawer.is-open {
-    transform: translateX(0);
-  }
-
-  .premium-header__drawer-backdrop.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .premium-header__drawer-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 18px;
-  }
-
-  .premium-header__drawer-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
-  }
-
-  .premium-header__drawer-logo {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .premium-header__drawer-logo img {
-    max-height: 42px;
-    width: auto;
-  }
-
-  .premium-header__drawer-close {
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    background: #fffefc;
-    color: #111111;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
-  }
-
-  .premium-header__drawer-close:hover {
-    transform: translateY(-1px);
-    background: #fff8ee;
-    border-color: rgba(212, 175, 55, 0.24);
-  }
-
-  .premium-header__drawer-nav {
-    padding: 18px 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    flex: 1;
-  }
-
-  .premium-header__drawer-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .premium-header__drawer-item + .premium-header__drawer-item {
-    margin-top: 10px;
-  }
-
-  .premium-header__drawer-link,
-  .premium-header__drawer-summary {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 15px 16px;
-    border-radius: 18px;
-    text-decoration: none;
-    color: var(--premium-header-text);
-    background: #fffefc;
-    border: 1px solid rgba(17, 17, 17, 0.08);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.3;
-    cursor: pointer;
-    transition: background 180ms ease, transform 180ms ease, border-color 180ms ease;
-  }
-
-  .premium-header__drawer-link:hover,
-  .premium-header__drawer-summary:hover {
-    background: #fff8ee;
-    transform: translateY(-1px);
-    border-color: rgba(212, 175, 55, 0.16);
-  }
-
-  .premium-header__drawer-summary {
-    list-style: none;
-  }
-
-  .premium-header__drawer-summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .premium-header__drawer-chevron {
-    width: 18px;
-    height: 18px;
-    transition: transform 180ms ease;
-  }
-
-  details[open] > .premium-header__drawer-summary .premium-header__drawer-chevron {
-    transform: rotate(180deg);
-  }
-
-  .premium-header__drawer-sublist {
-    list-style: none;
-    padding: 10px 0 0 0;
-    margin: 0;
-  }
-
-  .premium-header__drawer-subitem + .premium-header__drawer-subitem {
-    margin-top: 8px;
-  }
-
-  .premium-header__drawer-sublink {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px 12px 22px;
-    text-decoration: none;
-    color: var(--premium-header-text-muted);
-    font-size: 0.96rem;
-    line-height: 1.4;
-    border-radius: 14px;
-    transition: background 180ms ease, color 180ms ease, transform 180ms ease;
-  }
-
-  .premium-header__drawer-sublink:hover,
-  .premium-header__drawer-sublink:focus-visible {
-    background: #fff8ee;
-    color: #111111;
-    transform: translateX(2px);
-  }
-
-  .premium-header__drawer-footer {
-    padding-top: 18px;
-    border-top: 1px solid rgba(17, 17, 17, 0.08);
-    display: grid;
-    gap: 10px;
-  }
-
-  .premium-header__drawer-footer .premium-header__utility {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .premium-header__mobile-only {
-    display: none;
-  }
-
-  .premium-header__sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-
-  @media (max-width: 989px) {
-    .premium-header {
-      grid-template-columns: auto 1fr auto;
-      min-height: clamp(78px, 13vw, 96px);
-      gap: 12px;
-    }
-
-    .premium-header__nav {
-      display: none;
-    }
-
-    .premium-header__menu-button {
-      display: inline-flex;
-    }
-
-    .premium-header__utility--cta .premium-header__utility-label,
-    .premium-header__utility--text {
-      display: none;
-    }
-
-    .premium-header__utility {
-      width: 46px;
-      min-width: 46px;
-      padding: 0;
-    }
-
-    .premium-header__nav-link {
-      font-size: 1.42rem;
-    }
-
-    .premium-header__utility--cta {
-      background: var(--premium-header-surface);
-    }
-
-    .premium-header__mobile-only {
-      display: inline-flex;
-    }
-
-    .premium-header__desktop-only {
-      display: none;
-    }
-
-    .premium-header__logo img {
-      max-height: clamp(44px, 10.4vw, 58px);
-    }
-
-    .premium-header-shell.is-scrolled .premium-header__logo img {
-      max-height: clamp(40px, 9.6vw, 52px);
-    }
-  }
-
-  @media (max-width: 540px) {
-    .premium-header {
-      padding-inline: 14px;
-      min-height: clamp(74px, 15.5vw, 90px);
-    }
-
-    .premium-header__drawer {
-      width: 100vw;
-    }
-
-    .premium-header__drawer-inner {
-      padding: 14px;
-    }
-
-    .premium-header__drawer-link,
-    .premium-header__drawer-summary {
-      padding: 14px 14px;
-      border-radius: 16px;
-    }
-
-    .premium-header__drawer-sublink {
-      padding-left: 18px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .premium-header-shell,
-    .premium-header,
-    .premium-header__logo,
-    .premium-header__logo img,
-    .premium-header__nav-link,
-    .premium-header__submenu,
-    .premium-header__utility,
-    .premium-header__menu-button,
-    .premium-header__drawer,
-    .premium-header__drawer-backdrop,
-    .premium-header__drawer-link,
-    .premium-header__drawer-summary,
-    .premium-header__drawer-sublink,
-    .premium-header__drawer-close,
-    .premium-header__burger span {
-      transition: none !important;
-    }
-  }
-</style>
-
 {%- liquid
-  assign has_menu = false
-  if section.settings.menu != blank
-    assign has_menu = true
+  assign main_menu = section.settings.menu
+  assign logo = settings.logo
+  assign logo_mobile = settings.logo
+  assign logo_alt = shop.name | escape
+  if logo.alt != blank
+    assign logo_alt = logo.alt | escape
   endif
-  assign menu_links = section.settings.menu.links
+
+  assign wishlist_url = section.settings.wishlist_url | default: '#'
+  assign wishlist_label = section.settings.wishlist_label | default: 'Wishlist'
+  assign drawer_footer_note = section.settings.drawer_footer_note | strip
+  assign whatsapp_label = section.settings.whatsapp_label | default: 'WhatsApp'
+
   assign show_whatsapp = false
-  if section.settings.show_whatsapp_cta and section.settings.whatsapp_url != blank
-    assign show_whatsapp = true
+  if section.settings.show_whatsapp_cta
+    if section.settings.whatsapp_url != blank
+      assign show_whatsapp = true
+    endif
   endif
+
+  assign show_country_selector = false
+  if section.settings.enable_country_selector
+    if localization.available_countries.size > 1
+      assign show_country_selector = true
+    endif
+  endif
+
+  assign show_language_selector = false
+  if section.settings.enable_language_selector
+    if localization.available_languages.size > 1
+      assign show_language_selector = true
+    endif
+  endif
+
+  assign show_search = section.settings.show_search
+  assign show_account = false
+  if section.settings.show_account
+    if shop.customer_accounts_enabled
+      assign show_account = true
+    endif
+  endif
+  assign show_wishlist = section.settings.show_wishlist
+
+  assign mobile_logo_left = false
+  if section.settings.mobile_logo_position == 'left'
+    assign mobile_logo_left = true
+  endif
+
+  assign sticky_mode = 'always'
 -%}
 
-<header class="section-header premium-header-shell" data-premium-header>
-  <div class="premium-header" role="navigation" aria-label="Main navigation">
-    <div class="premium-header__left">
-      <button
-        class="premium-header__menu-button"
-        type="button"
-        aria-label="Open menu"
-        aria-controls="PremiumHeaderDrawer"
-        aria-expanded="false"
-        data-menu-toggle
-      >
-        <span class="premium-header__burger" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </button>
+<header
+  class="lux-header{% if section.settings.show_line_separator %} lux-header--with-border{% endif %}"
+  data-lux-header
+  data-sticky-mode="{{ sticky_mode }}"
+  style="--lux-header-margin-bottom: {{ section.settings.margin_bottom }}px; --lux-header-pt: {{ section.settings.padding_top }}px; --lux-header-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <a class="lux-skip-link" href="#MainContent">Skip to content</a>
 
-      {%- if has_menu -%}
-        <nav class="premium-header__nav premium-header__desktop-only" aria-label="Primary">
-          <ul class="premium-header__nav-list" role="list">
-            {%- for link in menu_links -%}
-              <li class="premium-header__nav-item{% if link.links != blank %} has-submenu{% endif %}">
-                <a
-                  href="{{ link.url }}"
-                  class="premium-header__nav-link{% if link.active %} is-active{% endif %}"
-                  {% if link.active %}aria-current="page"{% endif %}
-                >
-                  <span>{{ link.title | escape }}</span>
-                  {%- if link.links != blank -%}
-                    <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  {%- endif -%}
-                </a>
+  <div class="lux-header__bar">
+    <div class="lux-header__container">
 
+      <div class="lux-header__left">
+        <button
+          type="button"
+          class="lux-icon-btn lux-header__menu-btn"
+          aria-controls="lux-drawer-{{ section.id }}"
+          aria-expanded="false"
+          aria-label="Open menu"
+          data-drawer-open
+        >
+          <span class="lux-burger" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <nav class="lux-header__nav" aria-label="Primary">
+          <ul class="lux-nav" role="list">
+            {%- for link in main_menu.links -%}
+              <li class="lux-nav__item" data-dropdown-item>
                 {%- if link.links != blank -%}
-                  <ul class="premium-header__submenu" role="list" aria-label="{{ link.title | escape }}">
-                    {%- for childlink in link.links -%}
-                      <li class="premium-header__submenu-item">
-                        <a
-                          href="{{ childlink.url }}"
-                          class="premium-header__submenu-link{% if childlink.active %} is-active{% endif %}"
-                          {% if childlink.active %}aria-current="page"{% endif %}
-                        >
-                          <span>{{ childlink.title | escape }}</span>
-                          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
+                  <button
+                    type="button"
+                    class="lux-nav__link lux-nav__trigger"
+                    aria-expanded="false"
+                    aria-controls="lux-submenu-{{ section.id }}-{{ forloop.index }}"
+                    data-dropdown-trigger
+                  >
+                    <span>{{ link.title | escape }}</span>
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+
+                  <div
+                    id="lux-submenu-{{ section.id }}-{{ forloop.index }}"
+                    class="lux-submenu"
+                    hidden
+                    data-dropdown-panel
+                  >
+                    <ul class="lux-submenu__list" role="list">
+                      {%- for child in link.links -%}
+                        <li class="lux-submenu__item">
+                          <a href="{{ child.url }}" class="lux-submenu__link">
+                            {{ child.title | escape }}
+                          </a>
+                          {%- if child.links != blank -%}
+                            <ul class="lux-submenu__nested" role="list">
+                              {%- for grandchild in child.links -%}
+                                <li>
+                                  <a href="{{ grandchild.url }}" class="lux-submenu__nested-link">
+                                    {{ grandchild.title | escape }}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="lux-nav__link{% if link.active %} is-active{% endif %}">
+                    {{ link.title | escape }}
+                  </a>
                 {%- endif -%}
               </li>
             {%- endfor -%}
           </ul>
         </nav>
-      {%- endif -%}
-    </div>
-
-    <div class="premium-header__center">
-      {%- if request.page_type == 'index' -%}
-        <h1 style="margin:0;">
-      {%- endif -%}
-      <a href="{{ routes.root_url }}" class="premium-header__logo" aria-label="{{ shop.name | escape }}">
-        {%- if settings.logo != blank -%}
-          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-          {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-          {% capture sizes %}(max-width: 989px) 160px, {{ settings.logo_width }}px{% endcapture %}
-          {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-          {{ settings.logo | image_url: width: 600 | image_tag:
-            class: 'motion-reduce',
-            widths: widths,
-            height: logo_height,
-            width: settings.logo_width,
-            alt: logo_alt,
-            sizes: sizes,
-            preload: true
-          }}
-        {%- else -%}
-          <span class="premium-header__brand-text">{{ shop.name }}</span>
-        {%- endif -%}
-      </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    </div>
-
-    <div class="premium-header__right">
-      <a
-        href="{{ routes.search_url }}"
-        class="premium-header__utility premium-header__utility--ghost premium-header__desktop-only"
-        aria-label="Search"
-      >
-        <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-      </a>
-
-      {%- if shop.customer_accounts_enabled -%}
-        <a
-          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="premium-header__utility premium-header__utility--ghost premium-header__desktop-only"
-          aria-label="{% if customer %}Account{% else %}Log in{% endif %}"
-          rel="nofollow"
-        >
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M20 21C20 17.6863 16.4183 15 12 15C7.58172 15 4 17.6863 4 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" stroke="currentColor" stroke-width="1.8"/>
-          </svg>
-        </a>
-      {%- endif -%}
-
-      {%- if show_whatsapp -%}
-        <a
-          href="{{ section.settings.whatsapp_url }}"
-          class="premium-header__utility premium-header__utility--cta"
-          target="_blank"
-          rel="noopener"
-          aria-label="{{ section.settings.whatsapp_label | default: 'WhatsApp' | escape }}"
-        >
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M20.5 11.5C20.5 16.1944 16.6944 20 12 20C10.5283 20 9.1141 19.6232 7.86777 18.9331L4 20L5.08535 16.2283C4.36137 14.9682 4 13.5435 4 12C4 7.30558 7.80558 3.5 12.5 3.5C17.1944 3.5 20.5 6.80558 20.5 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M9.2 8.9C9.5 8.2 9.9 8.2 10.2 8.2H10.8C11.1 8.2 11.3 8.5 11.4 8.7L11.9 9.9C12 10.1 12 10.4 11.8 10.6L11.2 11.3C11.1 11.5 11.1 11.8 11.2 12C11.9 13.2 12.8 14.1 14 14.8C14.2 14.9 14.5 14.9 14.7 14.8L15.4 14.2C15.6 14.1 15.9 14.1 16.1 14.2L17.3 14.7C17.5 14.8 17.8 15 17.8 15.3V15.9C17.8 16.2 17.8 16.6 17.1 16.9C16.4 17.2 15.5 17.3 14.3 16.9C12.7 16.4 11.2 15.4 10 14.2C8.8 13 7.8 11.5 7.3 9.9C6.9 8.7 7 7.8 7.3 7.1C7.6 6.4 8 6.4 8.3 6.4H8.9C9.2 6.4 9.4 6.7 9.5 6.9L10 8.1C10.1 8.3 10.1 8.6 9.9 8.8L9.2 8.9Z" fill="currentColor"/>
-          </svg>
-          <span class="premium-header__utility-label premium-header__desktop-only">{{ section.settings.whatsapp_label | default: 'WhatsApp' }}</span>
-        </a>
-      {%- endif -%}
-
-      <a href="{{ routes.cart_url }}" class="premium-header__utility premium-header__utility--ghost" id="cart-icon-bubble" aria-label="Cart">
-        {% if cart == empty %}
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 7H20L18.5 14H8L6 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M6 7L5.2 4H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <circle cx="9" cy="19" r="1.4" fill="currentColor"/>
-            <circle cx="17" cy="19" r="1.4" fill="currentColor"/>
-          </svg>
-        {% else %}
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 7H20L18.5 14H8L6 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M6 7L5.2 4H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <circle cx="9" cy="19" r="1.4" fill="currentColor"/>
-            <circle cx="17" cy="19" r="1.4" fill="currentColor"/>
-            <circle cx="18" cy="6" r="4" fill="#d4af37"/>
-          </svg>
-        {% endif %}
-        <span class="premium-header__sr-only">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
-      </a>
-    </div>
-  </div>
-
-  <div class="premium-header__drawer-backdrop" data-drawer-backdrop></div>
-
-  <aside
-    id="PremiumHeaderDrawer"
-    class="premium-header__drawer"
-    aria-hidden="true"
-    tabindex="-1"
-    data-drawer
-  >
-    <div class="premium-header__drawer-inner">
-      <div class="premium-header__drawer-top">
-        <a href="{{ routes.root_url }}" class="premium-header__drawer-logo" aria-label="{{ shop.name | escape }}">
-          {%- if settings.logo != blank -%}
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {{ settings.logo | image_url: width: 320 | image_tag:
-              width: settings.logo_width,
-              alt: logo_alt,
-              loading: 'eager'
-            }}
-          {%- else -%}
-            <span class="premium-header__brand-text">{{ shop.name }}</span>
-          {%- endif -%}
-        </a>
-
-        <button class="premium-header__drawer-close" type="button" aria-label="Close menu" data-menu-close>
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </button>
       </div>
 
-      <nav class="premium-header__drawer-nav" aria-label="Mobile navigation">
-        <ul class="premium-header__drawer-list" role="list">
-          {%- if has_menu -%}
-            {%- for link in menu_links -%}
-              <li class="premium-header__drawer-item">
-                {%- if link.links != blank -%}
-                  <details>
-                    <summary class="premium-header__drawer-summary">
-                      <span>{{ link.title | escape }}</span>
-                      <svg class="premium-header__drawer-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </summary>
-
-                    <ul class="premium-header__drawer-sublist" role="list">
-                      {%- for childlink in link.links -%}
-                        <li class="premium-header__drawer-subitem">
-                          <a
-                            href="{{ childlink.url }}"
-                            class="premium-header__drawer-sublink{% if childlink.active %} is-active{% endif %}"
-                            {% if childlink.active %}aria-current="page"{% endif %}
-                          >
-                            {{ childlink.title | escape }}
-                          </a>
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </details>
-                {%- else -%}
-                  <a
-                    href="{{ link.url }}"
-                    class="premium-header__drawer-link{% if link.active %} is-active{% endif %}"
-                    {% if link.active %}aria-current="page"{% endif %}
-                  >
-                    <span>{{ link.title | escape }}</span>
-                  </a>
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
+      <div class="lux-header__center{% if mobile_logo_left %} lux-header__center--mobile-left{% endif %}">
+        <a href="{{ routes.root_url }}" class="lux-logo" aria-label="{{ shop.name | escape }}">
+          {%- if logo != blank -%}
+            {{ logo | image_url: width: 480 | image_tag:
+              widths: '120,160,200,240,300,360,420,480',
+              sizes: '(min-width: 990px) 200px, 140px',
+              alt: logo_alt,
+              loading: 'eager',
+              fetchpriority: 'high',
+              class: 'lux-logo__img'
+            }}
+          {%- else -%}
+            <span class="lux-logo__text">{{ shop.name }}</span>
           {%- endif -%}
-        </ul>
-      </nav>
-
-      <div class="premium-header__drawer-footer">
-        <a href="{{ routes.search_url }}" class="premium-header__utility" aria-label="Search">
-          <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-          <span class="premium-header__utility-label">Search</span>
         </a>
+      </div>
 
-        {%- if shop.customer_accounts_enabled -%}
-          <a
-            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-            class="premium-header__utility"
-            rel="nofollow"
+      <div class="lux-header__right">
+        {%- if show_search -%}
+          <button
+            type="button"
+            class="lux-icon-btn"
+            aria-label="Open search"
+            aria-expanded="false"
+            aria-controls="lux-search-{{ section.id }}"
+            data-search-open
           >
-            <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M20 21C20 17.6863 16.4183 15 12 15C7.58172 15 4 17.6863 4 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" stroke="currentColor" stroke-width="1.8"/>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <path d="m16.2 16.2 4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
             </svg>
-            <span class="premium-header__utility-label">{% if customer %}Account{% else %}Log in{% endif %}</span>
+            <span class="lux-icon-btn__label">Search</span>
+          </button>
+        {%- endif -%}
+
+        {%- if show_account -%}
+          <a
+            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+            class="lux-icon-btn lux-icon-btn--desktop"
+            aria-label="{% if customer %}Account{% else %}Sign in{% endif %}"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="8.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M5.4 19.2c.9-3.4 3.4-5.2 6.6-5.2s5.7 1.8 6.6 5.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <span class="lux-icon-btn__label">{% if customer %}Account{% else %}Sign in{% endif %}</span>
           </a>
         {%- endif -%}
+
+        {%- if show_wishlist -%}
+          <a href="{{ wishlist_url }}" class="lux-icon-btn lux-icon-btn--desktop" aria-label="{{ wishlist_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 9 6c1.7 0 2.6.9 3 1.7C12.4 6.9 13.3 6 15 6a4 4 0 0 1 4 4.4c0 5.2-7 9.6-7 9.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            </svg>
+            <span class="lux-icon-btn__label">{{ wishlist_label | escape }}</span>
+          </a>
+        {%- endif -%}
+
+        <a href="{{ routes.cart_url }}" class="lux-icon-btn lux-icon-btn--cart" aria-label="Cart, {{ cart.item_count }} items">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 6h2.2l1.4 9.4h9.2L19.5 8H8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="10" cy="19" r="1.4"/>
+            <circle cx="17" cy="19" r="1.4"/>
+          </svg>
+          <span class="lux-icon-btn__label">Cart</span>
+          {%- if cart.item_count > 0 -%}
+            <span class="lux-cart-count is-active" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
+          {%- else -%}
+            <span class="lux-cart-count" data-cart-count aria-hidden="true" hidden></span>
+          {%- endif -%}
+        </a>
 
         {%- if show_whatsapp -%}
           <a
             href="{{ section.settings.whatsapp_url }}"
-            class="premium-header__utility premium-header__utility--cta"
+            class="lux-cta lux-cta--desktop"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
+            aria-label="{{ whatsapp_label | escape }}"
           >
-            <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M20.5 11.5C20.5 16.1944 16.6944 20 12 20C10.5283 20 9.1141 19.6232 7.86777 18.9331L4 20L5.08535 16.2283C4.36137 14.9682 4 13.5435 4 12C4 7.30558 7.80558 3.5 12.5 3.5C17.1944 3.5 20.5 6.80558 20.5 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M9.2 8.9C9.5 8.2 9.9 8.2 10.2 8.2H10.8C11.1 8.2 11.3 8.5 11.4 8.7L11.9 9.9C12 10.1 12 10.4 11.8 10.6L11.2 11.3C11.1 11.5 11.1 11.8 11.2 12C11.9 13.2 12.8 14.1 14 14.8C14.2 14.9 14.5 14.9 14.7 14.8L15.4 14.2C15.6 14.1 15.9 14.1 16.1 14.2L17.3 14.7C17.5 14.8 17.8 15 17.8 15.3V15.9C17.8 16.2 17.8 16.6 17.1 16.9C16.4 17.2 15.5 17.3 14.3 16.9C12.7 16.4 11.2 15.4 10 14.2C8.8 13 7.8 11.5 7.3 9.9C6.9 8.7 7 7.8 7.3 7.1C7.6 6.4 8 6.4 8.3 6.4H8.9C9.2 6.4 9.4 6.7 9.5 6.9L10 8.1C10.1 8.3 10.1 8.6 9.9 8.8L9.2 8.9Z" fill="currentColor"/>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20 11.7A8 8 0 1 1 5.5 16.6L4.5 20l3.5-1A8 8 0 0 0 20 11.7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M9.4 9c.2-.5.5-.5.8-.5h.4c.2 0 .4.1.5.4l.5 1.1c.1.2.1.4-.1.6l-.5.6c-.1.2-.1.4 0 .5.5 1 1.3 1.7 2.3 2.3.2.1.4.1.6 0l.6-.5c.2-.2.4-.2.6-.1l1.1.5c.2.1.4.3.4.5v.4c0 .3-.1.6-.5.8-.5.2-1.3.4-2.4 0a8 8 0 0 1-4.3-4.3c-.4-1.1-.2-1.9 0-2.3Z" fill="currentColor"/>
             </svg>
-            <span class="premium-header__utility-label">{{ section.settings.whatsapp_label | default: 'WhatsApp' }}</span>
+            <span class="lux-cta__label">{{ whatsapp_label | escape }}</span>
           </a>
         {%- endif -%}
 
-        <a href="{{ routes.cart_url }}" class="premium-header__utility" aria-label="Cart">
-          {% if cart == empty %}
-            <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 7H20L18.5 14H8L6 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M6 7L5.2 4H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <circle cx="9" cy="19" r="1.4" fill="currentColor"/>
-              <circle cx="17" cy="19" r="1.4" fill="currentColor"/>
-            </svg>
-          {% else %}
-            <svg class="premium-header__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 7H20L18.5 14H8L6 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M6 7L5.2 4H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <circle cx="9" cy="19" r="1.4" fill="currentColor"/>
-              <circle cx="17" cy="19" r="1.4" fill="currentColor"/>
-              <circle cx="18" cy="6" r="4" fill="#d4af37"/>
-            </svg>
-          {% endif %}
-          <span class="premium-header__utility-label">{{ 'templates.cart.cart' | t }}</span>
-        </a>
+        {%- for block in section.blocks -%}
+          <div class="lux-header__app" {{ block.shopify_attributes }}>{% render block %}</div>
+        {%- endfor -%}
       </div>
     </div>
-  </aside>
+
+    {%- if show_search -%}
+      <div
+        id="lux-search-{{ section.id }}"
+        class="lux-search"
+        hidden
+        data-search-panel
+      >
+        <form action="{{ routes.search_url }}" method="get" role="search" class="lux-search__form">
+          <input type="hidden" name="options[prefix]" value="last">
+          <label class="lux-search__label" for="lux-search-input-{{ section.id }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <path d="m16.2 16.2 4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <span class="lux-visually-hidden">Search</span>
+          </label>
+          <input
+            id="lux-search-input-{{ section.id }}"
+            class="lux-search__input"
+            type="search"
+            name="q"
+            value="{{ search.terms | escape }}"
+            placeholder="Search fragrances, attars, incense"
+            autocomplete="off"
+            spellcheck="false"
+            data-search-input
+          >
+          <button type="button" class="lux-search__close" aria-label="Close search" data-search-close>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="lux-drawer" id="lux-drawer-{{ section.id }}" hidden data-drawer>
+    <button class="lux-drawer__scrim" type="button" aria-label="Close menu" data-drawer-close></button>
+
+    <aside
+      class="lux-drawer__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile menu"
+      tabindex="-1"
+      data-drawer-panel
+    >
+      <header class="lux-drawer__head">
+        <a href="{{ routes.root_url }}" class="lux-drawer__brand" data-drawer-link>
+          {%- if logo_mobile != blank -%}
+            {{ logo_mobile | image_url: width: 200 | image_tag:
+              widths: '100,140,180,220',
+              sizes: '120px',
+              alt: logo_alt,
+              loading: 'lazy',
+              class: 'lux-drawer__brand-img'
+            }}
+          {%- else -%}
+            <span>{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+        <button class="lux-drawer__close" type="button" aria-label="Close menu" data-drawer-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+
+      {%- if show_search -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="lux-drawer__search">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m16.2 16.2 4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <label class="lux-visually-hidden" for="lux-drawer-q-{{ section.id }}">Search</label>
+          <input
+            id="lux-drawer-q-{{ section.id }}"
+            type="search"
+            name="q"
+            placeholder="Search the collection"
+            autocomplete="off"
+          >
+        </form>
+      {%- endif -%}
+
+      <nav class="lux-drawer__nav" aria-label="Mobile navigation">
+        <ul class="lux-drawer__menu" role="list">
+          {%- for link in main_menu.links -%}
+            <li class="lux-drawer__item">
+              {%- if link.links != blank -%}
+                <details class="lux-acc">
+                  <summary>
+                    <span>{{ link.title | escape }}</span>
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                  </summary>
+                  <div class="lux-acc__body">
+                    <ul role="list">
+                      {%- for child in link.links -%}
+                        <li>
+                          <a href="{{ child.url }}" data-drawer-link>{{ child.title | escape }}</a>
+                          {%- if child.links != blank -%}
+                            <ul class="lux-acc__sub" role="list">
+                              {%- for grandchild in child.links -%}
+                                <li><a href="{{ grandchild.url }}" data-drawer-link>{{ grandchild.title | escape }}</a></li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </details>
+              {%- else -%}
+                <a href="{{ link.url }}" class="lux-drawer__link" data-drawer-link>{{ link.title | escape }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <div class="lux-drawer__quick">
+        {%- if show_account -%}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="lux-drawer__quick-item" data-drawer-link>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 19c.8-3 3.2-4.6 6.5-4.6S17.7 16 18.5 19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span>{% if customer %}Account{% else %}Sign in{% endif %}</span>
+          </a>
+        {%- endif -%}
+        {%- if show_wishlist -%}
+          <a href="{{ wishlist_url }}" class="lux-drawer__quick-item" data-drawer-link>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 9 6c1.7 0 2.6.9 3 1.7C12.4 6.9 13.3 6 15 6a4 4 0 0 1 4 4.4c0 5.2-7 9.6-7 9.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            <span>{{ wishlist_label | escape }}</span>
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="lux-drawer__quick-item" data-drawer-link>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 6h2.2l1.4 9.4h9.2L19.5 8H8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg>
+          <span>Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</span>
+        </a>
+      </div>
+
+      {%- if show_whatsapp -%}
+        <a
+          href="{{ section.settings.whatsapp_url }}"
+          class="lux-drawer__cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 11.7A8 8 0 1 1 5.5 16.6L4.5 20l3.5-1A8 8 0 0 0 20 11.7Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.4 9c.2-.5.5-.5.8-.5h.4c.2 0 .4.1.5.4l.5 1.1c.1.2.1.4-.1.6l-.5.6c-.1.2-.1.4 0 .5.5 1 1.3 1.7 2.3 2.3.2.1.4.1.6 0l.6-.5c.2-.2.4-.2.6-.1l1.1.5c.2.1.4.3.4.5v.4c0 .3-.1.6-.5.8-.5.2-1.3.4-2.4 0a8 8 0 0 1-4.3-4.3c-.4-1.1-.2-1.9 0-2.3Z" fill="currentColor"/>
+          </svg>
+          <span>{{ whatsapp_label | escape }}</span>
+        </a>
+      {%- endif -%}
+
+      {%- if show_country_selector or show_language_selector -%}
+        {%- assign locale_form_id = 'lux-locale-' | append: section.id -%}
+        <div class="lux-drawer__locale">
+          {%- form 'localization', id: locale_form_id, class: 'lux-drawer__locale-form' -%}
+            {%- if show_country_selector -%}
+              <label class="lux-visually-hidden" for="lux-country-{{ section.id }}">Country</label>
+              <select id="lux-country-{{ section.id }}" name="country_code">
+                {%- for country in localization.available_countries -%}
+                  <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                    {{ country.name }} ({{ country.currency.iso_code }})
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+            {%- if show_language_selector -%}
+              <label class="lux-visually-hidden" for="lux-lang-{{ section.id }}">Language</label>
+              <select id="lux-lang-{{ section.id }}" name="locale_code">
+                {%- for language in localization.available_languages -%}
+                  <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                    {{ language.endonym_name | capitalize }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+            <button type="submit" class="lux-drawer__locale-submit">Update</button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
+      <footer class="lux-drawer__foot">
+        {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener noreferrer">Instagram</a>{%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener noreferrer">Facebook</a>{%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}" target="_blank" rel="noopener noreferrer">YouTube</a>{%- endif -%}
+        {%- if settings.social_tiktok_link != blank -%}<a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener noreferrer">TikTok</a>{%- endif -%}
+        {%- if drawer_footer_note != blank -%}<p>{{ drawer_footer_note | escape }}</p>{%- endif -%}
+      </footer>
+    </aside>
+  </div>
 </header>
 
-{%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+{%- if settings.cart_type == 'notification' -%}
+  {% render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop %}
 {%- endif -%}
 
-<script>
+{% stylesheet %}
+  .lux-header {
+    --lux-z-bar: 35;
+    --lux-z-drawer: 80;
+    --lux-max: 1480px;
+
+    --lux-bg: rgba(255, 255, 255, 0.92);
+    --lux-bg-solid: #ffffff;
+    --lux-soft: #f8f5f0;
+    --lux-text: #181613;
+    --lux-muted: #6f685f;
+    --lux-accent: #a3823f;
+    --lux-line: rgba(24, 22, 19, 0.12);
+    --lux-line-soft: rgba(24, 22, 19, 0.06);
+    --lux-shadow: 0 6px 24px rgba(20, 16, 12, 0.07);
+    --lux-shadow-lg: 0 18px 50px rgba(18, 14, 10, 0.1);
+
+    --lux-radius-pill: 999px;
+    --lux-radius-md: 16px;
+    --lux-radius-sm: 12px;
+
+    --lux-touch: 44px;
+
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--lux-z-bar);
+    margin-block-end: var(--lux-header-margin-bottom, 0);
+    color: var(--lux-text);
+    font-family: var(--font-body-family, 'Inter', system-ui, -apple-system, sans-serif);
+  }
+
+  .lux-skip-link {
+    position: absolute;
+    inset-block-start: -100px;
+    inset-inline-start: 1rem;
+    background: #fff;
+    color: #000;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    z-index: 9;
+    text-decoration: none;
+    transition: inset-block-start 0.2s ease;
+  }
+  .lux-skip-link:focus {
+    inset-block-start: 1rem;
+  }
+
+  .lux-visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lux-header__bar {
+    background: var(--lux-bg);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-block-end: 1px solid transparent;
+    transition: background-color 240ms ease, box-shadow 240ms ease, border-color 240ms ease, transform 280ms ease;
+    will-change: transform;
+  }
+  .lux-header--with-border .lux-header__bar {
+    border-block-end-color: var(--lux-line);
+  }
+  .lux-header.is-compact .lux-header__bar {
+    background: var(--lux-bg-solid);
+    box-shadow: var(--lux-shadow);
+  }
+  .lux-header.is-hidden .lux-header__bar {
+    transform: none;
+  }
+
+  .lux-header__container {
+    max-inline-size: var(--lux-max);
+    margin-inline: auto;
+    padding-inline: clamp(14px, 3vw, 36px);
+    padding-block: var(--lux-header-pt, 14px) var(--lux-header-pb, 14px);
+    min-block-size: clamp(64px, 7.5vw, 86px);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: clamp(10px, 1.5vw, 22px);
+    transition: padding 220ms ease, min-block-size 220ms ease;
+  }
+  .lux-header.is-compact .lux-header__container {
+    min-block-size: clamp(56px, 6vw, 72px);
+    padding-block: clamp(8px, 1vw, 12px);
+  }
+
+  .lux-header__left,
+  .lux-header__right {
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 0.6vw, 10px);
+    min-inline-size: 0;
+  }
+  .lux-header__left { justify-content: flex-start; }
+  .lux-header__right { justify-content: flex-end; }
+  .lux-header__center {
+    display: flex;
+    justify-content: center;
+    min-inline-size: 0;
+  }
+
+  .lux-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1;
+  }
+  .lux-logo__img {
+    display: block;
+    inline-size: auto;
+    max-inline-size: clamp(110px, 14vw, 200px);
+    max-block-size: clamp(36px, 4vw, 56px);
+    object-fit: contain;
+    transition: max-block-size 240ms ease;
+  }
+  .lux-header.is-compact .lux-logo__img {
+    max-block-size: clamp(32px, 3.4vw, 46px);
+  }
+  .lux-logo__text {
+    font-size: clamp(1rem, 1vw + 0.7rem, 1.3rem);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .lux-icon-btn {
+    --pad: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-inline-size: var(--lux-touch);
+    min-block-size: var(--lux-touch);
+    padding: 8px var(--pad);
+    border: 1px solid transparent;
+    border-radius: var(--lux-radius-pill);
+    background: transparent;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+    line-height: 1;
+    position: relative;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+  .lux-icon-btn:hover {
+    background: var(--lux-soft);
+  }
+  .lux-icon-btn:active {
+    transform: translate3d(0, 1px, 0);
+  }
+  .lux-icon-btn svg {
+    inline-size: 20px;
+    block-size: 20px;
+    flex: none;
+  }
+  .lux-icon-btn__label {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lux-muted);
+    white-space: nowrap;
+  }
+
+  .lux-icon-btn--cart {
+    position: relative;
+  }
+
+  .lux-cart-count {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-end: 2px;
+    min-inline-size: 18px;
+    block-size: 18px;
+    padding-inline: 5px;
+    border-radius: 999px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.66rem;
+    font-weight: 600;
+    background: #1c1814;
+    color: #fff;
+    line-height: 1;
+    border: 2px solid var(--lux-bg-solid, #fff);
+    box-shadow: 0 2px 4px rgba(20, 16, 12, 0.18);
+    pointer-events: none;
+  }
+  .lux-cart-count.is-active {
+    display: inline-flex;
+  }
+  .lux-cart-count[hidden] {
+    display: none !important;
+  }
+
+  .lux-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-block-size: var(--lux-touch);
+    padding: 8px 16px;
+    border-radius: var(--lux-radius-pill);
+    background: #1c1814;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background-color 180ms ease, transform 180ms ease;
+  }
+  .lux-cta:hover {
+    background: #2c241a;
+    transform: translate3d(0, -1px, 0);
+  }
+  .lux-cta svg {
+    inline-size: 18px;
+    block-size: 18px;
+  }
+
+  .lux-burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    inline-size: 18px;
+  }
+  .lux-burger span {
+    block-size: 1.4px;
+    inline-size: 100%;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  .lux-header__nav { display: none; }
+  .lux-nav { list-style: none; padding: 0; margin: 0; display: inline-flex; align-items: center; gap: clamp(4px, 1vw, 16px); }
+  .lux-nav__item { position: relative; }
+  .lux-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    color: var(--lux-text);
+    text-decoration: none;
+    font: inherit;
+    font-size: clamp(0.8rem, 0.22vw + 0.76rem, 0.94rem);
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 12px 10px;
+    cursor: pointer;
+    position: relative;
+  }
+  .lux-nav__link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 10px;
+    inset-block-end: 6px;
+    block-size: 1px;
+    background: currentColor;
+    transform-origin: center;
+    transform: scaleX(0);
+    opacity: 0.55;
+    transition: transform 220ms ease;
+  }
+  .lux-nav__item:hover > .lux-nav__link::after,
+  .lux-nav__link.is-active::after,
+  .lux-nav__trigger[aria-expanded='true']::after,
+  .lux-nav__link:focus-visible::after {
+    transform: scaleX(1);
+  }
+  .lux-nav__trigger svg {
+    inline-size: 12px;
+    block-size: 12px;
+    transition: transform 200ms ease;
+  }
+  .lux-nav__trigger[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+
+  .lux-submenu {
+    --shift: 0px;
+    position: absolute;
+    inset-block-start: calc(100% + 4px);
+    inset-inline-start: 0;
+    min-inline-size: 240px;
+    max-inline-size: min(360px, 92vw);
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--lux-line);
+    border-radius: var(--lux-radius-md);
+    box-shadow: var(--lux-shadow-lg);
+    opacity: 0;
+    transform: translate3d(var(--shift), 8px, 0);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+    contain: layout paint;
+  }
+  .lux-submenu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(var(--shift), 0, 0);
+  }
+  .lux-submenu__list,
+  .lux-submenu__nested { list-style: none; margin: 0; padding: 0; }
+  .lux-submenu__item + .lux-submenu__item { margin-block-start: 2px; }
+  .lux-submenu__link,
+  .lux-submenu__nested-link {
+    display: block;
+    text-decoration: none;
+    color: var(--lux-text);
+    border-radius: 10px;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+  .lux-submenu__link {
+    padding: 10px 12px;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .lux-submenu__nested {
+    margin-block-start: 4px;
+    margin-inline-start: 8px;
+    padding-inline-start: 10px;
+    border-inline-start: 1px solid var(--lux-line-soft);
+  }
+  .lux-submenu__nested-link {
+    padding: 8px 10px;
+    font-size: 0.84rem;
+    color: var(--lux-muted);
+  }
+  .lux-submenu__link:hover,
+  .lux-submenu__link:focus-visible,
+  .lux-submenu__nested-link:hover,
+  .lux-submenu__nested-link:focus-visible {
+    background: var(--lux-soft);
+    color: var(--lux-text);
+  }
+
+  .lux-search {
+    border-block-start: 1px solid var(--lux-line-soft);
+    background: #fff;
+    overflow: hidden;
+  }
+  .lux-search[hidden] { display: none; }
+  .lux-search__form {
+    max-inline-size: var(--lux-max);
+    margin-inline: auto;
+    padding: 12px clamp(14px, 3vw, 36px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lux-search__label svg {
+    inline-size: 20px;
+    block-size: 20px;
+    color: var(--lux-muted);
+  }
+  .lux-search__input {
+    flex: 1;
+    min-inline-size: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: clamp(0.95rem, 0.5vw + 0.85rem, 1.1rem);
+    color: var(--lux-text);
+    padding-block: 8px;
+  }
+  .lux-search__input::placeholder { color: var(--lux-muted); }
+  .lux-search__close {
+    border: 1px solid var(--lux-line);
+    background: transparent;
+    border-radius: 999px;
+    inline-size: 38px;
+    block-size: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: inherit;
+    transition: background-color 180ms ease;
+  }
+  .lux-search__close:hover { background: var(--lux-soft); }
+  .lux-search__close svg { inline-size: 16px; block-size: 16px; }
+
+  .lux-icon-btn:focus-visible,
+  .lux-cta:focus-visible,
+  .lux-nav__link:focus-visible,
+  .lux-submenu__link:focus-visible,
+  .lux-submenu__nested-link:focus-visible,
+  .lux-search__close:focus-visible,
+  .lux-drawer__close:focus-visible,
+  .lux-drawer__link:focus-visible,
+  .lux-drawer__quick-item:focus-visible,
+  .lux-acc summary:focus-visible {
+    outline: 2px solid var(--lux-accent);
+    outline-offset: 2px;
+  }
+
+  .lux-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--lux-z-drawer);
+  }
+  .lux-drawer[hidden] { display: none; }
+  .lux-drawer__scrim {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: rgba(15, 12, 9, 0.4);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    cursor: pointer;
+  }
+  .lux-drawer__panel {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: min(420px, 100vw);
+    background: #fff;
+    box-shadow: -10px 0 40px rgba(15, 12, 9, 0.16);
+    transform: translate3d(100%, 0, 0);
+    transition: transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: calc(env(safe-area-inset-top) + 18px) max(18px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 18px) 18px;
+  }
+  .lux-drawer.is-open .lux-drawer__scrim { opacity: 1; }
+  .lux-drawer.is-open .lux-drawer__panel { transform: translate3d(0, 0, 0); }
+
+  .lux-drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .lux-drawer__brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .lux-drawer__brand-img {
+    block-size: 32px;
+    inline-size: auto;
+    object-fit: contain;
+  }
+  .lux-drawer__close {
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--lux-line);
+    background: #fff;
+    cursor: pointer;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lux-drawer__close svg { inline-size: 16px; block-size: 16px; }
+
+  .lux-drawer__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--lux-line);
+    border-radius: var(--lux-radius-pill);
+    padding: 6px 14px;
+    min-block-size: var(--lux-touch);
+    background: #fff;
+  }
+  .lux-drawer__search svg {
+    inline-size: 18px;
+    block-size: 18px;
+    color: var(--lux-muted);
+    flex: none;
+  }
+  .lux-drawer__search input {
+    flex: 1;
+    min-inline-size: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 0.95rem;
+  }
+
+  .lux-drawer__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lux-drawer__item + .lux-drawer__item {
+    margin-block-start: 2px;
+    border-block-start: 1px solid var(--lux-line-soft);
+  }
+  .lux-drawer__link,
+  .lux-acc summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-block-size: 52px;
+    padding: 12px 4px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .lux-acc summary {
+    list-style: none;
+  }
+  .lux-acc summary::-webkit-details-marker { display: none; }
+  .lux-acc summary svg {
+    inline-size: 14px;
+    block-size: 14px;
+    color: var(--lux-muted);
+    transition: transform 200ms ease;
+  }
+  .lux-acc[open] > summary svg {
+    transform: rotate(180deg);
+  }
+  .lux-acc__body ul,
+  .lux-acc__sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lux-acc__body {
+    padding-block-end: 6px;
+  }
+  .lux-acc__body a {
+    display: block;
+    text-decoration: none;
+    color: var(--lux-muted);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .lux-acc__body a:hover { background: var(--lux-soft); color: var(--lux-text); }
+  .lux-acc__sub {
+    margin-inline-start: 10px;
+    padding-inline-start: 12px;
+    border-inline-start: 1px solid var(--lux-line-soft);
+  }
+  .lux-acc__sub a { font-size: 0.88rem; padding-block: 8px; }
+
+  .lux-drawer__quick {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  .lux-drawer__quick-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--lux-soft);
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-block-size: var(--lux-touch);
+  }
+  .lux-drawer__quick-item svg {
+    inline-size: 18px;
+    block-size: 18px;
+  }
+
+  .lux-drawer__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-block-size: 48px;
+    border-radius: var(--lux-radius-pill);
+    background: #1c1814;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .lux-drawer__cta svg { inline-size: 18px; block-size: 18px; }
+
+  .lux-drawer__locale-form {
+    display: grid;
+    gap: 8px;
+  }
+  .lux-drawer__locale-form select,
+  .lux-drawer__locale-submit {
+    min-block-size: var(--lux-touch);
+    border-radius: 10px;
+    border: 1px solid var(--lux-line);
+    padding: 0 12px;
+    background: #fff;
+    font: inherit;
+    color: inherit;
+  }
+  .lux-drawer__locale-submit {
+    background: #1c1814;
+    color: #fff;
+    border-color: #1c1814;
+    cursor: pointer;
+  }
+
+  .lux-drawer__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding-block-start: 14px;
+    border-block-start: 1px solid var(--lux-line-soft);
+    margin-block-start: auto;
+  }
+  .lux-drawer__foot a,
+  .lux-drawer__foot p {
+    margin: 0;
+    color: var(--lux-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  html.lux-locked, html.lux-locked body {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  @media (min-width: 990px) {
+    .lux-header__container {
+      grid-template-columns: 1fr auto 1fr;
+      column-gap: clamp(16px, 2vw, 28px);
+    }
+    .lux-header__menu-btn { display: none; }
+    .lux-header__nav { display: flex; align-items: center; min-inline-size: 0; }
+    .lux-drawer { display: none; }
+  }
+
+  @media (max-width: 1199px) {
+    .lux-icon-btn__label,
+    .lux-cta__label {
+      display: none;
+    }
+    .lux-icon-btn { padding-inline: 8px; }
+    .lux-cta { padding-inline: 12px; }
+  }
+
+  @media (max-width: 989px) {
+    .lux-header__container {
+      grid-template-columns: 1fr auto 1fr;
+      column-gap: clamp(6px, 2vw, 14px);
+      padding-inline: clamp(12px, 4vw, 20px);
+      min-block-size: 60px;
+    }
+    .lux-header__nav { display: none; }
+    .lux-header__left { justify-content: flex-start; }
+    .lux-header__center { justify-content: center; }
+    .lux-header__right { justify-content: flex-end; gap: 2px; }
+
+    .lux-header__center--mobile-left { justify-content: center; }
+
+    .lux-logo {
+      justify-content: center;
+    }
+    .lux-logo__img,
+    .lux-logo__text {
+      max-inline-size: clamp(120px, 38vw, 180px);
+      max-block-size: clamp(32px, 8vw, 44px);
+    }
+    .lux-logo__text {
+      font-size: clamp(1rem, 4.6vw, 1.25rem);
+      letter-spacing: 0.04em;
+    }
+
+    .lux-icon-btn--desktop,
+    .lux-cta--desktop {
+      display: none !important;
+    }
+
+    .lux-header__app { display: none; }
+
+    .lux-icon-btn {
+      min-inline-size: 44px;
+      min-block-size: 44px;
+      padding-inline: 8px;
+    }
+    .lux-icon-btn svg {
+      inline-size: 22px;
+      block-size: 22px;
+    }
+    .lux-icon-btn__label {
+      display: none;
+    }
+
+    .lux-header__menu-btn {
+      min-inline-size: 44px;
+      min-block-size: 44px;
+    }
+
+    .lux-cart-count {
+      inset-block-start: 6px;
+      inset-inline-end: 4px;
+      min-inline-size: 17px;
+      block-size: 17px;
+      font-size: 0.62rem;
+      border-width: 2px;
+    }
+
+    .lux-header.is-compact .lux-header__container {
+      min-block-size: 56px;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .lux-header__container {
+      padding-inline: 12px;
+      column-gap: 4px;
+      min-block-size: 58px;
+    }
+    .lux-icon-btn {
+      min-inline-size: 42px;
+      min-block-size: 42px;
+      padding-inline: 6px;
+    }
+    .lux-icon-btn svg {
+      inline-size: 21px;
+      block-size: 21px;
+    }
+    .lux-header__menu-btn {
+      min-inline-size: 42px;
+      min-block-size: 42px;
+      padding-inline: 6px;
+    }
+    .lux-logo__img,
+    .lux-logo__text {
+      max-inline-size: clamp(110px, 42vw, 160px);
+      max-block-size: clamp(28px, 7.5vw, 38px);
+    }
+    .lux-cart-count {
+      inset-block-start: 5px;
+      inset-inline-end: 3px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lux-header *, .lux-drawer *, .lux-submenu, .lux-search {
+      transition-duration: 0ms !important;
+      animation-duration: 0ms !important;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
   (() => {
-    const header = document.querySelector('[data-premium-header]');
-    if (!header) return;
+    const SELECTOR = '[data-lux-header]';
+    const FOCUSABLE = 'a[href],area[href],button:not([disabled]),input:not([disabled]):not([type="hidden"]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"]),summary,details';
 
-    const shell = header;
-    const menuToggle = header.querySelector('[data-menu-toggle]');
-    const drawer = header.querySelector('[data-drawer]');
-    const backdrop = header.querySelector('[data-drawer-backdrop]');
-    const closeButtons = header.querySelectorAll('[data-menu-close]');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const setScrolledState = () => {
-      const isScrolled = window.scrollY > 8;
-      shell.classList.toggle('is-scrolled', isScrolled);
-    };
+    class LuxHeader {
+      constructor(root) {
+        this.root = root;
+        this.stickyMode = root.dataset.stickyMode || 'always';
+        this.lastY = window.scrollY;
 
-    const openDrawer = () => {
-      drawer.classList.add('is-open');
-      backdrop.classList.add('is-open');
-      drawer.setAttribute('aria-hidden', 'false');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+        this.drawer = root.querySelector('[data-drawer]');
+        this.drawerPanel = root.querySelector('[data-drawer-panel]');
+        this.drawerOpen = root.querySelector('[data-drawer-open]');
+        this.drawerCloseBtns = root.querySelectorAll('[data-drawer-close]');
+        this.drawerLinks = root.querySelectorAll('[data-drawer-link]');
 
-      if (!reduceMotion) {
+        this.dropdownTriggers = root.querySelectorAll('[data-dropdown-trigger]');
+        this.activeTrigger = null;
+        this.hoverTimer = null;
+        this.closeTimer = null;
+
+        this.searchOpen = root.querySelector('[data-search-open]');
+        this.searchClose = root.querySelector('[data-search-close]');
+        this.searchPanel = root.querySelector('[data-search-panel]');
+        this.searchInput = root.querySelector('[data-search-input]');
+
+        this.lastFocused = null;
+
+        this.onScroll = this.onScroll.bind(this);
+        this.onKeydown = this.onKeydown.bind(this);
+        this.onDocClick = this.onDocClick.bind(this);
+
+        this.bindSticky();
+        this.bindDropdowns();
+        this.bindDrawer();
+        this.bindSearch();
+      }
+
+      bindSticky() {
+        if (this.stickyMode === 'none') return;
+        this.onScroll();
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+      }
+
+      onScroll() {
+        if (this.stickyMode === 'none') return;
+        const y = window.scrollY;
+        this.root.classList.toggle('is-compact', y > 8);
+        this.root.classList.remove('is-hidden');
+        this.lastY = y;
+      }
+
+      bindDropdowns() {
+        if (!this.dropdownTriggers.length) return;
+
+        this.dropdownTriggers.forEach((trigger) => {
+          const item = trigger.closest('[data-dropdown-item]');
+          if (!item) return;
+
+          trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const expanded = trigger.getAttribute('aria-expanded') === 'true';
+            if (expanded) {
+              this.closeDropdown(trigger);
+            } else {
+              this.openDropdown(trigger);
+            }
+          });
+
+          trigger.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              this.openDropdown(trigger, true);
+            } else if (e.key === 'Escape') {
+              this.closeDropdown(trigger);
+              trigger.focus();
+            }
+          });
+
+          if (finePointer) {
+            item.addEventListener('pointerenter', () => {
+              clearTimeout(this.closeTimer);
+              this.hoverTimer = window.setTimeout(() => this.openDropdown(trigger), 80);
+            });
+            item.addEventListener('pointerleave', () => {
+              clearTimeout(this.hoverTimer);
+              this.closeTimer = window.setTimeout(() => this.closeDropdown(trigger), 140);
+            });
+          }
+        });
+
+        document.addEventListener('click', this.onDocClick, { passive: true });
+      }
+
+      openDropdown(trigger, focusFirst = false) {
+        if (!trigger) return;
+        const id = trigger.getAttribute('aria-controls');
+        const panel = id ? this.root.querySelector('#' + CSS.escape(id)) : null;
+        if (!panel) return;
+
+        if (this.activeTrigger && this.activeTrigger !== trigger) {
+          this.closeDropdown(this.activeTrigger);
+        }
+
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
         requestAnimationFrame(() => {
-          const firstFocusable = drawer.querySelector('a, button, summary, [tabindex]:not([tabindex="-1"])');
-          if (firstFocusable) firstFocusable.focus({ preventScroll: true });
+          panel.classList.add('is-open');
+          this.repositionPanel(panel);
+        });
+        this.activeTrigger = trigger;
+
+        if (focusFirst) {
+          const first = panel.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+          if (first) first.focus({ preventScroll: true });
+        }
+      }
+
+      closeDropdown(trigger) {
+        if (!trigger) return;
+        const id = trigger.getAttribute('aria-controls');
+        const panel = id ? this.root.querySelector('#' + CSS.escape(id)) : null;
+        trigger.setAttribute('aria-expanded', 'false');
+        if (!panel) return;
+        panel.classList.remove('is-open');
+
+        const finalize = () => { panel.hidden = true; };
+        if (reducedMotion) {
+          finalize();
+        } else {
+          const onEnd = (e) => {
+            if (e.target !== panel || e.propertyName !== 'opacity') return;
+            finalize();
+            panel.removeEventListener('transitionend', onEnd);
+          };
+          panel.addEventListener('transitionend', onEnd);
+        }
+
+        if (this.activeTrigger === trigger) this.activeTrigger = null;
+      }
+
+      repositionPanel(panel) {
+        panel.style.setProperty('--shift', '0px');
+        const pad = 14;
+        const r = panel.getBoundingClientRect();
+        let shift = 0;
+        if (r.right > window.innerWidth - pad) shift -= r.right - (window.innerWidth - pad);
+        if (r.left < pad) shift += pad - r.left;
+        panel.style.setProperty('--shift', Math.round(shift) + 'px');
+      }
+
+      onDocClick(e) {
+        if (!this.activeTrigger) return;
+        if (!e.target.closest('[data-dropdown-item]')) {
+          this.closeDropdown(this.activeTrigger);
+        }
+      }
+
+      bindDrawer() {
+        if (!this.drawer || !this.drawerPanel || !this.drawerOpen) return;
+        this.drawerOpen.addEventListener('click', () => this.openDrawer());
+        this.drawerCloseBtns.forEach((b) => b.addEventListener('click', () => this.closeDrawer()));
+        this.drawerLinks.forEach((a) => a.addEventListener('click', () => this.closeDrawer()));
+        document.addEventListener('keydown', this.onKeydown);
+      }
+
+      openDrawer() {
+        if (!this.drawer || !this.drawer.hidden && this.drawer.classList.contains('is-open')) return;
+        this.drawer.hidden = false;
+        requestAnimationFrame(() => this.drawer.classList.add('is-open'));
+        this.drawerOpen.setAttribute('aria-expanded', 'true');
+        this.lastFocused = document.activeElement;
+        this.lockScroll();
+        requestAnimationFrame(() => {
+          const first = this.drawerPanel.querySelector(FOCUSABLE);
+          (first || this.drawerPanel).focus({ preventScroll: true });
         });
       }
+
+      closeDrawer() {
+        if (!this.drawer || this.drawer.hidden) return;
+        this.drawer.classList.remove('is-open');
+        this.drawerOpen.setAttribute('aria-expanded', 'false');
+        this.unlockScroll();
+        const finalize = () => { this.drawer.hidden = true; };
+        if (reducedMotion) {
+          finalize();
+        } else {
+          const onEnd = (e) => {
+            if (e.target !== this.drawerPanel || e.propertyName !== 'transform') return;
+            finalize();
+            this.drawerPanel.removeEventListener('transitionend', onEnd);
+          };
+          this.drawerPanel.addEventListener('transitionend', onEnd);
+        }
+        if (this.lastFocused && typeof this.lastFocused.focus === 'function') {
+          this.lastFocused.focus({ preventScroll: true });
+        } else {
+          this.drawerOpen.focus({ preventScroll: true });
+        }
+      }
+
+      onKeydown(e) {
+        if (e.key === 'Escape') {
+          if (this.drawer && !this.drawer.hidden) { this.closeDrawer(); return; }
+          if (this.searchPanel && !this.searchPanel.hidden) { this.closeSearch(); return; }
+          if (this.activeTrigger) { this.closeDropdown(this.activeTrigger); this.activeTrigger.focus(); return; }
+        }
+        if (e.key === 'Tab' && this.drawer && !this.drawer.hidden) this.trapFocus(e);
+      }
+
+      trapFocus(e) {
+        const nodes = Array.from(this.drawerPanel.querySelectorAll(FOCUSABLE)).filter(n => n.offsetParent !== null);
+        if (!nodes.length) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus({ preventScroll: true });
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus({ preventScroll: true });
+        }
+      }
+
+      bindSearch() {
+        if (!this.searchOpen || !this.searchPanel) return;
+        this.searchOpen.addEventListener('click', () => this.toggleSearch());
+        if (this.searchClose) this.searchClose.addEventListener('click', () => this.closeSearch());
+      }
+
+      toggleSearch() {
+        if (this.searchPanel.hidden) this.openSearch();
+        else this.closeSearch();
+      }
+
+      openSearch() {
+        this.searchPanel.hidden = false;
+        this.searchOpen.setAttribute('aria-expanded', 'true');
+        requestAnimationFrame(() => {
+          if (this.searchInput) this.searchInput.focus({ preventScroll: true });
+        });
+      }
+
+      closeSearch() {
+        this.searchPanel.hidden = true;
+        this.searchOpen.setAttribute('aria-expanded', 'false');
+        this.searchOpen.focus({ preventScroll: true });
+      }
+
+      lockScroll() {
+        const sw = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.classList.add('lux-locked');
+        if (sw > 0) document.body.style.paddingInlineEnd = sw + 'px';
+      }
+
+      unlockScroll() {
+        document.documentElement.classList.remove('lux-locked');
+        document.body.style.paddingInlineEnd = '';
+      }
+    }
+
+    const init = (root) => {
+      (root || document).querySelectorAll(SELECTOR).forEach((el) => {
+        if (el.dataset.luxInit === 'true') return;
+        el.dataset.luxInit = 'true';
+        new LuxHeader(el);
+      });
     };
 
-    const closeDrawer = () => {
-      drawer.classList.remove('is-open');
-      backdrop.classList.remove('is-open');
-      drawer.setAttribute('aria-hidden', 'true');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-      menuToggle.focus({ preventScroll: true });
-    };
-
-    setScrolledState();
-    window.addEventListener('scroll', setScrolledState, { passive: true });
-
-    menuToggle?.addEventListener('click', () => {
-      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      expanded ? closeDrawer() : openDrawer();
-    });
-
-    closeButtons.forEach(btn => btn.addEventListener('click', closeDrawer));
-    backdrop?.addEventListener('click', closeDrawer);
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && drawer.classList.contains('is-open')) {
-        closeDrawer();
-      }
-    });
-
-    drawer?.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target && target.matches('a[href]')) {
-        closeDrawer();
-      }
+    init();
+    document.addEventListener('shopify:section:load', (e) => init(e.target));
+    document.addEventListener('shopify:section:unload', () => {
+      document.documentElement.classList.remove('lux-locked');
+      document.body.style.paddingInlineEnd = '';
     });
   })();
-</script>
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "Premium Header",
+  "name": "Premium header",
   "class": "section-header",
-  "max_blocks": 3,
+  "max_blocks": 6,
   "settings": [
-    {
-      "type": "select",
-      "id": "logo_position",
-      "options": [
-        { "value": "top-left", "label": "Top left" },
-        { "value": "top-center", "label": "Top center" },
-        { "value": "middle-left", "label": "Middle left" },
-        { "value": "middle-center", "label": "Middle center" }
-      ],
-      "default": "middle-center",
-      "label": "Logo position"
-    },
-    {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "options": [
-        { "value": "center", "label": "Center" },
-        { "value": "left", "label": "Left" }
-      ],
-      "default": "center",
-      "label": "Mobile logo position"
-    },
     {
       "type": "link_list",
       "id": "menu",
@@ -1142,6 +1521,16 @@
       "label": "Sticky header type"
     },
     {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center",
+      "label": "Mobile logo position"
+    },
+    {
       "type": "checkbox",
       "id": "show_line_separator",
       "default": true,
@@ -1150,6 +1539,35 @@
     {
       "type": "header",
       "content": "Utilities"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "default": true,
+      "label": "Show search"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "default": true,
+      "label": "Show account"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "default": true,
+      "label": "Show wishlist"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist URL"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_label",
+      "default": "Wishlist",
+      "label": "Wishlist label"
     },
     {
       "type": "checkbox",
@@ -1181,10 +1599,10 @@
       "label": "Enable language selector"
     },
     {
-      "type": "checkbox",
-      "id": "enable_customer_avatar",
-      "default": true,
-      "label": "Enable customer avatar"
+      "type": "text",
+      "id": "drawer_footer_note",
+      "default": "Crafted for modern fragrance rituals",
+      "label": "Drawer footer note"
     },
     {
       "type": "header",
@@ -1201,28 +1619,24 @@
       "default": 0
     },
     {
-      "type": "header",
-      "content": "Padding"
-    },
-    {
       "type": "range",
       "id": "padding_top",
       "min": 0,
       "max": 36,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "label": "Padding top",
-      "default": 16
+      "default": 14
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
       "max": 36,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "label": "Padding bottom",
-      "default": 16
+      "default": 14
     }
   ],
   "blocks": [
