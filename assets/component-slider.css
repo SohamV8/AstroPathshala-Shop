@@ -375,3 +375,196 @@ slider-component.slider-component-full-width {
 .slider-button--prev:not([disabled]):hover .icon {
   transform: rotate(90deg) scale(1.1);
 }
+
+/* ==========================================================================
+   Luxury slider overrides — featured-collection product sliders
+   Pairs with .lux-card system, mobile-first, premium polish
+   - Targets: .grid.product-grid.contains-card--product (slider/grid hybrid)
+   - Hides ugly native scrollbar, adds peek, smooth snap
+   - Refines slider arrows
+   - Kills slide-in flicker on slides
+   ========================================================================== */
+
+.slider-component-desktop,
+.slider-mobile-gutter {
+  --lux-slider-gap: clamp(10px, 1.4vw, 20px);
+  --lux-slider-edge: clamp(14px, 4vw, 32px);
+}
+
+/* Inner grid/slider list — consistent gaps and zero list spacing */
+.product-grid.contains-card--product {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none;
+  column-gap: var(--lux-slider-gap, 16px);
+  row-gap: clamp(16px, 2.4vw, 28px);
+}
+
+.product-grid.contains-card--product > .grid__item {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* No flicker: cancel scroll-trigger slide-in on slides */
+.product-grid.contains-card--product > .grid__item.scroll-trigger,
+.product-grid.contains-card--product > .grid__item.animate--slide-in {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Hide native scrollbar on the slider rail — premium feel */
+.slider.slider--desktop,
+.slider.slider--tablet,
+.slider.slider--everywhere {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.slider.slider--desktop::-webkit-scrollbar,
+.slider.slider--tablet::-webkit-scrollbar,
+.slider.slider--everywhere::-webkit-scrollbar {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+/* Mobile (≤749px) — clean 2-up grid with edge-to-edge breathing room
+   When merchant enables swipe_on_mobile, become a peek-snap carousel */
+@media screen and (max-width: 749px) {
+  .slider-component-desktop,
+  .slider-mobile-gutter {
+    padding-inline: 0 !important;
+  }
+
+  /* Static 2-col grid path */
+  .product-grid.contains-card--product:not(.slider) {
+    column-gap: 10px;
+    row-gap: 16px;
+    padding-inline: clamp(10px, 4vw, 16px) !important;
+  }
+
+  /* Mobile swipe carousel path (slider--tablet + grid--peek) */
+  .product-grid.contains-card--product.slider.slider--tablet {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-inline-start: 14px;
+    padding-inline: 0 !important;
+    gap: 10px;
+  }
+
+  .product-grid.contains-card--product.slider.slider--tablet > .slider__slide {
+    flex: 0 0 auto;
+    width: calc((100vw - 14px - 14px - 8px) / 2);
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+
+  .product-grid.contains-card--product.slider.slider--tablet > .slider__slide:first-child {
+    margin-inline-start: 14px;
+  }
+
+  .product-grid.contains-card--product.slider.slider--tablet > .slider__slide:last-child {
+    margin-inline-end: 14px;
+  }
+
+  /* Section title spacing */
+  .collection__title.title-wrapper {
+    padding-inline: clamp(14px, 4vw, 20px) !important;
+    margin-block-end: clamp(14px, 4vw, 22px) !important;
+    text-align: left;
+  }
+}
+
+/* Tablet (750–989px) — auto-balance to 3 columns when desktop is 4/5/6 */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .product-grid.contains-card--product.grid--4-col-desktop,
+  .product-grid.contains-card--product.grid--5-col-desktop,
+  .product-grid.contains-card--product.grid--6-col-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Desktop slider (≥990px) — premium peek + smooth snap */
+@media screen and (min-width: 990px) {
+  .slider.slider--desktop {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding-block: 4px;
+    gap: var(--lux-slider-gap, 18px);
+  }
+
+  .slider.slider--desktop > .slider__slide {
+    scroll-snap-align: start;
+  }
+
+  /* Tighten Dawn's :after spacer so peek looks intentional, not awkward */
+  .slider--desktop:after {
+    padding-left: clamp(24px, 4vw, 56px) !important;
+  }
+}
+
+/* Slider arrows — luxury circular buttons */
+.slider-buttons {
+  gap: 8px;
+  margin-block-start: clamp(12px, 1.6vw, 20px);
+}
+
+.slider-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 24, 20, 0.14);
+  background: #ffffff;
+  color: #1c1814;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease, color 200ms ease;
+}
+
+.slider-button:not([disabled]):hover {
+  background: #1c1814;
+  color: #ffffff;
+  border-color: #1c1814;
+  transform: translateY(-1px);
+}
+
+.slider-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.slider-counter {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: #6f685f;
+  font-size: 0.85rem;
+  min-width: 4.4rem;
+}
+
+.slider-counter__link--dots .dot {
+  width: 8px;
+  height: 8px;
+  border-color: rgba(28, 24, 20, 0.3);
+}
+
+.slider-counter__link--active.slider-counter__link--dots .dot {
+  background-color: #a3823f;
+  border-color: #a3823f;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slider.slider--desktop,
+  .slider.slider--tablet,
+  .product-grid.contains-card--product.slider {
+    scroll-behavior: auto !important;
+  }
+  .slider-button {
+    transition: none !important;
+  }
+}
