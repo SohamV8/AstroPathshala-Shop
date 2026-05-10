@@ -37,29 +37,15 @@
     <div class="premium-footer__top">
       <section class="premium-footer__brand{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a class="premium-footer__brand-link" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-          {%- if settings.brand_image != blank -%}
-            {%- assign brand_image_height = settings.brand_image_width | divided_by: settings.brand_image.aspect_ratio -%}
-            {{
-              settings.brand_image
-              | image_url: width: 460
-              | image_tag:
-                loading: 'lazy',
-                widths: '120, 180, 240, 320, 460',
-                height: brand_image_height,
-                width: settings.brand_image_width,
-                class: 'premium-footer__logo'
-            }}
-          {%- else -%}
-            <img
-              src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
-              alt="{{ shop.name | escape }}"
-              width="1080"
-              height="1080"
-              loading="lazy"
-              decoding="async"
-              class="premium-footer__logo premium-footer__logo--asset"
-            >
-          {%- endif -%}
+          <img
+            src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="1080"
+            height="1080"
+            loading="lazy"
+            decoding="async"
+            class="premium-footer__logo premium-footer__logo--asset"
+          >
         </a>
         <p class="premium-footer__brand-description">{{ section.settings.brand_description }}</p>
         <p class="premium-footer__brand-trust">{{ section.settings.brand_trust_line }}</p>

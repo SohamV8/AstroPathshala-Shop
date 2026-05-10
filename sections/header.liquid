@@ -1,5 +1,8 @@
 {%- liquid
   assign main_menu = section.settings.menu
+  assign brand_logo_asset = 'astro-pathshala-Logo-Black-New.png'
+  assign brand_logo_asset_url = brand_logo_asset | asset_url
+  assign use_asset_logo = true
   assign logo = settings.logo
   assign logo_mobile = settings.logo
   assign logo_alt = shop.name | escape
@@ -133,7 +136,19 @@
 
       <div class="lux-header__center{% if mobile_logo_left %} lux-header__center--mobile-left{% endif %}">
         <a href="{{ routes.root_url }}" class="lux-logo" aria-label="{{ shop.name | escape }}" itemscope itemtype="https://schema.org/Organization">
-          {%- if logo != blank -%}
+          {%- if use_asset_logo -%}
+            <img
+              src="{{ brand_logo_asset_url }}"
+              alt="{{ shop.name | escape }}"
+              width="1080"
+              height="1080"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="lux-logo__img lux-logo__img--asset"
+              itemprop="logo"
+            >
+          {%- elsif logo != blank -%}
             {{ logo | image_url: width: 480 | image_tag:
               widths: '120,160,200,240,300,360,420,480',
               sizes: '(min-width: 990px) 200px, 140px',
@@ -144,17 +159,7 @@
               itemprop: 'logo'
             }}
           {%- else -%}
-            <img
-              src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
-              alt="{{ shop.name | escape }}"
-              width="1080"
-              height="1080"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              class="lux-logo__img lux-logo__img--asset"
-              itemprop="logo"
-            >
+            <span class="lux-logo__text">{{ shop.name }}</span>
           {%- endif -%}
           <meta itemprop="name" content="{{ shop.name | escape }}">
           <meta itemprop="url" content="{{ request.origin }}">
