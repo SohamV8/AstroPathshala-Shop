@@ -1,34 +1,84 @@
+/* ------------------------------------------------------------------
+   Brand background image (bgmain.webp) — used site-wide
+   --site-bg-image is defined in layout/theme.liquid & layout/password.liquid
+   ------------------------------------------------------------------ */
+
+html {
+  background-color: #fefefc;
+}
+
 html,
 body {
   min-height: 100%;
 }
 
-body {
+/* The body keeps its color-scheme variable available to descendants,
+   but its painted background is removed so the brand image shows. */
+body,
+body.gradient {
   position: relative;
-  background-color: #fefefc;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
+/* Brand background layer — fixed to viewport so it stays as you scroll.
+   z-index: -1 keeps it behind everything but above the html canvas. */
 body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: var(--site-bg-image);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  will-change: transform;
+}
+
+/* Subtle wash for readability over busy areas of the image.
+   Tuned to keep the image visible while preventing text contrast issues. */
+body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: var(--site-bg-image);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain; /* no stretch, no crop */
-  will-change: transform;
+  background: linear-gradient(
+    180deg,
+    rgba(254, 254, 252, 0.62) 0%,
+    rgba(254, 254, 252, 0.74) 50%,
+    rgba(254, 254, 252, 0.82) 100%
+  );
 }
 
+/* Mobile: switch to scroll attachment (fixed is buggy on iOS Safari)
+   and a more focused position so the image doesn't crop awkwardly. */
 @media screen and (max-width: 749px) {
   body::before {
+    background-attachment: scroll;
     background-position: center top;
+    background-size: cover;
+  }
+  body::after {
+    position: absolute;
+    block-size: 100%;
   }
 }
 
+/* Honor reduced-motion: disable will-change & remove fixed parallax. */
 @media (prefers-reduced-motion: reduce) {
   body::before {
     will-change: auto;
+    background-attachment: scroll;
+  }
+}
+
+/* Print: don't waste ink on the background. */
+@media print {
+  body::before,
+  body::after {
+    display: none !important;
   }
 }
