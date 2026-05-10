@@ -551,6 +551,15 @@
   height: auto;
 }
 
+.premium-footer__logo--asset {
+  width: clamp(11rem, 12vw, 16rem);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  filter: brightness(0) invert(1);
+}
+
 .premium-footer__brand-name {
   font-size: clamp(2.2rem, 2.1vw, 3rem);
   line-height: 1.2;
@@ -744,9 +753,11 @@
   box-shadow: 0 0 0.9rem rgba(196, 163, 110, 0.25);
 }
 
-.premium-footer__social-link .icon {
-  width: 1.75rem;
-  height: 1.75rem;
+.premium-footer__social-link .icon,
+.premium-footer__social-link > svg {
+  width: 1.85rem;
+  height: 1.85rem;
+  display: block;
 }
 
 .premium-footer__contact-list {
@@ -764,8 +775,13 @@
   font-size: 1.35rem;
 }
 
-.premium-footer__contact-list .svg-wrapper {
+.premium-footer__contact-list .svg-wrapper,
+.premium-footer__contact-list > li > svg,
+.premium-footer__contact-icon {
   color: rgba(196, 163, 110, 0.9);
+  width: 1.7rem;
+  height: 1.7rem;
+  display: block;
 }
 
 .premium-footer__contact-list a {
@@ -894,6 +910,8 @@
 
 .premium-footer__brand-trust,
 .premium-footer__contact-list .svg-wrapper,
+.premium-footer__contact-list > li > svg,
+.premium-footer__contact-icon,
 .premium-footer__heading {
   color: #8f6f1d;
 }
