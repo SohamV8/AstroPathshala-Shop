@@ -50,7 +50,15 @@
                 class: 'premium-footer__logo'
             }}
           {%- else -%}
-            <span class="premium-footer__brand-name">{{ shop.name }}</span>
+            <img
+              src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
+              alt="{{ shop.name | escape }}"
+              width="1080"
+              height="1080"
+              loading="lazy"
+              decoding="async"
+              class="premium-footer__logo premium-footer__logo--asset"
+            >
           {%- endif -%}
         </a>
         <p class="premium-footer__brand-description">{{ section.settings.brand_description }}</p>

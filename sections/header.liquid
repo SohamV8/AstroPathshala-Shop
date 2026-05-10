@@ -132,7 +132,7 @@
       </div>
 
       <div class="lux-header__center{% if mobile_logo_left %} lux-header__center--mobile-left{% endif %}">
-        <a href="{{ routes.root_url }}" class="lux-logo" aria-label="{{ shop.name | escape }}">
+        <a href="{{ routes.root_url }}" class="lux-logo" aria-label="{{ shop.name | escape }}" itemscope itemtype="https://schema.org/Organization">
           {%- if logo != blank -%}
             {{ logo | image_url: width: 480 | image_tag:
               widths: '120,160,200,240,300,360,420,480',
@@ -140,11 +140,24 @@
               alt: logo_alt,
               loading: 'eager',
               fetchpriority: 'high',
-              class: 'lux-logo__img'
+              class: 'lux-logo__img',
+              itemprop: 'logo'
             }}
           {%- else -%}
-            <span class="lux-logo__text">{{ shop.name }}</span>
+            <img
+              src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
+              alt="{{ shop.name | escape }}"
+              width="1080"
+              height="1080"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="lux-logo__img lux-logo__img--asset"
+              itemprop="logo"
+            >
           {%- endif -%}
+          <meta itemprop="name" content="{{ shop.name | escape }}">
+          <meta itemprop="url" content="{{ request.origin }}">
         </a>
       </div>
 
@@ -551,8 +564,18 @@
     object-fit: contain;
     transition: max-block-size 240ms ease;
   }
+  .lux-logo__img--asset {
+    aspect-ratio: 1 / 1;
+    max-inline-size: clamp(48px, 5.5vw, 64px);
+    max-block-size: clamp(48px, 5.5vw, 64px);
+    image-rendering: -webkit-optimize-contrast;
+  }
   .lux-header.is-compact .lux-logo__img {
     max-block-size: clamp(32px, 3.4vw, 46px);
+  }
+  .lux-header.is-compact .lux-logo__img--asset {
+    max-inline-size: clamp(40px, 4.4vw, 52px);
+    max-block-size: clamp(40px, 4.4vw, 52px);
   }
   .lux-logo__text {
     font-size: clamp(1rem, 1vw + 0.7rem, 1.3rem);
@@ -1119,6 +1142,10 @@
       max-inline-size: clamp(120px, 38vw, 180px);
       max-block-size: clamp(32px, 8vw, 44px);
     }
+    .lux-logo__img--asset {
+      max-inline-size: clamp(40px, 9vw, 52px);
+      max-block-size: clamp(40px, 9vw, 52px);
+    }
     .lux-logo__text {
       font-size: clamp(1rem, 4.6vw, 1.25rem);
       letter-spacing: 0.04em;
@@ -1187,6 +1214,10 @@
     .lux-logo__text {
       max-inline-size: clamp(110px, 42vw, 160px);
       max-block-size: clamp(28px, 7.5vw, 38px);
+    }
+    .lux-logo__img--asset {
+      max-inline-size: clamp(36px, 10vw, 46px);
+      max-block-size: clamp(36px, 10vw, 46px);
     }
     .lux-cart-count {
       inset-block-start: 5px;

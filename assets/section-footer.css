@@ -551,6 +551,15 @@
   height: auto;
 }
 
+.premium-footer__logo--asset {
+  width: clamp(11rem, 12vw, 16rem);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  filter: brightness(0) invert(1);
+}
+
 .premium-footer__brand-name {
   font-size: clamp(2.2rem, 2.1vw, 3rem);
   line-height: 1.2;

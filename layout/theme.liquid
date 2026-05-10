@@ -11,11 +11,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#000000">
+    <meta name="msapplication-TileColor" content="#000000">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    {%- liquid
+      assign brand_logo_asset = 'astro-pathshala-Logo-Black-New.png'
+      assign brand_logo_asset_url = brand_logo_asset | asset_url
+    -%}
+
     {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | image_url: width: 16, height: 16 }}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      <link rel="icon" type="image/png" sizes="48x48" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">
+      <link rel="icon" type="image/png" sizes="192x192" href="{{ settings.favicon | image_url: width: 192, height: 192 }}">
+      <link rel="icon" type="image/png" sizes="512x512" href="{{ settings.favicon | image_url: width: 512, height: 512 }}">
+      <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+      <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+      <link rel="mask-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}" color="#000000">
+    {%- else -%}
+      <link rel="icon" type="image/png" sizes="any" href="{{ brand_logo_asset_url }}">
+      <link rel="apple-touch-icon" href="{{ brand_logo_asset_url }}">
+      <link rel="shortcut icon" type="image/png" href="{{ brand_logo_asset_url }}">
+      <link rel="mask-icon" href="{{ brand_logo_asset_url }}" color="#000000">
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
@@ -78,6 +96,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           };
         }
       })();
+    </script>
+
+    {%- comment -%} Organization schema for Google Knowledge Graph & rich results {%- endcomment -%}
+    {%- liquid
+      assign org_logo_url = brand_logo_asset_url
+      if settings.favicon != blank
+        assign org_logo_url = settings.favicon | image_url: width: 512, height: 512
+      endif
+      assign org_logo_prefix = org_logo_url | slice: 0, 2
+      if org_logo_prefix == '//'
+        assign org_logo_url = org_logo_url | prepend: 'https:'
+      endif
+    -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }},
+        "logo": {{ org_logo_url | json }},
+        "image": {{ org_logo_url | json }}{%- if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_twitter_link != blank or settings.social_pinterest_link != blank or settings.social_tiktok_link != blank -%},
+        "sameAs": [
+          {%- assign sep = '' -%}
+          {%- if settings.social_facebook_link != blank -%}{{ sep }}{{ settings.social_facebook_link | json }}{%- assign sep = ',' -%}{%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}{{ sep }}{{ settings.social_instagram_link | json }}{%- assign sep = ',' -%}{%- endif -%}
+          {%- if settings.social_youtube_link != blank -%}{{ sep }}{{ settings.social_youtube_link | json }}{%- assign sep = ',' -%}{%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}{{ sep }}{{ settings.social_twitter_link | json }}{%- assign sep = ',' -%}{%- endif -%}
+          {%- if settings.social_pinterest_link != blank -%}{{ sep }}{{ settings.social_pinterest_link | json }}{%- assign sep = ',' -%}{%- endif -%}
+          {%- if settings.social_tiktok_link != blank -%}{{ sep }}{{ settings.social_tiktok_link | json }}{%- endif -%}
+        ]{%- endif -%}
+      }
     </script>
 
     {{ content_for_header }}
