@@ -292,8 +292,18 @@
       data-drawer-panel
     >
       <header class="lux-drawer__head">
-        <a href="{{ routes.root_url }}" class="lux-drawer__brand" data-drawer-link>
-          {%- if logo_mobile != blank -%}
+        <a href="{{ routes.root_url }}" class="lux-drawer__brand" data-drawer-link aria-label="{{ shop.name | escape }}">
+          {%- if use_asset_logo -%}
+            <img
+              src="{{ brand_logo_asset_url }}"
+              alt="{{ shop.name | escape }}"
+              width="1080"
+              height="1080"
+              loading="lazy"
+              decoding="async"
+              class="lux-drawer__brand-img lux-drawer__brand-img--asset"
+            >
+          {%- elsif logo_mobile != blank -%}
             {{ logo_mobile | image_url: width: 200 | image_tag:
               widths: '100,140,180,220',
               sizes: '120px',
@@ -919,6 +929,11 @@
     block-size: 32px;
     inline-size: auto;
     object-fit: contain;
+  }
+  .lux-drawer__brand-img--asset {
+    block-size: 40px;
+    inline-size: 40px;
+    aspect-ratio: 1 / 1;
   }
   .lux-drawer__close {
     inline-size: 40px;
