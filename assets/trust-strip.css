@@ -30,9 +30,11 @@
   color: rgba(var(--color-foreground), 0.85);
 }
 
-.trust-strip__icon .icon {
+.trust-strip__icon .icon,
+.trust-strip__icon > svg {
   width: 2rem;
   height: 2rem;
+  display: block;
 }
 
 .trust-strip__content {

@@ -1,0 +1,182 @@
+{%- comment -%}
+  Lux Icon Library
+  ----------------------------------------------------------------------
+  Lucide-inspired, hand-tuned SVGs. Single source of truth for icons.
+
+  Usage:
+    {% render 'lux-icon', name: 'search' %}
+    {% render 'lux-icon', name: 'whatsapp', class: 'lux-cta__icon', size: 22 %}
+
+  Params:
+    name  (string, required)  Icon name. See list below.
+    class (string, optional)  Extra CSS class on the <svg>.
+    size  (number, optional)  Pixel width+height. Falls back to CSS.
+    title (string, optional)  Accessible label (use only for stand-alone icons
+                              not labelled by aria-label on a parent button).
+
+  Conventions:
+    - viewBox 0 0 24 24, stroke-based, stroke-width 1.75
+    - aria-hidden="true" by default (icons are presentational; the parent
+      button/link carries aria-label).
+    - currentColor everywhere so themes/states control color via CSS.
+{%- endcomment -%}
+{%- liquid
+  assign cls = class | default: ''
+  assign cls = 'lux-svg ' | append: cls | strip
+  assign sz = size | default: ''
+  assign attrs = ''
+  if sz != ''
+    assign attrs = attrs | append: ' width="' | append: sz | append: '" height="' | append: sz | append: '"'
+  endif
+  assign a11y = ' aria-hidden="true" focusable="false"'
+  if title != blank
+    assign a11y = ' role="img" aria-label="' | append: title | append: '" focusable="false"'
+  endif
+-%}
+{%- case name -%}
+  {%- when 'search' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <circle cx="11" cy="11" r="7"/>
+      <path d="m21 21-4.3-4.3"/>
+    </svg>
+
+  {%- when 'user' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M20 21a8 8 0 0 0-16 0"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+
+  {%- when 'heart' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
+    </svg>
+
+  {%- when 'shopping-bag' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+      <path d="M3 6h18"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+
+  {%- when 'whatsapp' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="currentColor"{{ a11y }}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.165-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.241-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.999-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.886 9.884Zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/>
+    </svg>
+
+  {%- when 'message-circle' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+    </svg>
+
+  {%- when 'phone' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/>
+    </svg>
+
+  {%- when 'close' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M18 6 6 18"/>
+      <path d="m6 6 12 12"/>
+    </svg>
+
+  {%- when 'chevron-down' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+
+  {%- when 'chevron-down-sm' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m4 6 4 4 4-4"/>
+    </svg>
+
+  {%- when 'mail' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="m22 7-8.97 5.7a2 2 0 0 1-2.06 0L2 7"/>
+    </svg>
+
+  {%- when 'map-pin' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+
+  {%- when 'clock' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 6v6l4 2"/>
+    </svg>
+
+  {%- when 'instagram' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <rect x="2" y="2" width="20" height="20" rx="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+
+  {%- when 'facebook' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/>
+    </svg>
+
+  {%- when 'youtube' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.42a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33Z"/>
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/>
+    </svg>
+
+  {%- when 'twitter', 'x' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="currentColor"{{ a11y }}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/>
+    </svg>
+
+  {%- when 'pinterest' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="currentColor"{{ a11y }}>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.137.893 2.739a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+    </svg>
+
+  {%- when 'tiktok' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="currentColor"{{ a11y }}>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.6 20.1a6.34 6.34 0 0 0 10.86-4.43V8.51a8.16 8.16 0 0 0 4.77 1.52V6.6a4.85 4.85 0 0 1-1.64.09Z"/>
+    </svg>
+
+  {%- when 'truck' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+      <path d="M15 18H9"/>
+      <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+      <circle cx="17" cy="18" r="2"/>
+      <circle cx="7" cy="18" r="2"/>
+    </svg>
+
+  {%- when 'shield-check', 'secure', 'lock' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+
+  {%- when 'rotate-ccw', 'return', 'refresh' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+      <path d="M3 3v5h5"/>
+    </svg>
+
+  {%- when 'headset', 'support' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M3 14v-3a9 9 0 0 1 18 0v3"/>
+      <path d="M21 16a3 3 0 0 1-3 3h-1v-6h1a3 3 0 0 1 3 3Z"/>
+      <path d="M3 16a3 3 0 0 0 3 3h1v-6H6a3 3 0 0 0-3 3Z"/>
+    </svg>
+
+  {%- when 'check', 'checkmark' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M20 6 9 17l-5-5"/>
+    </svg>
+
+  {%- when 'check-circle' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <circle cx="12" cy="12" r="10"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+
+{%- endcase -%}

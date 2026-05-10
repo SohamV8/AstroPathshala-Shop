@@ -8,15 +8,15 @@
           <span class="trust-strip__icon" aria-hidden="true">
             {%- case block.settings.icon -%}
               {%- when 'return' -%}
-                {{ 'icon-return.svg' | inline_asset_content }}
+                {% render 'lux-icon', name: 'rotate-ccw' %}
               {%- when 'truck' -%}
-                {{ 'icon-truck.svg' | inline_asset_content }}
+                {% render 'lux-icon', name: 'truck' %}
               {%- when 'lock' -%}
-                {{ 'icon-lock.svg' | inline_asset_content }}
+                {% render 'lux-icon', name: 'shield-check' %}
               {%- when 'support' -%}
-                {{ 'icon-chat-bubble.svg' | inline_asset_content }}
+                {% render 'lux-icon', name: 'headset' %}
               {%- else -%}
-                {{ 'icon-checkmark.svg' | inline_asset_content }}
+                {% render 'lux-icon', name: 'check-circle' %}
             {%- endcase -%}
           </span>
           <div class="trust-strip__content">
