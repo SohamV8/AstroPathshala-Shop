@@ -753,9 +753,11 @@
   box-shadow: 0 0 0.9rem rgba(196, 163, 110, 0.25);
 }
 
-.premium-footer__social-link .icon {
-  width: 1.75rem;
-  height: 1.75rem;
+.premium-footer__social-link .icon,
+.premium-footer__social-link > svg {
+  width: 1.85rem;
+  height: 1.85rem;
+  display: block;
 }
 
 .premium-footer__contact-list {
@@ -773,8 +775,13 @@
   font-size: 1.35rem;
 }
 
-.premium-footer__contact-list .svg-wrapper {
+.premium-footer__contact-list .svg-wrapper,
+.premium-footer__contact-list > li > svg,
+.premium-footer__contact-icon {
   color: rgba(196, 163, 110, 0.9);
+  width: 1.7rem;
+  height: 1.7rem;
+  display: block;
 }
 
 .premium-footer__contact-list a {
@@ -903,6 +910,8 @@
 
 .premium-footer__brand-trust,
 .premium-footer__contact-list .svg-wrapper,
+.premium-footer__contact-list > li > svg,
+.premium-footer__contact-icon,
 .premium-footer__heading {
   color: #8f6f1d;
 }

@@ -136,42 +136,42 @@
             {%- if settings.social_instagram_link != blank -%}
               <li>
                 <a href="{{ settings.social_instagram_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
-                  <span class="svg-wrapper">{{ 'icon-instagram.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'instagram' %}
                 </a>
               </li>
             {%- endif -%}
             {%- if settings.social_facebook_link != blank -%}
               <li>
                 <a href="{{ settings.social_facebook_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">
-                  <span class="svg-wrapper">{{ 'icon-facebook.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'facebook' %}
                 </a>
               </li>
             {%- endif -%}
             {%- if settings.social_youtube_link != blank -%}
               <li>
                 <a href="{{ settings.social_youtube_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="YouTube">
-                  <span class="svg-wrapper">{{ 'icon-youtube.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'youtube' %}
                 </a>
               </li>
             {%- endif -%}
             {%- if settings.social_tiktok_link != blank -%}
               <li>
                 <a href="{{ settings.social_tiktok_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="TikTok">
-                  <span class="svg-wrapper">{{ 'icon-tiktok.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'tiktok' %}
                 </a>
               </li>
             {%- endif -%}
             {%- if settings.social_twitter_link != blank -%}
               <li>
                 <a href="{{ settings.social_twitter_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="X">
-                  <span class="svg-wrapper">{{ 'icon-twitter.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'twitter' %}
                 </a>
               </li>
             {%- endif -%}
             {%- if settings.social_pinterest_link != blank -%}
               <li>
                 <a href="{{ settings.social_pinterest_link }}" class="premium-footer__social-link" target="_blank" rel="noopener" aria-label="Pinterest">
-                  <span class="svg-wrapper">{{ 'icon-pinterest.svg' | inline_asset_content }}</span>
+                  {% render 'lux-icon', name: 'pinterest' %}
                 </a>
               </li>
             {%- endif -%}
@@ -183,21 +183,21 @@
         <h2 class="premium-footer__heading premium-footer__heading--small">Contact</h2>
         <ul class="premium-footer__contact-list list-unstyled" role="list">
           <li>
-            <span class="svg-wrapper">{{ 'icon-chat-bubble.svg' | inline_asset_content }}</span>
+            {% render 'lux-icon', name: 'mail', class: 'premium-footer__contact-icon' %}
             <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
           </li>
           <li>
-            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+            {% render 'lux-icon', name: 'whatsapp', class: 'premium-footer__contact-icon' %}
             <a href="https://wa.me/{{ section.settings.whatsapp_number | replace: ' ', '' | replace: '+', '' }}" target="_blank" rel="noopener">
               {{ section.settings.whatsapp_number }}
             </a>
           </li>
           <li>
-            <span class="svg-wrapper">{{ 'icon-map-pin.svg' | inline_asset_content }}</span>
+            {% render 'lux-icon', name: 'map-pin', class: 'premium-footer__contact-icon' %}
             <span>{{ section.settings.location_text }}</span>
           </li>
           <li>
-            <span class="svg-wrapper">{{ 'icon-stopwatch.svg' | inline_asset_content }}</span>
+            {% render 'lux-icon', name: 'clock', class: 'premium-footer__contact-icon' %}
             <span>{{ section.settings.support_timing }}</span>
           </li>
         </ul>
