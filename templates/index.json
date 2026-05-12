@@ -9,6 +9,61 @@
  */
 {
   "sections": {
+    "slideshow_GcnMcf": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_DVNCdE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_03_28_PM.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/gemstone",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "top-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_MLdPU7": {
+          "type": "slide",
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_DVNCdE",
+        "slide_MLdPU7"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "slideshow_J76MHV": {
       "type": "slideshow",
       "name": "t:sections.slideshow.presets.name",
@@ -604,6 +659,7 @@
     }
   },
   "order": [
+    "slideshow_GcnMcf",
     "slideshow_J76MHV",
     "image_banner",
     "trust_strip_main",
