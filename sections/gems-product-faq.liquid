@@ -1,0 +1,547 @@
+{%- liquid
+  assign product_title_downcase = product.title | downcase
+  assign product_type_downcase = product.type | downcase
+  assign product_tags_joined = product.tags | join: ',' | downcase
+  assign product_lookup_text = product_title_downcase | append: ' ' | append: product_type_downcase | append: ' ' | append: product_tags_joined
+
+  assign gem_key = 'all'
+  if product_lookup_text contains 'zircon'
+    assign gem_key = 'zircon'
+  elsif product_lookup_text contains 'tourmaline'
+    assign gem_key = 'tourmaline'
+  elsif product_lookup_text contains 'tiger eye' or product_lookup_text contains 'tigereye'
+    assign gem_key = 'tiger eye'
+  elsif product_lookup_text contains 'sunela' or product_lookup_text contains 'citrine'
+    assign gem_key = 'sunela'
+  elsif product_lookup_text contains 'sulemani'
+    assign gem_key = 'sulemani hakik'
+  elsif product_lookup_text contains 'peridot'
+    assign gem_key = 'peridot'
+  elsif product_lookup_text contains 'moonstone'
+    assign gem_key = 'moonstone'
+  elsif product_lookup_text contains 'mahe mariam'
+    assign gem_key = 'mahe mariam'
+  elsif product_lookup_text contains 'lapis'
+    assign gem_key = 'lapis lazuli'
+  elsif product_lookup_text contains 'kaka neeli'
+    assign gem_key = 'kaka neeli'
+  elsif product_lookup_text contains 'firoza' or product_lookup_text contains 'turquoise'
+    assign gem_key = 'firoza'
+  elsif product_lookup_text contains 'amethyst'
+    assign gem_key = 'amethyst'
+  endif
+-%}
+
+<section
+  id="GemsFaq-{{ section.id }}"
+  class="gems-faq section-{{ section.id }}"
+  style="
+    --faq-bg: {{ section.settings.background_color }};
+    --faq-card-bg: {{ section.settings.card_color }};
+    --faq-text: {{ section.settings.text_color }};
+    --faq-muted: {{ section.settings.muted_text_color }};
+    --faq-accent: {{ section.settings.accent_color }};
+    --faq-radius: {{ section.settings.corner_radius }}px;
+  "
+>
+  <div class="gems-faq__container page-width">
+    <div class="gems-faq__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="gems-faq__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gems-faq__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="gems-faq__subheading">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="gems-faq__accordion" role="list">
+      {%- assign rendered_count = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign show_block = true -%}
+        {%- if block.settings.gemstone != 'all' -%}
+          {%- assign show_block = false -%}
+          {%- assign gemstone_key = block.settings.gemstone | downcase -%}
+          {%- if product_title_downcase contains gemstone_key or product_type_downcase contains gemstone_key or product_tags_joined contains gemstone_key -%}
+            {%- assign show_block = true -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if show_block -%}
+          <details
+            class="gems-faq__item"
+            {% if forloop.first and section.settings.first_open %}open{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <summary class="gems-faq__question">
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="gems-faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="gems-faq__answer rte">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+          {%- assign rendered_count = rendered_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if rendered_count == 0 -%}
+        {%- case gem_key -%}
+          {%- when 'zircon' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}>
+              <summary class="gems-faq__question"><span>What are the benefits of Zircon stone for love and wealth?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary>
+              <div class="gems-faq__answer rte"><p>Zircon is known for its astrological and spiritual significance. It is often worn to support relationship harmony, positivity, confidence, and financial growth through Venus-related energy.</p></div>
+            </details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Zircon stone help attract love?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many people wear Zircon for love attraction because it is believed to improve emotional bonding, romance, charm, and relationship balance.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Does Zircon stone attract money and success?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Zircon is associated with prosperity and opportunities in Vedic traditions, and is commonly chosen by people seeking abundance and material comfort.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>What is the best day to wear a Zircon stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Friday is generally considered the best day for wearing Zircon, often after cleansing and spiritual preparation.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How long does Zircon stone take to show results?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Results vary by individual. Some people notice changes in a few weeks, while others experience gradual shifts over time.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify an original Zircon stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>An original Zircon typically has natural brilliance and subtle unique characteristics. Always buy from a trusted source.</p></div></details>
+          {%- when 'tourmaline' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>What are the benefits of Tourmaline stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Tourmaline is valued for emotional protection, energetic cleansing, focus, and spiritual grounding in daily life.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>What is Tourmaline stone used for?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>People commonly use Tourmaline for protection from negativity, mental calmness, and positive energy support.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Tourmaline protect from negative energy?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Yes, Tourmaline is widely considered a protection stone and is often used as a shield against stress and unwanted emotional influence.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Who should wear Tourmaline stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>It is commonly preferred by people seeking emotional balance, stress relief, confidence, and cleaner personal energy.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How long does Tourmaline take to show results?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Some users feel calmness quickly, while others report gradual improvements over time.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I know if Tourmaline is original?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original Tourmaline usually shows natural color variation and texture. Buy from a reliable seller for authenticity.</p></div></details>
+          {%- when 'tiger eye' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>Can Tiger Eye stone attract success and money?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Tiger Eye is often used for confidence, focus, and decision-making, which many people connect to career and financial progress.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How does Tiger Eye help with focus?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>It is associated with concentration and mental clarity, helping reduce distractions and improve productivity.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Is Tiger Eye good for emotional balance?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many people use Tiger Eye to stabilize emotions and build inner strength during stressful phases.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Tiger Eye protect from negative energy?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Tiger Eye is commonly carried as a grounding and protective crystal against negative thoughts and emotional heaviness.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Tiger Eye be worn every day?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Yes, Tiger Eye jewelry is generally durable and suitable for regular wear.</p></div></details>
+          {%- when 'sunela' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>Why is Citrine called the "wealth and success crystal"?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Citrine is popularly associated with abundance, prosperity, motivation, and opportunities for growth.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>What are the benefits of Citrine stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Citrine is often linked to confidence, positivity, creativity, emotional balance, and a success-oriented mindset.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Citrine attract money and financial growth?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many people use Citrine as a money-attraction crystal connected to optimism and purposeful action.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify original Citrine stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original Citrine generally has warm yellow to golden tones with natural clarity variations and texture differences.</p></div></details>
+          {%- when 'sulemani hakik' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>What are the benefits of Sulemani Hakik stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Sulemani Hakik is commonly worn for Rahu Shanti, Nazar protection, emotional balance, and spiritual grounding.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Sulemani Hakik protect from Nazar (evil eye)?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Yes, it is widely considered an evil-eye protection stone in traditional spiritual practices.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Sulemani Hakik remove negative energy?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many users choose Sulemani Hakik to reduce negativity, emotional instability, and overthinking.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I know if Sulemani Hakik is original?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original stones usually show natural layered patterns and authentic texture variations.</p></div></details>
+          {%- when 'peridot' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>What makes Peridot different from other gemstones?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Peridot is often linked with mental freshness, clarity, and renewed motivation for forward movement in life.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Is Peridot useful for career growth?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many professionals and entrepreneurs choose Peridot for confidence, focus, and goal-driven energy.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Peridot help with overthinking?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Peridot is often used for mental clarity and calmer decision-making when thoughts feel cluttered.</p></div></details>
+          {%- when 'moonstone' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>What are the benefits of Moonstone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Moonstone is linked to emotional healing, calmness, intuition, positivity, and inner peace.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Moonstone help with emotional balance?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Many wearers use Moonstone to ease emotional ups and downs and reduce overthinking.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify original Moonstone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original Moonstone often shows natural shimmer or flash with unique surface variation.</p></div></details>
+          {%- when 'mahe mariam' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>What makes Mahe Mariam special?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Mahe Mariam is often chosen for emotional release, self-healing, and greater inner clarity.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Is Mahe Mariam good for emotional stability?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Yes, many users prefer it for emotional grounding and calmer daily routines.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify original Mahe Mariam stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original pieces usually carry natural textures, patterns, and color differences that feel unique.</p></div></details>
+          {%- when 'lapis lazuli' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>How can Lapis Lazuli help in daily life?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Lapis Lazuli is associated with confidence, communication, mental clarity, and intuitive decision-making.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Why is Lapis Lazuli popular among professionals?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Writers, students, and professionals often use it to support focus, communication, and creative thinking.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify original Lapis Lazuli?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original Lapis Lazuli usually has rich royal-blue tones with natural golden or white mineral patterns.</p></div></details>
+          {%- when 'kaka neeli' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>Why are people curious about Kaka Neeli stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>It is often associated with protection, positivity, emotional support, and energetic balance.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can Kaka Neeli protect from negativity?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Traditional belief connects Kaka Neeli with reducing negative influence and improving calmness.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Is Kaka Neeli suitable for daily use?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Yes, many users include it in daily life as a reminder of strength, stability, and positivity.</p></div></details>
+          {%- when 'firoza' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>Why do many people wear Firoza stone?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Firoza is often worn for positivity, protection, confidence, and emotional balance in everyday life.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How can Firoza be used daily?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>You can wear Firoza as jewelry or keep it near a workspace or meditation area for uplifting energy.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How do I identify original Firoza?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Original Firoza typically has natural sky-blue or green-blue shades with visible natural variation.</p></div></details>
+          {%- when 'amethyst' -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}><summary class="gems-faq__question"><span>Why is Amethyst one of the most loved healing stones?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Amethyst is known for calming energy and is often used to support mindfulness, emotional balance, and peace.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Who usually uses Amethyst crystal?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Students, professionals, and meditators often choose Amethyst for focus, emotional clarity, and reduced stress.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How can Amethyst be used in everyday life?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Wear Amethyst jewelry, keep it on a desk, or place it near your bed for daily calm and positivity.</p></div></details>
+          {%- else -%}
+            <details class="gems-faq__item" {% if section.settings.first_open %}open{% endif %}>
+              <summary class="gems-faq__question"><span>How do I choose the right gemstone for my goals?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary>
+              <div class="gems-faq__answer rte"><p>Choose a gemstone based on your intention, such as love, confidence, protection, calmness, or growth. You can also consult an astrologer for personalized guidance.</p></div>
+            </details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>How can I check gemstone authenticity?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Look for natural variation in texture, tone, and pattern. Buy from trusted sellers who provide quality details.</p></div></details>
+            <details class="gems-faq__item"><summary class="gems-faq__question"><span>Can gemstones be worn daily?</span><span class="gems-faq__icon" aria-hidden="true"></span></summary><div class="gems-faq__answer rte"><p>Most gemstone jewelry can be worn daily with regular gentle care and mindful handling.</p></div></details>
+        {%- endcase -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .gems-faq {
+    background: var(--faq-bg);
+    color: var(--faq-text);
+    padding: clamp(48px, 7vw, 110px) 0;
+  }
+
+  .gems-faq__container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .gems-faq__header {
+    text-align: center;
+    margin-bottom: clamp(24px, 4.8vw, 44px);
+  }
+
+  .gems-faq__eyebrow {
+    margin: 0 0 10px;
+    color: var(--faq-accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .gems-faq__heading {
+    margin: 0;
+    font-size: clamp(1.55rem, 3.2vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .gems-faq__subheading {
+    margin: 14px auto 0;
+    max-width: 660px;
+    color: var(--faq-muted);
+    font-size: clamp(0.96rem, 1.6vw, 1.06rem);
+    line-height: 1.68;
+    letter-spacing: -0.01em;
+  }
+
+  .gems-faq__accordion {
+    display: grid;
+    gap: 10px;
+  }
+
+  .gems-faq__item {
+    border-radius: var(--faq-radius);
+    border: 1px solid color-mix(in srgb, var(--faq-text) 10%, transparent);
+    background: var(--faq-card-bg);
+    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.03);
+    overflow: hidden;
+    transition: border-color 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+  }
+
+  .gems-faq__item:hover {
+    border-color: color-mix(in srgb, var(--faq-accent) 22%, transparent);
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+  }
+
+  .gems-faq__item[open] {
+    border-color: color-mix(in srgb, var(--faq-accent) 26%, transparent);
+    box-shadow: 0 10px 26px rgba(17, 24, 39, 0.07);
+  }
+
+  .gems-faq__question {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+    padding: clamp(15px, 2.2vw, 21px) clamp(16px, 2.4vw, 24px);
+    font-size: clamp(0.98rem, 1.3vw, 1.07rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .gems-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .gems-faq__icon {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--faq-text) 22%, transparent);
+    transition: border-color 0.24s ease, background-color 0.24s ease;
+  }
+
+  .gems-faq__icon::before,
+  .gems-faq__icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 9px;
+    height: 1.4px;
+    border-radius: 2px;
+    background: var(--faq-accent);
+    transform: translate(-50%, -50%);
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gems-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .gems-faq__item[open] .gems-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .gems-faq__item[open] .gems-faq__icon {
+    border-color: color-mix(in srgb, var(--faq-accent) 35%, transparent);
+    background: color-mix(in srgb, var(--faq-accent) 7%, transparent);
+  }
+
+  .gems-faq__answer {
+    color: var(--faq-muted);
+    line-height: 1.72;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    padding: 0 clamp(16px, 2.4vw, 24px) clamp(16px, 2.4vw, 22px);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.34s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gems-faq__item[open] .gems-faq__answer {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 749px) {
+    .gems-faq {
+      padding: 38px 0 52px;
+    }
+
+    .gems-faq__accordion {
+      gap: 9px;
+    }
+
+    .gems-faq__question {
+      padding: 14px 15px;
+    }
+
+    .gems-faq__answer {
+      padding: 0 15px 15px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const sections = document.querySelectorAll('.gems-faq');
+    sections.forEach((section) => {
+      const items = section.querySelectorAll('.gems-faq__item');
+
+      items.forEach((item) => {
+        item.addEventListener('toggle', () => {
+          if (!item.open) return;
+          items.forEach((other) => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Gems product FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everything you need to know"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Helpful answers about gemstone quality, benefits, authenticity, and daily usage."
+    },
+    {
+      "type": "checkbox",
+      "id": "first_open",
+      "label": "Open first FAQ by default",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F5F5F7"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading and question color",
+      "default": "#1D1D1F"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Answer color",
+      "default": "#6E6E73"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#0071E3"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Card corner radius",
+      "min": 8,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "gemstone",
+          "label": "Show on gemstone",
+          "options": [
+            { "value": "all", "label": "All gemstone products" },
+            { "value": "zircon", "label": "Zircon" },
+            { "value": "tourmaline", "label": "Tourmaline" },
+            { "value": "tiger eye", "label": "Tiger Eye" },
+            { "value": "sunela", "label": "Sunela (Citrine)" },
+            { "value": "sulemani hakik", "label": "Sulemani Hakik" },
+            { "value": "peridot", "label": "Peridot" },
+            { "value": "moonstone", "label": "Moonstone" },
+            { "value": "mahe mariam", "label": "Mahe Mariam" },
+            { "value": "lapis lazuli", "label": "Lapis Lazuli" },
+            { "value": "kaka neeli", "label": "Kaka Neeli" },
+            { "value": "firoza", "label": "Firoza" },
+            { "value": "amethyst", "label": "Amethyst" }
+          ],
+          "default": "all"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What are the benefits of this gemstone?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Gemstones are often chosen for spiritual support, confidence, emotional balance, and positive energy based on personal beliefs.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "Gems product FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "zircon",
+            "question": "What are the benefits of Zircon stone for love and wealth?",
+            "answer": "<p>Zircon is associated with Venus energy and is often chosen to support relationship harmony, confidence, positivity, and financial prosperity.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "zircon",
+            "question": "How long does Zircon stone take to show results?",
+            "answer": "<p>Results vary person to person. Some people notice positive changes within a few weeks, while others experience gradual shifts over time.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "tourmaline",
+            "question": "Can Tourmaline stone protect from negative energy?",
+            "answer": "<p>Tourmaline is widely used as a protection stone and is believed to help shield against negative influences while promoting emotional stability.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "tiger eye",
+            "question": "Can Tiger Eye stone attract success and money?",
+            "answer": "<p>Tiger Eye is often selected for confidence, focus, and decision-making, which many people connect with career and financial growth.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "sunela",
+            "question": "Can Citrine (Sunela) attract money and financial growth?",
+            "answer": "<p>Citrine is popularly known as a wealth crystal and is often used to support abundance, motivation, and optimistic thinking.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "sulemani hakik",
+            "question": "Can Sulemani Hakik protect from Nazar (evil eye)?",
+            "answer": "<p>Sulemani Hakik is traditionally worn for protection from negative energies and emotional heaviness, including Nazar-related concerns.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "moonstone",
+            "question": "Is Moonstone good for emotional healing?",
+            "answer": "<p>Moonstone is commonly chosen to support calmness, emotional clarity, and inner balance during stressful phases.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "lapis lazuli",
+            "question": "How can Lapis Lazuli help in daily life?",
+            "answer": "<p>Lapis Lazuli is associated with wisdom and communication, and many people use it to improve confidence and mental clarity.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "firoza",
+            "question": "What makes an original Firoza stone different?",
+            "answer": "<p>An original Firoza stone generally has natural sky-blue to green-blue shades with texture variations that make each piece unique.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "gemstone": "amethyst",
+            "question": "Why do many people use Amethyst crystal?",
+            "answer": "<p>Amethyst is a popular calming crystal used for focus, emotional balance, mindfulness, and everyday positivity.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

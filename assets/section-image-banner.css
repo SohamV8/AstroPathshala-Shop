@@ -821,3 +821,41 @@ main.content-for-layout {
     transform: none !important;
   }
 }
+
+/* Global banner spacing reset and responsive continuity */
+.shopify-section:has(> .banner),
+.shopify-section:has(> .slideshow),
+.shopify-section:has(> slideshow-component),
+.shopify-section:has(.email-signup-banner) {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.shopify-section:has(> .banner) + .shopify-section,
+.shopify-section:has(> .slideshow) + .shopify-section,
+.shopify-section:has(> slideshow-component) + .shopify-section,
+.shopify-section:has(.email-signup-banner) + .shopify-section {
+  margin-top: 0.6rem !important;
+}
+
+.banner,
+.slideshow,
+slideshow-component,
+.email-signup-banner,
+.banner__media,
+.slideshow__media {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 749px) {
+  .shopify-section:has(> .banner) + .shopify-section,
+  .shopify-section:has(> .slideshow) + .shopify-section,
+  .shopify-section:has(> slideshow-component) + .shopify-section,
+  .shopify-section:has(.email-signup-banner) + .shopify-section {
+    margin-top: 0.4rem !important;
+  }
+}

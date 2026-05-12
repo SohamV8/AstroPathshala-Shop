@@ -234,6 +234,21 @@
       "name": "Marquee",
       "settings": {}
     },
+    "gems_product_faq": {
+      "type": "gems-product-faq",
+      "settings": {
+        "eyebrow": "Gemstone FAQs",
+        "heading": "Frequently asked questions",
+        "subheading": "Everything you need to know about authenticity, benefits, daily use, and care for this gemstone.",
+        "first_open": true,
+        "background_color": "#F8F9FF",
+        "card_color": "#FFFFFF",
+        "text_color": "#15152E",
+        "muted_text_color": "#5A5E78",
+        "accent_color": "#6654EA",
+        "corner_radius": 16
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -284,6 +299,7 @@
     "image_banner_AFp4zg",
     "image_banner_Dnqjcf",
     "blocks_y69Wbp",
+    "gems_product_faq",
     "related-products",
     "177787383347cadde0"
   ]
