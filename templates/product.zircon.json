@@ -211,7 +211,7 @@
       "settings": {
         "image": "{{ product.metafields.custom.image_banner.value }}",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
@@ -228,7 +228,7 @@
       "settings": {
         "image": "{{ product.metafields.custom.turmuli_image.value }}",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
@@ -245,7 +245,7 @@
       "settings": {
         "image": "{{ product.metafields.custom.image_03.value }}",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
