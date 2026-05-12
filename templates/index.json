@@ -641,16 +641,6 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
-    },
-    "custom_liquid_Djq3m8": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "custom_liquid": "<!-- Content -->\n    <div class=\"content-box\">\n\n      <div class=\"content-top\">\n\n        <h1>\n          Find your perfect gemstone and Mala with our...\n        </h1>\n\n        <h2>Astro Pathshala Certified Experts</h2>\n\n        <div class=\"features\">\n\n          <div class=\"feature-box\">\n            <span class=\"icon\">👤</span>\n            <div>\n              <strong>Personalized</strong>\n              <p>Expert Recommendation</p>\n            </div>\n          </div>\n\n          <div class=\"feature-box\">\n            <span class=\"icon\">🎁</span>\n            <div>\n              <strong>Offers</strong>\n              <p>Exclusive Discount</p>\n            </div>\n          </div>\n\n          <div class=\"feature-box\">\n            <span class=\"icon\">⭐</span>\n            <div>\n              <strong>100% Satisfaction</strong>\n              <p>Guarantee</p>\n            </div>\n          </div>\n\n        </div>\n\n      </div>\n\n      <!-- Buttons -->\n      <div class=\"button-area\">\n\n        <!-- WhatsApp Button -->\n        <a href=\"https://wa.me/919871130487\"\n           target=\"_blank\"\n           class=\"chat-btn\">\n          <span>💬</span>\n          CHAT NOW\n        </a>\n\n        <!-- Call Button -->\n        <a href=\"tel:+919871130487\"\n           class=\"call-btn\">\n          <span>📞</span>\n          CALL US\n        </a>\n\n      </div>\n\n    </div>\n\n  </div>\n</div>\n\n<!-- Floating WhatsApp -->\n<a href=\"https://wa.me/919871130487\"\n   target=\"_blank\"\n   class=\"floating-whatsapp\">\n   💬\n</a>\n\n<style>\n.gemstone-section{\n  position:relative;\n  padding:60px 20px;\n  overflow:hidden;\n}\n\n.bg-shape{\n  position:absolute;\n  left:0;\n  bottom:0;\n  width:100%;\n  height:280px;\n  background:linear-gradient(to right,#66bfff,#f5ccd5);\n  border-radius:220px 0 0 0;\n  z-index:0;\n}\n\n.gemstone-card{\n  position:relative;\n  z-index:2;\n  max-width:1350px;\n  margin:auto;\n  display:flex;\n  align-items:flex-end;\n}\n\n.left-image{\n  width:35%;\n  position:relative;\n  z-index:3;\n}\n\n.left-image img{\n  width:100%;\n  max-width:480px;\n  object-fit:cover;\n  border-radius:20px;\n}\n\n.content-box{\n  width:65%;\n  background:#fff;\n  border-radius:20px;\n  overflow:hidden;\n  box-shadow:0 10px 30px rgba(0,0,0,.12);\n}\n\n.content-top{\n  background:linear-gradient(to right,#f5e6e6,#edf5fc);\n  padding:45px;\n}\n\n.content-top h1{\n  font-size:42px;\n  font-family:Georgia, serif;\n  color:#333;\n  margin-bottom:10px;\n}\n\n.content-top h2{\n  font-size:30px;\n  margin-bottom:35px;\n}\n\n.features{\n  display:flex;\n  gap:20px;\n  justify-content:space-between;\n}\n\n.feature-box{\n  display:flex;\n  gap:12px;\n  flex:1;\n}\n\n.icon{\n  font-size:32px;\n}\n\n.feature-box strong{\n  display:block;\n  font-size:18px;\n}\n\n.feature-box p{\n  margin:4px 0 0;\n  color:#666;\n}\n\n.button-area{\n  display:flex;\n  gap:20px;\n  padding:30px 45px;\n}\n\n.chat-btn,\n.call-btn{\n  flex:1;\n  text-align:center;\n  padding:20px;\n  border-radius:12px;\n  text-decoration:none;\n  font-size:24px;\n  font-weight:700;\n  transition:.3s;\n}\n\n.chat-btn{\n  background:#fff;\n  border:2px solid #ddd;\n  color:#111;\n}\n\n.call-btn{\n  background:#000;\n  color:#fff;\n}\n\n.chat-btn:hover,\n.call-btn:hover{\n  transform:translateY(-4px);\n}\n\n.floating-whatsapp{\n  position:fixed;\n  left:20px;\n  bottom:20px;\n  width:70px;\n  height:70px;\n  background:#25D366;\n  border-radius:50%;\n  display:flex;\n  justify-content:center;\n  align-items:center;\n  text-decoration:none;\n  font-size:34px;\n  z-index:999;\n}\n\n@media(max-width:991px){\n\n  .gemstone-card{\n    flex-direction:column;\n  }\n\n  .left-image,\n  .content-box{\n    width:100%;\n  }\n\n  .left-image{\n    text-align:center;\n    margin-bottom:20px;\n  }\n\n  .features,\n  .button-area{\n    flex-direction:column;\n  }\n\n  .content-top{\n    padding:30px;\n  }\n\n  .content-top h1{\n    font-size:30px;\n  }\n\n  .content-top h2{\n    font-size:22px;\n  }\n}\n</style>",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
     }
   },
   "order": [
@@ -671,7 +661,6 @@
     "rich_text_RbhKtr",
     "featured_blog_yyM4PG",
     "1778047418f90103c4",
-    "multicolumn1",
-    "custom_liquid_Djq3m8"
+    "multicolumn1"
   ]
 }
