@@ -4,10 +4,9 @@
    ========================================================================== */
 
 .related-products {
-  --rp-pad-y: clamp(40px, 7vw, 88px);
-  --rp-pad-x: clamp(16px, 4vw, 56px);
-  --rp-grid-gap-x: clamp(10px, 1.6vw, 24px);
-  --rp-grid-gap-y: clamp(20px, 3vw, 40px);
+  /* Vertical rhythm comes from section `padding_top` / `padding_bottom` in the theme editor — avoid doubling with extra block padding here. */
+  --rp-grid-gap-x: clamp(10px, 1.5vw, 20px);
+  --rp-grid-gap-y: clamp(14px, 2.2vw, 28px);
   --rp-text: #1c1814;
   --rp-muted: #756c61;
   --rp-accent: #a3823f;
@@ -17,9 +16,7 @@
   width: 100%;
   max-width: min(1440px, 100%);
   margin-inline: auto !important;
-  padding-block: var(--rp-pad-y) !important;
-  padding-inline: var(--rp-pad-x) !important;
-  scroll-margin-block-start: 96px;
+  scroll-margin-block-start: 48px;
   isolation: isolate;
   contain: layout paint;
 }
@@ -45,13 +42,13 @@
 
 .related-products__heading {
   position: relative;
-  margin: 0 0 clamp(20px, 3.5vw, 44px) 0 !important;
-  padding: 0 0 clamp(14px, 2vw, 22px) 0;
+  margin: 0 0 clamp(12px, 2vw, 20px) 0 !important;
+  padding: 0 0 clamp(8px, 1.2vw, 12px) 0;
   text-align: center;
   font-family: var(--font-heading-family, 'Cormorant Garamond', 'Playfair Display', Georgia, serif);
   font-weight: 500;
-  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
-  line-height: 1.15;
+  font-size: clamp(1.45rem, 2.8vw, 2.15rem);
+  line-height: 1.2;
   letter-spacing: 0.005em;
   color: var(--rp-text);
   text-wrap: balance;
@@ -100,7 +97,7 @@
 .related-products .grid--5-col-desktop { --rp-cols: 5; }
 .related-products .grid--6-col-desktop { --rp-cols: 6; }
 
-/* Tablet: cap at 3 columns for readability */
+/* Large tablet / small desktop: cap wide grids at 3 columns */
 @media (max-width: 1199px) {
   .related-products .grid--4-col-desktop,
   .related-products .grid--5-col-desktop,
@@ -109,49 +106,45 @@
   }
 }
 
-/* Small tablet: 2 columns */
-@media (max-width: 989px) {
-  .related-products {
-    --rp-pad-y: clamp(32px, 6vw, 56px);
-  }
-  .related-products .grid {
+/* Tablet & down: wide desktop grids → 2 columns (3-col desktop stays 3 until phone) */
+@media (max-width: 749px) {
+  .related-products .grid--3-col-desktop,
+  .related-products .grid--4-col-desktop,
+  .related-products .grid--5-col-desktop,
+  .related-products .grid--6-col-desktop {
     --rp-cols: 2;
   }
-}
 
-/* --------------------------------------------------------------------------
-   Mobile (≤ 749 px) — premium 2-up grid with edge-to-edge breathing room
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 749px) {
   .related-products {
-    --rp-pad-x: clamp(12px, 4vw, 18px);
-    --rp-pad-y: clamp(28px, 8vw, 48px);
-    --rp-grid-gap-x: 10px;
-    --rp-grid-gap-y: 16px;
-    scroll-margin-block-start: 72px;
+    --rp-grid-gap-x: clamp(10px, 3vw, 14px);
+    --rp-grid-gap-y: clamp(12px, 3.5vw, 18px);
+    scroll-margin-block-start: 40px;
   }
 
   .related-products__heading {
-    font-size: clamp(1.4rem, 5.8vw, 1.85rem);
-    margin-bottom: clamp(18px, 5vw, 28px) !important;
-    padding-bottom: 12px;
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    margin-bottom: clamp(10px, 3vw, 16px) !important;
+    padding-bottom: 8px;
   }
 
   .related-products__heading::after {
-    inline-size: 36px;
+    inline-size: 32px;
   }
 
-  .related-products .grid--2-col-tablet-down { --rp-cols: 2; }
-  .related-products .grid--1-col-tablet-down { --rp-cols: 1; }
+  .related-products .grid--2-col-tablet-down {
+    --rp-cols: 2;
+  }
+
+  .related-products .grid--1-col-tablet-down {
+    --rp-cols: 1;
+  }
 }
 
-/* Very small phones (≤ 360 px) — keep 2 columns but tighten gaps */
+/* Very small phones — tighter gutters */
 @media (max-width: 380px) {
   .related-products {
-    --rp-pad-x: 10px;
     --rp-grid-gap-x: 8px;
-    --rp-grid-gap-y: 14px;
+    --rp-grid-gap-y: 12px;
   }
 }
 
@@ -163,7 +156,7 @@
 
 .related-products:not(.product-recommendations--loaded):empty,
 .related-products:not(.product-recommendations--loaded):not(:has(.product-grid)) {
-  min-block-size: clamp(280px, 32vw, 420px);
+  min-block-size: clamp(200px, 26vw, 340px);
   position: relative;
 }
 

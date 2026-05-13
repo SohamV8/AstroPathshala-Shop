@@ -28,16 +28,31 @@
   }
 }
 
-.template-index #MainContent .shopify-section .multicolumn .page-width[class*='section-'][class*='padding'] {
-  padding-top: var(--showcase-section-y-mobile);
-  padding-bottom: var(--showcase-section-y-mobile);
+/* ----- Homepage: full-width rich text → multicolumn (“Why families…”) ----- */
+.template-index #MainContent .shopify-section:has(.rich-text.rich-text--full-width)
+  + .shopify-section:has(> .multicolumn) {
+  margin-top: clamp(4px, 1.2vw, 12px) !important;
 }
 
 @media screen and (min-width: 750px) {
-  .template-index #MainContent .shopify-section .multicolumn .page-width[class*='section-'][class*='padding'] {
-    padding-top: var(--showcase-section-y-desktop);
-    padding-bottom: var(--showcase-section-y-desktop);
+  .template-index #MainContent .shopify-section:has(.rich-text.rich-text--full-width)
+    + .shopify-section:has(> .multicolumn) {
+    margin-top: clamp(6px, 1vw, 16px) !important;
   }
+}
+
+/* Default rich-text stack is 2rem between blocks — too airy for title + subtitle pairs */
+.template-index .rich-text--full-width .rich-text__blocks > * + * {
+  margin-top: clamp(0.65rem, 1.8vw, 1.05rem) !important;
+}
+
+.template-index .rich-text--full-width .rich-text__heading {
+  margin-bottom: 0 !important;
+}
+
+.template-index .rich-text--full-width .rich-text__text p {
+  margin-top: 0.45em;
+  margin-bottom: 0.45em;
 }
 
 /* ----- Page gutters (collections + sliders) ----- */
@@ -322,13 +337,13 @@
 
 .template-index .multicolumn-list {
   column-gap: var(--showcase-gap-col);
-  row-gap: var(--showcase-gap-row);
+  row-gap: clamp(14px, 2.8vw, 24px);
 }
 
 @media screen and (min-width: 750px) {
   .template-index .multicolumn-list {
     column-gap: var(--showcase-gap-col-lg);
-    row-gap: var(--showcase-gap-row-lg);
+    row-gap: clamp(16px, 2.4vw, 30px);
   }
 }
 

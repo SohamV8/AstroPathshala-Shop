@@ -1,6 +1,6 @@
 {% comment %}
-  Premium expert consultation CTA — split layout, WhatsApp + Call.
-  Edit phone constants below or replace with theme metafields when available.
+  Premium expert consultation CTA — reference layout: ribbon wash, overlap, serif + Inter, 3 trust rows, WhatsApp + Call.
+  Edit assigns below or swap to metafields.
 {% endcomment %}
 {{ 'expert-consultation-cta.css' | asset_url | stylesheet_tag }}
 
@@ -9,14 +9,16 @@
   assign expert_phone_digits = '919871130487'
   assign expert_phone_display = '+91 98711 30487'
   assign expert_image = 'https://i.postimg.cc/3JT8HKtp/portrait-happy-smiling-cheerful-support-phone-operator-headset-isolated-white-wall.jpg'
-  assign expert_image_alt = 'Astro Pathshala certified consultation specialist'
+  assign expert_image_alt = 'Astro Pathshala certified gemstone and consultation specialist'
 -%}
 
 <section class="expert-cta" aria-labelledby="expert-cta-heading">
-  <div class="expert-cta__bg" aria-hidden="true"></div>
+  <div class="expert-cta__surface" aria-hidden="true"></div>
   <div class="expert-cta__inner">
+    <div class="expert-cta__ribbon" aria-hidden="true"></div>
+
     <div class="expert-cta__figure">
-      <div class="expert-cta__figure-shape" aria-hidden="true"></div>
+      <div class="expert-cta__figure-pedestal" aria-hidden="true"></div>
       <img
         class="expert-cta__img"
         src="{{ expert_image }}"
@@ -31,55 +33,45 @@
 
     <div class="expert-cta__card">
       <header class="expert-cta__head">
-        <p class="expert-cta__kicker">
-          Find the right gemstone, mala, or remedy for you with a short, private conversation—no pressure, just
-          clarity.
-        </p>
-        <div class="expert-cta__title-row">
-          <span class="expert-cta__mark" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-            </svg>
-          </span>
-          <h2 id="expert-cta-heading" class="expert-cta__title">Astro Pathshala certified experts</h2>
-        </div>
+        <p class="expert-cta__kicker">Find your perfect gemstone with our&hellip;</p>
+        <h2 id="expert-cta-heading" class="expert-cta__title">Astro Pathshala Certified Experts</h2>
       </header>
 
       <ul class="expert-cta__features" role="list">
         <li class="expert-cta__feature">
           <span class="expert-cta__icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/>
+            </svg>
           </span>
-          <div>
-            <span class="expert-cta__feature-title">Personalized recommendation</span>
-            <p class="expert-cta__feature-desc">Guidance matched to your goals, chart context, and budget.</p>
+          <div class="expert-cta__feature-copy">
+            <span class="expert-cta__feature-line"
+              ><strong>Personalized</strong> <span class="expert-cta__feature-rest">Expert Recommendation</span></span
+            >
           </div>
         </li>
         <li class="expert-cta__feature">
           <span class="expert-cta__icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+              <rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+            </svg>
           </span>
-          <div>
-            <span class="expert-cta__feature-title">Exclusive offers</span>
-            <p class="expert-cta__feature-desc">First-time consultation perks when you connect with our team.</p>
+          <div class="expert-cta__feature-copy">
+            <span class="expert-cta__feature-line"
+              ><strong>Offers</strong> <span class="expert-cta__feature-rest">Exclusive Discount</span></span
+            >
           </div>
         </li>
         <li class="expert-cta__feature">
           <span class="expert-cta__icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+              <circle cx="12" cy="8" r="6"/><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/>
+            </svg>
           </span>
-          <div>
-            <span class="expert-cta__feature-title">Satisfaction-first</span>
-            <p class="expert-cta__feature-desc">Ethical guidance—we help you choose only what truly fits.</p>
-          </div>
-        </li>
-        <li class="expert-cta__feature">
-          <span class="expert-cta__icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </span>
-          <div>
-            <span class="expert-cta__feature-title">Trusted consultation</span>
-            <p class="expert-cta__feature-desc">Vedic + Lal Kitab perspective from Gurugram-based specialists.</p>
+          <div class="expert-cta__feature-copy">
+            <span class="expert-cta__feature-line"
+              ><strong>100%</strong> <span class="expert-cta__feature-rest">Satisfaction Guarantee</span></span
+            >
           </div>
         </li>
       </ul>
@@ -90,21 +82,26 @@
           href="https://wa.me/{{ expert_phone_digits }}?text={{ 'Hi Astro Pathshala — I would like guidance on this product.' | url_encode }}"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp with Astro Pathshala"
         >
           <span class="expert-cta__btn-icon expert-cta__btn-icon--wa" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
           </span>
-          Chat on WhatsApp
+          <span class="expert-cta__btn-label">Chat now</span>
         </a>
-        <a class="expert-cta__btn expert-cta__btn--call" href="tel:{{ expert_phone_e164 | replace: ' ', '' }}">
-          <span class="expert-cta__btn-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <a
+          class="expert-cta__btn expert-cta__btn--call"
+          href="tel:{{ expert_phone_e164 | replace: ' ', '' }}"
+          aria-label="Call Astro Pathshala at {{ expert_phone_display }}"
+        >
+          <span class="expert-cta__btn-icon expert-cta__btn-icon--call" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.44 12.44 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
           </span>
-          Call {{ expert_phone_display }}
+          <span class="expert-cta__btn-label">Call us</span>
         </a>
       </div>
     </div>
