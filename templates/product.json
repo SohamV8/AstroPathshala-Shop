@@ -183,8 +183,9 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "{{ product.metafields.custom.image_banner.value }}",
+        "image_2": "shopify://shop_images/kaka_neeli_3.png",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
