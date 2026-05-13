@@ -52,6 +52,18 @@
 }
 
 @media screen and (max-width: 749px) {
+  .banner__media.animate--zoom-in > img:not(.zoom):not(.deferred-media__poster-button),
+  .banner__media.animate--zoom-in > svg:not(.zoom):not(.deferred-media__poster-button) {
+    position: absolute !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain;
+  }
+}
+
+@media screen and (max-width: 749px) {
   .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
     height: min(22rem, 72vw);
@@ -520,7 +532,6 @@ main.content-for-layout {
   Excludes banner--mobile-bottom — text-below layouts need natural height.
 */
 .banner.banner--large:not(.banner--mobile-bottom),
-.banner.banner--adapt:not(.banner--mobile-bottom),
 .slideshow:not(.banner--mobile-bottom) {
   min-height: min(88svh, 620px);
   height: min(88svh, 620px);
@@ -529,7 +540,6 @@ main.content-for-layout {
 
 @media screen and (min-width: 750px) {
   .banner.banner--large:not(.banner--mobile-bottom),
-  .banner.banner--adapt:not(.banner--mobile-bottom),
   .slideshow:not(.banner--mobile-bottom) {
     min-height: min(92svh, 720px);
     height: min(92svh, 720px);
@@ -539,7 +549,6 @@ main.content-for-layout {
 
 @media screen and (min-width: 990px) {
   .banner.banner--large:not(.banner--mobile-bottom),
-  .banner.banner--adapt:not(.banner--mobile-bottom),
   .slideshow:not(.banner--mobile-bottom) {
     min-height: 100vh;
     min-height: 100svh;
@@ -590,7 +599,7 @@ main.content-for-layout {
   width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   display: block !important;
   background-color: #ffffff;
@@ -662,7 +671,6 @@ main.content-for-layout {
 
   /* Hero height: capped cinematic (not full 100vh) — see rules above */
   .banner.banner--large:not(.banner--mobile-bottom),
-  .banner.banner--adapt:not(.banner--mobile-bottom),
   .slideshow:not(.banner--mobile-bottom) {
     min-height: min(86svh, 580px);
     height: min(86svh, 580px);

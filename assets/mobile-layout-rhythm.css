@@ -33,7 +33,7 @@
     padding-right: var(--mobile-gutter-inline) !important;
   }
 
-  /* Grids: premium but compact card rhythm (product grids keep readable gaps) */
+  /* Grids: premium but compact card rhythm */
   .grid:not(.product-grid) {
     row-gap: clamp(12px, 3vw, 18px) !important;
     column-gap: clamp(12px, 3vw, 18px) !important;
@@ -42,6 +42,11 @@
   .multicolumn .grid,
   .rich-text .grid {
     row-gap: clamp(12px, 3vw, 18px) !important;
+  }
+
+  /* Product grids: tighter but readable gaps on phones */
+  .product-grid.contains-card--product {
+    row-gap: clamp(12px, 3vw, 20px) !important;
   }
 
   /* Rich text blocks — tighter prose rhythm */
