@@ -1,0 +1,40 @@
+{% comment %}
+  Crawl policy override (Shopify-safe):
+  - Preserve Shopify default robots groups
+  - Add targeted rules for duplicate/utility URLs that waste crawl budget
+  - Keep key SEO surfaces crawlable (products, collections, pages, blogs, images)
+{% endcomment %}
+{% for group in robots.default_groups %}
+  {{- group.user_agent -}}
+  {%- for rule in group.rules -%}
+    {{ rule }}
+  {%- endfor -%}
+
+  {%- if group.user_agent.value == '*' -%}
+    {{ 'Allow: /products/' }}
+    {{ 'Allow: /collections/' }}
+    {{ 'Allow: /pages/' }}
+    {{ 'Allow: /blogs/' }}
+    {{ 'Allow: /cdn/shop/files/' }}
+    {{ 'Allow: /cdn/shop/products/' }}
+    {{ 'Allow: /cdn/shop/articles/' }}
+
+    {{ 'Disallow: /search' }}
+    {{ 'Disallow: /search?*' }}
+    {{ 'Disallow: /search/suggest*' }}
+    {{ 'Disallow: /cart' }}
+    {{ 'Disallow: /checkout' }}
+    {{ 'Disallow: /account' }}
+    {{ 'Disallow: /account/*' }}
+    {{ 'Disallow: /orders' }}
+    {{ 'Disallow: /challenge' }}
+
+    {{ 'Disallow: /*?*view=*' }}
+    {{ 'Disallow: /*?*sort_by=*' }}
+    {{ 'Disallow: /*?*filter.*=*' }}
+    {{ 'Disallow: /*?*constraint=*' }}
+    {{ 'Disallow: /*?*variant=*' }}
+  {%- endif -%}
+{% endfor %}
+
+{{ 'Sitemap: ' | append: request.origin | append: '/sitemap.xml' }}

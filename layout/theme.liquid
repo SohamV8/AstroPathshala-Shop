@@ -13,7 +13,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
     <meta name="msapplication-TileColor" content="#000000">
+    {%- comment -%}
+      Canonical stays Shopify-native to avoid route regressions.
+      Query-heavy utility/filter/search URLs are controlled with robots directives below.
+    {%- endcomment -%}
     <link rel="canonical" href="{{ canonical_url }}">
+    {%- liquid
+      assign should_noindex = false
+      if request.page_type == 'search' or request.page_type == 'cart' or request.page_type == '404'
+        assign should_noindex = true
+      endif
+      if request.path contains '/account' or request.path contains '/orders' or request.path contains '/checkout' or request.path contains '/challenge'
+        assign should_noindex = true
+      endif
+    -%}
+    {%- if should_noindex -%}
+      <meta name="robots" content="noindex,follow,noarchive">
+    {%- else -%}
+      <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    {%- endif -%}
 
     {%- liquid
       assign brand_logo_asset = 'astro-pathshala-Logo-Black-New.png'
@@ -349,6 +367,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'site-background.css' | asset_url | stylesheet_tag }}
     {{ 'ui-refinement.css' | asset_url | stylesheet_tag }}
+    {{ 'mobile-layout-rhythm.css' | asset_url | stylesheet_tag }}
     {{ 'premium-cards.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 

@@ -391,6 +391,24 @@ slider-component.slider-component-full-width {
   --lux-slider-edge: clamp(14px, 4vw, 32px);
 }
 
+/* Full-width carousels: keep cards off the viewport edge (all breakpoints) */
+.slider-mobile-gutter.slider-component-full-width {
+  box-sizing: border-box;
+  padding-inline: var(--lux-slider-edge);
+}
+
+@media screen and (min-width: 750px) {
+  .slider-mobile-gutter.slider-component-full-width {
+    padding-inline: clamp(18px, 3.2vw, 40px);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .slider-mobile-gutter.slider-component-full-width {
+    padding-inline: clamp(22px, 3.6vw, 56px);
+  }
+}
+
 /* Inner grid/slider list — consistent gaps and zero list spacing */
 .product-grid.contains-card--product {
   margin: 0 !important;
@@ -430,48 +448,70 @@ slider-component.slider-component-full-width {
   width: 0;
 }
 
-/* Mobile (≤749px) — clean 2-up grid with edge-to-edge breathing room
-   When merchant enables swipe_on_mobile, become a peek-snap carousel */
+/* Mobile (≤749px) — gutters where Dawn uses zero padding; product strips become a real grid */
 @media screen and (max-width: 749px) {
-  .slider-component-desktop,
-  .slider-mobile-gutter {
-    padding-inline: 0 !important;
+  /*
+    .page-width-desktop is padding:0 below 990px — featured rows otherwise hit the screen edge.
+    (Skip .page-width sliders; those already get horizontal padding from core slider rules.)
+  */
+  .slider-mobile-gutter.page-width-desktop:not(.page-width):not(.slider-component-full-width) {
+    padding-inline: var(--lux-slider-edge);
   }
 
-  /* Static 2-col grid path */
+  /* Static grid (no horizontal swipe) */
   .product-grid.contains-card--product:not(.slider) {
-    column-gap: 10px;
-    row-gap: 16px;
-    padding-inline: clamp(10px, 4vw, 16px) !important;
+    column-gap: 12px;
+    row-gap: clamp(18px, 4vw, 28px);
+    padding-inline: 0 !important;
   }
 
-  /* Mobile swipe carousel path (slider--tablet + grid--peek) */
+  /*
+    Featured / product sliders on small screens: use rows × columns instead of
+    horizontal scroll so cards stay readable and aligned with section padding.
+  */
   .product-grid.contains-card--product.slider.slider--tablet {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scroll-padding-inline-start: 14px;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex-wrap: unset !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    scroll-padding-inline: 0 !important;
+    gap: var(--lux-slider-gap, 12px);
     padding-inline: 0 !important;
-    gap: 10px;
+    margin-inline: 0;
+  }
+
+  .product-grid.contains-card--product.slider.slider--tablet.grid--1-col-tablet-down {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .product-grid.contains-card--product.slider.slider--tablet > .slider__slide {
-    flex: 0 0 auto;
-    width: calc((100vw - 14px - 14px - 8px) / 2);
-    max-width: 320px;
-    scroll-snap-align: start;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: none !important;
+    scroll-snap-align: unset;
+    margin-inline-start: 0 !important;
+    margin-inline-end: 0 !important;
   }
 
-  .product-grid.contains-card--product.slider.slider--tablet > .slider__slide:first-child {
-    margin-inline-start: 14px;
-  }
-
+  .product-grid.contains-card--product.slider.slider--tablet > .slider__slide:first-child,
   .product-grid.contains-card--product.slider.slider--tablet > .slider__slide:last-child {
-    margin-inline-end: 14px;
+    margin-inline-start: 0 !important;
+    margin-inline-end: 0 !important;
+  }
+
+  .product-grid.contains-card--product.slider.slider--tablet::after {
+    content: none !important;
+    display: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Arrows / counter are for horizontal mode only */
+  slider-component:has(> ul.product-grid.contains-card--product.slider.slider--tablet) > .slider-buttons {
+    display: none;
   }
 
   /* Section title spacing */

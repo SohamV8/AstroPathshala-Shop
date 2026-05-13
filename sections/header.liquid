@@ -454,7 +454,7 @@
     color: var(--lux-text);
     font-family: var(--font-body-family, 'Inter', system-ui, -apple-system, sans-serif);
     isolation: isolate;
-    contain: layout style;
+    overflow: visible;
   }
   .lux-header.is-hidden,
   .lux-header.is-hidden .lux-header__bar {
@@ -688,6 +688,12 @@
     transition: transform 200ms ease, opacity 200ms ease;
   }
 
+  .lux-header__menu-btn {
+    position: relative;
+    z-index: 60;
+    pointer-events: auto;
+  }
+
   .lux-header__nav { display: none; }
   .lux-nav { list-style: none; padding: 0; margin: 0; display: inline-flex; align-items: center; gap: clamp(4px, 1vw, 16px); }
   .lux-nav__item { position: relative; }
@@ -857,7 +863,7 @@
   .lux-drawer {
     position: fixed;
     inset: 0;
-    z-index: var(--lux-z-drawer);
+    z-index: 9999;
   }
   .lux-drawer[hidden] { display: none; }
   .lux-drawer__scrim {
@@ -887,6 +893,7 @@
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: calc(env(safe-area-inset-top) + 18px) max(18px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 18px) 18px;
+    z-index: 10000;
   }
   .lux-drawer.is-open .lux-drawer__scrim { opacity: 1; }
   .lux-drawer.is-open .lux-drawer__panel { transform: translate3d(0, 0, 0); }

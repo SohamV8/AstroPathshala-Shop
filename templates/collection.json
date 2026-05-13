@@ -24,7 +24,7 @@
       "settings": {
         "image": "shopify://shop_images/banner.webp",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "top-center",
         "desktop_content_alignment": "center",

@@ -54,29 +54,29 @@
 @media screen and (max-width: 749px) {
   .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 28rem;
+    height: min(22rem, 72vw);
   }
 
   .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 34rem;
+    height: min(28rem, 78vw);
   }
 
   .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--large.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 39rem;
+    height: min(32rem, 85vw);
   }
 
   .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 28rem;
+    min-height: min(22rem, 72vw);
   }
 
   .banner--medium:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 34rem;
+    min-height: min(28rem, 78vw);
   }
 
   .banner--large:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 39rem;
+    min-height: min(32rem, 85vw);
   }
 }
 
@@ -514,17 +514,40 @@ main.content-for-layout {
   margin-block-start: 0;
 }
 
-/* Hero banners (large / adapt) → full-viewport height, white background.
-   Small / medium banners → keep their natural Dawn sizing for product pages. */
-.banner.banner--large,
-.banner.banner--adapt,
-.slideshow {
-  height: 100vh;
-  height: 100svh;
-  min-height: 100vh;
-  min-height: 100svh;
-  max-height: 100vh;
-  max-height: 100svh;
+/*
+  Hero banners (large / adapt, slideshow): cinematic height without forcing every
+  phone to a full 100vh (reduces awkward whitespace and “floating” sections).
+  Excludes banner--mobile-bottom — text-below layouts need natural height.
+*/
+.banner.banner--large:not(.banner--mobile-bottom),
+.banner.banner--adapt:not(.banner--mobile-bottom),
+.slideshow:not(.banner--mobile-bottom) {
+  min-height: min(88svh, 620px);
+  height: min(88svh, 620px);
+  max-height: min(92svh, 680px);
+}
+
+@media screen and (min-width: 750px) {
+  .banner.banner--large:not(.banner--mobile-bottom),
+  .banner.banner--adapt:not(.banner--mobile-bottom),
+  .slideshow:not(.banner--mobile-bottom) {
+    min-height: min(92svh, 720px);
+    height: min(92svh, 720px);
+    max-height: min(96svh, 800px);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .banner.banner--large:not(.banner--mobile-bottom),
+  .banner.banner--adapt:not(.banner--mobile-bottom),
+  .slideshow:not(.banner--mobile-bottom) {
+    min-height: 100vh;
+    min-height: 100svh;
+    height: 100vh;
+    height: 100svh;
+    max-height: 100vh;
+    max-height: 100svh;
+  }
 }
 
 .banner,
@@ -567,28 +590,40 @@ main.content-for-layout {
   width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
   display: block !important;
   background-color: #ffffff;
 }
 
-.banner.banner--large .banner__media > img,
-.banner.banner--large .banner__media > svg,
-.banner.banner--adapt .banner__media > img,
-.banner.banner--adapt .banner__media > svg,
-.slideshow .banner__media > img,
-.slideshow .banner__media > svg {
-  max-height: 100vh !important;
-  max-height: 100svh !important;
+.banner.banner--large:not(.banner--mobile-bottom) .banner__media > img,
+.banner.banner--large:not(.banner--mobile-bottom) .banner__media > svg,
+.banner.banner--adapt:not(.banner--mobile-bottom) .banner__media > img,
+.banner.banner--adapt:not(.banner--mobile-bottom) .banner__media > svg,
+.slideshow:not(.banner--mobile-bottom) .banner__media > img,
+.slideshow:not(.banner--mobile-bottom) .banner__media > svg {
+  max-height: 100% !important;
 }
 
-.slideshow__slide,
-.slideshow .slider__slide {
-  height: 100vh;
-  height: 100svh;
-  min-height: 100vh;
-  min-height: 100svh;
+.slideshow:not(.banner--mobile-bottom) .slideshow__slide,
+.slideshow:not(.banner--mobile-bottom) .slider__slide {
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.banner.banner--mobile-bottom,
+.slideshow.banner--mobile-bottom {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+.slideshow.banner--mobile-bottom .slideshow__slide,
+.slideshow.banner--mobile-bottom .slider__slide {
+  height: auto !important;
+  min-height: min(58svh, 420px) !important;
+  max-height: none !important;
 }
 
 /* Edge-to-edge banner section: no margin / padding wrapping the banner */
@@ -625,21 +660,23 @@ main.content-for-layout {
     border-radius: 0 !important;
   }
 
-  /* Hero only on mobile = 100vh; product-page banners stay natural */
-  .banner.banner--large,
-  .banner.banner--adapt,
-  .slideshow {
-    height: 100vh;
-    height: 100svh;
-    min-height: 100vh;
-    min-height: 100svh;
-    max-height: 100vh;
-    max-height: 100svh;
+  /* Hero height: capped cinematic (not full 100vh) — see rules above */
+  .banner.banner--large:not(.banner--mobile-bottom),
+  .banner.banner--adapt:not(.banner--mobile-bottom),
+  .slideshow:not(.banner--mobile-bottom) {
+    min-height: min(86svh, 580px);
+    height: min(86svh, 580px);
+    max-height: min(90svh, 640px);
   }
 
   .banner__media,
   .slideshow__media {
     position: absolute !important;
+  }
+
+  .banner.banner--mobile-bottom .banner__media,
+  .slideshow.banner--mobile-bottom .slideshow__media {
+    position: relative !important;
   }
 }
 

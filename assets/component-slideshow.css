@@ -23,7 +23,7 @@ slideshow-component .slideshow.banner {
 @media screen and (max-width: 749px) {
   .slideshow--placeholder.banner--mobile-bottom.banner--adapt_image .slideshow__media,
   .slideshow--placeholder.banner--adapt_image:not(.banner--mobile-bottom) {
-    height: 28rem;
+    height: min(24rem, 70vw);
   }
 }
 

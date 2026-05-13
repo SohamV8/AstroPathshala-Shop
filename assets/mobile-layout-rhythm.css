@@ -1,0 +1,68 @@
+/**
+ * Mobile-first layout rhythm — global section spacing, gutters, typography balance.
+ * Loaded after ui-refinement.css; uses progressive enhancement (no desktop regressions).
+ */
+
+@media screen and (max-width: 749px) {
+  :root {
+    --mobile-section-gap: clamp(24px, 5.5vw, 40px);
+    --mobile-gutter-inline: clamp(16px, 4.5vw, 20px);
+  }
+
+  /* Tighter vertical rhythm between sections (theme + Dawn stack) */
+  html {
+    --spacing-sections-mobile: var(--mobile-section-gap) !important;
+  }
+
+  .section + .section {
+    margin-top: var(--mobile-section-gap) !important;
+  }
+
+  /* Headings: less “floating” air under titles on small screens */
+  .title-wrapper,
+  .title-wrapper-with-link,
+  .rich-text__heading,
+  .main-page-title,
+  .collection__title.title-wrapper {
+    margin-bottom: clamp(12px, 3vw, 20px) !important;
+  }
+
+  /* Default page gutters — consistent with banner content padding */
+  .page-width {
+    padding-left: var(--mobile-gutter-inline) !important;
+    padding-right: var(--mobile-gutter-inline) !important;
+  }
+
+  /* Grids: premium but compact card rhythm (product grids keep readable gaps) */
+  .grid:not(.product-grid) {
+    row-gap: clamp(12px, 3vw, 18px) !important;
+    column-gap: clamp(12px, 3vw, 18px) !important;
+  }
+
+  .multicolumn .grid,
+  .rich-text .grid {
+    row-gap: clamp(12px, 3vw, 18px) !important;
+  }
+
+  /* Rich text blocks — tighter prose rhythm */
+  .rich-text__blocks .rich-text__text,
+  .rte p {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+
+  .rich-text__blocks .rich-text__text:first-child,
+  .rte p:first-child {
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  :root {
+    --spacing-sections-mobile: clamp(28px, 3.5vw, 44px);
+  }
+
+  .section + .section {
+    margin-top: clamp(28px, 3.5vw, 48px);
+  }
+}
