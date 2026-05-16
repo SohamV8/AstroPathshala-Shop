@@ -1,0 +1,286 @@
+/* =============================================================================
+   Contact page — Apple-like layout, responsive, animated
+   Scoped via .contact-showcase on /pages/contact
+   ============================================================================= */
+
+body:has(.contact-showcase) {
+  --contact-max: min(720px, 100%);
+  --contact-shell: min(960px, 100%);
+  --contact-gutter: clamp(16px, 4.5vw, 40px);
+  --contact-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --contact-radius: clamp(18px, 3vw, 24px);
+}
+
+/* ----------------------------- Hero banner --------------------------------- */
+
+body:has(.contact-showcase) .shopify-section:has(> .banner:not(.image-banner--product-slot)) {
+  overflow: hidden;
+}
+
+body:has(.contact-showcase) .shopify-section:has(> .banner:not(.image-banner--product-slot)) .banner {
+  min-height: clamp(180px, 32vw, 320px);
+}
+
+body:has(.contact-showcase) .shopify-section:has(> .banner:not(.image-banner--product-slot)) .banner__media,
+body:has(.contact-showcase) .shopify-section:has(> .banner:not(.image-banner--product-slot)) .banner__media > img {
+  border-radius: 0 !important;
+}
+
+body:has(.contact-showcase) .shopify-section:has(> .banner:not(.image-banner--product-slot)) .banner__media > img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ----------------------------- Section shell ------------------------------- */
+
+.contact-showcase {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(-48px, -7vw, -72px);
+  padding-bottom: clamp(40px, 8vw, 80px) !important;
+}
+
+.contact-showcase__inner {
+  max-width: var(--contact-shell);
+  margin-inline: auto;
+  padding-inline: var(--contact-gutter);
+}
+
+.contact-showcase__header {
+  text-align: center;
+  max-width: var(--contact-max);
+  margin-inline: auto;
+  margin-bottom: clamp(20px, 4vw, 32px);
+  animation: contact-header-in 0.7s var(--contact-ease) both;
+}
+
+.contact-showcase__eyebrow {
+  margin: 0 0 0.6rem;
+  font-size: clamp(0.72rem, 1.8vw, 0.8rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.45);
+}
+
+.contact-showcase__title {
+  margin: 0 !important;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: #111;
+  font-size: clamp(1.65rem, 4.5vw, 2.35rem) !important;
+}
+
+.contact-showcase__title.scroll-trigger {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: inherit;
+}
+
+/* ----------------------------- Form card ----------------------------------- */
+
+.contact-showcase__card {
+  max-width: var(--contact-max);
+  margin-inline: auto;
+  padding: clamp(24px, 5vw, 44px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  border-radius: var(--contact-radius);
+  box-shadow:
+    0 1px 2px rgba(17, 17, 17, 0.04),
+    0 16px 48px rgba(17, 17, 17, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: contact-card-in 0.75s var(--contact-ease) 0.08s both;
+}
+
+.contact-showcase__card form.scroll-trigger {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.contact-showcase .form__message,
+.contact-showcase .form-status-list {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 1.5rem;
+  animation: contact-field-in 0.45s var(--contact-ease) both;
+}
+
+/* ----------------------------- Fields -------------------------------------- */
+
+.contact-showcase .contact__fields {
+  display: grid;
+  gap: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .contact-showcase .contact__fields {
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(16px, 3vw, 24px);
+  }
+}
+
+.contact-showcase .field {
+  margin-bottom: clamp(14px, 3vw, 20px);
+  animation: contact-field-in 0.55s var(--contact-ease) both;
+}
+
+.contact-showcase .contact__fields .field:nth-child(1) {
+  animation-delay: 0.12s;
+}
+
+.contact-showcase .contact__fields .field:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.contact-showcase #ContactForm > .field:nth-of-type(1) {
+  animation-delay: 0.24s;
+}
+
+.contact-showcase #ContactForm > .field:nth-of-type(2) {
+  animation-delay: 0.3s;
+}
+
+.contact-showcase .contact__button {
+  margin-top: clamp(20px, 4vw, 28px);
+  animation: contact-field-in 0.55s var(--contact-ease) 0.36s both;
+}
+
+.contact-showcase .field__input,
+.contact-showcase .text-area {
+  min-height: 52px;
+  padding: 1.4rem 1.5rem 0.6rem;
+  border-radius: 14px !important;
+  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+  background: rgba(254, 254, 252, 0.9) !important;
+  font-size: 1.45rem;
+  transition:
+    border-color 0.25s var(--contact-ease),
+    box-shadow 0.25s var(--contact-ease),
+    background-color 0.25s var(--contact-ease);
+}
+
+.contact-showcase .text-area {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contact-showcase .field__input:focus,
+.contact-showcase .text-area:focus {
+  border-color: rgba(17, 17, 17, 0.35) !important;
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.06);
+  outline: none;
+}
+
+.contact-showcase .field__label {
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+  color: rgba(17, 17, 17, 0.55);
+}
+
+/* ----------------------------- Submit button ------------------------------- */
+
+.contact-showcase .contact__button .button {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 999px !important;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    transform 0.35s var(--contact-ease),
+    box-shadow 0.35s var(--contact-ease),
+    opacity 0.25s ease;
+}
+
+@media screen and (min-width: 750px) {
+  .contact-showcase .contact__button .button {
+    width: auto;
+    min-width: 200px;
+  }
+
+  .contact-showcase .contact__button {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-showcase .contact__button .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(17, 17, 17, 0.14);
+  }
+
+  .contact-showcase .contact__button .button:active {
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------- Keyframes ----------------------------------- */
+
+@keyframes contact-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes contact-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes contact-field-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-showcase__header,
+  .contact-showcase__card,
+  .contact-showcase .field,
+  .contact-showcase .contact__button,
+  .contact-showcase .form__message {
+    animation: none !important;
+  }
+
+  .contact-showcase .contact__button .button:hover {
+    transform: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .contact-showcase {
+    margin-top: -28px;
+  }
+
+  .contact-showcase__card {
+    padding: 20px 18px 24px;
+  }
+
+  .contact-showcase .field__input,
+  .contact-showcase .text-area {
+    font-size: 16px;
+  }
+}

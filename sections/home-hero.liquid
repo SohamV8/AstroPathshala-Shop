@@ -1,0 +1,178 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'home-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign slide_count = 0
+  for i in (1..4)
+    assign asset_key = 'home-banner-' | append: i | append: '.webp'
+    assign test_url = asset_key | asset_url
+    if test_url contains 'home-banner-'
+      assign slide_count = slide_count | plus: 1
+    endif
+  endfor
+-%}
+
+<slideshow-component
+  class="home-hero slider-mobile-gutter"
+  role="region"
+  aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <div
+    class="home-hero__slider slideshow banner banner--adapt home-hero--contain grid grid--1-col slider slider--everywhere{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+    id="Slider-{{ section.id }}"
+    aria-live="polite"
+    aria-atomic="true"
+    data-autoplay="{{ section.settings.auto_rotate }}"
+    data-speed="{{ section.settings.change_slides_speed }}"
+  >
+    {%- for i in (1..4) -%}
+      {%- liquid
+        assign asset_key = 'home-banner-' | append: i | append: '.webp'
+        assign slide_url = asset_key | asset_url
+        assign link_key = 'link_' | append: i
+        assign slide_link = section.settings[link_key]
+        assign loading_mode = 'lazy'
+        assign fetch_prio = blank
+        if forloop.first
+          assign loading_mode = 'eager'
+          assign fetch_prio = 'high'
+        endif
+      -%}
+      {%- unless slide_url contains 'home-banner-' -%}
+        {%- continue -%}
+      {%- endunless -%}
+      <div
+        class="slideshow__slide home-hero__slide grid__item grid--1-col slider__slide"
+        id="Slide-{{ section.id }}-{{ i }}"
+        {{ block.shopify_attributes }}
+        role="group"
+        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+        aria-label="{{ i }} {{ 'general.slider.of' | t }} 4"
+        tabindex="-1"
+        style="--home-hero-order: {{ forloop.index }};"
+      >
+        <div class="slideshow__media banner__media media home-hero__media">
+          {%- if slide_link != blank -%}
+            <a href="{{ slide_link }}" class="home-hero__link" tabindex="-1">
+          {%- endif -%}
+          <img
+            src="{{ slide_url }}"
+            alt="{{ section.settings.accessibility_label | escape }} — {{ i }}"
+            class="home-hero__img"
+            width="1920"
+            height="800"
+            loading="{{ loading_mode }}"
+            decoding="async"
+            {% if fetch_prio != blank %}fetchpriority="{{ fetch_prio }}"{% endif %}
+            sizes="100vw"
+          >
+          {%- if slide_link != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+      </motion>
+    {%- endfor -%}
+  </div>
+
+  {%- if slide_count > 1 -%}
+    <div class="home-hero__controls slideshow__controls slider-buttons">
+      <button
+        type="button"
+        class="home-hero__nav slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+      </button>
+      <motion class="home-hero__dots slideshow__control-wrapper">
+        {%- for i in (1..4) -%}
+          {%- assign asset_key = 'home-banner-' | append: i | append: '.webp' -%}
+          {%- assign slide_url = asset_key | asset_url -%}
+          {%- unless slide_url contains 'home-banner-' -%}
+            {%- continue -%}
+          {%- endunless -%}
+          <button
+            class="slider-counter__link slider-counter__link--dots link home-hero__dot"
+            aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ i }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="dot"></span>
+          </button>
+        {%- endfor -%}
+      </motion>
+      <button
+        type="button"
+        class="home-hero__nav slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+      </button>
+    </div>
+  {%- endif -%}
+</slideshow-component>
+
+{% schema %}
+{
+  "name": "Home hero (theme banners)",
+  "tag": "section",
+  "class": "section section-home-hero",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Homepage highlights"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Banner 1 link"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Banner 2 link"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Banner 3 link"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Banner 4 link"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home hero (theme banners)"
+    }
+  ]
+}
+{% endschema %}

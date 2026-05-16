@@ -1,0 +1,191 @@
+/* =============================================================================
+   Homepage hero — minimal full-width banner, contain (no crop/stretch)
+   Assets: home-banner-1.webp … home-banner-N.webp in /assets
+   ============================================================================= */
+
+.template-index .section-home-hero {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100%;
+}
+
+.template-index .section-home-hero + .shopify-section {
+  margin-top: 0 !important;
+}
+
+.home-hero {
+  --hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --hero-bg: #0c0c0c;
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+
+.home-hero__stage {
+  position: relative;
+  width: 100%;
+  min-height: clamp(200px, 42vw, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-hero__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.65s var(--hero-ease),
+    visibility 0.65s var(--hero-ease);
+  will-change: opacity;
+}
+
+.home-hero__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.home-hero__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.home-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: min(78vh, 640px);
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ----------------------------- Minimal controls ------------------------------ */
+
+.home-hero__chrome {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(14px, 3vw, 22px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 16px);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  box-shadow: 0 4px 20px rgba(17, 17, 17, 0.08);
+}
+
+.home-hero__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--hero-ease),
+    transform 0.25s var(--hero-ease);
+}
+
+.home-hero__btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-hero__btn:hover {
+    background: rgba(17, 17, 17, 0.06);
+  }
+
+  .home-hero__btn:active {
+    transform: scale(0.94);
+  }
+}
+
+.home-hero__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-hero__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.22);
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--hero-ease),
+    background-color 0.3s var(--hero-ease),
+    width 0.3s var(--hero-ease);
+}
+
+.home-hero__dot.is-active {
+  width: 22px;
+  border-radius: 999px;
+  background: #111;
+}
+
+/* ----------------------------- Mobile -------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  .home-hero__stage {
+    min-height: clamp(180px, 52vw, 380px);
+  }
+
+  .home-hero__img {
+    max-height: min(70vh, 420px);
+  }
+
+  .home-hero__chrome {
+    bottom: 12px;
+    padding: 5px 8px;
+    gap: 8px;
+  }
+
+  .home-hero__btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__slide {
+    transition: none;
+  }
+
+  .home-hero__btn,
+  .home-hero__dot {
+    transition: none;
+  }
+}

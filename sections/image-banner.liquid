@@ -1,9 +1,69 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
+{%- style -%}
+  #Banner-{{ section.id }}.section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}.section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom }}px !important;
+    }
+  }
+{%- endstyle -%}
+
 {%- liquid
   assign banner_image = section.settings.image
   assign banner_image_2 = section.settings.image_2
-  if template.name == 'product' and banner_image == blank and section.settings.product_image_fallback != blank and section.settings.product_image_fallback != 'none'
+  assign banner_asset_url = ''
+  assign banner_use_asset = false
+
+  if template.name == 'product'
+    assign banner_slot = 1
+    case section.settings.product_metafield_source
+      when 'turmuli_image'
+        assign banner_slot = 2
+      when 'image_03'
+        assign banner_slot = 3
+    endcase
+  endif
+-%}
+{%- if template.name == 'product' -%}
+  {%- capture banner_asset_url -%}{%- render 'product-banner-asset-url', slot: banner_slot -%}{%- endcapture -%}
+{%- endif -%}
+{%- liquid
+  assign banner_asset_url = banner_asset_url | strip
+  if banner_asset_url != ''
+    assign banner_use_asset = true
+  endif
+
+  # Product: metafield when theme asset banner is not mapped for this product.
+  if banner_use_asset == false and template.name == 'product' and section.settings.product_metafield_source != blank and section.settings.product_metafield_source != 'picker_only'
+    assign mf_pick = blank
+    case section.settings.product_metafield_source
+      when 'image_banner'
+        assign mf_pick = product.metafields.custom.image_banner
+      when 'turmuli_image'
+        assign mf_pick = product.metafields.custom.turmuli_image
+      when 'image_03'
+        assign mf_pick = product.metafields.custom.image_03
+    endcase
+    if mf_pick != blank and mf_pick.value != blank
+      assign mf_type = mf_pick.type | default: ''
+      if mf_type contains 'list.'
+        assign mf_resolved = mf_pick.value | first
+      else
+        assign mf_resolved = mf_pick.value
+      endif
+      if mf_resolved != blank
+        assign banner_image = mf_resolved
+      endif
+    endif
+  endif
+
+  if banner_use_asset == false and template.name == 'product' and banner_image == blank and section.settings.product_image_fallback != blank and section.settings.product_image_fallback != 'none'
     case section.settings.product_image_fallback
       when 'featured'
         assign banner_image = product.featured_image
@@ -13,9 +73,14 @@
         assign banner_image = product.images[2] | default: product.featured_image
     endcase
   endif
+
+  assign hide_product_banner = false
+  if template.name == 'product' and banner_use_asset == false and banner_image == blank
+    assign hide_product_banner = true
+  endif
 -%}
 
-{%- if section.settings.image_height == 'adapt' and banner_image != blank -%}
+{%- if section.settings.image_height == 'adapt' and banner_image != blank and banner_use_asset == false -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
       #Banner-{{ section.id }}::before,
@@ -64,46 +129,111 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
+
+  assign product_banner_chrome = false
+  assign product_visual_only = false
+  if template.name == 'product'
+    assign product_banner_chrome = true
+  endif
+
+  if product_banner_chrome
+    if section.blocks.size == 0
+      assign product_visual_only = true
+    endif
+    assign sizes = '100vw'
+    assign full_width = '100vw'
+    assign stacked_sizes = '100vw'
+    assign half_width = '100vw'
+    if banner_slot == 1
+      assign fetch_priority = 'high'
+      assign img_loading = 'eager'
+    else
+      assign fetch_priority = 'low'
+      assign img_loading = 'lazy'
+    endif
+    assign img_decoding = 'async'
+  endif
 -%}
 
+{%- if product_banner_chrome -%}
+  {%- style -%}
+    #Banner-{{ section.id }}.image-banner--product-slot {
+      --product-banner-stagger: 0s;
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- unless hide_product_banner -%}
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and banner_image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and banner_image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="section-{{ section.id }}-padding banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if product_banner_chrome %} image-banner--product-slot{% if product_visual_only %} image-banner--product-visual-only{% endif %}{% if banner_use_asset %} image-banner--product-asset{% endif %}{% endif %}{% if section.settings.stack_images_on_mobile and banner_image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and banner_image != blank and banner_use_asset == false %} banner--adapt{% endif %}{% if banner_use_asset %} banner--adapt banner--product-asset{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% unless product_banner_chrome %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}{% endunless %}"
 >
-  {%- if banner_image != blank -%}
-    <div class="banner__media media{% if banner_image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  {%- if banner_use_asset -%}
+    <div class="banner__media media image-banner--product-slot__media image-banner--product-asset__media">
+      <img
+        src="{{ banner_asset_url }}"
+        alt="{{ product.title | escape }}"
+        class="product-banner-asset-img"
+        width="1920"
+        height="1080"
+        loading="{{ img_loading | default: 'lazy' }}"
+        decoding="{{ img_decoding | default: 'async' }}"
+        {% if fetch_priority %}fetchpriority="{{ fetch_priority }}"{% endif %}
+        sizes="100vw"
+      >
+    </div>
+  {%- elsif banner_image != blank -%}
+    <div class="banner__media media{% if product_banner_chrome %} image-banner--product-slot__media{% endif %}{% if banner_image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% unless product_banner_chrome %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}{% endunless %}">
       {%- liquid
         assign image_height = banner_image.width | divided_by: banner_image.aspect_ratio
         if section.settings.image_2 != blank
           assign image_class = 'banner__media-image-half'
         endif
-        if section.settings.image_2 != blank and section.settings.stack_images_on_mobile
-          assign sizes = stacked_sizes
-        elsif section.settings.image_2 != blank
-          assign sizes = half_width
-        else
-          assign sizes = full_width
+        if product_banner_chrome == false
+          if section.settings.image_2 != blank and section.settings.stack_images_on_mobile
+            assign sizes = stacked_sizes
+          elsif section.settings.image_2 != blank
+            assign sizes = half_width
+          else
+            assign sizes = full_width
+          endif
         endif
       -%}
-      {{
-        banner_image
-        | image_url: width: 3840
-        | image_tag:
-          width: banner_image.width,
-          height: image_height,
-          class: image_class,
-          sizes: sizes,
-          widths: widths,
-          fetchpriority: fetch_priority
-      }}
+      {%- if product_banner_chrome -%}
+        {{
+          banner_image
+          | image_url: width: 3840
+          | image_tag:
+            width: banner_image.width,
+            height: image_height,
+            class: image_class,
+            sizes: sizes,
+            widths: widths,
+            fetchpriority: fetch_priority,
+            loading: img_loading,
+            decoding: img_decoding
+        }}
+      {%- else -%}
+        {{
+          banner_image
+          | image_url: width: 3840
+          | image_tag:
+            width: banner_image.width,
+            height: image_height,
+            class: image_class,
+            sizes: sizes,
+            widths: widths,
+            fetchpriority: fetch_priority
+        }}
+      {%- endif -%}
     </div>
-  {%- elsif section.settings.image_2 == blank -%}
-    <div class="banner__media media{% if banner_image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  {%- elsif section.settings.image_2 == blank and banner_use_asset == false -%}
+    <div class="banner__media media{% if product_banner_chrome %} image-banner--product-slot__media{% endif %}{% if banner_image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% unless product_banner_chrome %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}{% endunless %}">
       {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
     </div>
   {%- endif -%}
   {%- if section.settings.image_2 != blank -%}
-    <div class="banner__media media{% if banner_image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="banner__media media{% if banner_image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% unless product_banner_chrome %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}{% endunless %}">
       {%- liquid
         assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
         if banner_image != blank
@@ -115,6 +245,9 @@
           assign sizes = half_width
         else
           assign sizes = full_width
+        endif
+        if product_banner_chrome
+          assign sizes = '100vw'
         endif
       -%}
       {{
@@ -130,7 +263,7 @@
       }}
     </div>
   {%- endif -%}
-  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% unless product_banner_chrome %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% endunless %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -180,6 +313,7 @@
     </div>
   </div>
 </div>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -202,9 +336,34 @@
     },
     {
       "type": "select",
+      "id": "product_metafield_source",
+      "label": "Product page: extra image source",
+      "info": "If the image above is empty, read this product metafield (supports file and list of files).",
+      "options": [
+        {
+          "value": "picker_only",
+          "label": "Theme editor / dynamic image only"
+        },
+        {
+          "value": "image_banner",
+          "label": "Metafield: custom.image_banner"
+        },
+        {
+          "value": "turmuli_image",
+          "label": "Metafield: custom.turmuli_image"
+        },
+        {
+          "value": "image_03",
+          "label": "Metafield: custom.image_03"
+        }
+      ],
+      "default": "picker_only"
+    },
+    {
+      "type": "select",
       "id": "product_image_fallback",
-      "label": "Product page: if main image is empty",
-      "info": "On product templates only, show a product image when the main image above is not set.",
+      "label": "Product page: if still empty",
+      "info": "After the image above and metafield, use a catalog image so the banner slot is not blank.",
       "options": [
         {
           "value": "none",
@@ -398,6 +557,30 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 0
     }
   ],
   "blocks": [

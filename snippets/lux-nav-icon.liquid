@@ -1,0 +1,30 @@
+{%- comment -%}
+  Maps menu link to lux-icon name for bottom navigation.
+  Accepts: link (link object)
+{%- endcomment -%}
+{%- liquid
+  assign icon_name = 'sparkles'
+  assign h = link.handle | downcase
+  assign t = link.title | downcase
+
+  if h == 'home' or t contains 'home'
+    assign icon_name = 'home'
+  elsif h contains 'course' or t contains 'course'
+    assign icon_name = 'book-open'
+  elsif h contains 'consult' or t contains 'consult'
+    assign icon_name = 'message-circle'
+  elsif h contains 'report' or t contains 'report'
+    assign icon_name = 'file-text'
+  elsif h contains 'gem' or t contains 'gem'
+    assign icon_name = 'sparkles'
+  elsif h contains 'puja' or t contains 'puja' or h contains 'pooja'
+    assign icon_name = 'flame'
+  elsif h contains 'combo'
+    assign icon_name = 'layers'
+  elsif h contains 'blog'
+    assign icon_name = 'newspaper'
+  elsif h contains 'contact'
+    assign icon_name = 'mail'
+  endif
+-%}
+{%- render 'lux-icon', name: icon_name, class: class -%}

@@ -1,0 +1,224 @@
+/* =============================================================================
+   Collection pages — centered grid, Apple-like rhythm, responsive, animated
+   Scoped via .collection-showcase (product + list collection templates)
+   ============================================================================= */
+
+.template-collection,
+.template-list-collections {
+  --collection-max: min(1280px, 100%);
+  --collection-gutter: clamp(16px, 4vw, 40px);
+  --collection-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ----------------------------- Toolbar (filters / sort) -------------------- */
+
+.template-collection .collection-showcase .facets-wrapper.page-width {
+  max-width: var(--collection-max);
+  margin-inline: auto;
+  padding-inline: var(--collection-gutter);
+}
+
+.template-collection .collection-showcase .facets-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding-top: 0.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
+  animation: collection-toolbar-in 0.5s var(--collection-ease) both;
+}
+
+.template-collection .collection-showcase .facets__form {
+  width: 100%;
+  max-width: var(--collection-max);
+  margin-inline: auto;
+  margin-bottom: 0;
+  padding-inline: 0;
+  gap: 12px 24px;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+}
+
+.template-collection .collection-showcase .facets__wrapper {
+  justify-content: flex-start;
+}
+
+.template-collection .collection-showcase .facet-filters {
+  padding-left: 0;
+  justify-content: flex-end;
+}
+
+.template-collection .collection-showcase .product-count,
+.template-collection .collection-showcase .product-count-vertical {
+  text-align: right;
+  color: rgba(17, 17, 17, 0.55);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+
+/* ----------------------------- Grid shell -------------------------------- */
+
+.template-collection .collection-showcase .product-grid-container {
+  max-width: var(--collection-max);
+  margin-inline: auto;
+  width: 100%;
+}
+
+.template-collection .collection-showcase .collection {
+  padding-inline: var(--collection-gutter);
+}
+
+.template-collection .collection-showcase #product-grid.product-grid {
+  display: grid !important;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+  justify-items: stretch;
+  align-items: start;
+  row-gap: clamp(20px, 3vw, 36px);
+  column-gap: clamp(12px, 2vw, 22px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.template-collection .collection-showcase #product-grid.product-grid > .grid__item {
+  width: auto !important;
+  max-width: none !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0;
+}
+
+/* Staggered card entrance (overrides stuck scroll-reveal) */
+.template-collection .collection-showcase #product-grid .grid__item {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: collection-card-in 0.62s var(--collection-ease) both;
+  animation-delay: calc(var(--animation-order, 1) * 48ms);
+}
+
+.template-collection .collection-showcase #product-grid .grid__item .lux-card {
+  height: 100%;
+  transition:
+    transform 0.45s var(--collection-ease),
+    box-shadow 0.45s var(--collection-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .template-collection .collection-showcase #product-grid .grid__item .lux-card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 4px 6px rgba(17, 17, 17, 0.03),
+      0 18px 44px rgba(17, 17, 17, 0.09);
+  }
+}
+
+/* ----------------------------- Responsive columns -------------------------- */
+
+@media screen and (min-width: 750px) {
+  .template-collection .collection-showcase #product-grid.product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .template-collection .collection-showcase #product-grid.product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ----------------------------- Pagination ---------------------------------- */
+
+.template-collection .collection-showcase .pagination-wrapper {
+  max-width: var(--collection-max);
+  margin-inline: auto;
+  padding-inline: var(--collection-gutter);
+}
+
+.template-collection .collection-showcase .pagination {
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+/* ----------------------------- List collections index ---------------------- */
+
+.template-list-collections .collection-showcase {
+  max-width: var(--collection-max);
+  margin-inline: auto;
+  padding-inline: var(--collection-gutter);
+}
+
+.template-list-collections .collection-showcase .title--primary {
+  text-align: center;
+  margin-bottom: clamp(24px, 4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.template-list-collections .collection-showcase .collection-list {
+  display: grid !important;
+  justify-content: center;
+  justify-items: stretch;
+  row-gap: clamp(20px, 3vw, 32px);
+  column-gap: clamp(12px, 2vw, 22px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 2rem;
+}
+
+.template-list-collections .collection-showcase .collection-list > .grid__item {
+  width: auto !important;
+  max-width: none !important;
+  flex-grow: 0 !important;
+  animation: collection-card-in 0.62s var(--collection-ease) both;
+  animation-delay: calc(var(--animation-order, 1) * 48ms);
+}
+
+@media screen and (min-width: 750px) {
+  .template-list-collections .collection-showcase .collection-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ----------------------------- Keyframes ----------------------------------- */
+
+@keyframes collection-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes collection-toolbar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-collection .collection-showcase #product-grid .grid__item,
+  .template-collection .collection-showcase .facets-container,
+  .template-list-collections .collection-showcase .collection-list > .grid__item {
+    animation: none !important;
+  }
+
+  .template-collection .collection-showcase #product-grid .grid__item .lux-card:hover {
+    transform: none;
+  }
+}

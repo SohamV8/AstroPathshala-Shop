@@ -1,13 +1,22 @@
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PPJ3659G');</script>
-<!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (deferred so it does not block first paint) -->
+    <script>
+      window.addEventListener('load', () => {
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PPJ3659G');
+      });
+    </script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -113,6 +122,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             return nativeFetch(resource, init);
           };
         }
+
+        const removeShopAppFrames = () => {
+          document.querySelectorAll('iframe[src*="shop.app"]').forEach((node) => node.remove());
+        };
+
+        removeShopAppFrames();
+        const shopAppObserver = new MutationObserver(removeShopAppFrames);
+        shopAppObserver.observe(document.documentElement, { childList: true, subtree: true });
+        window.addEventListener('load', () => shopAppObserver.disconnect(), { once: true });
       })();
     </script>
 
@@ -370,6 +388,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'mobile-layout-rhythm.css' | asset_url | stylesheet_tag }}
     {{ 'premium-cards.css' | asset_url | stylesheet_tag }}
     {%- if template.name == 'index' -%}
+      <link rel="preload" as="image" href="{{ 'home-banner-1.webp' | asset_url }}" fetchpriority="high">
       {{ 'home-showcase.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -398,6 +417,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    {{ 'lux-search.css' | asset_url | stylesheet_tag }}
     {%- if settings.predictive_search_enabled -%}
       <link
         rel="stylesheet"
@@ -425,6 +445,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {% sections 'header-group' %}
 
+    {% render 'lux-search-modal',
+      placeholder: settings.lux_search_placeholder | default: 'Search for courses, gems, blogs, remedies...',
+      trending: settings.lux_search_trending
+    %}
+
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
@@ -444,6 +469,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         cart_update_url: '{{ routes.cart_update_url }}',
         cart_url: '{{ routes.cart_url }}',
         predictive_search_url: '{{ routes.predictive_search_url }}',
+        search_url: '{{ routes.search_url }}',
+        suggest_url: '{{ routes.predictive_search_url }}.json',
       };
 
       window.cartStrings = {
@@ -481,6 +508,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       };
     </script>
 
+    <script src="{{ 'lux-search.js' | asset_url }}" defer="defer"></script>
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}

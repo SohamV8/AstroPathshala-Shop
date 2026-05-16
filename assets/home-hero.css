@@ -1,0 +1,192 @@
+/* =============================================================================
+   Homepage hero — theme assets home-banner-*.webp only
+   Full width · contain (no crop/stretch) · minimal controls · performant
+   ============================================================================= */
+
+.template-index {
+  --home-hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --home-hero-bg: #ffffff;
+}
+
+/* Kill global cinematic 100vh rules for this slider only */
+.template-index .home-hero,
+.template-index .home-hero .home-hero__slider,
+.template-index .home-hero .home-hero__slide,
+.template-index .home-hero .home-hero__media {
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.template-index .shopify-section.section-home-hero {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.template-index .home-hero {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--home-hero-bg);
+}
+
+.template-index .home-hero__slider {
+  position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  background: var(--home-hero-bg);
+}
+
+.template-index .home-hero__slide {
+  width: 100% !important;
+  height: auto !important;
+  animation: home-hero-slide-in 0.65s var(--home-hero-ease) both;
+  animation-delay: calc(var(--home-hero-order, 1) * 40ms);
+}
+
+.template-index .home-hero__media {
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  height: auto !important;
+  padding: 0;
+  background: var(--home-hero-bg);
+}
+
+.template-index .home-hero__link {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.template-index .home-hero__img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-height: clamp(200px, 38vw, 540px) !important;
+  margin: 0 auto;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: var(--home-hero-bg);
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.template-index .home-hero .slideshow__text-wrapper,
+.template-index .home-hero .banner__content {
+  display: none !important;
+}
+
+/* Minimal controls */
+.template-index .home-hero__controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 16px);
+  width: 100%;
+  margin: 0;
+  padding: clamp(10px, 2.5vw, 16px) clamp(16px, 4vw, 24px) clamp(14px, 3vw, 20px);
+  border: none;
+  background: var(--home-hero-bg);
+  animation: home-hero-controls-in 0.55s var(--home-hero-ease) 0.2s both;
+}
+
+.template-index .home-hero__nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 12px rgba(17, 17, 17, 0.06);
+  transition:
+    transform 0.3s var(--home-hero-ease),
+    box-shadow 0.3s var(--home-hero-ease);
+}
+
+.template-index .home-hero__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.template-index .home-hero__dot .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.2);
+  transition:
+    transform 0.3s var(--home-hero-ease),
+    background-color 0.3s var(--home-hero-ease);
+}
+
+.template-index .home-hero__dot.slider-counter__link--active .dot {
+  background: #111;
+  transform: scale(1.15);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .template-index .home-hero__nav:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(17, 17, 17, 0.1);
+  }
+}
+
+/* Mobile: taller readable banner, no crop */
+@media screen and (max-width: 749px) {
+  .template-index .home-hero__img {
+    max-height: clamp(180px, 48vw, 360px) !important;
+  }
+
+  .template-index .home-hero__nav {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@keyframes home-hero-slide-in {
+  from {
+    opacity: 0;
+    transform: scale(0.992);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes home-hero-controls-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-index .home-hero__slide,
+  .template-index .home-hero__controls {
+    animation: none !important;
+  }
+
+  .template-index .home-hero__nav:hover {
+    transform: none;
+  }
+}

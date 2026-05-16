@@ -554,9 +554,13 @@
 .premium-footer__logo--asset {
   width: clamp(11rem, 12vw, 16rem);
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: auto;
   object-fit: contain;
   image-rendering: -webkit-optimize-contrast;
+}
+
+/* Dark footer variant (when light overrides below are not active) */
+.premium-footer:not(.premium-footer--light) .premium-footer__logo--asset {
   filter: brightness(0) invert(1);
 }
 
@@ -885,10 +889,17 @@
 }
 
 /* Light luxury footer overrides */
-.premium-footer {
+.premium-footer,
+.premium-footer.premium-footer--light {
   border-top-color: rgba(17, 17, 17, 0.1);
   background: linear-gradient(180deg, #fffefc 0%, #fff8ee 100%);
   color: #1b1b1b;
+}
+
+.premium-footer.premium-footer--light .premium-footer__logo,
+.premium-footer.premium-footer--light .premium-footer__logo--asset,
+.premium-footer:not(.premium-footer--dark) .premium-footer__logo--asset {
+  filter: none;
 }
 
 .premium-footer__backdrop {
@@ -962,4 +973,23 @@
 .premium-footer__list a:hover,
 .premium-footer__legal a:hover {
   color: #111;
+}
+
+/* Footer logo must stay visible (no scroll-reveal fade stuck at opacity 0) */
+.premium-footer__brand.scroll-trigger.animate--slide-in,
+.premium-footer__brand.scroll-trigger.animate--fade-in {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+.premium-footer__brand-link {
+  min-height: 4.8rem;
+}
+
+.premium-footer__logo,
+.premium-footer__logo--asset {
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }

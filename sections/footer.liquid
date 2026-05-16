@@ -31,17 +31,21 @@
   endif
 -%}
 
-<footer class="footer premium-footer color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" role="contentinfo">
+<footer class="footer premium-footer premium-footer--light color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" role="contentinfo">
   <div class="premium-footer__backdrop" aria-hidden="true"></div>
   <div class="premium-footer__inner page-width">
     <div class="premium-footer__top">
-      <section class="premium-footer__brand{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <section class="premium-footer__brand">
         <a class="premium-footer__brand-link" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+          {%- liquid
+            assign footer_logo_asset = 'astro-pathshala-Logo-Black-New.png'
+            assign footer_logo_url = footer_logo_asset | asset_url
+          -%}
           <img
-            src="{{ 'astro-pathshala-Logo-Black-New.png' | asset_url }}"
+            src="{{ footer_logo_url }}"
             alt="{{ shop.name | escape }}"
-            width="1080"
-            height="1080"
+            width="320"
+            height="320"
             loading="lazy"
             decoding="async"
             class="premium-footer__logo premium-footer__logo--asset"

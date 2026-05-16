@@ -1,0 +1,202 @@
+{{ 'section-home-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-hero.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #HomeHero-{{ section.id }} {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign slide_count = section.blocks.size
+  if slide_count == 0
+    assign slide_count = 4
+  endif
+-%}
+
+<section
+  class="home-hero section-{{ section.id }}-padding"
+  id="HomeHero-{{ section.id }}"
+  data-home-hero
+  data-autoplay="{{ section.settings.auto_rotate }}"
+  data-speed="{{ section.settings.change_slides_speed | times: 1000 }}"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <div class="home-hero__stage">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign slide_index = forloop.index -%}
+        {%- assign banner_file = 'home-banner-' | append: slide_index | append: '.webp' -%}
+        {%- assign is_first = forloop.first -%}
+        <div
+          class="home-hero__slide{% if is_first %} is-active{% endif %}"
+          data-home-hero-slide
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="home-hero__link"{% if block.settings.link_new_tab %} target="_blank" rel="noopener"{% endif %}>
+          {%- endif -%}
+          <img
+            class="home-hero__img"
+            src="{{ banner_file | asset_url }}"
+            alt="{{ block.settings.image_alt | default: shop.name | escape }}"
+            width="1920"
+            height="800"
+            {% if is_first %}
+              loading="eager"
+              fetchpriority="high"
+            {% else %}
+              loading="lazy"
+              fetchpriority="low"
+            {% endif %}
+            decoding="async"
+            sizes="100vw"
+          >
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        {%- assign banner_file = 'home-banner-' | append: i | append: '.webp' -%}
+        <div class="home-hero__slide{% if forloop.first %} is-active{% endif %}" data-home-hero-slide data-index="{{ forloop.index0 }}">
+          <img
+            class="home-hero__img"
+            src="{{ banner_file | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="1920"
+            height="800"
+            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" fetchpriority="low"{% endif %}
+            decoding="async"
+            sizes="100vw"
+          >
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if slide_count > 1 -%}
+    <div class="home-hero__chrome" aria-hidden="false">
+      <button type="button" class="home-hero__btn home-hero__btn--prev" data-home-hero-prev aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="home-hero__dots" role="tablist" aria-label="Slide navigation">
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="home-hero__dot{% if forloop.first %} is-active{% endif %}"
+            data-home-hero-dot
+            data-index="{{ forloop.index0 }}"
+            role="tab"
+            aria-label="Slide {{ forloop.index }} of {{ section.blocks.size }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          ></button>
+        {%- endfor -%}
+        {%- if section.blocks.size == 0 -%}
+          {%- for i in (1..4) -%}
+            <button
+              type="button"
+              class="home-hero__dot{% if forloop.first %} is-active{% endif %}"
+              data-home-hero-dot
+              data-index="{{ forloop.index0 }}"
+              role="tab"
+              aria-label="Slide {{ forloop.index }} of 4"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            ></button>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      <button type="button" class="home-hero__btn home-hero__btn--next" data-home-hero-next aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Home hero banner",
+  "tag": "section",
+  "class": "section-home-hero",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Homepage banner slideshow"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Uses theme file home-banner-1.webp, home-banner-2.webp, etc. in assets folder (by slide order)."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Slide link"
+        },
+        {
+          "type": "checkbox",
+          "id": "link_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home hero banner",
+      "blocks": [
+        { "type": "slide", "settings": { "link": "shopify://collections/gemstone", "image_alt": "Natural gemstones collection" } },
+        { "type": "slide", "settings": { "link": "shopify://collections/rudraksha-collection", "image_alt": "Rudraksha collection" } },
+        { "type": "slide", "settings": { "image_alt": "Astro Pathshala" } },
+        { "type": "slide", "settings": { "image_alt": "Astro Pathshala" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,12 +1,4 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
+
 {
   "sections": {
     "main": {
@@ -207,56 +199,65 @@
     },
     "image_banner_c8XK4t": {
       "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
+      "name": "Product banner 1",
       "settings": {
         "image": "{{ product.metafields.custom.image_banner.value }}",
+        "product_metafield_source": "image_banner",
         "product_image_fallback": "featured",
         "image_overlay_opacity": 0,
-        "image_height": "small",
+        "image_height": "adapt",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
-        "show_text_box": true,
+        "show_text_box": false,
         "color_scheme": "",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "image_banner_AFp4zg": {
       "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
+      "name": "Product banner 2",
       "settings": {
         "image": "{{ product.metafields.custom.turmuli_image.value }}",
+        "product_metafield_source": "turmuli_image",
         "product_image_fallback": "gallery_2",
         "image_overlay_opacity": 0,
-        "image_height": "small",
+        "image_height": "adapt",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
-        "show_text_box": true,
+        "show_text_box": false,
         "color_scheme": "",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "image_banner_Dnqjcf": {
       "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
+      "name": "Product banner 3",
       "settings": {
         "image": "{{ product.metafields.custom.image_03.value }}",
+        "product_metafield_source": "image_03",
         "product_image_fallback": "gallery_3",
         "image_overlay_opacity": 0,
-        "image_height": "small",
+        "image_height": "adapt",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
-        "show_text_box": true,
+        "show_text_box": false,
         "color_scheme": "",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "blocks_y69Wbp": {

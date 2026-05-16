@@ -1,4 +1,5 @@
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+{{ 'contact-showcase.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -14,22 +15,22 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ section.settings.heading }}
-      </h2>
-    {%- else -%}
-      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
-    {%- endif -%}
-    {%- liquid
-      assign contact_form_class = 'isolate'
-      if settings.animations_reveal_on_scroll
-        assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
-      endif
-    -%}
-    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+<div class="color-{{ section.settings.color_scheme }} gradient contact-showcase">
+  <div class="contact contact-showcase__inner section-{{ section.id }}-padding">
+    <header class="contact-showcase__header">
+      <p class="contact-showcase__eyebrow">Contact</p>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="contact-showcase__title title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- else -%}
+        <h2 class="contact-showcase__title title title-wrapper--no-top-margin">
+          {{ 'templates.contact.form.title' | t }}
+        </h2>
+      {%- endif -%}
+    </header>
+    <div class="contact-showcase__card">
+    {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
       {%- if form.posted_successfully? -%}
         <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
           {{- 'icon-success.svg' | inline_asset_content -}}
@@ -132,6 +133,7 @@
         </button>
       </div>
     {%- endform -%}
+    </div>
   </div>
 </div>
 

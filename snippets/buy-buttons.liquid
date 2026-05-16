@@ -94,7 +94,9 @@
             {%- render 'loading-spinner' -%}
           </button>
           {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
+            {%- unless request.host contains '127.0.0.1' or request.host contains 'localhost' -%}
+              {{ form | payment_button }}
+            {%- endunless -%}
           {%- endif -%}
         </div>
       {%- endform -%}

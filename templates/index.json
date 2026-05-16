@@ -1,73 +1,53 @@
+
 {
   "sections": {
-    "slideshow_GcnMcf": {
-      "type": "slideshow",
+    "home_hero": {
+      "type": "home-hero-banner",
       "blocks": {
-        "slide_DVNCdE": {
+        "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_03_28_PM.webp",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
+            "image_alt": "Natural gemstones for protection, healing and success",
             "link": "shopify://collections/gemstone",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "top-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
+            "link_new_tab": false
           }
         },
-        "slide_MLdPU7": {
+        "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
+            "image_alt": "Rudraksha and spiritual malas",
             "link": "shopify://collections/rudraksha-collection",
-            "button_style_secondary": true,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
+            "link_new_tab": false
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Astro Pathshala",
+            "link": "",
+            "link_new_tab": false
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Astro Pathshala",
+            "link": "",
+            "link_new_tab": false
           }
         }
       },
       "block_order": [
-        "slide_DVNCdE",
-        "slide_MLdPU7"
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4"
       ],
-      "name": "t:sections.slideshow.presets.name",
       "settings": {
-        "layout": "full_bleed",
-        "slide_height": "small",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
-      }
-    },
-    "slideshow_J76MHV": {
-      "type": "slideshow",
-      "name": "t:sections.slideshow.presets.name",
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
+        "accessibility_label": "Homepage banner",
+        "auto_rotate": true,
+        "change_slides_speed": 6,
+        "padding_bottom": 0
       }
     },
     "trust_strip_main": {
@@ -183,7 +163,7 @@
         "show_secondary_image": false,
         "show_vendor": true,
         "show_rating": true,
-        "quick_add": "bulk",
+        "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 0,
@@ -292,8 +272,8 @@
         "button_label": "",
         "button_link": "",
         "columns_desktop": 4,
-        "column_alignment": "left",
-        "background_style": "primary",
+        "column_alignment": "center",
+        "background_style": "none",
         "color_scheme": "scheme-4",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
@@ -363,7 +343,7 @@
         "show_secondary_image": false,
         "show_vendor": true,
         "show_rating": true,
-        "quick_add": "bulk",
+        "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 0,
@@ -462,10 +442,10 @@
         "column_alignment": "center",
         "background_style": "none",
         "color_scheme": "scheme-4",
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 12,
+        "padding_bottom": 24
       }
     },
     "177788073682861726": {
@@ -635,8 +615,7 @@
     }
   },
   "order": [
-    "slideshow_GcnMcf",
-    "slideshow_J76MHV",
+    "home_hero",
     "trust_strip_main",
     "rich_text",
     "rich_text_7mBr4z",

@@ -179,4 +179,64 @@
       <path d="m9 12 2 2 4-4"/>
     </svg>
 
+  {%- when 'home' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+
+  {%- when 'book-open' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H2Z"/>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a4 4 0 0 0 4 4h6Z"/>
+    </svg>
+
+  {%- when 'file-text' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+      <path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>
+    </svg>
+
+  {%- when 'sparkles', 'gem' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+    </svg>
+
+  {%- when 'flame' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-2-1.72-2.34-3-4.94-2.5-7.62 0-2.98 2-5.54 5.54-5.54 2.51 0 4.68 2.94 5.65 0 2.5-1.38 2-2.5 2-2.5 2.12 0 3.57-2.69 3.94-5.8 0-2.35-1.61-3.2-4.05Z"/>
+    </svg>
+
+  {%- when 'layers' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M12 2 2 7l10 5 10-5-10-5Z"/>
+      <path d="m2 17 10 5 10-5"/>
+      <path d="m2 12 10 5 10-5"/>
+    </svg>
+
+  {%- when 'newspaper', 'blog' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2Z"/>
+      <path d="M16 2v4a2 2 0 0 0 2 2"/><path d="M8 2v4a2 2 0 0 1 2 2"/><path d="M8 12h8"/><path d="M8 16h8"/><path d="M8 20h5"/>
+    </svg>
+
+  {%- when 'grid', 'more' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+      <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+    </svg>
+
+  {%- when 'star' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+
+  {%- when 'log-in' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+      <polyline points="10 17 15 12 10 7"/>
+      <line x1="15" y1="12" x2="3" y2="12"/>
+    </svg>
+
 {%- endcase -%}

@@ -1,0 +1,137 @@
+{%- comment -%}
+  Premium command-palette search modal.
+  Config via render params or defaults below.
+{%- endcomment -%}
+{%- liquid
+  assign lux_placeholder = placeholder | default: 'Search courses, gems, reports, blogs, remedies...'
+  if trending != blank
+    assign lux_trending_raw = trending
+  else
+    assign lux_trending_raw = 'Vedic astrology courses,Gemstones,Kundli report,Consultation,Pooja services,Remedies,E-books'
+  endif
+  assign lux_trending = lux_trending_raw | split: ','
+  assign lux_collections_raw = collection_links | default: '/collections/courses,/collections/gemstones,/collections/all'
+  assign lux_collection_paths = lux_collections_raw | split: ','
+-%}
+
+<div
+  id="lux-search-modal"
+  class="lux-search-modal"
+  hidden
+  data-lux-search-modal
+  role="dialog"
+  aria-modal="true"
+  aria-label="Search"
+>
+  <button type="button" class="lux-search-modal__scrim" data-lux-search-close aria-label="Close search"></button>
+
+  <div class="lux-search-modal__panel" data-lux-search-panel tabindex="-1">
+    <header class="lux-search-modal__head">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="lux-search-modal__form" data-lux-search-form>
+        <input type="hidden" name="options[prefix]" value="last">
+        <div class="lux-search-modal__field">
+          {% render 'lux-icon', name: 'search', class: 'lux-search-modal__field-icon', size: 22 %}
+          <input
+            type="search"
+            name="q"
+            class="lux-search-modal__input"
+            data-lux-search-input
+            placeholder="{{ lux_placeholder | escape }}"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-autocomplete="list"
+            aria-controls="lux-search-results"
+            aria-expanded="false"
+            aria-activedescendant=""
+          >
+          <kbd class="lux-search-modal__kbd lux-search-modal__kbd--desktop" aria-hidden="true">ESC</kbd>
+          <button type="button" class="lux-search-modal__clear" data-lux-search-clear hidden aria-label="Clear search">
+            {% render 'lux-icon', name: 'close', class: 'lux-search-modal__clear-icon', size: 18 %}
+          </button>
+        </div>
+        <button type="submit" class="lux-visually-hidden">Search</button>
+      </form>
+      <button type="button" class="lux-search-modal__close" data-lux-search-close aria-label="Close search">
+        {% render 'lux-icon', name: 'close', size: 22 %}
+      </button>
+    </header>
+
+    <div class="lux-search-modal__body" data-lux-search-body>
+      <div id="lux-search-results" class="lux-search-modal__results" data-lux-search-results role="listbox" aria-label="Search suggestions">
+        <div class="lux-search-modal__idle" data-lux-search-idle>
+          <section class="lux-search-section" data-lux-search-recent-wrap hidden>
+            <h3 class="lux-search-section__title">
+              {% render 'lux-icon', name: 'clock', size: 16 %}
+              <span>Recent</span>
+            </h3>
+            <ul class="lux-search-chips" data-lux-search-recent role="list"></ul>
+          </section>
+
+          <section class="lux-search-section">
+            <h3 class="lux-search-section__title">
+              {% render 'lux-icon', name: 'sparkles', size: 16 %}
+              <span>Trending</span>
+            </h3>
+            <ul class="lux-search-chips" role="list">
+              {%- for term in lux_trending -%}
+                {%- assign t = term | strip -%}
+                {%- if t != blank -%}
+                  <li>
+                    <button type="button" class="lux-search-chip" data-lux-search-chip="{{ t | escape }}">{{ t | escape }}</button>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </section>
+
+          <section class="lux-search-section">
+            <h3 class="lux-search-section__title">
+              <span>Browse categories</span>
+            </h3>
+            <ul class="lux-search-categories" role="list">
+              <li><a href="/collections/all" class="lux-search-cat" data-lux-search-item>Gemstones</a></li>
+              <li><a href="/collections/all?sort_by=created-descending" class="lux-search-cat" data-lux-search-item>Courses</a></li>
+              <li><a href="{{ blogs.first.url | default: '/blogs/news' }}" class="lux-search-cat" data-lux-search-item>Blogs</a></li>
+              <li><a href="/pages/contact" class="lux-search-cat" data-lux-search-item>Consultations</a></li>
+            </ul>
+          </section>
+
+          <p class="lux-search-modal__hint">
+            <kbd class="lux-search-modal__kbd">⌘</kbd><kbd class="lux-search-modal__kbd">K</kbd>
+            <span>to search anywhere</span>
+          </p>
+        </div>
+
+        <div class="lux-search-modal__live" data-lux-search-live hidden>
+          <div class="lux-search-modal__loading" data-lux-search-loading hidden>
+            <span class="lux-search-modal__spinner" aria-hidden="true"></span>
+            <span>Searching...</span>
+          </div>
+          <div data-lux-search-groups></div>
+          <footer class="lux-search-modal__footer" data-lux-search-footer hidden>
+            <a href="{{ routes.search_url }}" class="lux-search-modal__view-all" data-lux-search-view-all>
+              View all results
+              {% render 'lux-icon', name: 'chevron-down-sm', class: 'lux-search-modal__view-all-icon', size: 14 %}
+            </a>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <span class="lux-visually-hidden" data-lux-search-status role="status" aria-live="polite" aria-atomic="true"></span>
+  </div>
+</div>
+
+<script type="application/json" data-lux-search-config>
+{
+  "moneyFormat": {{ shop.money_format | json }},
+  "currency": {{ cart.currency.iso_code | json }},
+  "showPrice": {{ settings.predictive_search_show_price | json }},
+  "showVendor": {{ settings.predictive_search_show_vendor | json }},
+  "searchUrl": {{ routes.search_url | json }},
+  "suggestUrl": {{ routes.predictive_search_url | append: '.json' | json }},
+  "placeholder": {{ lux_placeholder | json }}
+}
+</script>

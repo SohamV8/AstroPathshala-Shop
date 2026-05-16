@@ -91,10 +91,29 @@ function percentageSeen(element) {
   return Math.round(percentage);
 }
 
+function revealVisibleScrollTriggers() {
+  document.querySelectorAll(`.${SCROLL_ANIMATION_TRIGGER_CLASSNAME}`).forEach((element) => {
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+      element.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
+    }
+  });
+}
+
+function revealStuckScrollTriggers() {
+  document.querySelectorAll(`.${SCROLL_ANIMATION_TRIGGER_CLASSNAME}.${SCROLL_ANIMATION_OFFSCREEN_CLASSNAME}`).forEach((element) => {
+    element.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
+  });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   initializeScrollAnimationTrigger();
   initializeScrollZoomAnimationTrigger();
+  requestAnimationFrame(revealVisibleScrollTriggers);
 });
+
+window.addEventListener('load', revealStuckScrollTriggers);
+setTimeout(revealStuckScrollTriggers, 2500);
 
 if (Shopify.designMode) {
   document.addEventListener('shopify:section:load', (event) => initializeScrollAnimationTrigger(event.target, true));

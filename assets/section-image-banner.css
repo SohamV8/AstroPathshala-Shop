@@ -904,3 +904,179 @@ slideshow-component,
     margin-top: 0.4rem !important;
   }
 }
+
+/* =============================================================================
+   Product page banners — full width, tight spacing, fast paint, mobile-safe
+   ============================================================================= */
+
+@keyframes product-banner-reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.template-product .shopify-section:has(> .banner.image-banner--product-slot) {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 !important;
+  overflow-x: clip;
+  background-color: #ffffff;
+}
+
+.template-product .shopify-section:has(> .banner.image-banner--product-slot) + .shopify-section:has(> .banner.image-banner--product-slot) {
+  margin-top: 0 !important;
+}
+
+.template-product #MainContent > .shopify-section:first-child + .shopify-section:has(> .banner.image-banner--product-slot) {
+  margin-top: 0 !important;
+}
+
+.template-product .banner.image-banner--product-slot {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0;
+  isolation: isolate;
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
+.template-product .banner.image-banner--product-slot .banner__media {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.template-product .banner.image-banner--product-slot .banner__media > img,
+.template-product .banner.image-banner--product-slot .banner__media > svg {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  vertical-align: middle;
+}
+
+.template-product .banner.image-banner--product-slot.image-banner--product-visual-only .banner__content {
+  display: none !important;
+}
+
+.template-product .banner.image-banner--product-slot.image-banner--product-visual-only::after,
+.template-product .banner.image-banner--product-slot.image-banner--product-visual-only .banner__media::after {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.template-product .banner.image-banner--product-slot .image-banner--product-slot__media,
+.template-product .banner.image-banner--product-slot .image-banner--product-asset__media {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
+}
+
+.template-product .banner.image-banner--product-slot.banner--adapt {
+  height: auto;
+  min-height: 0;
+}
+
+.template-product .banner.image-banner--product-slot.banner--mobile-bottom .banner__media {
+  position: relative;
+}
+
+.template-product .banner.image-banner--product-slot.banner--mobile-bottom:not(.banner--stacked) .banner__content {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0 !important;
+  pointer-events: none;
+}
+
+.template-product .banner.image-banner--product-slot.banner--mobile-bottom:not(.banner--stacked):not(.image-banner--product-visual-only) .banner__box {
+  margin-top: 0;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+@media screen and (max-width: 749px) {
+  .template-product .shopify-section:has(> .banner.image-banner--product-slot) {
+    padding-inline: 0 !important;
+  }
+
+  .template-product .banner.image-banner--product-slot .banner__media,
+  .template-product .banner.image-banner--product-slot .banner__media-half {
+    border-radius: 0 !important;
+  }
+}
+
+/* Theme assets (flat /assets/product-banner-*.webp) — full width, visible, no crop/stretch */
+.template-product .banner.image-banner--product-asset {
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.template-product .banner.image-banner--product-asset::before,
+.template-product .banner.image-banner--product-asset .banner__media::before,
+.template-product .banner.image-banner--product-asset::after,
+.template-product .banner.image-banner--product-asset .banner__media::after {
+  display: none !important;
+  padding-bottom: 0 !important;
+  content: none !important;
+  opacity: 0 !important;
+}
+
+.template-product .banner.image-banner--product-asset .banner__media,
+.template-product .banner.image-banner--product-asset .image-banner--product-asset__media,
+.template-product .banner.image-banner--product-asset .image-banner--product-slot__media {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+.template-product .banner.image-banner--product-asset .banner__media > img,
+.template-product .banner.image-banner--product-asset .product-banner-asset-img {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  max-width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 auto;
+  object-fit: contain !important;
+  object-position: center center !important;
+  vertical-align: middle;
+  opacity: 1 !important;
+}
+
+@media screen and (max-width: 749px) {
+  .template-product .banner.image-banner--product-asset .banner__media,
+  .template-product .banner.image-banner--product-asset .image-banner--product-asset__media {
+    position: relative !important;
+    height: auto !important;
+  }
+}

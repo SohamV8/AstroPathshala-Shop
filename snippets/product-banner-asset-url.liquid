@@ -1,0 +1,63 @@
+{%- comment -%}
+  Product banner URLs from theme assets (flat files in /assets).
+  Params: slot — 1, 2, or 3
+{%- endcomment -%}
+{%- liquid
+  assign banner_slot = slot | default: 1 | plus: 0
+  assign title = product.title | downcase
+  assign handle = product.handle | downcase
+  assign banner_key = ''
+
+  if title contains 'tiger eye' and title contains 'bracelet' or handle contains 'tiger-eye-bracelet'
+    assign banner_key = 'tiger-eye-bracelet'
+  elsif title contains '7 chakra' or title contains 'karungali' or handle contains 'karungali' or handle contains '7-chakra'
+    assign banner_key = '7-chakra-karungali'
+  elsif title contains 'crystal rudraksha' or handle contains 'crystal-rudraksha'
+    assign banner_key = 'crystal-rudraksha'
+  elsif title contains 'dhan yog' or handle contains 'dhan-yog'
+    assign banner_key = 'dhan-yog'
+  elsif title contains 'moti mala' or handle contains 'moti-mala'
+    assign banner_key = 'moti-mala'
+  elsif title contains 'tulsi' and title contains 'mala' or handle contains 'tulsi'
+    assign banner_key = 'tulsi-japa-mala'
+  elsif title contains 'rudraksha' and title contains 'japa' or handle contains 'rudraksha-japa'
+    assign banner_key = 'rudraksha-japa-108'
+  elsif title contains 'sphatik' or handle contains 'sphatik'
+    assign banner_key = 'sphatik-mala'
+  elsif title contains 'chandan' or handle contains 'chandan'
+    assign banner_key = 'chandan-mala'
+  elsif title contains 'copper ring' or handle contains 'copper-ring'
+    assign banner_key = 'copper-ring'
+  elsif title contains 'pyrite' or handle contains 'pyrite'
+    assign banner_key = 'pyrite'
+  elsif title contains 'feroza' or title contains 'firoza' or title contains 'turquoise' or handle contains 'feroza' or handle contains 'firoza'
+    assign banner_key = 'feroza'
+  elsif title contains 'kaka geeli' or title contains 'kaka neeli' or title contains 'iolite' or handle contains 'kaka' or handle contains 'neeli'
+    assign banner_key = 'kaka-geeli'
+  elsif title contains 'amethyst' or handle contains 'amethyst'
+    assign banner_key = 'amethyst'
+  elsif title contains 'lapis' or handle contains 'lapis'
+    assign banner_key = 'lapis-lazuli'
+  elsif title contains 'mahe mariam' or title contains 'mariam' or handle contains 'mariam'
+    assign banner_key = 'mahe-mariam'
+  elsif title contains 'moonstone' or handle contains 'moonstone'
+    assign banner_key = 'moonstone'
+  elsif title contains 'peridot' or handle contains 'peridot'
+    assign banner_key = 'peridot'
+  elsif title contains 'sulemani' or title contains 'hakik' or handle contains 'sulemani' or handle contains 'hakik'
+    assign banner_key = 'sulemani-hakik'
+  elsif title contains 'sunela' or title contains 'citrine' or handle contains 'sunela' or handle contains 'citrine'
+    assign banner_key = 'sunela'
+  elsif title contains 'tiger eye' or title contains 'tiger-eye' or handle contains 'tiger-eye'
+    assign banner_key = 'tiger-eye'
+  elsif title contains 'tourmaline' or handle contains 'tourmaline'
+    assign banner_key = 'tourmaline-stone'
+  elsif title contains 'zircon' or handle contains 'zircon'
+    assign banner_key = 'zircon-stone'
+  endif
+
+  if banner_key != ''
+    assign banner_file = 'product-banner-' | append: banner_key | append: '-' | append: banner_slot | append: '.webp'
+    echo banner_file | asset_url
+  endif
+-%}

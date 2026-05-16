@@ -51,6 +51,15 @@
   endif
 
   assign sticky_mode = 'always'
+
+  assign utility_welcome = section.settings.utility_welcome | default: 'Welcome to Astro Pathshala'
+  assign phone_label = section.settings.phone_label | default: '+91 98711 30487'
+  assign phone_url = section.settings.phone_url | default: 'tel:+919871130487'
+  assign search_placeholder = section.settings.search_placeholder | default: 'Search for courses, gems, blogs...'
+  assign show_utility_bar = section.settings.show_utility_bar
+  if show_utility_bar == nil
+    assign show_utility_bar = true
+  endif
 -%}
 
 <header
@@ -61,13 +70,45 @@
 >
   <a class="lux-skip-link" href="#MainContent">Skip to content</a>
 
-  <div class="lux-header__bar">
-    <div class="lux-header__container">
+  <div class="lux-header__float">
+    {%- if show_utility_bar -%}
+      <div class="lux-header__utility" aria-label="Store announcements">
+        <div class="lux-header__utility-inner page-width">
+          <p class="lux-header__welcome">
+            <span>{{ utility_welcome | escape }}</span>
+            {% render 'lux-icon', name: 'star', class: 'lux-header__welcome-star', size: 12 %}
+          </p>
+          <nav class="lux-header__utility-nav" aria-label="Contact and account">
+            {%- if phone_label != blank -%}
+              <a href="{{ phone_url }}" class="lux-header__utility-link">
+                {% render 'lux-icon', name: 'phone', class: 'lux-header__utility-icon', size: 14 %}
+                <span>{{ phone_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if show_whatsapp -%}
+              <a href="{{ section.settings.whatsapp_url }}" class="lux-header__utility-link" target="_blank" rel="noopener noreferrer">
+                {% render 'lux-icon', name: 'whatsapp', class: 'lux-header__utility-icon', size: 14 %}
+                <span>{{ whatsapp_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if show_account -%}
+              <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="lux-header__utility-link">
+                {% render 'lux-icon', name: 'log-in', class: 'lux-header__utility-icon', size: 14 %}
+                <span>{% if customer %}Account{% else %}Login / Register{% endif %}</span>
+              </a>
+            {%- endif -%}
+          </nav>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="lux-header__bar">
+      <div class="lux-header__main lux-header__container">
 
       <div class="lux-header__left">
         <button
           type="button"
-          class="lux-icon-btn lux-header__menu-btn"
+          class="lux-icon-btn lux-icon-btn--circle lux-header__menu-btn"
           aria-controls="lux-drawer-{{ section.id }}"
           aria-expanded="false"
           aria-label="Open menu"
@@ -78,7 +119,25 @@
           </span>
         </button>
 
-        <nav class="lux-header__nav" aria-label="Primary">
+        {%- if show_search -%}
+          <form action="{{ routes.search_url }}" method="get" role="search" class="lux-search-inline lux-search-inline--desktop">
+            <input type="hidden" name="options[prefix]" value="last">
+            <label class="lux-visually-hidden" for="lux-inline-search-{{ section.id }}">Search</label>
+            {% render 'lux-icon', name: 'search', class: 'lux-search-inline__icon', size: 18 %}
+            <input
+              id="lux-inline-search-{{ section.id }}"
+              class="lux-search-inline__input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ search_placeholder | escape }}"
+              autocomplete="off"
+              spellcheck="false"
+            >
+          </form>
+        {%- endif -%}
+
+        <nav class="lux-header__nav lux-header__nav--legacy" aria-label="Primary" hidden>
           <ul class="lux-nav" role="list">
             {%- for link in main_menu.links -%}
               <li class="lux-nav__item" data-dropdown-item>
@@ -168,36 +227,21 @@
         {%- if show_search -%}
           <button
             type="button"
-            class="lux-icon-btn"
+            class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--mobile-search"
             aria-label="Open search"
-            aria-expanded="false"
-            aria-controls="lux-search-{{ section.id }}"
-            data-search-open
+            data-lux-search-open
           >
             {% render 'lux-icon', name: 'search', class: 'lux-icon-btn__svg' %}
-            <span class="lux-icon-btn__label">Search</span>
           </button>
         {%- endif -%}
 
-        {%- if show_account -%}
-          <a
-            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-            class="lux-icon-btn lux-icon-btn--desktop"
-            aria-label="{% if customer %}Account{% else %}Sign in{% endif %}"
-          >
-            {% render 'lux-icon', name: 'user', class: 'lux-icon-btn__svg' %}
-            <span class="lux-icon-btn__label">{% if customer %}Account{% else %}Sign in{% endif %}</span>
-          </a>
-        {%- endif -%}
-
         {%- if show_wishlist -%}
-          <a href="{{ wishlist_url }}" class="lux-icon-btn lux-icon-btn--desktop" aria-label="{{ wishlist_label | escape }}">
+          <a href="{{ wishlist_url }}" class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--desktop" aria-label="{{ wishlist_label | escape }}">
             {% render 'lux-icon', name: 'heart', class: 'lux-icon-btn__svg' %}
-            <span class="lux-icon-btn__label">{{ wishlist_label | escape }}</span>
           </a>
         {%- endif -%}
 
-        <a href="{{ routes.cart_url }}" class="lux-icon-btn lux-icon-btn--cart" aria-label="Cart, {{ cart.item_count }} items">
+        <a href="{{ routes.cart_url }}" class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--cart" aria-label="Cart, {{ cart.item_count }} items">
           {% render 'lux-icon', name: 'shopping-bag', class: 'lux-icon-btn__svg' %}
           <span class="lux-icon-btn__label">Cart</span>
           {%- if cart.item_count > 0 -%}
@@ -226,7 +270,7 @@
       </div>
     </div>
 
-    {%- if show_search -%}
+    {%- if false -%}
       <div
         id="lux-search-{{ section.id }}"
         class="lux-search"
@@ -245,7 +289,7 @@
             type="search"
             name="q"
             value="{{ search.terms | escape }}"
-            placeholder="Search fragrances, attars, incense"
+            placeholder="{{ search_placeholder | escape }}"
             autocomplete="off"
             spellcheck="false"
             data-search-input
@@ -256,7 +300,78 @@
         </form>
       </div>
     {%- endif -%}
+
+      <nav class="lux-header__bottom" aria-label="Primary navigation">
+        <div class="lux-header__bottom-inner page-width">
+          <ul class="lux-bottom-nav" role="list">
+            {%- for link in main_menu.links -%}
+              <li class="lux-bottom-nav__item" data-dropdown-item>
+                {%- if link.links != blank -%}
+                  <button
+                    type="button"
+                    class="lux-bottom-nav__link lux-bottom-nav__trigger"
+                    aria-expanded="false"
+                    aria-controls="lux-bottom-submenu-{{ section.id }}-{{ forloop.index }}"
+                    data-dropdown-trigger
+                  >
+                    <span class="lux-bottom-nav__icon" aria-hidden="true">
+                      {% render 'lux-nav-icon', link: link, class: 'lux-bottom-nav__svg' %}
+                    </span>
+                    <span class="lux-bottom-nav__text">{{ link.title | escape }}</span>
+                    {% render 'lux-icon', name: 'chevron-down-sm', class: 'lux-bottom-nav__chevron' %}
+                  </button>
+                  <div
+                    id="lux-bottom-submenu-{{ section.id }}-{{ forloop.index }}"
+                    class="lux-submenu lux-submenu--bottom"
+                    hidden
+                    data-dropdown-panel
+                  >
+                    <ul class="lux-submenu__list" role="list">
+                      {%- for child in link.links -%}
+                        <li class="lux-submenu__item">
+                          <a href="{{ child.url }}" class="lux-submenu__link">{{ child.title | escape }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="lux-bottom-nav__link{% if link.active %} is-active{% endif %}">
+                    <span class="lux-bottom-nav__icon" aria-hidden="true">
+                      {% render 'lux-nav-icon', link: link, class: 'lux-bottom-nav__svg' %}
+                    </span>
+                    <span class="lux-bottom-nav__text">{{ link.title | escape }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </nav>
+    </div>
   </div>
+
+  <nav class="lux-mobile-dock" aria-label="Quick navigation" data-mobile-dock>
+    <ul class="lux-mobile-dock__list" role="list">
+      {%- for link in main_menu.links limit: 4 -%}
+        <li>
+          <a href="{{ link.url }}" class="lux-mobile-dock__item{% if link.active %} is-active{% endif %}">
+            <span class="lux-mobile-dock__icon" aria-hidden="true">
+              {% render 'lux-nav-icon', link: link, class: 'lux-mobile-dock__svg' %}
+            </span>
+            <span class="lux-mobile-dock__label">{{ link.title | escape }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+      <li>
+        <button type="button" class="lux-mobile-dock__item" data-drawer-open aria-label="Open menu">
+          <span class="lux-mobile-dock__icon" aria-hidden="true">
+            {% render 'lux-icon', name: 'grid', class: 'lux-mobile-dock__svg' %}
+          </span>
+          <span class="lux-mobile-dock__label">More</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
 
   <div class="lux-drawer" id="lux-drawer-{{ section.id }}" hidden data-drawer>
     <button class="lux-drawer__scrim" type="button" aria-label="Close menu" data-drawer-close></button>
@@ -425,15 +540,18 @@
 {% stylesheet %}
   .lux-header {
     --lux-z-bar: 35;
+    --lux-z-dock: 40;
     --lux-z-drawer: 80;
     --lux-max: 1480px;
 
-    --lux-bg: rgba(255, 255, 255, 0.92);
-    --lux-bg-solid: #ffffff;
-    --lux-soft: #f8f5f0;
-    --lux-text: #181613;
-    --lux-muted: #6f685f;
-    --lux-accent: #a3823f;
+    --lux-bg: rgba(255, 248, 238, 0.94);
+    --lux-bg-solid: #fff8ee;
+    --lux-soft: #f3ebe0;
+    --lux-bottom: #efe4d4;
+    --lux-text: #2a2622;
+    --lux-muted: #6b645c;
+    --lux-accent: #b8943f;
+    --lux-gold: #c9a84c;
     --lux-line: rgba(24, 22, 19, 0.12);
     --lux-line-soft: rgba(24, 22, 19, 0.06);
     --lux-shadow: 0 6px 24px rgba(20, 16, 12, 0.07);
@@ -450,6 +568,10 @@
     inset-block-start: 0 !important;
     top: 0 !important;
     z-index: var(--lux-z-bar);
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-block-start: 0;
+    margin-inline: 0;
     margin-block-end: var(--lux-header-margin-bottom, 0);
     color: var(--lux-text);
     font-family: var(--font-body-family, 'Inter', system-ui, -apple-system, sans-serif);
@@ -491,11 +613,76 @@
     border: 0;
   }
 
+  .lux-header__float {
+    margin: 0;
+    border-radius: 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    overflow: clip;
+    background: var(--lux-bg-solid);
+    border: 0;
+    border-block-end: 1px solid var(--lux-line-soft);
+    box-shadow: none;
+    transition: box-shadow 280ms ease, border-color 280ms ease;
+  }
+  .lux-header.is-compact .lux-header__float,
+  .lux-header.is-scrolled .lux-header__float {
+    box-shadow: 0 4px 20px rgba(20, 16, 12, 0.06);
+  }
+  .lux-header.is-scrolled .lux-header__float {
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+  }
+
+  .lux-header__utility {
+    border-block-end: 1px solid var(--lux-line-soft);
+    background: linear-gradient(180deg, #fffdf9 0%, #fff8ee 100%);
+  }
+  .lux-header__utility-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    padding-block: 10px;
+    flex-wrap: wrap;
+  }
+  .lux-header__welcome {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--lux-muted);
+    font-weight: 500;
+  }
+  .lux-header__welcome-star { color: var(--lux-gold); flex-shrink: 0; }
+  .lux-header__utility-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  .lux-header__utility-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    color: var(--lux-text);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 4px 0;
+    transition: color 180ms ease, opacity 180ms ease;
+  }
+  .lux-header__utility-link:hover { color: var(--lux-accent); }
+  .lux-header__utility-icon { color: var(--lux-muted); flex-shrink: 0; }
+
   .lux-header__bar {
-    background: var(--lux-bg);
-    backdrop-filter: saturate(160%) blur(10px);
-    -webkit-backdrop-filter: saturate(160%) blur(10px);
-    border-block-end: 1px solid transparent;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-block-end: none;
     transition: background-color 240ms ease, box-shadow 240ms ease, border-color 240ms ease, transform 280ms ease;
     will-change: transform;
   }
@@ -510,7 +697,8 @@
     transform: none;
   }
 
-  .lux-header__container {
+  .lux-header__container,
+  .lux-header__main {
     max-inline-size: var(--lux-max);
     margin-inline: auto;
     padding-inline: clamp(14px, 3vw, 36px);
@@ -522,9 +710,201 @@
     column-gap: clamp(10px, 1.5vw, 22px);
     transition: padding 220ms ease, min-block-size 220ms ease;
   }
-  .lux-header.is-compact .lux-header__container {
+  .lux-header.is-compact .lux-header__container,
+  .lux-header.is-compact .lux-header__main {
     min-block-size: clamp(72px, 7.5vw, 96px);
     padding-block: clamp(8px, 1vw, 12px);
+  }
+
+  .lux-search-inline {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-inline-size: 0;
+    max-inline-size: min(420px, 38vw);
+    padding: 10px 16px;
+    border: 1px solid var(--lux-line);
+    border-radius: var(--lux-radius-pill);
+    background: rgba(255, 255, 255, 0.65);
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  }
+  .lux-search-inline:focus-within {
+    border-color: rgba(184, 148, 63, 0.45);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+    background: #fff;
+  }
+  .lux-search-inline__icon { color: var(--lux-muted); flex-shrink: 0; }
+  .lux-search-inline__input {
+    flex: 1;
+    min-inline-size: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--lux-text);
+  }
+  .lux-search-inline__input::placeholder { color: var(--lux-muted); opacity: 0.85; }
+
+  .lux-icon-btn--circle {
+    inline-size: 44px;
+    block-size: 44px;
+    min-inline-size: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--lux-line);
+    background: rgba(255, 255, 255, 0.55);
+    justify-content: center;
+    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  }
+  .lux-icon-btn--circle:hover {
+    border-color: rgba(184, 148, 63, 0.35);
+    background: #fff;
+    transform: translateY(-1px);
+  }
+  .lux-icon-btn--circle .lux-icon-btn__label { display: none; }
+
+  .lux-header__nav--legacy { display: none !important; }
+
+  .lux-header__bottom {
+    display: none;
+    background: var(--lux-bottom);
+    border-block-start: 1px solid var(--lux-line-soft);
+  }
+  .lux-header__bottom-inner {
+    padding-block: 6px 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lux-header__bottom-inner::-webkit-scrollbar { display: none; }
+  .lux-bottom-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2px;
+    min-inline-size: 100%;
+  }
+  .lux-bottom-nav__item { position: relative; flex-shrink: 0; }
+  .lux-bottom-nav__link,
+  .lux-bottom-nav__trigger {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-inline-size: 88px;
+    padding: 10px 12px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--lux-muted);
+    text-decoration: none;
+    font: inherit;
+    cursor: pointer;
+    position: relative;
+    transition: color 200ms ease;
+  }
+  .lux-bottom-nav__text {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .lux-bottom-nav__svg { inline-size: 18px; block-size: 18px; stroke-width: 1.65; }
+  .lux-bottom-nav__chevron { inline-size: 10px; block-size: 10px; margin-block-start: -2px; opacity: 0.55; }
+  .lux-bottom-nav__link::after,
+  .lux-bottom-nav__trigger::after {
+    content: '';
+    position: absolute;
+    inset-inline: 18px;
+    inset-block-end: 6px;
+    block-size: 2px;
+    border-radius: 2px;
+    background: var(--lux-gold);
+    transform: scaleX(0);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lux-bottom-nav__link:hover,
+  .lux-bottom-nav__trigger:hover,
+  .lux-bottom-nav__link.is-active,
+  .lux-bottom-nav__trigger[aria-expanded='true'] {
+    color: var(--lux-accent);
+  }
+  .lux-bottom-nav__link.is-active::after,
+  .lux-bottom-nav__trigger[aria-expanded='true']::after {
+    transform: scaleX(1);
+  }
+  .lux-submenu--bottom {
+    inset-block-start: calc(100% - 4px);
+    inset-inline-start: 50%;
+    transform: translate3d(calc(-50% + var(--shift, 0px)), 8px, 0);
+  }
+  .lux-submenu--bottom.is-open {
+    transform: translate3d(calc(-50% + var(--shift, 0px)), 0, 0);
+  }
+
+  .lux-mobile-dock {
+    display: none;
+    position: fixed;
+    inset-inline: clamp(12px, 4vw, 20px);
+    inset-block-end: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: var(--lux-z-dock);
+    pointer-events: none;
+  }
+  .lux-mobile-dock__list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    background: rgba(255, 248, 238, 0.96);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border: 1px solid var(--lux-line-soft);
+    border-radius: 22px;
+    box-shadow: 0 12px 40px rgba(18, 14, 10, 0.12);
+    pointer-events: auto;
+  }
+  .lux-mobile-dock__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-block-size: 52px;
+    padding: 6px 4px;
+    border: 0;
+    background: transparent;
+    color: var(--lux-muted);
+    text-decoration: none;
+    font: inherit;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: color 180ms ease, background-color 180ms ease;
+  }
+  .lux-mobile-dock__item:hover,
+  .lux-mobile-dock__item.is-active {
+    color: var(--lux-accent);
+    background: rgba(201, 168, 76, 0.1);
+  }
+  .lux-mobile-dock__svg { inline-size: 20px; block-size: 20px; }
+  .lux-mobile-dock__label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+    line-height: 1.2;
+    text-align: center;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .lux-header__left,
@@ -1107,13 +1487,27 @@
   }
 
   @media (min-width: 990px) {
-    .lux-header__container {
+    .lux-header__container,
+    .lux-header__main {
       grid-template-columns: 1fr auto 1fr;
       column-gap: clamp(16px, 2vw, 28px);
     }
     .lux-header__menu-btn { display: none; }
-    .lux-header__nav { display: flex; align-items: center; min-inline-size: 0; }
+    .lux-search-inline--desktop { display: flex; }
+    .lux-icon-btn--mobile-search { display: none !important; }
+    .lux-header__bottom { display: block; }
+    .lux-mobile-dock { display: none !important; }
     .lux-drawer { display: none; }
+  }
+
+  @media (max-width: 989px) {
+    html.lux-has-dock body {
+      padding-block-end: calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+    .lux-header__utility { display: none; }
+    .lux-header__bottom { display: none; }
+    .lux-mobile-dock { display: block; }
+    .lux-search-inline--desktop { display: none !important; }
   }
 
   @media (max-width: 1199px) {
@@ -1258,7 +1652,7 @@
 
         this.drawer = root.querySelector('[data-drawer]');
         this.drawerPanel = root.querySelector('[data-drawer-panel]');
-        this.drawerOpen = root.querySelector('[data-drawer-open]');
+        this.drawerOpenBtns = root.querySelectorAll('[data-drawer-open]');
         this.drawerCloseBtns = root.querySelectorAll('[data-drawer-close]');
         this.drawerLinks = root.querySelectorAll('[data-drawer-link]');
 
@@ -1294,6 +1688,7 @@
         if (this.stickyMode === 'none') return;
         const y = window.scrollY;
         this.root.classList.toggle('is-compact', y > 8);
+        this.root.classList.toggle('is-scrolled', y > 4);
         this.root.classList.remove('is-hidden');
         this.lastY = y;
       }
@@ -1405,8 +1800,8 @@
       }
 
       bindDrawer() {
-        if (!this.drawer || !this.drawerPanel || !this.drawerOpen) return;
-        this.drawerOpen.addEventListener('click', () => this.openDrawer());
+        if (!this.drawer || !this.drawerPanel || !this.drawerOpenBtns.length) return;
+        this.drawerOpenBtns.forEach((btn) => btn.addEventListener('click', () => this.openDrawer()));
         this.drawerCloseBtns.forEach((b) => b.addEventListener('click', () => this.closeDrawer()));
         this.drawerLinks.forEach((a) => a.addEventListener('click', () => this.closeDrawer()));
         document.addEventListener('keydown', this.onKeydown);
@@ -1416,7 +1811,7 @@
         if (!this.drawer || !this.drawer.hidden && this.drawer.classList.contains('is-open')) return;
         this.drawer.hidden = false;
         requestAnimationFrame(() => this.drawer.classList.add('is-open'));
-        this.drawerOpen.setAttribute('aria-expanded', 'true');
+        this.drawerOpenBtns.forEach((btn) => btn.setAttribute('aria-expanded', 'true'));
         this.lastFocused = document.activeElement;
         this.lockScroll();
         requestAnimationFrame(() => {
@@ -1428,7 +1823,7 @@
       closeDrawer() {
         if (!this.drawer || this.drawer.hidden) return;
         this.drawer.classList.remove('is-open');
-        this.drawerOpen.setAttribute('aria-expanded', 'false');
+        this.drawerOpenBtns.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
         this.unlockScroll();
         const finalize = () => { this.drawer.hidden = true; };
         if (reducedMotion) {
@@ -1443,8 +1838,8 @@
         }
         if (this.lastFocused && typeof this.lastFocused.focus === 'function') {
           this.lastFocused.focus({ preventScroll: true });
-        } else {
-          this.drawerOpen.focus({ preventScroll: true });
+        } else if (this.drawerOpenBtns[0]) {
+          this.drawerOpenBtns[0].focus({ preventScroll: true });
         }
       }
 
@@ -1472,9 +1867,7 @@
       }
 
       bindSearch() {
-        if (!this.searchOpen || !this.searchPanel) return;
-        this.searchOpen.addEventListener('click', () => this.toggleSearch());
-        if (this.searchClose) this.searchClose.addEventListener('click', () => this.closeSearch());
+        /* Search handled by lux-search.js modal */
       }
 
       toggleSearch() {
@@ -1508,15 +1901,23 @@
       }
     }
 
+    const syncDockPadding = () => {
+      const hasDock = window.matchMedia('(max-width: 989px)').matches
+        && document.querySelector('[data-mobile-dock]');
+      document.documentElement.classList.toggle('lux-has-dock', Boolean(hasDock));
+    };
+
     const init = (root) => {
       (root || document).querySelectorAll(SELECTOR).forEach((el) => {
         if (el.dataset.luxInit === 'true') return;
         el.dataset.luxInit = 'true';
         new LuxHeader(el);
       });
+      syncDockPadding();
     };
 
     init();
+    window.addEventListener('resize', syncDockPadding, { passive: true });
     document.addEventListener('shopify:section:load', (e) => init(e.target));
     document.addEventListener('shopify:section:unload', () => {
       document.documentElement.classList.remove('lux-locked');
@@ -1575,6 +1976,39 @@
       "id": "show_line_separator",
       "default": true,
       "label": "Show separator"
+    },
+    {
+      "type": "header",
+      "content": "Top bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_utility_bar",
+      "default": true,
+      "label": "Show top utility bar"
+    },
+    {
+      "type": "text",
+      "id": "utility_welcome",
+      "default": "Welcome to Astro Pathshala",
+      "label": "Welcome message"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "default": "+91 98711 30487",
+      "label": "Phone number label"
+    },
+    {
+      "type": "url",
+      "id": "phone_url",
+      "label": "Phone link (tel:)"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "default": "Search for courses, gems, blogs...",
+      "label": "Search placeholder"
     },
     {
       "type": "header",
@@ -1641,7 +2075,7 @@
     {
       "type": "text",
       "id": "drawer_footer_note",
-      "default": "Crafted for modern fragrance rituals",
+      "default": "Vedic guidance for modern life",
       "label": "Drawer footer note"
     },
     {

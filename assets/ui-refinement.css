@@ -250,3 +250,11 @@ textarea {
   border-color: rgba(17, 17, 17, 0.08) !important;
   box-shadow: 0 12px 34px rgba(17, 17, 17, 0.045) !important;
 }
+
+/* Product page: never hide buy box behind scroll-reveal (prevents blank “loading” screen) */
+.template-product .product__info-wrapper,
+.template-product .product__media-wrapper {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}

@@ -34,7 +34,7 @@
   <nav class="article-editorial__breadcrumb page-width" aria-label="Breadcrumb">
     <ol itemscope itemtype="https://schema.org/BreadcrumbList">
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">{{ 'general.home' | t | default: 'Home' }}</span></a>
+        <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">Home</span></a>
         <meta itemprop="position" content="1">
       </li>
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -123,7 +123,7 @@
                   {%- endif -%}
                   <span>{{ read_mins }} min read</span>
                   {%- if section.settings.enable_read_time_label -%}
-                    <span class="visually-hidden">{{ 'blogs.article.reading_time' | t | default: 'Estimated reading time' }}</span>
+                    <span class="visually-hidden">Estimated reading time</span>
                   {%- endif -%}
                   {%- if block.settings.blog_show_author and article.author != blank -%}
                     <span class="circle-divider caption-with-letter-spacing">{{ article.author | escape }}</span>

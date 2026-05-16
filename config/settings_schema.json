@@ -1378,9 +1378,21 @@
       {
         "type": "checkbox",
         "id": "predictive_search_show_price",
-        "default": false,
+        "default": true,
         "label": "t:settings_schema.search_input.settings.predictive_search_show_price.label",
         "info": "t:settings_schema.search_input.settings.predictive_search_show_price.info"
+      },
+      {
+        "type": "text",
+        "id": "lux_search_placeholder",
+        "label": "Premium search placeholder",
+        "default": "Search for courses, gems, blogs, remedies..."
+      },
+      {
+        "type": "textarea",
+        "id": "lux_search_trending",
+        "label": "Trending searches (comma-separated)",
+        "default": "Vedic astrology courses,Gemstones,Kundli report,Consultation,Pooja services,Remedies,E-books"
       }
     ]
   },

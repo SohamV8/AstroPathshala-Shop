@@ -53,7 +53,7 @@
         "show_line_separator": false,
         "show_whatsapp_cta": true,
         "whatsapp_url": "https://wa.me/919871130487",
-        "whatsapp_label": "Consult Now",
+        "whatsapp_label": "WhatsApp",
         "enable_country_selector": true,
         "enable_language_selector": true,
         "margin_bottom": 0,
