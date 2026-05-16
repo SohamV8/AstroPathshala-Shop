@@ -1,4 +1,16 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+>>>>>>> 05cf47d5ad0fe9ad99fc3f1bcfb649ae3e328294
 {
   "sections": {
     "home_hero": {
@@ -15,7 +27,16 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+<<<<<<< HEAD
             "image_alt": "Rudraksha and spiritual malas",
+=======
+            "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "",
+>>>>>>> 05cf47d5ad0fe9ad99fc3f1bcfb649ae3e328294
             "link": "shopify://collections/rudraksha-collection",
             "link_new_tab": false
           }
@@ -44,10 +65,35 @@
         "slide_4"
       ],
       "settings": {
+<<<<<<< HEAD
         "accessibility_label": "Homepage banner",
         "auto_rotate": true,
         "change_slides_speed": 6,
         "padding_bottom": 0
+=======
+        "layout": "full_bleed",
+        "slide_height": "small",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_J76MHV": {
+      "type": "slideshow",
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+>>>>>>> 05cf47d5ad0fe9ad99fc3f1bcfb649ae3e328294
       }
     },
     "trust_strip_main": {
@@ -277,8 +323,8 @@
         "color_scheme": "scheme-4",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "image_banner_MFnUnC": {
@@ -286,6 +332,7 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
+        "product_image_fallback": "none",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -433,7 +480,7 @@
       ],
       "settings": {
         "title": "",
-        "heading_size": "h2",
+        "heading_size": "h1",
         "image_width": "full",
         "image_ratio": "adapt",
         "button_label": "",
@@ -501,8 +548,8 @@
         "show_date": true,
         "show_author": false,
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "1778047418f90103c4": {
