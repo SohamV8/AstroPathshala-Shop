@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "slideshow_GcnMcf": {
@@ -27,7 +36,7 @@
             "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
             "image_overlay_opacity": 0,
             "heading": "",
-            "heading_size": "h1",
+            "heading_size": "h2",
             "subheading": "",
             "button_label": "",
             "link": "shopify://collections/rudraksha-collection",
@@ -48,7 +57,7 @@
       "settings": {
         "layout": "full_bleed",
         "slide_height": "small",
-        "slider_visual": "counter",
+        "slider_visual": "dots",
         "auto_rotate": false,
         "change_slides_speed": 5,
         "image_behavior": "none",
@@ -306,6 +315,7 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
+        "product_image_fallback": "none",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
