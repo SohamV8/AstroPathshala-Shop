@@ -1,0 +1,351 @@
+{{ 'section-lux-testimonials.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lux-testimonials.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #LuxTestimonials-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #LuxTestimonials-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign block_count = section.blocks.size
+  assign autoplay = false
+  if section.settings.enable_autoplay and block_count > 1
+    assign autoplay = true
+  endif
+-%}
+
+<section
+  id="LuxTestimonials-{{ section.id }}"
+  class="lux-testimonials section-{{ section.id }}-padding{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  data-lux-testimonials
+  data-autoplay="{{ autoplay }}"
+  data-speed="{{ section.settings.autoplay_seconds | times: 1000 }}"
+  aria-labelledby="LuxTestimonialsHeading-{{ section.id }}"
+>
+  <div class="lux-testimonials__inner page-width">
+    <header class="lux-testimonials__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="lux-testimonials__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 id="LuxTestimonialsHeading-{{ section.id }}" class="lux-testimonials__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="lux-testimonials__subheading">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_summary -%}
+        <div class="lux-testimonials__summary" role="group" aria-label="Overall rating">
+          {% render 'lux-testimonial-stars', rating: 5, class: 'lux-testimonials__summary-stars' %}
+          {%- if section.settings.average_rating != blank -%}
+            <span class="lux-testimonials__summary-score">{{ section.settings.average_rating | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.review_count != blank -%}
+            <span class="lux-testimonials__summary-count">{{ section.settings.review_count | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if block_count > 0 -%}
+      <div
+        class="lux-testimonials__featured"
+        data-lux-t-carousel
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="{{ section.settings.carousel_label | default: 'Featured testimonials' | escape }}"
+      >
+        <div class="lux-testimonials__viewport" data-lux-t-viewport tabindex="0">
+          <ul class="lux-testimonials__track list-unstyled" data-lux-t-track role="list">
+            {%- for block in section.blocks -%}
+              <li
+                class="lux-testimonials__slide{% if forloop.first %} is-active{% endif %}"
+                data-lux-t-slide
+                data-index="{{ forloop.index0 }}"
+                id="LuxTestimonialSlide-{{ section.id }}-{{ forloop.index }}"
+                role="group"
+                aria-roledescription="slide"
+                aria-label="{{ forloop.index }} of {{ block_count }}"
+                {{ block.shopify_attributes }}
+              >
+                {% render 'lux-testimonial-card',
+                  variant: 'featured',
+                  quote: block.settings.quote,
+                  author: block.settings.author,
+                  meta: block.settings.meta,
+                  rating: block.settings.rating,
+                  verified: block.settings.verified,
+                  product_label: block.settings.product_label
+                %}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        {%- if block_count > 1 -%}
+          <div class="lux-testimonials__controls">
+            <button
+              type="button"
+              class="lux-testimonials__arrow lux-testimonials__arrow--prev"
+              data-lux-t-prev
+              aria-label="Previous testimonial"
+            >
+              {% render 'lux-icon', name: 'chevron-left', class: 'lux-testimonials__arrow-icon' %}
+            </button>
+            <div class="lux-testimonials__dots" data-lux-t-dots role="tablist" aria-label="Choose testimonial">
+              {%- for block in section.blocks -%}
+                <button
+                  type="button"
+                  class="lux-testimonials__dot{% if forloop.first %} is-active{% endif %}"
+                  data-lux-t-dot
+                  data-index="{{ forloop.index0 }}"
+                  role="tab"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  aria-controls="LuxTestimonialSlide-{{ section.id }}-{{ forloop.index }}"
+                  aria-label="Testimonial {{ forloop.index }}"
+                ></button>
+              {%- endfor -%}
+            </div>
+            <button
+              type="button"
+              class="lux-testimonials__arrow lux-testimonials__arrow--next"
+              data-lux-t-next
+              aria-label="Next testimonial"
+            >
+              {% render 'lux-icon', name: 'chevron-right', class: 'lux-testimonials__arrow-icon' %}
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <ul class="lux-testimonials__grid list-unstyled" role="list" aria-label="More customer stories">
+        {%- for block in section.blocks -%}
+          <li class="lux-testimonials__grid-item" {{ block.shopify_attributes }}>
+            {% render 'lux-testimonial-card',
+              variant: 'compact',
+              quote: block.settings.quote,
+              author: block.settings.author,
+              meta: block.settings.meta,
+              rating: block.settings.rating,
+              verified: block.settings.verified,
+              product_label: block.settings.product_label
+            %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="lux-testimonials__empty">Add testimonial blocks in the theme editor.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Luxury testimonials",
+  "tag": "section",
+  "class": "section-lux-testimonials",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Customer stories"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by seekers across India"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real experiences with our gemstones, remedies, and spiritual guidance."
+    },
+    {
+      "type": "header",
+      "content": "Rating summary"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Show rating summary",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "average_rating",
+      "label": "Average rating label",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count label",
+      "default": "2,400+ verified reviews"
+    },
+    {
+      "type": "text",
+      "id": "carousel_label",
+      "label": "Carousel accessibility label",
+      "default": "Featured testimonials"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Auto-advance slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_seconds",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Seconds per slide",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Authentic products, thoughtful guidance, and a calm buying experience from start to finish."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer name",
+          "default": "Priya Sharma"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Location or role",
+          "default": "Delhi, India"
+        },
+        {
+          "type": "text",
+          "id": "product_label",
+          "label": "Product purchased (optional)"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show verified badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Luxury testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Maine Astro Pathshala se Zircon liya aur sach mein kamaal ka result mila. Stone bilkul authentic hai aur packaging bahut elegant thi.",
+            "author": "Manpreet Sharma",
+            "meta": "Verified customer",
+            "product_label": "Zircon gemstone",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Lal Kitab remedy items bilkul sahi aur original mile. Ghar mein positive energy aane lagi hai.",
+            "author": "Ritik Patel",
+            "meta": "Gurugram",
+            "product_label": "Lal Kitab remedies",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Chandi ka hathi bahut acha maana jaata hai. Quality ekdum top hai aur finish bilkul perfect.",
+            "author": "Sunita Agarwal",
+            "meta": "Jaipur",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Rudraksha Mala li aur 15 din mein fark dikhne laga. Neend aur mental peace dono improve hue.",
+            "author": "Sunita Devi",
+            "meta": "Lucknow",
+            "product_label": "Rudraksha mala",
+            "rating": 5,
+            "verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

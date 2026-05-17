@@ -1,0 +1,48 @@
+{%- comment -%}
+  @param {string} variant - featured | compact
+  @param {string} quote
+  @param {string} author
+  @param {string} meta
+  @param {number} rating
+  @param {boolean} verified
+  @param {string} product_label
+{%- endcomment -%}
+{%- liquid
+  assign variant = variant | default: 'compact'
+  assign rating = rating | default: 5
+-%}
+<article class="lux-t-card lux-t-card--{{ variant }}">
+  <div class="lux-t-card__quote-mark" aria-hidden="true">
+    <svg viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 24V14.4C0 6.72 4.32 1.44 12 0v4.8c-3.84.96-6 3.12-6 7.2h6v12H0zm20 0V14.4c0-7.68 4.32-12.96 12-14.4v4.8c-3.84.96-6 3.12-6 7.2h6v12H20z" fill="currentColor" opacity="0.14"/>
+    </svg>
+  </div>
+
+  {% render 'lux-testimonial-stars', rating: rating, class: 'lux-t-card__stars' %}
+
+  {%- if quote != blank -%}
+    <blockquote class="lux-t-card__quote">
+      <p>{{ quote | escape }}</p>
+    </blockquote>
+  {%- endif -%}
+
+  <footer class="lux-t-card__footer">
+    <div class="lux-t-card__author-wrap">
+      {%- if author != blank -%}
+        <cite class="lux-t-card__author">{{ author | escape }}</cite>
+      {%- endif -%}
+      {%- if meta != blank -%}
+        <p class="lux-t-card__meta">{{ meta | escape }}</p>
+      {%- endif -%}
+      {%- if product_label != blank -%}
+        <p class="lux-t-card__product">{{ product_label | escape }}</p>
+      {%- endif -%}
+    </div>
+    {%- if verified -%}
+      <span class="lux-t-card__verified">
+        {% render 'lux-icon', name: 'shield-check', class: 'lux-t-card__verified-icon' %}
+        <span>Verified</span>
+      </span>
+    {%- endif -%}
+  </footer>
+</article>

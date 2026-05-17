@@ -1,0 +1,129 @@
+{
+  "products": {
+    "7-chakra-karungali-bracelet": [
+      "product-banner-7-chakra-karungali-bracelet-1.webp",
+      "product-banner-7-chakra-karungali-bracelet-2.webp",
+      "product-banner-7-chakra-karungali-bracelet-3.webp"
+    ],
+    "amethyst-gemstone": [
+      "product-banner-amethyst-gemstone-1.webp",
+      "product-banner-amethyst-gemstone-2.webp",
+      "product-banner-amethyst-gemstone-3.webp"
+    ],
+    "chandan-mala": [
+      "product-banner-chandan-mala-1.webp",
+      "product-banner-chandan-mala-2.webp",
+      "product-banner-chandan-mala-3.webp"
+    ],
+    "copper-ring": [
+      "product-banner-copper-ring-1.webp",
+      "product-banner-copper-ring-2.webp",
+      "product-banner-copper-ring-3.webp"
+    ],
+    "crystal-rudraksha-bracelet-1": [
+      "product-banner-crystal-rudraksha-bracelet-1-1.webp"
+    ],
+    "crystal-rudraksha-bracelet": [
+      "product-banner-crystal-rudraksha-bracelet-1.webp",
+      "product-banner-crystal-rudraksha-bracelet-2.webp"
+    ],
+    "feroza": [
+      "product-banner-feroza-1.webp",
+      "product-banner-feroza-2.webp",
+      "product-banner-feroza-3.webp"
+    ],
+    "kaka-geeli-gemstone": [
+      "product-banner-kaka-geeli-gemstone-1.webp",
+      "product-banner-kaka-geeli-gemstone-2.webp",
+      "product-banner-kaka-geeli-gemstone-3.webp"
+    ],
+    "lapis-lazuli-stone": [
+      "product-banner-lapis-lazuli-stone-1.webp",
+      "product-banner-lapis-lazuli-stone-2.webp",
+      "product-banner-lapis-lazuli-stone-3.webp"
+    ],
+    "mahe-mariam-stone": [
+      "product-banner-mahe-mariam-stone-1.webp",
+      "product-banner-mahe-mariam-stone-2.webp",
+      "product-banner-mahe-mariam-stone-3.webp"
+    ],
+    "moonstone-gemstone": [
+      "product-banner-moonstone-gemstone-1.webp",
+      "product-banner-moonstone-gemstone-2.webp",
+      "product-banner-moonstone-gemstone-3.webp"
+    ],
+    "natural-pyrite-stone-energy-bracelet-1": [
+      "product-banner-natural-pyrite-stone-energy-bracelet-1-1.webp"
+    ],
+    "natural-pyrite-stone-energy-bracelet": [
+      "product-banner-natural-pyrite-stone-energy-bracelet-1.webp",
+      "product-banner-natural-pyrite-stone-energy-bracelet-2.webp"
+    ],
+    "original-dhan-yog-bracelet": [
+      "product-banner-original-dhan-yog-bracelet-1.webp",
+      "product-banner-original-dhan-yog-bracelet-2.webp",
+      "product-banner-original-dhan-yog-bracelet-3.webp"
+    ],
+    "original-moti-mala-108-beads": [
+      "product-banner-original-moti-mala-108-beads-1.webp",
+      "product-banner-original-moti-mala-108-beads-2.webp",
+      "product-banner-original-moti-mala-108-beads-3.webp"
+    ],
+    "original-sphatik-mala": [
+      "product-banner-original-sphatik-mala-1.webp",
+      "product-banner-original-sphatik-mala-2.webp",
+      "product-banner-original-sphatik-mala-3.webp"
+    ],
+    "original-tulsi-japa-mala-108-beads": [
+      "product-banner-original-tulsi-japa-mala-108-beads-1.webp",
+      "product-banner-original-tulsi-japa-mala-108-beads-2.webp",
+      "product-banner-original-tulsi-japa-mala-108-beads-3.webp"
+    ],
+    "peridot-gemstone": [
+      "product-banner-peridot-gemstone-1.webp",
+      "product-banner-peridot-gemstone-2.webp",
+      "product-banner-peridot-gemstone-3.webp"
+    ],
+    "rudraksha-japa-mala-108": [
+      "product-banner-rudraksha-japa-mala-108-1.webp",
+      "product-banner-rudraksha-japa-mala-108-2.webp",
+      "product-banner-rudraksha-japa-mala-108-3.webp"
+    ],
+    "sulemani-hakik-gemstone": [
+      "product-banner-sulemani-hakik-gemstone-1.webp",
+      "product-banner-sulemani-hakik-gemstone-2.webp",
+      "product-banner-sulemani-hakik-gemstone-3.webp"
+    ],
+    "sunela-stone": [
+      "product-banner-sunela-stone-1.webp",
+      "product-banner-sunela-stone-2.webp",
+      "product-banner-sunela-stone-3.webp"
+    ],
+    "tiger-eye": [
+      "product-banner-tiger-eye-1.webp",
+      "product-banner-tiger-eye-2.webp",
+      "product-banner-tiger-eye-3.webp"
+    ],
+    "tiger-eye-bracelet": [
+      "product-banner-tiger-eye-bracelet-1.webp",
+      "product-banner-tiger-eye-bracelet-2.webp"
+    ],
+    "tourmaline-stone": [
+      "product-banner-tourmaline-stone-1.webp",
+      "product-banner-tourmaline-stone-2.webp",
+      "product-banner-tourmaline-stone-3.webp"
+    ],
+    "zircon-stone": [
+      "product-banner-zircon-stone-1.webp",
+      "product-banner-zircon-stone-2.webp",
+      "product-banner-zircon-stone-3.webp"
+    ]
+  },
+  "collections": {
+    "book": "product-banner-collection-book.webp",
+    "gemstone-collection": "product-banner-collection-gemstone-collection.webp",
+    "lal-kitaab": "product-banner-collection-lal-kitaab.webp",
+    "rudraksha-collection": "product-banner-collection-rudraksha-collection.webp"
+  },
+  "default": "product-banner-default.webp"
+}

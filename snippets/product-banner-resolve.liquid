@@ -1,0 +1,435 @@
+{%- comment -%}
+  Auto-generated — scripts/build-banner-system.mjs
+  Output: unique_asset_paths~~~source
+  Capture once: {% capture bundle %}{% render 'product-banner-resolve' %}{% endcapture %}
+{%- endcomment -%}
+{%- liquid
+  assign banner_paths = ''
+  assign banner_source = ''
+  assign banner_match_key = ''
+  assign h = product.handle | downcase | strip
+  assign t = product.title | downcase | strip
+
+  # Resolve product key (aliases longest-first, single pass)
+  if banner_match_key == blank
+    if h == '7-chakra-karungali-bracelet' or h contains '7-chakra-karungali-bracelet' or t contains '7 chakra karungali bracelet'
+      assign banner_match_key = '7-chakra-karungali-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'rudraksha-japa-mala' or h contains 'rudraksha-japa-mala' or t contains 'rudraksha japa mala'
+      assign banner_match_key = 'rudraksha-japa-mala-108'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == '7-chakra-karungali' or h contains '7-chakra-karungali' or t contains '7 chakra karungali'
+      assign banner_match_key = '7-chakra-karungali-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tiger-eye-bracelet' or h contains 'tiger-eye-bracelet' or t contains 'tiger eye bracelet'
+      assign banner_match_key = 'tiger-eye-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'crystal-rudraksha' or h contains 'crystal-rudraksha' or t contains 'crystal rudraksha'
+      assign banner_match_key = 'crystal-rudraksha-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tourmaline-stone' or h contains 'tourmaline-stone' or t contains 'tourmaline stone'
+      assign banner_match_key = 'tourmaline-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tulsi-japa-mala' or h contains 'tulsi-japa-mala' or t contains 'tulsi japa mala'
+      assign banner_match_key = 'original-tulsi-japa-mala-108-beads'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'sulemani-hakik' or h contains 'sulemani-hakik' or t contains 'sulemani hakik'
+      assign banner_match_key = 'sulemani-hakik-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'rudraksha-japa' or h contains 'rudraksha-japa' or t contains 'rudraksha japa'
+      assign banner_match_key = 'rudraksha-japa-mala-108'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'zircon-stone' or h contains 'zircon-stone' or t contains 'zircon stone'
+      assign banner_match_key = 'zircon-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'sphatik-mala' or h contains 'sphatik-mala' or t contains 'sphatik mala'
+      assign banner_match_key = 'original-sphatik-mala'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'chandan-mala' or h contains 'chandan-mala' or t contains 'chandan mala'
+      assign banner_match_key = 'chandan-mala'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'lapis-lazuli' or h contains 'lapis-lazuli' or t contains 'lapis lazuli'
+      assign banner_match_key = 'lapis-lazuli-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'mahe-mariam' or h contains 'mahe-mariam' or t contains 'mahe mariam'
+      assign banner_match_key = 'mahe-mariam-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tourmaline' or h contains 'tourmaline' or t contains 'tourmaline'
+      assign banner_match_key = 'tourmaline-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'kaka-neeli' or h contains 'kaka-neeli' or t contains 'kaka neeli'
+      assign banner_match_key = 'kaka-geeli-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'kaka-geeli' or h contains 'kaka-geeli' or t contains 'kaka geeli'
+      assign banner_match_key = 'kaka-geeli-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tiger-eye' or h contains 'tiger-eye' or t contains 'tiger eye'
+      assign banner_match_key = 'tiger-eye'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'turquoise' or h contains 'turquoise' or t contains 'turquoise'
+      assign banner_match_key = 'feroza'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'moti-mala' or h contains 'moti-mala' or t contains 'moti mala'
+      assign banner_match_key = 'original-moti-mala-108-beads'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'moonstone' or h contains 'moonstone' or t contains 'moonstone'
+      assign banner_match_key = 'moonstone-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'dhan-yog' or h contains 'dhan-yog' or t contains 'dhan yog'
+      assign banner_match_key = 'original-dhan-yog-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'amethyst' or h contains 'amethyst' or t contains 'amethyst'
+      assign banner_match_key = 'amethyst-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'citrine' or h contains 'citrine' or t contains 'citrine'
+      assign banner_match_key = 'sunela-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'peridot' or h contains 'peridot' or t contains 'peridot'
+      assign banner_match_key = 'peridot-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'zircon' or h contains 'zircon' or t contains 'zircon'
+      assign banner_match_key = 'zircon-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'feroza' or h contains 'feroza' or t contains 'feroza'
+      assign banner_match_key = 'feroza'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'firoza' or h contains 'firoza' or t contains 'firoza'
+      assign banner_match_key = 'feroza'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'iolite' or h contains 'iolite' or t contains 'iolite'
+      assign banner_match_key = 'kaka-geeli-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'sunela' or h contains 'sunela' or t contains 'sunela'
+      assign banner_match_key = 'sunela-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'pyrite' or h contains 'pyrite' or t contains 'pyrite'
+      assign banner_match_key = 'natural-pyrite-stone-energy-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'hakik' or h contains 'hakik' or t contains 'hakik'
+      assign banner_match_key = 'sulemani-hakik-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == '7-chakra-karungali-bracelet' or h contains '7-chakra-karungali-bracelet' or t contains '7 chakra karungali bracelet'
+      assign banner_match_key = '7-chakra-karungali-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'amethyst-gemstone' or h contains 'amethyst-gemstone' or t contains 'amethyst gemstone'
+      assign banner_match_key = 'amethyst-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'chandan-mala' or h contains 'chandan-mala' or t contains 'chandan mala'
+      assign banner_match_key = 'chandan-mala'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'copper-ring' or h contains 'copper-ring' or t contains 'copper ring'
+      assign banner_match_key = 'copper-ring'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'crystal-rudraksha-bracelet' or h contains 'crystal-rudraksha-bracelet' or t contains 'crystal rudraksha bracelet'
+      assign banner_match_key = 'crystal-rudraksha-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'crystal-rudraksha-bracelet-1' or h contains 'crystal-rudraksha-bracelet-1' or t contains 'crystal rudraksha bracelet 1'
+      assign banner_match_key = 'crystal-rudraksha-bracelet-1'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'feroza' or h contains 'feroza' or t contains 'feroza'
+      assign banner_match_key = 'feroza'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'kaka-geeli-gemstone' or h contains 'kaka-geeli-gemstone' or t contains 'kaka geeli gemstone'
+      assign banner_match_key = 'kaka-geeli-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'lapis-lazuli-stone' or h contains 'lapis-lazuli-stone' or t contains 'lapis lazuli stone'
+      assign banner_match_key = 'lapis-lazuli-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'mahe-mariam-stone' or h contains 'mahe-mariam-stone' or t contains 'mahe mariam stone'
+      assign banner_match_key = 'mahe-mariam-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'moonstone-gemstone' or h contains 'moonstone-gemstone' or t contains 'moonstone gemstone'
+      assign banner_match_key = 'moonstone-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'natural-pyrite-stone-energy-bracelet' or h contains 'natural-pyrite-stone-energy-bracelet' or t contains 'natural pyrite stone energy bracelet'
+      assign banner_match_key = 'natural-pyrite-stone-energy-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'natural-pyrite-stone-energy-bracelet-1' or h contains 'natural-pyrite-stone-energy-bracelet-1' or t contains 'natural pyrite stone energy bracelet 1'
+      assign banner_match_key = 'natural-pyrite-stone-energy-bracelet-1'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'original-dhan-yog-bracelet' or h contains 'original-dhan-yog-bracelet' or t contains 'original dhan yog bracelet'
+      assign banner_match_key = 'original-dhan-yog-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'original-moti-mala-108-beads' or h contains 'original-moti-mala-108-beads' or t contains 'original moti mala 108 beads'
+      assign banner_match_key = 'original-moti-mala-108-beads'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'original-sphatik-mala' or h contains 'original-sphatik-mala' or t contains 'original sphatik mala'
+      assign banner_match_key = 'original-sphatik-mala'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'original-tulsi-japa-mala-108-beads' or h contains 'original-tulsi-japa-mala-108-beads' or t contains 'original tulsi japa mala 108 beads'
+      assign banner_match_key = 'original-tulsi-japa-mala-108-beads'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'peridot-gemstone' or h contains 'peridot-gemstone' or t contains 'peridot gemstone'
+      assign banner_match_key = 'peridot-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'rudraksha-japa-mala-108' or h contains 'rudraksha-japa-mala-108' or t contains 'rudraksha japa mala 108'
+      assign banner_match_key = 'rudraksha-japa-mala-108'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'sulemani-hakik-gemstone' or h contains 'sulemani-hakik-gemstone' or t contains 'sulemani hakik gemstone'
+      assign banner_match_key = 'sulemani-hakik-gemstone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'sunela-stone' or h contains 'sunela-stone' or t contains 'sunela stone'
+      assign banner_match_key = 'sunela-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tiger-eye' or h contains 'tiger-eye' or t contains 'tiger eye'
+      assign banner_match_key = 'tiger-eye'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tiger-eye-bracelet' or h contains 'tiger-eye-bracelet' or t contains 'tiger eye bracelet'
+      assign banner_match_key = 'tiger-eye-bracelet'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'tourmaline-stone' or h contains 'tourmaline-stone' or t contains 'tourmaline stone'
+      assign banner_match_key = 'tourmaline-stone'
+    endif
+  endif
+  if banner_match_key == blank
+    if h == 'zircon-stone' or h contains 'zircon-stone' or t contains 'zircon stone'
+      assign banner_match_key = 'zircon-stone'
+    endif
+  endif
+
+  # Product banners — all slots, no fallback if matched
+  case banner_match_key
+    when '7-chakra-karungali-bracelet'
+      assign banner_paths = 'product-banner-7-chakra-karungali-bracelet-1.webp|product-banner-7-chakra-karungali-bracelet-2.webp|product-banner-7-chakra-karungali-bracelet-3.webp'
+      assign banner_source = 'product'
+    when 'amethyst-gemstone'
+      assign banner_paths = 'product-banner-amethyst-gemstone-1.webp|product-banner-amethyst-gemstone-2.webp|product-banner-amethyst-gemstone-3.webp'
+      assign banner_source = 'product'
+    when 'chandan-mala'
+      assign banner_paths = 'product-banner-chandan-mala-1.webp|product-banner-chandan-mala-2.webp|product-banner-chandan-mala-3.webp'
+      assign banner_source = 'product'
+    when 'copper-ring'
+      assign banner_paths = 'product-banner-copper-ring-1.webp|product-banner-copper-ring-2.webp|product-banner-copper-ring-3.webp'
+      assign banner_source = 'product'
+    when 'crystal-rudraksha-bracelet'
+      assign banner_paths = 'product-banner-crystal-rudraksha-bracelet-1.webp|product-banner-crystal-rudraksha-bracelet-2.webp'
+      assign banner_source = 'product'
+    when 'crystal-rudraksha-bracelet-1'
+      assign banner_paths = 'product-banner-crystal-rudraksha-bracelet-1-1.webp'
+      assign banner_source = 'product'
+    when 'feroza'
+      assign banner_paths = 'product-banner-feroza-1.webp|product-banner-feroza-2.webp|product-banner-feroza-3.webp'
+      assign banner_source = 'product'
+    when 'kaka-geeli-gemstone'
+      assign banner_paths = 'product-banner-kaka-geeli-gemstone-1.webp|product-banner-kaka-geeli-gemstone-2.webp|product-banner-kaka-geeli-gemstone-3.webp'
+      assign banner_source = 'product'
+    when 'lapis-lazuli-stone'
+      assign banner_paths = 'product-banner-lapis-lazuli-stone-1.webp|product-banner-lapis-lazuli-stone-2.webp|product-banner-lapis-lazuli-stone-3.webp'
+      assign banner_source = 'product'
+    when 'mahe-mariam-stone'
+      assign banner_paths = 'product-banner-mahe-mariam-stone-1.webp|product-banner-mahe-mariam-stone-2.webp|product-banner-mahe-mariam-stone-3.webp'
+      assign banner_source = 'product'
+    when 'moonstone-gemstone'
+      assign banner_paths = 'product-banner-moonstone-gemstone-1.webp|product-banner-moonstone-gemstone-2.webp|product-banner-moonstone-gemstone-3.webp'
+      assign banner_source = 'product'
+    when 'natural-pyrite-stone-energy-bracelet'
+      assign banner_paths = 'product-banner-natural-pyrite-stone-energy-bracelet-1.webp|product-banner-natural-pyrite-stone-energy-bracelet-2.webp'
+      assign banner_source = 'product'
+    when 'natural-pyrite-stone-energy-bracelet-1'
+      assign banner_paths = 'product-banner-natural-pyrite-stone-energy-bracelet-1-1.webp'
+      assign banner_source = 'product'
+    when 'original-dhan-yog-bracelet'
+      assign banner_paths = 'product-banner-original-dhan-yog-bracelet-1.webp|product-banner-original-dhan-yog-bracelet-2.webp|product-banner-original-dhan-yog-bracelet-3.webp'
+      assign banner_source = 'product'
+    when 'original-moti-mala-108-beads'
+      assign banner_paths = 'product-banner-original-moti-mala-108-beads-1.webp|product-banner-original-moti-mala-108-beads-2.webp|product-banner-original-moti-mala-108-beads-3.webp'
+      assign banner_source = 'product'
+    when 'original-sphatik-mala'
+      assign banner_paths = 'product-banner-original-sphatik-mala-1.webp|product-banner-original-sphatik-mala-2.webp|product-banner-original-sphatik-mala-3.webp'
+      assign banner_source = 'product'
+    when 'original-tulsi-japa-mala-108-beads'
+      assign banner_paths = 'product-banner-original-tulsi-japa-mala-108-beads-1.webp|product-banner-original-tulsi-japa-mala-108-beads-2.webp|product-banner-original-tulsi-japa-mala-108-beads-3.webp'
+      assign banner_source = 'product'
+    when 'peridot-gemstone'
+      assign banner_paths = 'product-banner-peridot-gemstone-1.webp|product-banner-peridot-gemstone-2.webp|product-banner-peridot-gemstone-3.webp'
+      assign banner_source = 'product'
+    when 'rudraksha-japa-mala-108'
+      assign banner_paths = 'product-banner-rudraksha-japa-mala-108-1.webp|product-banner-rudraksha-japa-mala-108-2.webp|product-banner-rudraksha-japa-mala-108-3.webp'
+      assign banner_source = 'product'
+    when 'sulemani-hakik-gemstone'
+      assign banner_paths = 'product-banner-sulemani-hakik-gemstone-1.webp|product-banner-sulemani-hakik-gemstone-2.webp|product-banner-sulemani-hakik-gemstone-3.webp'
+      assign banner_source = 'product'
+    when 'sunela-stone'
+      assign banner_paths = 'product-banner-sunela-stone-1.webp|product-banner-sunela-stone-2.webp|product-banner-sunela-stone-3.webp'
+      assign banner_source = 'product'
+    when 'tiger-eye'
+      assign banner_paths = 'product-banner-tiger-eye-1.webp|product-banner-tiger-eye-2.webp|product-banner-tiger-eye-3.webp'
+      assign banner_source = 'product'
+    when 'tiger-eye-bracelet'
+      assign banner_paths = 'product-banner-tiger-eye-bracelet-1.webp|product-banner-tiger-eye-bracelet-2.webp'
+      assign banner_source = 'product'
+    when 'tourmaline-stone'
+      assign banner_paths = 'product-banner-tourmaline-stone-1.webp|product-banner-tourmaline-stone-2.webp|product-banner-tourmaline-stone-3.webp'
+      assign banner_source = 'product'
+    when 'zircon-stone'
+      assign banner_paths = 'product-banner-zircon-stone-1.webp|product-banner-zircon-stone-2.webp|product-banner-zircon-stone-3.webp'
+      assign banner_source = 'product'
+  endcase
+
+  # Collection fallback — only when no product banners
+  if banner_source == blank
+    for coll in product.collections
+      if banner_source != blank
+        break
+      endif
+      assign ch = coll.handle | downcase
+      if ch == 'gemstone' or ch contains 'gemstone'
+        assign banner_paths = 'product-banner-collection-gemstone-collection.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'gems' or ch contains 'gems'
+        assign banner_paths = 'product-banner-collection-gemstone-collection.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'gemstones' or ch contains 'gemstones'
+        assign banner_paths = 'product-banner-collection-gemstone-collection.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'rudraksha' or ch contains 'rudraksha'
+        assign banner_paths = 'product-banner-collection-rudraksha-collection.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'rudraksha-collection' or ch contains 'rudraksha-collection'
+        assign banner_paths = 'product-banner-collection-rudraksha-collection.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'e-books' or ch contains 'e-books'
+        assign banner_paths = 'product-banner-collection-book.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'books' or ch contains 'books'
+        assign banner_paths = 'product-banner-collection-book.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+      if ch == 'courses' or ch contains 'courses'
+        assign banner_paths = 'product-banner-collection-book.webp'
+        assign banner_source = 'collection'
+        break
+      endif
+    endfor
+  endif
+
+  # Default — only when nothing else matched
+  if banner_source == blank
+    assign banner_paths = 'product-banner-default.webp'
+    assign banner_source = 'default'
+  endif
+-%}
+{{- banner_paths -}}~~~{{- banner_source -}}

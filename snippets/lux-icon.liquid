@@ -89,6 +89,16 @@
       <path d="m4 6 4 4 4-4"/>
     </svg>
 
+  {%- when 'chevron-left' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+
+  {%- when 'chevron-right' -%}
+    <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+
   {%- when 'mail' -%}
     <svg class="{{ cls }}"{{ attrs }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"{{ a11y }}>
       <rect x="2" y="4" width="20" height="16" rx="2"/>

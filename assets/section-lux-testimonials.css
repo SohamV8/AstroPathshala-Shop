@@ -1,0 +1,418 @@
+/**
+ * Luxury testimonials — minimal spiritual luxury
+ */
+
+.lux-testimonials {
+  --lux-t-bg: #fefefc;
+  --lux-t-surface: #fff8ee;
+  --lux-t-border: rgba(31, 28, 24, 0.08);
+  --lux-t-text: #1f1c18;
+  --lux-t-muted: #6b6560;
+  --lux-t-gold: #c9a84c;
+  --lux-t-gold-soft: rgba(201, 168, 76, 0.14);
+  --lux-t-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --lux-t-shadow: 0 14px 40px rgba(31, 28, 24, 0.06);
+  --lux-t-shadow-hover: 0 20px 48px rgba(31, 28, 24, 0.09);
+  background: var(--lux-t-bg);
+  color: var(--lux-t-text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lux-testimonials__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vw, 56px);
+}
+
+/* Header */
+.lux-testimonials__header {
+  max-width: 42rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.lux-testimonials__eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lux-t-gold);
+}
+
+.lux-testimonials__heading {
+  margin: 0 0 14px;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  color: var(--lux-t-text);
+}
+
+.lux-testimonials__subheading {
+  margin: 0;
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  line-height: 1.65;
+  color: var(--lux-t-muted);
+}
+
+.lux-testimonials__summary {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 14px;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--lux-t-surface);
+  border: 1px solid var(--lux-t-border);
+}
+
+.lux-testimonials__summary-score {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.lux-testimonials__summary-count {
+  font-size: 0.875rem;
+  color: var(--lux-t-muted);
+}
+
+/* Stars */
+.lux-t-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.lux-t-stars__star {
+  display: inline-flex;
+  color: rgba(31, 28, 24, 0.14);
+}
+
+.lux-t-stars__star svg {
+  width: 16px;
+  height: 16px;
+}
+
+.lux-t-stars__star.is-filled {
+  color: var(--lux-t-gold);
+}
+
+.lux-t-card--featured .lux-t-stars__star svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Cards */
+.lux-t-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 20px;
+  border: 1px solid var(--lux-t-border);
+  background: #fff;
+  box-shadow: var(--lux-t-shadow);
+  transition:
+    transform 420ms var(--lux-t-ease),
+    box-shadow 420ms var(--lux-t-ease),
+    border-color 320ms ease;
+}
+
+.lux-t-card__quote-mark {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  width: 40px;
+  color: var(--lux-t-gold);
+  pointer-events: none;
+}
+
+.lux-t-card__stars {
+  margin-bottom: 14px;
+}
+
+.lux-t-card__quote {
+  margin: 0;
+  flex: 1;
+}
+
+.lux-t-card__quote p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.lux-t-card--featured {
+  padding: clamp(28px, 4vw, 40px);
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.lux-t-card--featured .lux-t-card__quote {
+  font-size: clamp(1.0625rem, 2.2vw, 1.3125rem);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: var(--lux-t-text);
+}
+
+.lux-t-card--compact {
+  padding: 22px 20px 20px;
+}
+
+.lux-t-card--compact .lux-t-card__quote {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #3d3935;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lux-t-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lux-t-border);
+}
+
+.lux-t-card--compact .lux-t-card__footer {
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.lux-t-card__author {
+  display: block;
+  font-style: normal;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--lux-t-text);
+}
+
+.lux-t-card--compact .lux-t-card__author {
+  font-size: 0.9375rem;
+}
+
+.lux-t-card__meta,
+.lux-t-card__product {
+  margin: 4px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--lux-t-muted);
+}
+
+.lux-t-card__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--lux-t-gold-soft);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a6f2e;
+}
+
+.lux-t-card__verified-icon {
+  width: 14px;
+  height: 14px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-t-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--lux-t-shadow-hover);
+    border-color: rgba(201, 168, 76, 0.22);
+  }
+}
+
+/* Featured carousel */
+.lux-testimonials__featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.lux-testimonials__viewport {
+  width: 100%;
+  overflow: hidden;
+  outline: none;
+}
+
+.lux-testimonials__viewport:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--lux-t-gold);
+  border-radius: 22px;
+}
+
+.lux-testimonials__track {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  transition: transform 620ms var(--lux-t-ease);
+  will-change: transform;
+}
+
+.lux-testimonials__slide {
+  opacity: 0.35;
+  transform: scale(0.97);
+  transition:
+    opacity 520ms var(--lux-t-ease),
+    transform 620ms var(--lux-t-ease);
+  padding-inline: clamp(8px, 2vw, 20px);
+}
+
+.lux-testimonials__slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lux-testimonials__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.lux-testimonials__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--lux-t-border);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--lux-t-text);
+  cursor: pointer;
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms var(--lux-t-ease);
+}
+
+.lux-testimonials__arrow:hover {
+  border-color: rgba(201, 168, 76, 0.35);
+  background: var(--lux-t-surface);
+}
+
+.lux-testimonials__arrow:active {
+  transform: scale(0.96);
+}
+
+.lux-testimonials__arrow-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.lux-testimonials__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lux-testimonials__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(31, 28, 24, 0.16);
+  cursor: pointer;
+  transition:
+    transform 280ms var(--lux-t-ease),
+    background-color 280ms ease,
+    width 280ms var(--lux-t-ease);
+}
+
+.lux-testimonials__dot.is-active {
+  width: 22px;
+  border-radius: 999px;
+  background: var(--lux-t-gold);
+}
+
+/* Grid below featured */
+.lux-testimonials__grid {
+  display: none;
+  margin: 0;
+  padding: 0;
+  gap: clamp(16px, 2vw, 22px);
+}
+
+.lux-testimonials__grid-item {
+  min-width: 0;
+}
+
+.lux-testimonials__empty {
+  text-align: center;
+  color: var(--lux-t-muted);
+}
+
+@media screen and (min-width: 990px) {
+  .lux-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .lux-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: hide grid, carousel only */
+@media screen and (max-width: 749px) {
+  .lux-testimonials__grid {
+    display: none !important;
+  }
+
+  .lux-testimonials__slide {
+    padding-inline: 0;
+  }
+
+  .lux-t-card--featured {
+    padding: 24px 20px;
+  }
+
+  .lux-t-card--featured .lux-t-card__quote {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+  }
+}
+
+/* Hide legacy Judge.me testimonial carousel on homepage when luxury section present */
+.template-index .shopify-section:has([class*='jdgm']) .jdgm-carousel-wrapper,
+.template-index .shopify-section:has([class*='judgeme']) [class*='testimonials'] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-testimonials__track,
+  .lux-testimonials__slide,
+  .lux-t-card {
+    transition-duration: 0.01ms !important;
+  }
+
+  .lux-testimonials__slide {
+    opacity: 1;
+    transform: none;
+  }
+}

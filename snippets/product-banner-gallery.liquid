@@ -1,0 +1,44 @@
+{%- comment -%}
+  Renders deduplicated product banners (theme assets only).
+  Params: banner_bundle (from manager), lazy_after, debug
+{%- endcomment -%}
+{%- assign lazy_after = lazy_after | default: 1 | plus: 0 -%}
+{%- assign bundle = banner_bundle | strip -%}
+{%- if bundle == blank -%}
+  {%- capture bundle -%}
+    {%- render 'product-banner-manager', debug: debug -%}
+  {%- endcapture -%}
+  {%- assign bundle = bundle | strip -%}
+{%- endif -%}
+{%- assign parts = bundle | split: '~~~' -%}
+{%- assign paths_raw = parts[0] | strip -%}
+{%- assign banner_source = parts[1] | strip -%}
+{%- assign banner_count = parts[2] | strip | plus: 0 -%}
+
+{%- if paths_raw != blank and banner_count > 0 -%}
+  <div class="product-banners" data-product-banners data-banner-source="{{ banner_source }}" data-banner-count="{{ banner_count }}">
+    <ul class="product-banners__list list-unstyled" role="list">
+      {%- assign banner_paths = paths_raw | split: '|' -%}
+      {%- assign rendered_index = 0 -%}
+      {%- assign seen_keys = '|' -%}
+      {%- for banner_file in banner_paths -%}
+        {%- assign banner_file = banner_file | strip -%}
+        {%- if banner_file != blank -%}
+          {%- assign file_key = '|' | append: banner_file | append: '|' -%}
+          {%- unless seen_keys contains file_key -%}
+            {%- assign seen_keys = seen_keys | append: banner_file | append: '|' -%}
+            {%- assign rendered_index = rendered_index | plus: 1 -%}
+            {%- render 'product-banner-item',
+              asset_file: banner_file,
+              index: rendered_index,
+              lazy_after: lazy_after,
+              product_title: product.title
+            -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- elsif debug -%}
+  <!-- product-banner-gallery: empty for {{ product.handle }} -->
+{%- endif -%}

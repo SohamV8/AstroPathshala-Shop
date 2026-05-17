@@ -1,0 +1,27 @@
+{%- comment -%}
+  Premium star rating display.
+  @param {number} rating - 1–5
+  @param {string} [class] - extra class on root
+{%- endcomment -%}
+{%- liquid
+  assign rating = rating | default: 5 | plus: 0
+  if rating > 5
+    assign rating = 5
+  endif
+  if rating < 0
+    assign rating = 0
+  endif
+-%}
+<div
+  class="lux-t-stars{% if class != blank %} {{ class }}{% endif %}"
+  role="img"
+  aria-label="{{ rating }} out of 5 stars"
+>
+  {%- for i in (1..5) -%}
+    <span class="lux-t-stars__star{% if i <= rating %} is-filled{% endif %}" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.77l-4.94 2.6.94-5.5-4-3.9 5.53-.8L10 1.5z"/>
+      </svg>
+    </span>
+  {%- endfor -%}
+</div>

@@ -1,0 +1,44 @@
+{%- comment -%}
+  Central banner manager — resolves, deduplicates, returns render bundle.
+  Output format (captured): paths~~~source
+  Params: debug {boolean}
+{%- endcomment -%}
+{%- capture banner_bundle -%}
+  {%- render 'product-banner-resolve' -%}
+{%- endcapture -%}
+{%- assign banner_bundle = banner_bundle | strip -%}
+{%- assign bundle_parts = banner_bundle | split: '~~~' -%}
+{%- assign banner_paths_raw = bundle_parts[0] | strip -%}
+{%- assign banner_source = bundle_parts[1] | strip | default: 'unknown' -%}
+
+{%- comment -%} Runtime dedupe — same filename never twice {%- endcomment -%}
+{%- assign banner_paths_deduped = '' -%}
+{%- assign banner_dup_count = 0 -%}
+{%- if banner_paths_raw != blank -%}
+  {%- assign banner_paths_list = banner_paths_raw | split: '|' -%}
+  {%- for candidate in banner_paths_list -%}
+    {%- assign candidate = candidate | strip -%}
+    {%- if candidate != blank -%}
+      {%- assign needle = '|' | append: candidate | append: '|' -%}
+      {%- assign haystack = '|' | append: banner_paths_deduped | append: '|' -%}
+      {%- unless haystack contains needle -%}
+        {%- if banner_paths_deduped != blank -%}
+          {%- assign banner_paths_deduped = banner_paths_deduped | append: '|' -%}
+        {%- endif -%}
+        {%- assign banner_paths_deduped = banner_paths_deduped | append: candidate -%}
+      {%- else -%}
+        {%- assign banner_dup_count = banner_dup_count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign banner_count = 0 -%}
+{%- if banner_paths_deduped != blank -%}
+  {%- assign banner_count = banner_paths_deduped | split: '|' | size -%}
+{%- endif -%}
+
+{%- if debug -%}
+  <!-- banner-manager handle="{{ product.handle }}" source="{{ banner_source }}" count="{{ banner_count }}" dupes_removed="{{ banner_dup_count }}" paths="{{ banner_paths_deduped | escape }}" -->
+{%- endif -%}
+{{- banner_paths_deduped -}}~~~{{- banner_source -}}~~~{{- banner_count -}}

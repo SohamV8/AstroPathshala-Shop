@@ -1,0 +1,39 @@
+{%- comment -%}
+  Single product banner image.
+  Params: asset_file, index, lazy_after, product_title
+{%- endcomment -%}
+{%- liquid
+  assign asset_file = asset_file | strip
+  assign banner_index = index | default: 1 | plus: 0
+  assign lazy_after = lazy_after | default: 1 | plus: 0
+  assign is_eager = false
+  if banner_index <= lazy_after
+    assign is_eager = true
+  endif
+  assign banner_url = asset_file | asset_url
+  assign title_base = product_title | default: product.title | escape
+-%}
+{%- if asset_file != blank -%}
+<li class="product-banners__item" data-banner-index="{{ banner_index }}">
+  <figure class="product-banners__figure">
+    <div class="product-banners__frame">
+      <img
+        src="{{ banner_url }}"
+        alt="{{ title_base }} — detail banner {{ banner_index }}"
+        class="product-banners__img"
+        width="1920"
+        height="1080"
+        {% if is_eager %}
+          loading="eager"
+          fetchpriority="{% if banner_index == 1 %}high{% else %}low{% endif %}"
+        {% else %}
+          loading="lazy"
+          fetchpriority="low"
+        {% endif %}
+        decoding="async"
+        sizes="100vw"
+      >
+    </div>
+  </figure>
+</li>
+{%- endif -%}
