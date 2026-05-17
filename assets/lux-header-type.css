@@ -1,0 +1,406 @@
+/**
+ * Astro Pathshala — Header typography & navigation polish
+ */
+
+.lux-header {
+  --lux-nav-size: clamp(0.9375rem, 0.28vw + 0.84rem, 1.0625rem);
+  --lux-nav-weight: 600;
+  --lux-nav-lh: 1.35;
+  --lux-nav-track: 0.015em;
+  --lux-nav-gap: clamp(6px, 0.8vw, 14px);
+  --lux-icon-nav: 22px;
+  --lux-icon-action: 22px;
+  --lux-icon-dock: 22px;
+  --lux-text-strong: #1f1c18;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.lux-header .lux-svg {
+  stroke-width: 1.65;
+  transition: color 200ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+}
+
+/* Utility bar — readable, premium top strip */
+.lux-header__utility {
+  --lux-utility-size: clamp(0.9375rem, 0.42vw + 0.84rem, 1.0625rem);
+  --lux-utility-track: 0.01em;
+}
+
+.lux-header__welcome {
+  font-size: var(--lux-utility-size);
+  font-weight: 600;
+  letter-spacing: var(--lux-utility-track);
+  line-height: 1.35;
+}
+
+.lux-header__welcome span {
+  color: var(--lux-text-strong, #1f1c18);
+}
+
+.lux-header__utility-link {
+  font-size: var(--lux-utility-size);
+  font-weight: 600;
+  letter-spacing: var(--lux-utility-track);
+  line-height: 1.35;
+  padding: 6px 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lux-header__utility-link span {
+  white-space: nowrap;
+}
+
+.lux-header__utility-icon .lux-svg {
+  inline-size: 17px;
+  block-size: 17px;
+  stroke-width: 1.75;
+}
+
+.lux-header__welcome-star .lux-svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.lux-header__utility-nav .lux-header__utility-link + .lux-header__utility-link {
+  position: relative;
+}
+
+@media screen and (min-width: 990px) {
+  .lux-header__utility-nav .lux-header__utility-link + .lux-header__utility-link::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 14px;
+    background: rgba(31, 28, 24, 0.12);
+    pointer-events: none;
+  }
+}
+
+.lux-header__utility-link:hover {
+  color: var(--lux-accent);
+}
+
+.lux-header__utility-link:hover .lux-header__utility-icon {
+  color: var(--lux-gold);
+  transform: translateY(-1px);
+}
+
+/* Search */
+.lux-search-inline__input {
+  font-size: clamp(0.9375rem, 0.25vw + 0.86rem, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Action icons */
+.lux-icon-btn--circle {
+  inline-size: 46px;
+  block-size: 46px;
+  min-inline-size: 46px;
+}
+
+.lux-icon-btn--circle svg,
+.lux-icon-btn svg {
+  inline-size: var(--lux-icon-action);
+  block-size: var(--lux-icon-action);
+}
+
+.lux-icon-btn--circle:hover svg {
+  color: var(--lux-accent);
+  transform: translateY(-1px);
+}
+
+.lux-cart-count {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* Bottom navigation — desktop */
+.lux-header__bottom-inner {
+  padding-block: 10px 12px;
+}
+
+.lux-bottom-nav {
+  gap: var(--lux-nav-gap);
+  padding-inline: clamp(8px, 2vw, 20px);
+}
+
+.lux-bottom-nav__link,
+.lux-bottom-nav__trigger {
+  gap: 7px;
+  min-inline-size: clamp(96px, 9vw, 124px);
+  padding: 12px clamp(14px, 1.4vw, 18px) 14px;
+  color: var(--lux-muted);
+  font-size: var(--lux-nav-size);
+  font-weight: var(--lux-nav-weight);
+  line-height: var(--lux-nav-lh);
+  letter-spacing: var(--lux-nav-track);
+  text-transform: none;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+.lux-bottom-nav__text {
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  line-height: inherit;
+}
+
+.lux-bottom-nav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--lux-icon-nav);
+  block-size: var(--lux-icon-nav);
+  color: var(--lux-muted);
+  transition: color 200ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lux-bottom-nav__icon .lux-svg,
+.lux-bottom-nav__svg {
+  inline-size: var(--lux-icon-nav);
+  block-size: var(--lux-icon-nav);
+}
+
+.lux-bottom-nav__link::after,
+.lux-bottom-nav__trigger::after {
+  inset-inline: 14px;
+  inset-block-end: 8px;
+  block-size: 2.5px;
+  background: var(--lux-gold);
+  opacity: 1;
+}
+
+.lux-bottom-nav__link:hover,
+.lux-bottom-nav__trigger:hover {
+  color: var(--lux-text-strong);
+}
+
+.lux-bottom-nav__link:hover .lux-bottom-nav__icon,
+.lux-bottom-nav__trigger:hover .lux-bottom-nav__icon {
+  color: var(--lux-gold);
+  transform: translateY(-2px);
+}
+
+.lux-bottom-nav__link.is-active,
+.lux-bottom-nav__trigger[aria-expanded='true'] {
+  color: var(--lux-accent);
+}
+
+.lux-bottom-nav__link.is-active .lux-bottom-nav__icon,
+.lux-bottom-nav__trigger[aria-expanded='true'] .lux-bottom-nav__icon {
+  color: var(--lux-gold);
+}
+
+.lux-bottom-nav__chevron {
+  inline-size: 11px;
+  block-size: 11px;
+  margin-block-start: 2px;
+}
+
+.lux-submenu__link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Mobile dock — 6 items in one row */
+.lux-mobile-dock__list {
+  padding: 10px 8px;
+  gap: 4px;
+  border-radius: 24px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.lux-mobile-dock__cell,
+.lux-mobile-dock__list > li {
+  min-width: 0;
+}
+
+.lux-mobile-dock__item {
+  gap: 5px;
+  width: 100%;
+  min-block-size: 54px;
+  padding: 6px 3px;
+  font-size: clamp(0.6875rem, 3.1vw, 0.8125rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  transition: color 200ms ease, background-color 200ms ease, transform 200ms ease;
+}
+
+.lux-mobile-dock__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--lux-icon-dock);
+  block-size: var(--lux-icon-dock);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms ease;
+}
+
+.lux-mobile-dock__svg {
+  inline-size: var(--lux-icon-dock);
+  block-size: var(--lux-icon-dock);
+}
+
+.lux-mobile-dock__label {
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  max-inline-size: none;
+  white-space: nowrap;
+}
+
+.lux-mobile-dock__item:hover .lux-mobile-dock__icon,
+.lux-mobile-dock__item.is-active .lux-mobile-dock__icon {
+  color: var(--lux-gold);
+  transform: translateY(-2px);
+}
+
+.lux-mobile-dock__item.is-active {
+  color: var(--lux-accent);
+  background: rgba(201, 168, 76, 0.14);
+}
+
+/* Drawer */
+.lux-drawer__link--row,
+.lux-drawer__link.lux-drawer__link--row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: flex-start;
+  min-block-size: 54px;
+  padding: 12px 10px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: var(--lux-text-strong);
+}
+
+.lux-drawer__link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: 24px;
+  block-size: 24px;
+  color: var(--lux-muted);
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.lux-drawer__link-icon .lux-svg {
+  inline-size: 22px;
+  block-size: 22px;
+}
+
+.lux-drawer__link--row:hover .lux-drawer__link-icon,
+.lux-drawer__link--row.is-active .lux-drawer__link-icon {
+  color: var(--lux-gold);
+  transform: translateX(2px);
+}
+
+.lux-drawer__link--row.is-active {
+  color: var(--lux-accent);
+}
+
+.lux-acc summary {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  min-block-size: 54px;
+  padding: 12px 10px;
+}
+
+.lux-acc__body a {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 11px 14px 11px 48px;
+}
+
+.lux-drawer__quick-item {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.lux-drawer__quick-item svg {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+@media (min-width: 1200px) {
+  .lux-bottom-nav__link,
+  .lux-bottom-nav__trigger {
+    min-inline-size: 108px;
+    padding-inline: 18px;
+  }
+}
+
+@media (max-width: 989px) {
+  html.lux-has-dock {
+    --lux-dock-offset: 108px;
+    --lux-body-dock-pad: 100px;
+  }
+
+  html.lux-has-dock body {
+    padding-block-end: calc(var(--lux-body-dock-pad, 100px) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .lux-mobile-dock__icon,
+  .lux-mobile-dock__svg {
+    --lux-icon-dock: 22px;
+  }
+
+  /* Dondy + other floating WhatsApp widgets — above dock (JS sets --lux-dock-offset) */
+  html.lux-has-dock shopify-app-block:has(a[href*='wa.me']),
+  html.lux-has-dock :is(
+    [class*='dondy'],
+    [class*='Dondy'],
+    [id*='dondy'],
+    #shopify-chat,
+    #launcher,
+    .shopify-chat,
+    #whatsapp-widget,
+    .whatsapp-float,
+    .wws-widget-container,
+    .wa__btn_wrapper,
+    #wa-widget-container,
+    [class*='whatsapp'][class*='float'],
+    [class*='WhatsApp'][class*='button']
+  ) {
+    bottom: calc(var(--lux-dock-offset, 108px) + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 319 !important;
+    right: max(14px, env(safe-area-inset-right, 0px)) !important;
+    left: auto !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .lux-mobile-dock__item {
+    font-size: clamp(0.625rem, 2.9vw, 0.75rem);
+  }
+
+  .lux-mobile-dock__icon,
+  .lux-mobile-dock__svg {
+    --lux-icon-dock: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-header .lux-svg,
+  .lux-bottom-nav__icon,
+  .lux-mobile-dock__icon,
+  .lux-drawer__link-icon {
+    transition-duration: 0ms !important;
+    transform: none !important;
+  }
+}

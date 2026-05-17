@@ -258,3 +258,37 @@ textarea {
   transform: none !important;
   animation: none !important;
 }
+
+/* Header stacking — stay above page sliders, cards, and hero controls */
+.shopify-section-group-header-group {
+  position: relative;
+  z-index: 300;
+}
+
+#MainContent {
+  position: relative;
+  z-index: 1;
+}
+
+/* Page UI must not paint over sticky header / drawer */
+.home-hero__chrome,
+slider-component .slider-buttons,
+slideshow-component .slider-buttons,
+.product__media-container .slider-buttons {
+  z-index: 2;
+}
+
+html.lux-locked .home-hero__chrome,
+html.lux-locked slider-component .slider-buttons,
+html.lux-search-open .home-hero__chrome {
+  z-index: 0 !important;
+  pointer-events: none;
+}
+
+/* Product page: breathing room below header and between gallery / details */
+.template-product product-info {
+  padding-top: clamp(20px, 3.5vw, 40px) !important;
+  padding-bottom: clamp(24px, 4vw, 48px) !important;
+}
+
+/* Product grid layout — see section-product-layout.css */

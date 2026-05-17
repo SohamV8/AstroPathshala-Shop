@@ -1,0 +1,41 @@
+{%- comment -%}
+  Courses nav link for header (bottom bar, mobile dock, drawer).
+  Params: mode (bottom|dock|drawer), courses_url, courses_label
+{%- endcomment -%}
+{%- liquid
+  assign courses_url = courses_url | default: '/collections/e-books'
+  assign courses_label = courses_label | default: 'Courses'
+  assign courses_active = false
+  if request.path == courses_url or request.path contains '/collections/e-books' or request.path contains '/collections/courses'
+    assign courses_active = true
+  endif
+-%}
+{%- case mode -%}
+  {%- when 'bottom' -%}
+    <li class="lux-bottom-nav__item">
+      <a href="{{ courses_url }}" class="lux-bottom-nav__link{% if courses_active %} is-active{% endif %}">
+        <span class="lux-bottom-nav__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'book-open', class: 'lux-bottom-nav__svg' %}
+        </span>
+        <span class="lux-bottom-nav__text">{{ courses_label | escape }}</span>
+      </a>
+    </li>
+  {%- when 'dock' -%}
+    <li class="lux-mobile-dock__cell">
+      <a href="{{ courses_url }}" class="lux-mobile-dock__item{% if courses_active %} is-active{% endif %}">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'book-open', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">{{ courses_label | escape }}</span>
+      </a>
+    </li>
+  {%- when 'drawer' -%}
+    <li class="lux-drawer__item">
+      <a href="{{ courses_url }}" class="lux-drawer__link lux-drawer__link--row{% if courses_active %} is-active{% endif %}" data-drawer-link>
+        <span class="lux-drawer__link-icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'book-open' %}
+        </span>
+        <span>{{ courses_label | escape }}</span>
+      </a>
+    </li>
+{%- endcase -%}

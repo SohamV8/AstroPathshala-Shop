@@ -60,6 +60,32 @@
   if show_utility_bar == nil
     assign show_utility_bar = true
   endif
+
+  assign reports_url = section.settings.reports_url | default: '/collections/lal-kitaab-remedies'
+  assign reports_label = section.settings.reports_label | default: 'Reports'
+  assign show_reports_nav = section.settings.show_reports_nav
+  if show_reports_nav == nil
+    assign show_reports_nav = true
+  endif
+  assign has_reports_in_menu = false
+  assign has_courses_in_menu = false
+  for link in main_menu.links
+    assign link_h = link.handle | downcase
+    assign link_t = link.title | downcase
+    if link_h contains 'report' or link_t contains 'report'
+      assign has_reports_in_menu = true
+    endif
+    if link_h contains 'course' or link_t contains 'course' or link_h contains 'e-book' or link_t contains 'e-book' or link_t contains 'ebook'
+      assign has_courses_in_menu = true
+    endif
+  endfor
+
+  assign courses_url = section.settings.courses_url | default: '/collections/e-books'
+  assign courses_label = section.settings.courses_label | default: 'Courses'
+  assign show_courses_nav = section.settings.show_courses_nav
+  if show_courses_nav == nil
+    assign show_courses_nav = true
+  endif
 -%}
 
 <header
@@ -76,24 +102,24 @@
         <div class="lux-header__utility-inner page-width">
           <p class="lux-header__welcome">
             <span>{{ utility_welcome | escape }}</span>
-            {% render 'lux-icon', name: 'star', class: 'lux-header__welcome-star', size: 12 %}
+            {% render 'lux-icon', name: 'star', class: 'lux-header__welcome-star', size: 16 %}
           </p>
           <nav class="lux-header__utility-nav" aria-label="Contact and account">
             {%- if phone_label != blank -%}
               <a href="{{ phone_url }}" class="lux-header__utility-link">
-                {% render 'lux-icon', name: 'phone', class: 'lux-header__utility-icon', size: 14 %}
+                {% render 'lux-icon', name: 'phone', class: 'lux-header__utility-icon', size: 17 %}
                 <span>{{ phone_label | escape }}</span>
               </a>
             {%- endif -%}
             {%- if show_whatsapp -%}
               <a href="{{ section.settings.whatsapp_url }}" class="lux-header__utility-link" target="_blank" rel="noopener noreferrer">
-                {% render 'lux-icon', name: 'whatsapp', class: 'lux-header__utility-icon', size: 14 %}
+                {% render 'lux-icon', name: 'whatsapp', class: 'lux-header__utility-icon', size: 17 %}
                 <span>{{ whatsapp_label | escape }}</span>
               </a>
             {%- endif -%}
             {%- if show_account -%}
               <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="lux-header__utility-link">
-                {% render 'lux-icon', name: 'log-in', class: 'lux-header__utility-icon', size: 14 %}
+                {% render 'lux-icon', name: 'log-in', class: 'lux-header__utility-icon', size: 17 %}
                 <span>{% if customer %}Account{% else %}Login / Register{% endif %}</span>
               </a>
             {%- endif -%}
@@ -344,34 +370,27 @@
                 {%- endif -%}
               </li>
             {%- endfor -%}
+            {%- if show_courses_nav and has_courses_in_menu == false -%}
+              {% render 'lux-header-courses-link', mode: 'bottom', courses_url: courses_url, courses_label: courses_label %}
+            {%- endif -%}
+            {%- if show_reports_nav and has_reports_in_menu == false -%}
+              {% render 'lux-header-reports-link', mode: 'bottom', reports_url: reports_url, reports_label: reports_label %}
+            {%- endif -%}
           </ul>
         </div>
       </nav>
     </div>
   </div>
 
-  <nav class="lux-mobile-dock" aria-label="Quick navigation" data-mobile-dock>
-    <ul class="lux-mobile-dock__list" role="list">
-      {%- for link in main_menu.links limit: 4 -%}
-        <li>
-          <a href="{{ link.url }}" class="lux-mobile-dock__item{% if link.active %} is-active{% endif %}">
-            <span class="lux-mobile-dock__icon" aria-hidden="true">
-              {% render 'lux-nav-icon', link: link, class: 'lux-mobile-dock__svg' %}
-            </span>
-            <span class="lux-mobile-dock__label">{{ link.title | escape }}</span>
-          </a>
-        </li>
-      {%- endfor -%}
-      <li>
-        <button type="button" class="lux-mobile-dock__item" data-drawer-open aria-label="Open menu">
-          <span class="lux-mobile-dock__icon" aria-hidden="true">
-            {% render 'lux-icon', name: 'grid', class: 'lux-mobile-dock__svg' %}
-          </span>
-          <span class="lux-mobile-dock__label">More</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  {% render 'lux-mobile-dock-nav',
+    main_menu: main_menu,
+    courses_url: courses_url,
+    courses_label: courses_label,
+    show_courses_nav: show_courses_nav,
+    reports_url: reports_url,
+    reports_label: reports_label,
+    show_reports_nav: show_reports_nav
+  %}
 
   <div class="lux-drawer" id="lux-drawer-{{ section.id }}" hidden data-drawer>
     <button class="lux-drawer__scrim" type="button" aria-label="Close menu" data-drawer-close></button>
@@ -455,10 +474,21 @@
                   </div>
                 </details>
               {%- else -%}
-                <a href="{{ link.url }}" class="lux-drawer__link" data-drawer-link>{{ link.title | escape }}</a>
+                <a href="{{ link.url }}" class="lux-drawer__link lux-drawer__link--row{% if link.active %} is-active{% endif %}" data-drawer-link>
+                  <span class="lux-drawer__link-icon" aria-hidden="true">
+                    {% render 'lux-nav-icon', link: link, class: 'lux-drawer__nav-svg' %}
+                  </span>
+                  <span>{{ link.title | escape }}</span>
+                </a>
               {%- endif -%}
             </li>
           {%- endfor -%}
+          {%- if show_courses_nav and has_courses_in_menu == false -%}
+            {% render 'lux-header-courses-link', mode: 'drawer', courses_url: courses_url, courses_label: courses_label %}
+          {%- endif -%}
+          {%- if show_reports_nav and has_reports_in_menu == false -%}
+            {% render 'lux-header-reports-link', mode: 'drawer', reports_url: reports_url, reports_label: reports_label %}
+          {%- endif -%}
         </ul>
       </nav>
 
@@ -539,9 +569,10 @@
 
 {% stylesheet %}
   .lux-header {
-    --lux-z-bar: 35;
-    --lux-z-dock: 40;
-    --lux-z-drawer: 80;
+    --lux-z-bar: 300;
+    --lux-z-dock: 320;
+    --lux-z-drawer: 310;
+    --lux-z-drawer-panel: 311;
     --lux-max: 1480px;
 
     --lux-bg: rgba(255, 248, 238, 0.94);
@@ -575,8 +606,12 @@
     margin-block-end: var(--lux-header-margin-bottom, 0);
     color: var(--lux-text);
     font-family: var(--font-body-family, 'Inter', system-ui, -apple-system, sans-serif);
-    isolation: isolate;
     overflow: visible;
+  }
+
+  .lux-header__float {
+    position: relative;
+    z-index: var(--lux-z-bar);
   }
   .lux-header.is-hidden,
   .lux-header.is-hidden .lux-header__bar {
@@ -642,41 +677,42 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 20px;
-    padding-block: 10px;
+    gap: 16px 28px;
+    padding-block: 14px;
     flex-wrap: wrap;
+    min-height: 52px;
   }
   .lux-header__welcome {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin: 0;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    color: var(--lux-muted);
-    font-weight: 500;
+    color: var(--lux-text-strong, var(--lux-text));
+    font-weight: 600;
   }
   .lux-header__welcome-star { color: var(--lux-gold); flex-shrink: 0; }
   .lux-header__utility-nav {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 6px 18px;
+    gap: 8px 28px;
   }
   .lux-header__utility-link {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 9px;
     text-decoration: none;
     color: var(--lux-text);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    padding: 4px 0;
-    transition: color 180ms ease, opacity 180ms ease;
+    font-weight: 600;
+    padding: 6px 0;
+    transition: color 200ms ease, opacity 200ms ease;
   }
   .lux-header__utility-link:hover { color: var(--lux-accent); }
-  .lux-header__utility-icon { color: var(--lux-muted); flex-shrink: 0; }
+  .lux-header__utility-icon {
+    color: var(--lux-muted);
+    flex-shrink: 0;
+    transition: color 200ms ease, transform 200ms ease;
+  }
 
   .lux-header__bar {
     background: transparent;
@@ -859,9 +895,9 @@
   .lux-mobile-dock__list {
     list-style: none;
     margin: 0;
-    padding: 8px 10px;
+    padding: 10px 8px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 4px;
     background: rgba(255, 248, 238, 0.96);
     backdrop-filter: saturate(160%) blur(14px);
@@ -871,14 +907,20 @@
     box-shadow: 0 12px 40px rgba(18, 14, 10, 0.12);
     pointer-events: auto;
   }
+  .lux-mobile-dock__cell,
+  .lux-mobile-dock__list > li {
+    min-width: 0;
+  }
+
   .lux-mobile-dock__item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    min-block-size: 52px;
-    padding: 6px 4px;
+    gap: 3px;
+    width: 100%;
+    min-block-size: 54px;
+    padding: 6px 3px;
     border: 0;
     background: transparent;
     color: var(--lux-muted);
@@ -893,12 +935,12 @@
     color: var(--lux-accent);
     background: rgba(201, 168, 76, 0.1);
   }
-  .lux-mobile-dock__svg { inline-size: 20px; block-size: 20px; }
+  .lux-mobile-dock__svg { inline-size: 22px; block-size: 22px; }
   .lux-mobile-dock__label {
-    font-size: 0.62rem;
+    font-size: clamp(0.6875rem, 3.1vw, 0.8125rem);
     font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: capitalize;
+    letter-spacing: 0.02em;
+    text-transform: none;
     line-height: 1.2;
     text-align: center;
     max-inline-size: 100%;
@@ -1243,7 +1285,7 @@
   .lux-drawer {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: var(--lux-z-drawer);
   }
   .lux-drawer[hidden] { display: none; }
   .lux-drawer__scrim {
@@ -1273,7 +1315,7 @@
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: calc(env(safe-area-inset-top) + 18px) max(18px, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 18px) 18px;
-    z-index: 10000;
+    z-index: var(--lux-z-drawer-panel);
   }
   .lux-drawer.is-open .lux-drawer__scrim { opacity: 1; }
   .lux-drawer.is-open .lux-drawer__panel { transform: translate3d(0, 0, 0); }
@@ -1502,7 +1544,7 @@
 
   @media (max-width: 989px) {
     html.lux-has-dock body {
-      padding-block-end: calc(88px + env(safe-area-inset-bottom, 0px));
+      padding-block-end: calc(var(--lux-body-dock-pad, 100px) + env(safe-area-inset-bottom, 0px));
     }
     .lux-header__utility { display: none; }
     .lux-header__bottom { display: none; }
@@ -1635,6 +1677,8 @@
     }
   }
 {% endstylesheet %}
+
+{{ 'lux-header-type.css' | asset_url | stylesheet_tag }}
 
 {% javascript %}
   (() => {
@@ -1902,9 +1946,54 @@
     }
 
     const syncDockPadding = () => {
-      const hasDock = window.matchMedia('(max-width: 989px)').matches
-        && document.querySelector('[data-mobile-dock]');
+      const isMobile = window.matchMedia('(max-width: 989px)').matches;
+      const dock = document.querySelector('[data-mobile-dock]');
+      const hasDock = isMobile && dock;
       document.documentElement.classList.toggle('lux-has-dock', Boolean(hasDock));
+
+      if (!hasDock) {
+        document.documentElement.style.removeProperty('--lux-dock-offset');
+        document.documentElement.style.removeProperty('--lux-body-dock-pad');
+        return;
+      }
+
+      const dockHeight = dock.getBoundingClientRect().height;
+      const liftGap = 16;
+      const offsetPx = Math.ceil(dockHeight + liftGap);
+      document.documentElement.style.setProperty('--lux-dock-offset', `${offsetPx}px`);
+      document.documentElement.style.setProperty('--lux-body-dock-pad', `${Math.ceil(dockHeight + 20)}px`);
+
+      const bottom = `calc(${offsetPx}px + env(safe-area-inset-bottom, 0px))`;
+      const waRoots = new Set();
+
+      document.querySelectorAll(
+        '[class*="dondy"], [class*="Dondy"], [id*="dondy"], [id*="Dondy"], [class*="whatsapp"], [id*="whatsapp-widget"], #whatsapp-widget, .whatsapp-float'
+      ).forEach((node) => waRoots.add(node));
+
+      document.querySelectorAll('shopify-app-block').forEach((block) => {
+        if (block.querySelector('a[href*="wa.me"], [href*="api.whatsapp"]')) {
+          waRoots.add(block);
+        }
+      });
+
+      document.querySelectorAll('a[href*="wa.me"], [href*="api.whatsapp"]').forEach((anchor) => {
+        let el = anchor;
+        for (let depth = 0; depth < 10 && el; depth += 1) {
+          const pos = window.getComputedStyle(el).position;
+          if (pos === 'fixed' || el.tagName === 'SHOPIFY-APP-BLOCK') {
+            waRoots.add(el);
+            break;
+          }
+          el = el.parentElement;
+        }
+      });
+
+      waRoots.forEach((el) => {
+        el.style.setProperty('bottom', bottom, 'important');
+        el.style.setProperty('z-index', '319', 'important');
+        el.style.setProperty('right', 'max(14px, env(safe-area-inset-right, 0px))', 'important');
+        el.style.setProperty('left', 'auto', 'important');
+      });
     };
 
     const init = (root) => {
@@ -1918,6 +2007,16 @@
 
     init();
     window.addEventListener('resize', syncDockPadding, { passive: true });
+    window.addEventListener('load', () => {
+      syncDockPadding();
+      setTimeout(syncDockPadding, 600);
+      setTimeout(syncDockPadding, 2000);
+    });
+    if (typeof MutationObserver !== 'undefined') {
+      const waObserver = new MutationObserver(() => syncDockPadding());
+      waObserver.observe(document.body, { childList: true, subtree: true });
+      setTimeout(() => waObserver.disconnect(), 8000);
+    }
     document.addEventListener('shopify:section:load', (e) => init(e.target));
     document.addEventListener('shopify:section:unload', () => {
       document.documentElement.classList.remove('lux-locked');
@@ -1937,6 +2036,48 @@
       "id": "menu",
       "default": "main-menu",
       "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Courses link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_courses_nav",
+      "default": true,
+      "label": "Show Courses in navigation"
+    },
+    {
+      "type": "text",
+      "id": "courses_label",
+      "default": "Courses",
+      "label": "Courses label"
+    },
+    {
+      "type": "url",
+      "id": "courses_url",
+      "label": "Courses URL"
+    },
+    {
+      "type": "header",
+      "content": "Reports link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reports_nav",
+      "default": true,
+      "label": "Show Reports in navigation"
+    },
+    {
+      "type": "text",
+      "id": "reports_label",
+      "default": "Reports",
+      "label": "Reports label"
+    },
+    {
+      "type": "url",
+      "id": "reports_url",
+      "label": "Reports URL"
     },
     {
       "type": "select",

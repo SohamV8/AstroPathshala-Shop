@@ -11,38 +11,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "1778044459ac26f2af": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_fed5289_bXftHV": {
-          "type": "ai_gen_block_fed5289",
-          "settings": {
-            "text_1": "11,000+ students trusted Astro Pathshala",
-            "text_2": "20+ years of Vedic Astrology and Lal Kitab expertise",
-            "text_3": "Consultations, courses, gemstones, pooja services, and workshops",
-            "text_4": "Gurugram based spiritual guidance for modern life",
-            "text_5": "",
-            "background_color": "#fff8ee",
-            "text_color": "#111111",
-            "font_size": 16,
-            "font_weight": "500",
-            "padding_vertical": 12,
-            "show_separator": true,
-            "separator_color": "#d4af37",
-            "separator_size": 4,
-            "item_spacing": 20,
-            "animation_speed": 60,
-            "pause_on_hover": true,
-            "repeat_count": 4
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_fed5289_bXftHV"
-      ],
-      "settings": {}
-    },
     "header": {
       "type": "header",
       "settings": {
@@ -58,12 +26,17 @@
         "enable_language_selector": true,
         "margin_bottom": 0,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 0,
+        "show_courses_nav": true,
+        "courses_label": "Courses",
+        "courses_url": "/collections/e-books",
+        "show_reports_nav": true,
+        "reports_label": "Reports",
+        "reports_url": "/collections/lal-kitaab-remedies"
       }
     }
   },
   "order": [
-    "1778044459ac26f2af",
     "header"
   ]
 }

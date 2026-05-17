@@ -1,0 +1,41 @@
+{%- comment -%}
+  Reports nav link for header (bottom bar, mobile dock, drawer).
+  Params: mode (bottom|dock|drawer), reports_url, reports_label, section_id
+{%- endcomment -%}
+{%- liquid
+  assign reports_url = reports_url | default: '/collections/lal-kitaab-remedies'
+  assign reports_label = reports_label | default: 'Reports'
+  assign reports_active = false
+  if request.path == reports_url or request.path contains '/collections/lal-kitaab'
+    assign reports_active = true
+  endif
+-%}
+{%- case mode -%}
+  {%- when 'bottom' -%}
+    <li class="lux-bottom-nav__item">
+      <a href="{{ reports_url }}" class="lux-bottom-nav__link{% if reports_active %} is-active{% endif %}">
+        <span class="lux-bottom-nav__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'file-text', class: 'lux-bottom-nav__svg' %}
+        </span>
+        <span class="lux-bottom-nav__text">{{ reports_label | escape }}</span>
+      </a>
+    </li>
+  {%- when 'dock' -%}
+    <li class="lux-mobile-dock__cell">
+      <a href="{{ reports_url }}" class="lux-mobile-dock__item{% if reports_active %} is-active{% endif %}">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'file-text', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">{{ reports_label | escape }}</span>
+      </a>
+    </li>
+  {%- when 'drawer' -%}
+    <li class="lux-drawer__item">
+      <a href="{{ reports_url }}" class="lux-drawer__link lux-drawer__link--row{% if reports_active %} is-active{% endif %}" data-drawer-link>
+        <span class="lux-drawer__link-icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'file-text' %}
+        </span>
+        <span>{{ reports_label | escape }}</span>
+      </a>
+    </li>
+{%- endcase -%}

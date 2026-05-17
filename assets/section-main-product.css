@@ -1478,18 +1478,32 @@ a.product__text {
   text-transform: capitalize;
 }
 
-/* Light luxury product experience */
+/* Product buy box — open layout, no bordered card */
 .product__info-container {
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  border-radius: 1.8rem;
-  background: rgba(255, 255, 255, 0.84);
-  padding: clamp(1.6rem, 2.6vw, 2.8rem);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.product__title {
+  margin-bottom: 1rem;
 }
 
 .product__title h1,
 .product__title h2,
 .product__title h3 {
   font-family: Inter, var(--font-heading-family), sans-serif;
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  text-wrap: balance;
+  max-width: none;
 }
 
 .product__text,

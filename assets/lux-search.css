@@ -24,7 +24,7 @@ html.lux-search-open body {
 .lux-search-modal {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 400;
   display: flex;
   align-items: flex-start;
   justify-content: center;

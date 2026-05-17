@@ -1,0 +1,109 @@
+{%- comment -%}
+  Mobile bottom dock — fixed 6 items in one row: Home, Accessories, Gems, Courses, Reports, More
+{%- endcomment -%}
+{%- liquid
+  assign dock_home_url = routes.root_url
+  assign dock_home_active = false
+  if request.path == '/' or request.path == ''
+    assign dock_home_active = true
+  endif
+
+  assign dock_accessories_url = ''
+  assign dock_accessories_active = false
+  assign dock_gems_url = ''
+  assign dock_gems_active = false
+
+  for link in main_menu.links
+    assign link_h = link.handle | downcase
+    assign link_t = link.title | downcase
+
+    if link_h == 'home' or link_t == 'home'
+      assign dock_home_url = link.url
+      if link.active
+        assign dock_home_active = true
+      endif
+    endif
+
+    if dock_accessories_url == blank
+      if link_h contains 'accessor' or link_t contains 'accessor'
+        assign dock_accessories_url = link.url
+        assign dock_accessories_active = link.active
+      endif
+    endif
+
+    if dock_gems_url == blank
+      if link_h contains 'gemstone' or link_h contains 'gems' or link_t contains 'gem' or link_h contains 'rudraksha'
+        assign dock_gems_url = link.url
+        assign dock_gems_active = link.active
+      endif
+    endif
+  endfor
+
+  if dock_accessories_url == blank
+    assign dock_accessories_url = '/collections/accessories'
+    if request.path contains '/collections/accessories'
+      assign dock_accessories_active = true
+    endif
+  endif
+
+  if dock_gems_url == blank
+    assign dock_gems_url = '/collections/gemstone'
+    if request.path contains '/collections/gemstone' or request.path contains '/collections/gems'
+      assign dock_gems_active = true
+    endif
+  endif
+
+  assign courses_url = courses_url | default: '/collections/e-books'
+  assign courses_label = courses_label | default: 'Courses'
+  assign reports_url = reports_url | default: '/collections/lal-kitaab-remedies'
+  assign reports_label = reports_label | default: 'Reports'
+  if show_courses_nav == nil
+    assign show_courses_nav = true
+  endif
+  if show_reports_nav == nil
+    assign show_reports_nav = true
+  endif
+-%}
+
+<nav class="lux-mobile-dock" aria-label="Quick navigation" data-mobile-dock>
+  <ul class="lux-mobile-dock__list" role="list">
+    <li class="lux-mobile-dock__cell">
+      <a href="{{ dock_home_url }}" class="lux-mobile-dock__item{% if dock_home_active %} is-active{% endif %}">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'home', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">Home</span>
+      </a>
+    </li>
+    <li class="lux-mobile-dock__cell">
+      <a href="{{ dock_accessories_url }}" class="lux-mobile-dock__item{% if dock_accessories_active %} is-active{% endif %}">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'star', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">Accessories</span>
+      </a>
+    </li>
+    <li class="lux-mobile-dock__cell">
+      <a href="{{ dock_gems_url }}" class="lux-mobile-dock__item{% if dock_gems_active %} is-active{% endif %}">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'diamond', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">Gems</span>
+      </a>
+    </li>
+    {%- if show_courses_nav -%}
+      {% render 'lux-header-courses-link', mode: 'dock', courses_url: courses_url, courses_label: courses_label %}
+    {%- endif -%}
+    {%- if show_reports_nav -%}
+      {% render 'lux-header-reports-link', mode: 'dock', reports_url: reports_url, reports_label: reports_label %}
+    {%- endif -%}
+    <li class="lux-mobile-dock__cell">
+      <button type="button" class="lux-mobile-dock__item" data-drawer-open aria-label="Open menu">
+        <span class="lux-mobile-dock__icon" aria-hidden="true">
+          {% render 'lux-icon', name: 'grid', class: 'lux-mobile-dock__svg' %}
+        </span>
+        <span class="lux-mobile-dock__label">More</span>
+      </button>
+    </li>
+  </ul>
+</nav>
