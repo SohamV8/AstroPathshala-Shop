@@ -7,7 +7,6 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-
 {
   "sections": {
     "main": {
@@ -189,7 +188,11 @@
     "product_dynamic_banners": {
       "type": "product-dynamic-banners",
       "settings": {
+        "debug_mode": false,
+        "accessibility_label": "Product information banners",
         "show_heading": false,
+        "heading": "Product highlights",
+        "subheading": "",
         "eager_count": 1,
         "padding_top": 24,
         "padding_bottom": 32
