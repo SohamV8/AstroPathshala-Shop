@@ -65,8 +65,8 @@
           "type": "badge",
           "settings": {
             "icon": "check",
-            "title": "11,000+ Students",
-            "subtitle": "Trusted learning community"
+            "title": "Trusted By",
+            "subtitle": "More than 11000+ people"
           }
         },
         "badge_2": {
@@ -110,7 +110,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>11,000+ students | 20+ years experience | Gurugram based Vedic guidance</p>"
+            "text": "<p>20+ years experience | Gurugram based Vedic guidance</p>"
           }
         }
       },
@@ -294,6 +294,7 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
+        "product_metafield_source": "picker_only",
         "product_image_fallback": "none",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
@@ -304,7 +305,9 @@
         "color_scheme": "scheme-4",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "rich_text_axkT8Y": {
@@ -575,6 +578,7 @@
         "show_summary": true,
         "average_rating": "4.9",
         "review_count": "2,400+ verified reviews",
+        "carousel_label": "Featured testimonials",
         "enable_autoplay": true,
         "autoplay_seconds": 6,
         "padding_top": 56,
