@@ -75,6 +75,12 @@
             "custom_liquid": ""
           }
         },
+        "custom_liquid_7teUTU": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": ""
+          }
+        },
         "buy_buttons_ktnrJx": {
           "type": "buy_buttons",
           "settings": {
@@ -158,6 +164,7 @@
         "quantity_selector_zYDphx",
         "complementary_BK9HWx",
         "custom_liquid_RpWfFG",
+        "custom_liquid_7teUTU",
         "buy_buttons_ktnrJx",
         "description",
         "custom_liquid_rex7yf",
