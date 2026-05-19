@@ -88,6 +88,12 @@
             "show_gift_card_recipient": true
           }
         },
+        "custom_liquid_7pjTAc": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"delivery-check\">\n    <h4>📦 Check Delivery</h4>\n\n    <div class=\"input-box\">\n        <input type=\"text\" id=\"pincode\" placeholder=\"Enter pincode\" maxlength=\"6\">\n        <button onclick=\"checkDelivery()\">Check</button>\n    </div>\n\n    <p id=\"result\"></p>\n</div>\n\n<style>\n.delivery-check {\n    width: 320px;\n    font-family: Arial, sans-serif;\n}\n\n.delivery-check h4 {\n    margin-bottom: 10px;\n    font-size: 18px;\n    color: #4d1f00;\n}\n\n.input-box {\n    display: flex;\n    gap: 8px;\n}\n\n.input-box input {\n    flex: 1;\n    height: 38px;\n    padding: 0 10px;\n    border: 1px solid #ddd;\n    border-radius: 6px;\n    font-size: 14px;\n}\n\n.input-box button {\n    background: #c85d13;\n    color: #fff;\n    border: none;\n    padding: 0 15px;\n    border-radius: 6px;\n    cursor: pointer;\n    font-size: 14px;\n}\n\n#result {\n    margin-top: 8px;\n    font-size: 13px;\n}\n</style>\n\n<script>\nfunction checkDelivery() {\n    let pincode = document.getElementById(\"pincode\").value;\n    let result = document.getElementById(\"result\");\n\n    const deliveryPincode = [\"110001\", \"400001\", \"560001\"];\n\n    if (deliveryPincode.includes(pincode)) {\n        result.innerHTML = \"✅ Delivery Available\";\n        result.style.color = \"green\";\n    } else {\n        result.innerHTML = \"❌ Not Available\";\n        result.style.color = \"red\";\n    }\n}\n</script>"
+          }
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -166,6 +172,7 @@
         "custom_liquid_RpWfFG",
         "custom_liquid_7teUTU",
         "buy_buttons_ktnrJx",
+        "custom_liquid_7pjTAc",
         "description",
         "custom_liquid_rex7yf",
         "custom_liquid_dGQzLJ",
