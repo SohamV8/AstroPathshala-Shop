@@ -7,7 +7,6 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-
 {
   "sections": {
     "main": {
@@ -72,6 +71,12 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "custom_liquid_eyLxKq": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": ""
+          }
+        },
         "complementary_BK9HWx": {
           "type": "complementary",
           "settings": {
@@ -86,6 +91,12 @@
           }
         },
         "custom_liquid_RpWfFG": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": ""
+          }
+        },
+        "custom_liquid_gek3xX": {
           "type": "custom_liquid",
           "settings": {
             "custom_liquid": ""
@@ -183,8 +194,10 @@
         "custom_liquid_ngrpPf",
         "variant_picker_69Tn4T",
         "quantity_selector_zYDphx",
+        "custom_liquid_eyLxKq",
         "complementary_BK9HWx",
         "custom_liquid_RpWfFG",
+        "custom_liquid_gek3xX",
         "buy_buttons_ktnrJx",
         "description",
         "custom_liquid_HpAMQ9",
@@ -216,7 +229,11 @@
     "product_dynamic_banners": {
       "type": "product-dynamic-banners",
       "settings": {
+        "debug_mode": false,
+        "accessibility_label": "Product information banners",
         "show_heading": false,
+        "heading": "Product highlights",
+        "subheading": "",
         "eager_count": 1,
         "padding_top": 24,
         "padding_bottom": 32

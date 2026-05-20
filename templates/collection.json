@@ -23,6 +23,8 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/banner.webp",
+        "product_metafield_source": "picker_only",
+        "product_image_fallback": "none",
         "image_overlay_opacity": 0,
         "image_height": "small",
         "image_behavior": "none",
@@ -32,7 +34,9 @@
         "color_scheme": "",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "product-grid": {
@@ -54,11 +58,55 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "rich_text_KTghD7": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xMPtVK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Kundli Check Online By Date of Birth",
+            "heading_size": "h2"
+          }
+        },
+        "text_yTWz4Y": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Check your Kundli online by date of birth with accurate Vedic astrology insights at Astro Pathshala. Get personalized predictions for career, marriage, health, finances, and life guidance based on your birth details. Discover your future with expert kundli analysis and trusted astrological remedies.</p>"
+          }
+        },
+        "button_393cVT": {
+          "type": "button",
+          "settings": {
+            "button_label": "Download App",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "Download Play Store",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xMPtVK",
+        "text_yTWz4Y",
+        "button_393cVT"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "banner",
     "image_banner_GA3zDA",
-    "product-grid"
+    "product-grid",
+    "rich_text_KTghD7"
   ]
 }
