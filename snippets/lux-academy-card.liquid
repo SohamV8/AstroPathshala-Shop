@@ -1,0 +1,77 @@
+{%- comment -%}
+  Premium academy course card
+  @param image, title, tagline, instructor, duration, price, url
+{%- endcomment -%}
+<article class="lux-academy-card" itemscope itemtype="https://schema.org/Course">
+  <a
+    href="{{ url | escape }}"
+    class="lux-academy-card__link"
+    target="_blank"
+    rel="noopener noreferrer"
+    itemprop="url"
+    aria-label="{{ title | escape }} — view course"
+  >
+    <div class="lux-academy-card__media">
+      <img
+        class="lux-academy-card__img"
+        src="{{ image | asset_url }}"
+        alt="{{ title | escape }} — course thumbnail"
+        width="1280"
+        height="960"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        sizes="(min-width: 1200px) 22vw, (min-width: 900px) 30vw, (min-width: 540px) 46vw, 92vw"
+        itemprop="image"
+      >
+    </div>
+
+    <div class="lux-academy-card__body">
+      <h3 class="lux-academy-card__title" itemprop="name">{{ title | escape }}</h3>
+
+      {%- if tagline != blank -%}
+        <p class="lux-academy-card__tagline" itemprop="description">{{ tagline | escape }}</p>
+      {%- endif -%}
+
+      <div class="lux-academy-card__meta">
+        {%- if instructor != blank -%}
+          <span class="lux-academy-card__meta-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zM2 14s0-3 6-3 6 3 6 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span itemprop="provider">{{ instructor | escape }}</span>
+          </span>
+        {%- endif -%}
+        {%- if duration != blank -%}
+          <span class="lux-academy-card__meta-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span>{{ duration | escape }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+
+      <div class="lux-academy-card__footer">
+        {%- liquid
+          assign display_price = price
+          if display_price == blank
+            assign display_price = discounted_price
+          endif
+          if display_price == blank
+            assign display_price = original_price
+          endif
+        -%}
+        {%- if display_price != blank -%}
+          <div class="lux-academy-card__pricing">
+            <span class="lux-academy-card__price">
+              <span class="visually-hidden">Price </span>₹{{ display_price | escape }}
+            </span>
+          </div>
+        {%- endif -%}
+        <span class="lux-academy-card__cta">
+          <span>View course</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

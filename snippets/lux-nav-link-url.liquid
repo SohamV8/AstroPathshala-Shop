@@ -1,0 +1,16 @@
+{%- comment -%}
+  Resolves nav link URL; course/astrology menu items always point to the academy page.
+  Param: link (linklist link object)
+{%- endcomment -%}
+{%- liquid
+  assign nav_url = link.url
+  assign link_h = link.handle | downcase
+  assign link_t = link.title | downcase
+  if link_h contains 'course' or link_t contains 'course' or link_h contains 'astrology' or link_t contains 'astrology' or link_h contains 'e-book' or link_t contains 'e-book' or link_t contains 'ebook'
+    capture nav_url
+      render 'lux-academy-page-url'
+    endcapture
+    assign nav_url = nav_url | strip
+  endif
+-%}
+{{- nav_url -}}

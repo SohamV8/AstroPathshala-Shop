@@ -75,12 +75,15 @@
     if link_h contains 'report' or link_t contains 'report'
       assign has_reports_in_menu = true
     endif
-    if link_h contains 'course' or link_t contains 'course' or link_h contains 'e-book' or link_t contains 'e-book' or link_t contains 'ebook'
+    if link_h contains 'course' or link_t contains 'course' or link_h contains 'astrology' or link_t contains 'astrology' or link_h contains 'e-book' or link_t contains 'e-book' or link_t contains 'ebook'
       assign has_courses_in_menu = true
     endif
   endfor
 
-  assign courses_url = section.settings.courses_url | default: '/collections/e-books'
+  capture courses_url
+    render 'lux-academy-page-url'
+  endcapture
+  assign courses_url = courses_url | strip
   assign courses_label = section.settings.courses_label | default: 'Courses'
   assign show_courses_nav = section.settings.show_courses_nav
   if show_courses_nav == nil
@@ -188,14 +191,14 @@
                     <ul class="lux-submenu__list" role="list">
                       {%- for child in link.links -%}
                         <li class="lux-submenu__item">
-                          <a href="{{ child.url }}" class="lux-submenu__link">
+                          <a href="{% render 'lux-nav-link-url', link: child %}" class="lux-submenu__link">
                             {{ child.title | escape }}
                           </a>
                           {%- if child.links != blank -%}
                             <ul class="lux-submenu__nested" role="list">
                               {%- for grandchild in child.links -%}
                                 <li>
-                                  <a href="{{ grandchild.url }}" class="lux-submenu__nested-link">
+                                  <a href="{% render 'lux-nav-link-url', link: grandchild %}" class="lux-submenu__nested-link">
                                     {{ grandchild.title | escape }}
                                   </a>
                                 </li>
@@ -207,7 +210,7 @@
                     </ul>
                   </div>
                 {%- else -%}
-                  <a href="{{ link.url }}" class="lux-nav__link{% if link.active %} is-active{% endif %}">
+                  <a href="{% render 'lux-nav-link-url', link: link %}" class="lux-nav__link{% if link.active %} is-active{% endif %}">
                     {{ link.title | escape }}
                   </a>
                 {%- endif -%}
@@ -355,13 +358,13 @@
                     <ul class="lux-submenu__list" role="list">
                       {%- for child in link.links -%}
                         <li class="lux-submenu__item">
-                          <a href="{{ child.url }}" class="lux-submenu__link">{{ child.title | escape }}</a>
+                          <a href="{% render 'lux-nav-link-url', link: child %}" class="lux-submenu__link">{{ child.title | escape }}</a>
                         </li>
                       {%- endfor -%}
                     </ul>
                   </div>
                 {%- else -%}
-                  <a href="{{ link.url }}" class="lux-bottom-nav__link{% if link.active %} is-active{% endif %}">
+                  <a href="{% render 'lux-nav-link-url', link: link %}" class="lux-bottom-nav__link{% if link.active %} is-active{% endif %}">
                     <span class="lux-bottom-nav__icon" aria-hidden="true">
                       {% render 'lux-nav-icon', link: link, class: 'lux-bottom-nav__svg' %}
                     </span>
@@ -460,11 +463,11 @@
                     <ul role="list">
                       {%- for child in link.links -%}
                         <li>
-                          <a href="{{ child.url }}" data-drawer-link>{{ child.title | escape }}</a>
+                          <a href="{% render 'lux-nav-link-url', link: child %}" data-drawer-link>{{ child.title | escape }}</a>
                           {%- if child.links != blank -%}
                             <ul class="lux-acc__sub" role="list">
                               {%- for grandchild in child.links -%}
-                                <li><a href="{{ grandchild.url }}" data-drawer-link>{{ grandchild.title | escape }}</a></li>
+                                <li><a href="{% render 'lux-nav-link-url', link: grandchild %}" data-drawer-link>{{ grandchild.title | escape }}</a></li>
                               {%- endfor -%}
                             </ul>
                           {%- endif -%}
@@ -474,7 +477,7 @@
                   </div>
                 </details>
               {%- else -%}
-                <a href="{{ link.url }}" class="lux-drawer__link lux-drawer__link--row{% if link.active %} is-active{% endif %}" data-drawer-link>
+                <a href="{% render 'lux-nav-link-url', link: link %}" class="lux-drawer__link lux-drawer__link--row{% if link.active %} is-active{% endif %}" data-drawer-link>
                   <span class="lux-drawer__link-icon" aria-hidden="true">
                     {% render 'lux-nav-icon', link: link, class: 'lux-drawer__nav-svg' %}
                   </span>
@@ -2054,9 +2057,13 @@
       "label": "Courses label"
     },
     {
+      "type": "paragraph",
+      "content": "Courses link uses your Shopify page (handle: astrology-course) automatically."
+    },
+    {
       "type": "url",
       "id": "courses_url",
-      "label": "Courses URL"
+      "label": "Courses URL override (optional)"
     },
     {
       "type": "header",

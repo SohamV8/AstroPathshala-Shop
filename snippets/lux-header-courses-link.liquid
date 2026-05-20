@@ -3,10 +3,15 @@
   Params: mode (bottom|dock|drawer), courses_url, courses_label
 {%- endcomment -%}
 {%- liquid
-  assign courses_url = courses_url | default: '/collections/e-books'
+  unless courses_url != blank
+    capture courses_url
+      render 'lux-academy-page-url'
+    endcapture
+    assign courses_url = courses_url | strip
+  endunless
   assign courses_label = courses_label | default: 'Courses'
   assign courses_active = false
-  if request.path == courses_url or request.path contains '/collections/e-books' or request.path contains '/collections/courses'
+  if request.path contains '/pages/astrology-course' or request.path contains '/pages/courses' or page.handle == 'astrology-course' or page.handle == 'astrology-courses'
     assign courses_active = true
   endif
 -%}

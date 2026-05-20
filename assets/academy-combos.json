@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "title": "K.P Astrology + Advance K.P Astrology",
+    "tagline": "Complete KP astrology mastery",
+    "price": "9,000",
+    "route": "https://app.astropathshala.com/courses/388227?filterId=33&sortId=7",
+    "image": "academy-combo-1.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 2,
+    "title": "Love Marriage Astrology + Panchang & Kundli Milan",
+    "tagline": "Perfect your love and marriage insights",
+    "price": "6,000",
+    "route": "https://app.astropathshala.com/courses/388231?filterId=33&sortId=7",
+    "image": "academy-combo-2.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 3,
+    "title": "Love, Marriage Astrology + Prashna Kundli + Ayurveda",
+    "tagline": "Holistic astrology for love and health",
+    "price": "6,000",
+    "route": "https://app.astropathshala.com/courses/388221?filterId=33&sortId=7",
+    "image": "academy-combo-3.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 4,
+    "title": "Art of Prediction + Mantra Astrology",
+    "tagline": "Predict and empower with mantras",
+    "price": "5,000",
+    "route": "https://app.astropathshala.com/courses/411195?filterId=33&sortId=7",
+    "image": "academy-combo-4.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 5,
+    "title": "Mantra Astrology + Kundalini Tantra + Ayurveda Astrology",
+    "tagline": "Spiritual and healing astrology combo",
+    "price": "5,000",
+    "route": "https://app.astropathshala.com/courses/388214?filterId=33&sortId=7",
+    "image": "academy-combo-5.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 6,
+    "title": "Prashna Kundli + Advance Art of Prediction + Marriage Astrology",
+    "tagline": "Advanced prediction and marriage insights",
+    "price": "12,500",
+    "route": "https://app.astropathshala.com/courses/526899?filterId=1&sortId=7",
+    "image": "academy-combo-6.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 7,
+    "title": "Palmistry + Lal Kitab",
+    "tagline": "Palmistry meets Lal Kitab wisdom",
+    "price": "7,000",
+    "route": "https://app.astropathshala.com/courses/388240?filterId=33&sortId=7",
+    "image": "academy-combo-7.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 8,
+    "title": "Palmistry + Advance Lal Kitab",
+    "tagline": "Deep dive into palmistry and Lal Kitab",
+    "price": "14,000",
+    "route": "https://app.astropathshala.com/courses/388242?filterId=1&sortId=7",
+    "image": "academy-combo-8.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 9,
+    "title": "Rin Bandhan + Wealth Astrology + Pitradosh",
+    "tagline": "Clear debts and boost wealth",
+    "price": "1,500",
+    "route": "https://app.astropathshala.com/courses/388204?filterId=1&sortId=7",
+    "image": "academy-combo-9.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 10,
+    "title": "Basic Astrology + Art of Prediction",
+    "tagline": "Start predicting with astrology basics",
+    "price": "2,000",
+    "route": "https://app.astropathshala.com/courses/388179?filterId=1&sortId=7",
+    "image": "academy-combo-10.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 11,
+    "title": "Basic Astrology + Advance Art of Prediction",
+    "tagline": "Advance your astrology prediction skills",
+    "price": "4,000",
+    "route": "https://app.astropathshala.com/courses/388195?filterId=33&sortId=7",
+    "image": "academy-combo-11.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 12,
+    "title": "Basic Astrology + Art Of Prediction + Advance Art Of Prediction",
+    "tagline": "Complete astrology prediction mastery",
+    "price": "6,000",
+    "route": "https://app.astropathshala.com/courses/388200?filterId=33&sortId=7",
+    "image": "academy-combo-12.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 13,
+    "title": "Basic Numerology + Advance Numerology + Basic Vastu + Advance Vastu",
+    "tagline": "Numerology and Vastu all-in-one",
+    "price": "6,000",
+    "route": "https://app.astropathshala.com/courses/388209?filterId=33&sortId=7",
+    "image": "academy-combo-13.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 14,
+    "title": "All Lal Kitab Basic to Advance",
+    "tagline": "Ultimate Lal Kitab learning bundle",
+    "price": "33,000",
+    "route": "https://app.astropathshala.com/courses/593893?filterId=33&sortId=7",
+    "image": "academy-combo-14.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 15,
+    "title": "Wealth Astrology + Wealth Workshop",
+    "tagline": "Master wealth with astrology",
+    "price": "1,000",
+    "route": "https://app.astropathshala.com/courses/388238?filterId=33&sortId=7",
+    "image": "academy-combo-15.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 16,
+    "title": "All Vedic Astrology Course",
+    "tagline": "Comprehensive Vedic astrology training",
+    "price": "46,000",
+    "route": "https://app.astropathshala.com/courses/594492?filterId=33&sortId=7",
+    "image": "academy-combo-16.jpg",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 17,
+    "title": "Power of Houses",
+    "tagline": "Unlock the power of astrological houses",
+    "price": "5,800",
+    "route": "https://app.astropathshala.com/courses/594492?filterId=33&sortId=7",
+    "image": "academy-combo-17.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  },
+  {
+    "id": 18,
+    "title": "Complete LAL KITAB & VEDIC ASTROLOGY",
+    "tagline": "Complete Astrology Pack",
+    "price": "75,000",
+    "route": "https://app.astropathshala.com/courses/659645?filterId=1&sortId=7",
+    "image": "academy-combo-18.webp",
+    "instructor": "Expert Faculty",
+    "duration": "Bundle access"
+  }
+]

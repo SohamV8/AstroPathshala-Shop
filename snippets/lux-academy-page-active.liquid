@@ -1,0 +1,16 @@
+{%- comment -%}
+  Outputs "true" when the current request is the academy courses page.
+{%- endcomment -%}
+{%- liquid
+  assign lux_academy_active = false
+  if request.path contains '/pages/astrology-course'
+    assign lux_academy_active = true
+  endif
+  if request.path contains '/pages/courses'
+    assign lux_academy_active = true
+  endif
+  if page.handle == 'astrology-course'
+    assign lux_academy_active = true
+  endif
+-%}
+{%- if lux_academy_active -%}true{%- endif -%}

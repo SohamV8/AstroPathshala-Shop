@@ -1,0 +1,14 @@
+{%- comment -%} Accessible breadcrumb for academy page {%- endcomment -%}
+<nav class="lux-academy-breadcrumb" aria-label="Breadcrumb">
+  <ol class="lux-academy-breadcrumb__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="lux-academy-breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">Home</span></a>
+      <meta itemprop="position" content="1">
+    </li>
+    <li class="lux-academy-breadcrumb__sep" aria-hidden="true">/</li>
+    <li class="lux-academy-breadcrumb__item lux-academy-breadcrumb__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name">{{ page.title | default: 'Astrology Courses' | escape }}</span>
+      <meta itemprop="position" content="2">
+    </li>
+  </ol>
+</nav>

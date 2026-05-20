@@ -1,0 +1,54 @@
+{%- comment -%}
+  Decorative hero visual — floating course previews + spiritual orbs (no extra HTTP requests when using defaults).
+{%- endcomment -%}
+{%- liquid
+  assign img_main = section.settings.hero_image_main | default: 'academy-course-4.webp'
+  assign img_secondary = section.settings.hero_image_secondary | default: 'academy-course-21.webp'
+  assign img_tertiary = section.settings.hero_image_tertiary | default: 'academy-course-22.webp'
+-%}
+<div class="lux-academy-hero__visual" aria-hidden="true">
+  <div class="lux-academy-hero__orb lux-academy-hero__orb--1"></div>
+  <div class="lux-academy-hero__orb lux-academy-hero__orb--2"></div>
+  <div class="lux-academy-hero__orb lux-academy-hero__orb--3"></div>
+
+  <svg class="lux-academy-hero__glyph" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="72" stroke="currentColor" stroke-width="0.5" opacity="0.35"/>
+    <circle cx="100" cy="100" r="48" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+    <path d="M100 28v144M28 100h144M52 52l96 96M148 52L52 148" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+  </svg>
+
+  <div class="lux-academy-hero__float lux-academy-hero__float--main">
+    <img
+      src="{{ img_main | asset_url }}"
+      alt=""
+      width="1280"
+      height="960"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="lux-academy-hero__float-img"
+    >
+  </div>
+  <div class="lux-academy-hero__float lux-academy-hero__float--secondary">
+    <img
+      src="{{ img_secondary | asset_url }}"
+      alt=""
+      width="1280"
+      height="960"
+      loading="lazy"
+      decoding="async"
+      class="lux-academy-hero__float-img"
+    >
+  </div>
+  <div class="lux-academy-hero__float lux-academy-hero__float--tertiary">
+    <img
+      src="{{ img_tertiary | asset_url }}"
+      alt=""
+      width="1280"
+      height="960"
+      loading="lazy"
+      decoding="async"
+      class="lux-academy-hero__float-img"
+    >
+  </div>
+</div>

@@ -29,7 +29,7 @@
         "padding_bottom": 0,
         "show_courses_nav": true,
         "courses_label": "Courses",
-        "courses_url": "/collections/e-books",
+        "courses_url": "",
         "show_reports_nav": true,
         "reports_label": "Reports",
         "reports_url": "/collections/lal-kitaab-remedies"

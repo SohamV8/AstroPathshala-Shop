@@ -1,0 +1,14 @@
+{%- comment -%} SEO meta for Astrology Course academy page {%- endcomment -%}
+{%- liquid
+  assign meta_title = 'Astrology Courses'
+  if page.title != blank
+    assign meta_title = page.title
+  endif
+  assign meta_desc = 'Explore 39+ premium Vedic astrology, Lal Kitab, KP, palmistry, numerology and vastu courses. Live classes and lifetime access at Astro Pathshala Academy.'
+-%}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ meta_title | escape }}">
+<meta property="og:description" content="{{ meta_desc | escape }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ meta_title | escape }}">
+<meta name="twitter:description" content="{{ meta_desc | escape }}">

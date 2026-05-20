@@ -53,7 +53,12 @@
     endif
   endif
 
-  assign courses_url = courses_url | default: '/collections/e-books'
+  unless courses_url != blank
+    capture courses_url
+      render 'lux-academy-page-url'
+    endcapture
+    assign courses_url = courses_url | strip
+  endunless
   assign courses_label = courses_label | default: 'Courses'
   assign reports_url = reports_url | default: '/collections/lal-kitaab-remedies'
   assign reports_label = reports_label | default: 'Reports'

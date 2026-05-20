@@ -1,0 +1,392 @@
+[
+  {
+    "id": 1,
+    "title": "6th House Workshop",
+    "tagline": "Master the secrets of health and challenges",
+    "price": "1,100",
+    "route": "https://app.astropathshala.com/courses/415237?filterId=1&sortId=7",
+    "image": "academy-course-1.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "3–6 hours"
+  },
+  {
+    "id": 2,
+    "title": "8th House Workshop",
+    "tagline": "Unlock mysteries of transformation and longevity",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/453975?filterId=1&sortId=7",
+    "image": "academy-course-2.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "3–6 hours"
+  },
+  {
+    "id": 3,
+    "title": "12th House Workshop",
+    "tagline": "Explore spirituality and hidden realms",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/437539?filterId=1&sortId=7",
+    "image": "academy-course-3.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "3–6 hours"
+  },
+  {
+    "id": 4,
+    "title": "Advance Astrology by Pratap Sheel",
+    "tagline": "Deep dive into Vedic astrology mastery",
+    "price": "6,791",
+    "route": "https://app.astropathshala.com/courses/593513?filterId=1&sortId=7",
+    "image": "academy-course-4.webp",
+    "instructor": "Pt. Pratap Sheel",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 5,
+    "title": "Advance Lal Kitab (Grammar + Varshfal + Remedies)",
+    "tagline": "Master Lal Kitab's predictive techniques",
+    "price": "21,589",
+    "route": "https://app.astropathshala.com/courses/377074?filterId=1&sortId=7",
+    "image": "academy-course-5.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 6,
+    "title": "Advance Numerology",
+    "tagline": "Decode life's numbers with precision",
+    "price": "2,168",
+    "route": "https://app.astropathshala.com/courses/199278?filterId=1&sortId=7",
+    "image": "academy-course-6.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 7,
+    "title": "Art Of Prediction",
+    "tagline": "Predict the future like a pro",
+    "price": "5,044",
+    "route": "https://app.astropathshala.com/courses/162012?filterId=1&sortId=7",
+    "image": "academy-course-7.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 8,
+    "title": "Art Of Prediction Advance",
+    "tagline": "Elevate your prediction skills",
+    "price": "7,716",
+    "route": "https://app.astropathshala.com/courses/380280?filterId=1&sortId=7",
+    "image": "academy-course-8.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 9,
+    "title": "Basic Astrology Course",
+    "tagline": "Start your astrology journey here",
+    "price": "524",
+    "route": "https://app.astropathshala.com/courses/163157?filterId=1&sortId=7",
+    "image": "academy-course-9.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 10,
+    "title": "Basic Astrology Urmi Gupta",
+    "tagline": "Learn astrology basics with ease",
+    "price": "133",
+    "route": "https://app.astropathshala.com/courses/392619?filterId=1&sortId=7",
+    "image": "academy-course-10.webp",
+    "instructor": "Urmi Gupta",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 11,
+    "title": "Basic Numerology Course",
+    "tagline": "Begin your numerology adventure",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/181656?filterId=1&sortId=7",
+    "image": "academy-course-11.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 12,
+    "title": "Divisional Charts",
+    "tagline": "Master divisional chart analysis",
+    "price": "12,339",
+    "route": "https://app.astropathshala.com/courses/538712?filterId=1&sortId=7",
+    "image": "academy-course-12.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 13,
+    "title": "Ekadash Bhaav",
+    "tagline": "Unravel the 11th house secrets",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/470898?filterId=1&sortId=7",
+    "image": "academy-course-13.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 14,
+    "title": "Kaal Sarp Dosha",
+    "tagline": "Overcome Kaal Sarp challenges",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/518718?filterId=1&sortId=7",
+    "image": "academy-course-14.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 15,
+    "title": "Kundlini Tantra",
+    "tagline": "Awaken your Kundalini energy",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/163538?filterId=1&sortId=7",
+    "image": "academy-course-15.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 16,
+    "title": "Lagnadahaya",
+    "tagline": "Master your ascendant's power",
+    "price": "3,709",
+    "route": "https://app.astropathshala.com/courses/290217?filterId=1&sortId=7",
+    "image": "academy-course-16.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 17,
+    "title": "Basic Lal Kitab Course",
+    "tagline": "Start with Lal Kitab essentials",
+    "price": "5,044",
+    "route": "https://app.astropathshala.com/courses/267307?filterId=1&sortId=7",
+    "image": "academy-course-17.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 18,
+    "title": "Lal Kitab Grammar & Faladesh",
+    "tagline": "Decode Lal Kitab grammar",
+    "price": "12,339",
+    "route": "https://app.astropathshala.com/courses/470903?filterId=1&sortId=7",
+    "image": "academy-course-18.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 19,
+    "title": "Lal Kitab Predictive Technique With Case Study",
+    "tagline": "Predict with Lal Kitab case studies",
+    "price": "2,168",
+    "route": "https://app.astropathshala.com/courses/518719?filterId=1&sortId=7",
+    "image": "academy-course-19.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 20,
+    "title": "Ayurveda Astrology",
+    "tagline": "Blend Ayurveda with astrology",
+    "price": "3,091",
+    "route": "https://app.astropathshala.com/courses/163557?filterId=1&sortId=7",
+    "image": "academy-course-20.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 21,
+    "title": "Love, Marriage, and Relationship",
+    "tagline": "Find love and harmony",
+    "price": "5,044",
+    "route": "https://app.astropathshala.com/courses/163540?filterId=1&sortId=7",
+    "image": "academy-course-21.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 22,
+    "title": "Mantra Astrology",
+    "tagline": "Harness mantras for destiny",
+    "price": "3,092",
+    "route": "https://app.astropathshala.com/courses/168570?filterId=1&sortId=7",
+    "image": "academy-course-22.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 23,
+    "title": "Marriage Astrology",
+    "tagline": "Plan your marriage with stars",
+    "price": "5,044",
+    "route": "https://app.astropathshala.com/courses/415220?filterId=1&sortId=7",
+    "image": "academy-course-23.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 24,
+    "title": "Panchang Jyotish & Kundli Milan",
+    "tagline": "Master Panchang and compatibility",
+    "price": "5,147",
+    "route": "https://app.astropathshala.com/courses/276866?filterId=1&sortId=7",
+    "image": "academy-course-24.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 25,
+    "title": "Art of Interpretation Level 1",
+    "tagline": "Interpret charts like an expert",
+    "price": "3,092",
+    "route": "https://app.astropathshala.com/courses/646791?filterId=1&sortId=7",
+    "image": "academy-course-25.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 26,
+    "title": "Pitra Dosha",
+    "tagline": "Resolve ancestral karma",
+    "price": "318",
+    "route": "https://app.astropathshala.com/courses/168567?filterId=1&sortId=7",
+    "image": "academy-course-26.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 27,
+    "title": "Power of Trines by Pratap Sheel",
+    "tagline": "Unlock trines' cosmic power",
+    "price": "1,551",
+    "route": "https://app.astropathshala.com/courses/593312?filterId=1&sortId=7",
+    "image": "academy-course-27.webp",
+    "instructor": "Pt. Pratap Sheel",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 28,
+    "title": "Practical Palmistry Course",
+    "tagline": "Read palms with confidence",
+    "price": "4,633",
+    "route": "https://app.astropathshala.com/courses/162388?filterId=1&sortId=7",
+    "image": "academy-course-28.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 29,
+    "title": "Prashna Kundali",
+    "tagline": "Answer life's questions with Prashna",
+    "price": "3,709",
+    "route": "https://app.astropathshala.com/courses/164488?filterId=1&sortId=7",
+    "image": "academy-course-29.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 30,
+    "title": "Predictive Astrology by Pratap Sheel",
+    "tagline": "Predict with Vedic precision",
+    "price": "4,325",
+    "route": "https://app.astropathshala.com/courses/454349?filterId=1&sortId=7",
+    "image": "academy-course-30.webp",
+    "instructor": "Pt. Pratap Sheel",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 31,
+    "title": "Rin Bandhan Workshop",
+    "tagline": "Break free from karmic debts",
+    "price": "935",
+    "route": "https://app.astropathshala.com/courses/360641?filterId=1&sortId=7",
+    "image": "academy-course-31.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "3–6 hours"
+  },
+  {
+    "id": 32,
+    "title": "Wealth & Finance Astrology",
+    "tagline": "Grow wealth with astrology",
+    "price": "3,092",
+    "route": "https://app.astropathshala.com/courses/163541?filterId=1&sortId=7",
+    "image": "academy-course-32.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 33,
+    "title": "Wealth & Finance Workshop",
+    "tagline": "Master financial astrology",
+    "price": "1,140",
+    "route": "https://app.astropathshala.com/courses/376928?filterId=1&sortId=7",
+    "image": "academy-course-33.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "3–6 hours"
+  },
+  {
+    "id": 34,
+    "title": "Tarot Card",
+    "tagline": "Unlock Tarot's mystical insights",
+    "price": "9,257",
+    "route": "https://app.astropathshala.com/courses/599768?filterId=1&sortId=7",
+    "image": "academy-course-34.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "12+ hours"
+  },
+  {
+    "id": 35,
+    "title": "Basic Vastu",
+    "tagline": "Harmonize life with Vastu",
+    "price": "1,550",
+    "route": "https://app.astropathshala.com/courses/224561?filterId=1&sortId=7",
+    "image": "academy-course-35.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 36,
+    "title": "KP Astrology Basic",
+    "tagline": "Learn KP astrology basics",
+    "price": "5,100",
+    "route": "https://app.astropathshala.com/courses/227773?filterId=1&sortId=7",
+    "image": "academy-course-36.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "6–10 hours"
+  },
+  {
+    "id": 37,
+    "title": "Miracle Vastu Advance Course",
+    "tagline": "Advance your Vastu expertise",
+    "price": "3,092",
+    "route": "https://app.astropathshala.com/courses/224571?filterId=1&sortId=7",
+    "image": "academy-course-37.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 38,
+    "title": "KP Astrology Advance",
+    "tagline": "Master KP astrology techniques",
+    "price": "9,257",
+    "route": "https://app.astropathshala.com/courses/227776?filterId=1&sortId=7",
+    "image": "academy-course-38.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  },
+  {
+    "id": 39,
+    "title": "Advance Lal Kitab Remedies",
+    "tagline": "Powerful Lal Kitab remedies",
+    "price": "14,000",
+    "route": "https://app.astropathshala.com/courses/344237?filterId=1&sortId=7",
+    "image": "academy-course-39.webp",
+    "instructor": "Astro Pathshala Faculty",
+    "duration": "15–25 hours"
+  }
+]

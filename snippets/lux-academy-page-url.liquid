@@ -1,0 +1,12 @@
+{%- comment -%}
+  Canonical URL for the Astrology Course academy page (handle: astrology-course).
+{%- endcomment -%}
+{%- liquid
+  assign lux_academy_page_url = '/pages/astrology-course'
+  if pages['astrology-course'] != blank
+    assign lux_academy_page_url = pages['astrology-course'].url
+  elsif pages['astrology-courses'] != blank
+    assign lux_academy_page_url = pages['astrology-courses'].url
+  endif
+-%}
+{{- lux_academy_page_url -}}

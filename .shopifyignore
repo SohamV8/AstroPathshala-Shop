@@ -1,0 +1,9 @@
+# Source image folders — not uploaded (flat copies live in /assets root)
+source-assets/
+assets/Course/
+assets/Combo/
+assets/Banner/
+
+# Dev-only scripts and React source (not theme templates)
+scripts/
+templates/courses.js

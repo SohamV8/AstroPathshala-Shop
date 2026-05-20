@@ -1,0 +1,47 @@
+{
+  "name": "Academy courses page",
+  "type": "custom.academy",
+  "sections": {
+    "courses_hero": {
+      "type": "lux-courses-hero",
+      "settings": {
+        "eyebrow": "Learn Ancient Wisdom",
+        "heading": "Master Vedic Astrology with Clarity & Precision",
+        "subtitle": "Professional astrology courses designed for modern learners — covering Lal Kitab, KP Astrology, Palmistry, Numerology, Vastu, gemstone guidance, and spiritual sciences with structured learning and lifetime access.",
+        "cta_primary_label": "Explore Courses",
+        "cta_secondary_label": "Talk to an Expert",
+        "padding_top": 32,
+        "padding_bottom": 24
+      }
+    },
+    "courses_catalog": {
+      "type": "lux-courses-catalog",
+      "settings": {
+        "eyebrow": "Curated programs",
+        "heading": "Explore courses",
+        "subheading": "Structured Vedic astrology, Lal Kitab, KP, palmistry, numerology, and vastu — taught by expert faculty with lifetime access.",
+        "show_search": true,
+        "search_placeholder": "Search by course, topic, or instructor",
+        "padding_top": 24,
+        "padding_bottom": 56
+      }
+    },
+    "combos_catalog": {
+      "type": "lux-combos-catalog",
+      "settings": {
+        "eyebrow": "Best value",
+        "heading": "Course bundles",
+        "subheading": "Curated bundles for deeper learning — multiple programs, one enrollment, exceptional value.",
+        "show_search": true,
+        "search_placeholder": "Search bundles",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "courses_hero",
+    "courses_catalog",
+    "combos_catalog"
+  ]
+}

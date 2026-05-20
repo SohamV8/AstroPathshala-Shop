@@ -28,9 +28,56 @@
     {%- endcomment -%}
     <link rel="canonical" href="{{ canonical_url }}">
     {%- liquid
+      assign lux_academy_on_page = false
+      if request.path contains '/pages/astrology-course' or page.handle == 'astrology-course' or page.handle == 'astrology-courses'
+        assign lux_academy_on_page = true
+      endif
+
+      capture academy_page_url
+        render 'lux-academy-page-url'
+      endcapture
+      assign academy_page_url = academy_page_url | strip
+
+      assign academy_courses_redirect = false
+      if request.path == '/pages/courses' or request.path == '/pages/courses/'
+        assign academy_courses_redirect = true
+      endif
+
+      assign academy_has_correct_template = false
+      if template.suffix == 'astrology-course' or template.suffix == 'courses'
+        assign academy_has_correct_template = true
+      endif
+
+      assign academy_courses_fallback = false
+      if lux_academy_on_page and academy_courses_redirect == false
+        if request.page_type == '404'
+          assign academy_courses_fallback = true
+        elsif request.page_type == 'page' and academy_has_correct_template == false
+          assign academy_courses_fallback = true
+        endif
+      endif
+
+      assign academy_show_page = false
+      if lux_academy_on_page and academy_courses_redirect == false
+        if academy_courses_fallback or academy_has_correct_template
+          assign academy_show_page = true
+        endif
+      endif
+
+      if academy_show_page or academy_courses_redirect
+        assign page_title = 'Astrology Courses'
+        if page.title != blank
+          assign page_title = page.title
+        endif
+        assign page_description = 'Explore 38+ premium Vedic astrology, Lal Kitab, KP, palmistry, numerology and vastu courses. Live classes and bundles at Astro Pathshala Academy.'
+      endif
+
       assign should_noindex = false
       if request.page_type == 'search' or request.page_type == 'cart' or request.page_type == '404'
         assign should_noindex = true
+      endif
+      if academy_show_page
+        assign should_noindex = false
       endif
       if request.path contains '/account' or request.path contains '/orders' or request.path contains '/checkout' or request.path contains '/challenge'
         assign should_noindex = true
@@ -83,6 +130,11 @@
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
+
+    {%- if academy_show_page -%}
+      {% render 'lux-academy-page-meta' %}
+      <link rel="preload" href="{{ 'section-lux-academy.css' | asset_url }}" as="style">
+    {%- endif -%}
 
     {% render 'meta-tags' %}
 
@@ -434,7 +486,11 @@
     </script>
   </head>
 
-  <body class="gradient template-{{ template.name }}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient template-{{ template.name }}{% if academy_show_page %} template-page template-page-astrology-course{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    {%- if academy_courses_redirect -%}
+      <meta http-equiv="refresh" content="0;url={{ academy_page_url }}">
+      <script>window.location.replace({{ academy_page_url | json }});</script>
+    {%- endif -%}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -451,7 +507,15 @@
     %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-      {{ content_for_layout }}
+      {%- if academy_courses_redirect -%}
+        <div class="page-width" style="padding:4rem 0;text-align:center">
+          <p>Redirecting to <a href="{{ academy_page_url }}">Astrology Course</a>…</p>
+        </div>
+      {%- elsif academy_courses_fallback -%}
+        {% sections 'academy-page-group' %}
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
     </main>
 
     {% sections 'footer-group' %}

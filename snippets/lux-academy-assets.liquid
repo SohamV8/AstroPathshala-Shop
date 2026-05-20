@@ -1,0 +1,8 @@
+{%- comment -%}
+  Shared academy catalog assets. Pass load_js: false on second section to avoid duplicate script.
+{%- endcomment -%}
+<link rel="preload" href="{{ 'section-lux-academy.css' | asset_url }}" as="style">
+{{ 'section-lux-academy.css' | asset_url | stylesheet_tag }}
+{%- if load_js != false -%}
+  <script src="{{ 'lux-academy.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

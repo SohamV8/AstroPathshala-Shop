@@ -1,0 +1,166 @@
+{% render 'lux-academy-assets', load_js: false %}
+
+{%- liquid
+  assign hero_title = section.settings.heading
+  if hero_title == blank
+    assign hero_title = page.title | default: 'Master Vedic Astrology with Clarity & Precision'
+  endif
+  assign cta_primary_url = section.settings.cta_primary_url | default: '#academy-courses'
+  assign cta_secondary_url = section.settings.cta_secondary_url | default: 'https://wa.me/919871130487'
+-%}
+
+{%- style -%}
+  #LuxCoursesHero-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 990px) {
+    #LuxCoursesHero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<header
+  id="LuxCoursesHero-{{ section.id }}"
+  class="lux-academy-hero section-{{ section.id }}-padding"
+  data-academy-hero
+>
+  <div class="lux-academy-hero__shell page-width">
+    <div class="lux-academy-hero__breadcrumb" data-academy-reveal>
+      {% render 'lux-academy-breadcrumb' %}
+    </div>
+
+    <div class="lux-academy-hero__grid">
+      <div class="lux-academy-hero__content" data-academy-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="lux-academy-hero__badge">
+            <span class="lux-academy-hero__badge-dot" aria-hidden="true"></span>
+            {{ section.settings.eyebrow | escape }}
+          </p>
+        {%- endif -%}
+
+        <h1 class="lux-academy-hero__title">{{ hero_title | escape }}</h1>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="lux-academy-hero__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+
+        <div class="lux-academy-hero__actions">
+          <a href="{{ cta_primary_url }}" class="lux-academy-hero__btn lux-academy-hero__btn--primary">
+            {{ section.settings.cta_primary_label | default: 'Explore Courses' | escape }}
+          </a>
+          <a
+            href="{{ cta_secondary_url }}"
+            class="lux-academy-hero__btn lux-academy-hero__btn--secondary"
+            {% if cta_secondary_url contains 'wa.me' %}target="_blank" rel="noopener noreferrer"{% endif %}
+          >
+            {{ section.settings.cta_secondary_label | default: 'Talk to an Expert' | escape }}
+          </a>
+        </div>
+      </div>
+
+      <div class="lux-academy-hero__visual-wrap" data-academy-reveal>
+        {% render 'lux-academy-hero-visual', section: section %}
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Courses page hero",
+  "tag": "section",
+  "class": "section-lux-courses-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Badge",
+      "default": "Learn Ancient Wisdom"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Master Vedic Astrology with Clarity & Precision"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Description",
+      "default": "Professional astrology courses designed for modern learners — covering Lal Kitab, KP Astrology, Palmistry, Numerology, Vastu, gemstone guidance, and spiritual sciences with structured learning and lifetime access."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary button label",
+      "default": "Explore Courses"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary button label",
+      "default": "Talk to an Expert"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Hero visuals"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_main",
+      "label": "Main preview image (asset filename)",
+      "default": "academy-course-4.webp"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_secondary",
+      "label": "Secondary preview image",
+      "default": "academy-course-21.webp"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_tertiary",
+      "label": "Tertiary preview image",
+      "default": "academy-course-22.webp"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Courses page hero"
+    }
+  ]
+}
+{% endschema %}
