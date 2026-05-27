@@ -50,10 +50,10 @@
           {% if block.settings.image_1.alt != blank %}
             alt="{{ block.settings.image_1.alt | escape }}"
           {% else %}
-            role="presentation"
+            alt="{{ block.settings.heading_1 | escape }}"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="{{ block.settings.image_1.height }}"
+          width="{{ block.settings.image_1.width }}"
           loading="lazy"
         >
       {%- endif -%}
@@ -72,10 +72,10 @@
           {% if block.settings.image_2.alt != blank %}
             alt="{{ block.settings.image_2.alt | escape }}"
           {% else %}
-            role="presentation"
+            alt="{{ block.settings.heading_2 | escape }}"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="{{ block.settings.image_2.height }}"
+          width="{{ block.settings.image_2.width }}"
           loading="lazy"
         >
       {%- endif -%}
@@ -94,10 +94,10 @@
           {% if block.settings.image_3.alt != blank %}
             alt="{{ block.settings.image_3.alt | escape }}"
           {% else %}
-            role="presentation"
+            alt="{{ block.settings.heading_3 | escape }}"
           {% endif %}
-          height="auto"
-          width="auto"
+          height="{{ block.settings.image_3.height }}"
+          width="{{ block.settings.image_3.width }}"
           loading="lazy"
         >
       {%- endif -%}

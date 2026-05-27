@@ -82,12 +82,59 @@
       if request.path contains '/account' or request.path contains '/orders' or request.path contains '/checkout' or request.path contains '/challenge'
         assign should_noindex = true
       endif
+      if request.query_string contains 'sort_by=' or request.query_string contains 'page=1'
+        assign should_noindex = true
+      endif
     -%}
     {%- if should_noindex -%}
       <meta name="robots" content="noindex,follow,noarchive">
     {%- else -%}
       <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     {%- endif -%}
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    {%- liquid
+      assign seo_title = page_title | default: shop.name | strip_html | strip_newlines | strip
+      assign seo_title = seo_title | replace: '  ', ' '
+
+      if current_tags
+        assign current_tags_label = current_tags | join: ', '
+        assign seo_title = seo_title | append: ' - tagged "' | append: current_tags_label | append: '"'
+      endif
+      if current_page != 1
+        assign seo_title = seo_title | append: ' - Page ' | append: current_page
+      endif
+      unless seo_title contains shop.name
+        assign seo_title = seo_title | append: ' - ' | append: shop.name
+      endunless
+      assign seo_title = seo_title | truncate: 60, ''
+
+      assign seo_description = page_description | default: '' | strip_html | strip_newlines | strip
+      if seo_description == blank
+        case request.page_type
+          when 'product'
+            assign seo_description = product.description | default: product.title
+          when 'collection'
+            assign seo_description = collection.description | default: collection.title
+          when 'article'
+            assign seo_description = article.excerpt_or_content | default: article.title
+          when 'blog'
+            assign seo_description = blog.description | default: blog.title
+          when 'page'
+            assign seo_description = page.content | default: page.title
+          when 'policy'
+            assign seo_description = shop.name | append: ' policies and legal information.'
+          when 'cart'
+            assign seo_description = 'Review your selected products and proceed to secure checkout at ' | append: shop.name | append: '.'
+          when 'search'
+            assign seo_description = 'Search courses, products, remedies, and blogs at ' | append: shop.name | append: '.'
+          else
+            assign seo_description = shop.description | default: shop.name
+        endcase
+      endif
+      assign seo_description = seo_description | strip_html | strip_newlines | replace: '  ', ' ' | strip | truncate: 155, ''
+      assign page_description = seo_description
+    -%}
 
     {%- liquid
       assign brand_logo_asset = 'astro-pathshala-Logo-Black-New.png'
@@ -120,15 +167,10 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
     >
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
+    <title>{{ seo_title | escape }}</title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
+    {% if seo_description != blank %}
+      <meta name="description" content="{{ seo_description | escape }}">
     {% endif %}
 
     {%- if academy_show_page -%}
@@ -216,6 +258,130 @@
         ]{%- endif -%}
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {{ request.origin | append: routes.search_url | append: '?q=%7Bsearch_term_string%7D' | json }},
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    {%- unless request.page_type == 'index' or request.page_type == 'search' or request.page_type == 'cart' or request.page_type == '404' -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": {{ request.origin | append: routes.root_url | json }}
+            }
+            {%- if request.page_type == 'collection' and collection -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Collections",
+                "item": {{ request.origin | append: routes.collections_url | json }}
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": {{ collection.title | json }},
+                "item": {{ canonical_url | json }}
+              }
+            {%- elsif request.page_type == 'product' and product -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Products",
+                "item": {{ request.origin | append: routes.all_products_collection_url | json }}
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": {{ product.title | json }},
+                "item": {{ canonical_url | json }}
+              }
+            {%- elsif request.page_type == 'blog' and blog -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": {{ canonical_url | json }}
+              }
+            {%- elsif request.page_type == 'article' and blog and article -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": {{ blog.title | json }},
+                "item": {{ request.origin | append: blog.url | json }}
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": {{ article.title | json }},
+                "item": {{ canonical_url | json }}
+              }
+            {%- elsif request.page_type == 'page' and page -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": {{ page.title | json }},
+                "item": {{ canonical_url | json }}
+              }
+            {%- elsif request.page_type == 'policy' and policy -%}
+              ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": {{ policy.title | json }},
+                "item": {{ canonical_url | json }}
+              }
+            {%- endif -%}
+          ]
+        }
+      </script>
+    {%- endunless -%}
+    {%- if request.page_type == 'collection' and collection -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": {{ collection.title | json }},
+          "url": {{ canonical_url | json }},
+          "description": {{ collection.description | strip_html | strip_newlines | truncate: 280, '' | json }},
+          "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": [
+              {%- for product in collection.products limit: 12 -%}
+                {
+                  "@type": "ListItem",
+                  "position": {{ forloop.index }},
+                  "url": {{ request.origin | append: product.url | json }},
+                  "name": {{ product.title | json }}
+                }{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            ]
+          }
+        }
+      </script>
+    {%- elsif request.page_type == 'blog' and blog -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": {{ blog.title | json }},
+          "url": {{ canonical_url | json }},
+          "description": {{ blog.description | strip_html | strip_newlines | truncate: 280, '' | json }}
+        }
+      </script>
+    {%- endif -%}
 
     {{ content_for_header }}
 

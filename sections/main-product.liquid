@@ -740,6 +740,7 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
+    {% render 'product-smart-faq', product: product, section: section %}
   </div>
 </product-info>
 

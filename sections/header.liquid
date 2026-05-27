@@ -267,6 +267,7 @@
         {%- if show_wishlist -%}
           <a href="{{ wishlist_url }}" class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--desktop" aria-label="{{ wishlist_label | escape }}">
             {% render 'lux-icon', name: 'heart', class: 'lux-icon-btn__svg' %}
+            <span class="visually-hidden">{{ wishlist_label | escape }}</span>
           </a>
         {%- endif -%}
 

@@ -10,7 +10,7 @@
     assign lux_trending_raw = 'Vedic astrology courses,Gemstones,Kundli report,Consultation,Pooja services,Remedies,E-books'
   endif
   assign lux_trending = lux_trending_raw | split: ','
-  assign lux_collections_raw = collection_links | default: '/collections/courses,/collections/gemstones,/collections/all'
+  assign lux_collections_raw = collection_links | default: '/pages/astrology-course,/collections/gemstone,/collections/all'
   assign lux_collection_paths = lux_collections_raw | split: ','
 -%}
 
@@ -92,7 +92,7 @@
             </h3>
             <ul class="lux-search-categories" role="list">
               <li><a href="/collections/all" class="lux-search-cat" data-lux-search-item>Gemstones</a></li>
-              <li><a href="/collections/all?sort_by=created-descending" class="lux-search-cat" data-lux-search-item>Courses</a></li>
+              <li><a href="/pages/astrology-course" class="lux-search-cat" data-lux-search-item>Courses</a></li>
               <li><a href="{{ blogs.first.url | default: '/blogs/news' }}" class="lux-search-cat" data-lux-search-item>Blogs</a></li>
               <li><a href="/pages/contact" class="lux-search-cat" data-lux-search-item>Consultations</a></li>
             </ul>

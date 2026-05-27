@@ -1,0 +1,175 @@
+{%- comment -%}
+  Smart product FAQ mapper
+  - Maps FAQs from uploaded DOCX to the correct product pages only
+  - Uses handle/title/tag/type keyword matching
+  - Renders accessible accordion + FAQPage JSON-LD
+{%- endcomment -%}
+{%- liquid
+  assign p_handle = product.handle | downcase
+  assign p_title = product.title | downcase
+  assign p_type = product.type | downcase
+  assign p_tags = product.tags | join: ' ' | downcase
+  assign faq_key = ''
+
+  if p_handle contains 'crystal-rudraksha-bracelet' or p_title contains 'crystal rudraksha bracelet'
+    assign faq_key = 'crystal_rudraksha_bracelet'
+  elsif p_handle contains 'rudraksha-japa-mala-108' or p_title contains 'rudraksha japa mala'
+    assign faq_key = 'rudraksha_japa_mala'
+  elsif p_handle contains 'chandan-mala' or p_title contains 'chandan mala'
+    assign faq_key = 'chandan_mala'
+  elsif p_handle contains 'original-dhan-yog-bracelet' or p_title contains 'dhan yog bracelet'
+    assign faq_key = 'dhan_yog_bracelet'
+  elsif p_handle contains 'copper-ring' or p_title contains 'copper ring'
+    assign faq_key = 'copper_ring'
+  elsif p_handle contains 'ranga-ring' or p_title contains 'ranga ring'
+    assign faq_key = 'ranga_ring'
+  elsif p_handle contains '7-chakra-karungali-bracelet' or p_title contains 'karungali bracelet' or p_tags contains 'karungali'
+    assign faq_key = 'karungali_bracelet'
+  elsif p_handle contains 'original-tulsi-japa-mala-108-beads' or p_title contains 'tulsi japa mala'
+    assign faq_key = 'tulsi_japa_mala'
+  elsif p_handle contains 'original-moti-mala-108-beads' or p_title contains 'moti mala'
+    assign faq_key = 'moti_mala'
+  elsif p_handle contains 'tiger-eye-bracelet' or p_title contains 'tiger eye bracelet'
+    assign faq_key = 'tiger_eye_bracelet'
+  elsif p_handle contains 'original-sphatik-mala' or p_title contains 'sphatik mala'
+    assign faq_key = 'sphatik_mala'
+  elsif p_handle contains 'natural-pyrite-stone-energy-bracelet' or p_title contains 'pyrite bracelet' or p_title contains 'pyrite stone'
+    assign faq_key = 'pyrite_bracelet'
+  endif
+
+  assign has_faq = false
+  if faq_key != blank
+    assign has_faq = true
+  endif
+-%}
+
+{%- if has_faq -%}
+  <section class="product-smart-faq page-width" aria-labelledby="ProductFaqHeading-{{ section.id }}">
+    <div class="product-smart-faq__wrap">
+      <h2 id="ProductFaqHeading-{{ section.id }}" class="product-smart-faq__heading">Frequently Asked Questions</h2>
+
+      {%- capture faq_items_markup -%}
+        {%- case faq_key -%}
+          {%- when 'crystal_rudraksha_bracelet' -%}
+            <details class="product-smart-faq__item"><summary>What is a Crystal Rudraksha Bracelet?</summary><div class="product-smart-faq__answer"><p>A Crystal Rudraksha Bracelet combines authentic Rudraksha beads with crystal elements for spiritual balance, positivity, and daily comfort.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Are the Rudraksha beads real?</summary><div class="product-smart-faq__answer"><p>Yes, this bracelet uses original Rudraksha beads selected for authenticity and quality.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can women wear this bracelet?</summary><div class="product-smart-faq__answer"><p>Yes. It is suitable for both women and men, and is commonly chosen for everyday spiritual wear.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How is a Rudraksha bracelet different from a Rudraksha mala?</summary><div class="product-smart-faq__answer"><p>A bracelet is worn on the wrist for daily use, while a mala is usually worn around the neck or used for mantra chanting and meditation.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can this bracelet be gifted?</summary><div class="product-smart-faq__answer"><p>Yes, it makes a thoughtful gift for people seeking peace, focus, and positive spiritual energy.</p></div></details>
+
+          {%- when 'chandan_mala' -%}
+            <details class="product-smart-faq__item"><summary>What is a Chandan Mala?</summary><div class="product-smart-faq__answer"><p>A Chandan Mala is a sandalwood bead mala traditionally used for meditation, mantra chanting, and daily prayer.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are the benefits of a Chandan Mala?</summary><div class="product-smart-faq__answer"><p>It is commonly used to support calmness, better focus, and a grounded spiritual routine.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can it be used for japa?</summary><div class="product-smart-faq__answer"><p>Yes, this Chandan Japa Mala is suitable for mantra repetition and meditation practices.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this an original sandalwood mala?</summary><div class="product-smart-faq__answer"><p>Yes, it is made from sandalwood beads selected for devotional and spiritual use.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How should I care for this mala?</summary><div class="product-smart-faq__answer"><p>Keep it dry, avoid chemicals, and store it in a clean place when not in use.</p></div></details>
+
+          {%- when 'dhan_yog_bracelet' -%}
+            <details class="product-smart-faq__item"><summary>What is a Dhan Yog Bracelet?</summary><div class="product-smart-faq__answer"><p>A Dhan Yog Bracelet is a spiritual bracelet associated with prosperity-focused intention, confidence, and positive mindset.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Who can wear a Dhan Yog Bracelet?</summary><div class="product-smart-faq__answer"><p>Anyone can wear it, including students, professionals, and business owners.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can I wear it daily?</summary><div class="product-smart-faq__answer"><p>Yes, it is designed for regular everyday use.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is it suitable for men and women?</summary><div class="product-smart-faq__answer"><p>Yes, its styling and fit are suitable for both men and women.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Does it guarantee financial results?</summary><div class="product-smart-faq__answer"><p>No spiritual accessory can guarantee outcomes. It is generally used as a supportive tool for positive intention and discipline.</p></div></details>
+
+          {%- when 'copper_ring' -%}
+            <details class="product-smart-faq__item"><summary>Is this an original copper ring?</summary><div class="product-smart-faq__answer"><p>Yes, this ring is crafted from quality copper for daily wear and comfort.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can men and women both wear it?</summary><div class="product-smart-faq__answer"><p>Yes, it is suitable for both men and women.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are common reasons people wear copper rings?</summary><div class="product-smart-faq__answer"><p>People often wear copper rings for traditional, astrological, or personal wellness beliefs.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How should I maintain this ring?</summary><div class="product-smart-faq__answer"><p>Avoid harsh chemicals and clean gently with a soft cloth.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this ring adjustable?</summary><div class="product-smart-faq__answer"><p>Adjustment depends on the specific product variant. Please check the variant details before purchase.</p></div></details>
+
+          {%- when 'ranga_ring' -%}
+            <details class="product-smart-faq__item"><summary>Is this an original Ranga Ring?</summary><div class="product-smart-faq__answer"><p>Yes, this Ranga Ring is made with quality craftsmanship for comfortable regular wear.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Who can wear a Ranga Ring?</summary><div class="product-smart-faq__answer"><p>It can be worn by both men and women based on personal preference and traditional beliefs.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can I buy this ring online?</summary><div class="product-smart-faq__answer"><p>Yes, this ring is available for secure online purchase through the store.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is it worn for specific wellness goals?</summary><div class="product-smart-faq__answer"><p>Some customers use it for wellness-oriented or spiritual routines; outcomes vary by individual lifestyle and belief.</p></div></details>
+
+          {%- when 'karungali_bracelet' -%}
+            <details class="product-smart-faq__item"><summary>Can women wear this 7 Chakra Karungali Bracelet?</summary><div class="product-smart-faq__answer"><p>Yes, this bracelet is suitable for everyone, including women, and is designed for daily comfort.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are the benefits of this bracelet?</summary><div class="product-smart-faq__answer"><p>It is commonly worn for spiritual protection, emotional balance, and mindfulness support.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can I wear it every day?</summary><div class="product-smart-faq__answer"><p>Yes, it is lightweight and suitable for regular daily wear.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How do I care for it?</summary><div class="product-smart-faq__answer"><p>Keep it away from excess water and chemicals, and store it in a dry place.</p></div></details>
+
+          {%- when 'tulsi_japa_mala' -%}
+            <details class="product-smart-faq__item"><summary>Why does this Tulsi Japa Mala have 108 beads?</summary><div class="product-smart-faq__answer"><p>108 is a traditionally sacred count used in mantra chanting and meditation practices.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can beginners use this Tulsi Mala?</summary><div class="product-smart-faq__answer"><p>Yes, it is suitable for beginners as well as experienced practitioners.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How should I care for Tulsi beads?</summary><div class="product-smart-faq__answer"><p>Avoid perfumes, chemicals, and prolonged moisture exposure. Store in a clean, dry place.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this an original Tulsi Mala?</summary><div class="product-smart-faq__answer"><p>Yes, it is crafted for authentic devotional use and regular chanting routines.</p></div></details>
+
+          {%- when 'moti_mala' -%}
+            <details class="product-smart-faq__item"><summary>What is a Moti Mala?</summary><div class="product-smart-faq__answer"><p>A Moti Mala is a bead mala used for meditation, chanting, and spiritual practice.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How many beads are in this mala?</summary><div class="product-smart-faq__answer"><p>This mala follows the traditional 108-bead count used for mantra recitation.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are common benefits of using a Moti Mala?</summary><div class="product-smart-faq__answer"><p>It is commonly used to support calmness, concentration, and devotional focus.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can I wear this mala comfortably?</summary><div class="product-smart-faq__answer"><p>Yes, it is designed for easy handling during japa and comfortable use in spiritual activities.</p></div></details>
+
+          {%- when 'rudraksha_japa_mala' -%}
+            <details class="product-smart-faq__item"><summary>What are the benefits of Rudraksha Japa Mala 108?</summary><div class="product-smart-faq__answer"><p>It is widely used for meditation, mantra chanting, and spiritual grounding with better focus.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Can beginners use this mala?</summary><div class="product-smart-faq__answer"><p>Yes, it is suitable for both beginners and experienced practitioners.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How do I maintain Rudraksha beads?</summary><div class="product-smart-faq__answer"><p>Avoid excess water and chemicals, and keep the mala clean and dry when not in use.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this mala suitable for daily chanting?</summary><div class="product-smart-faq__answer"><p>Yes, it is designed for regular chanting, meditation, and devotional routines.</p></div></details>
+
+          {%- when 'tiger_eye_bracelet' -%}
+            <details class="product-smart-faq__item"><summary>What is a Tiger Eye Bracelet?</summary><div class="product-smart-faq__answer"><p>A Tiger Eye Bracelet is made from natural tiger eye beads known for their golden-brown appearance and premium finish.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Are the beads natural?</summary><div class="product-smart-faq__answer"><p>Yes, this bracelet uses natural tiger eye stone beads selected for quality.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are common reasons people wear Tiger Eye?</summary><div class="product-smart-faq__answer"><p>It is often worn for confidence, focus, and a balanced mindset.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Where can I buy this bracelet online?</summary><div class="product-smart-faq__answer"><p>You can purchase it directly through this product page with secure checkout.</p></div></details>
+
+          {%- when 'sphatik_mala' -%}
+            <details class="product-smart-faq__item"><summary>What is a Sphatik Mala?</summary><div class="product-smart-faq__answer"><p>A Sphatik Mala is a crystal quartz mala traditionally used for meditation and mantra chanting.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this an original Sphatik Mala?</summary><div class="product-smart-faq__answer"><p>Yes, it is crafted with quality crystal beads for devotional and spiritual use.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What are common benefits of Sphatik Mala?</summary><div class="product-smart-faq__answer"><p>It is commonly associated with calmness, clarity, and improved focus during meditation.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How do I verify this product’s suitability for me?</summary><div class="product-smart-faq__answer"><p>Please review product details and consult your spiritual guide if you follow personalized ritual recommendations.</p></div></details>
+
+          {%- when 'pyrite_bracelet' -%}
+            <details class="product-smart-faq__item"><summary>Is this bracelet made with natural Pyrite stone?</summary><div class="product-smart-faq__answer"><p>Yes, it uses natural pyrite beads selected for finish and authenticity.</p></div></details>
+            <details class="product-smart-faq__item"><summary>What affects Pyrite bracelet pricing?</summary><div class="product-smart-faq__answer"><p>Price depends on stone quality, bead grading, craftsmanship, and finishing.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this a real pyrite crystal bracelet?</summary><div class="product-smart-faq__answer"><p>Yes, it is crafted using genuine pyrite beadwork suitable for daily wear.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How should I maintain this bracelet?</summary><div class="product-smart-faq__answer"><p>Keep away from harsh chemicals and moisture, and store in a dry pouch after use.</p></div></details>
+        {%- endcase -%}
+      {%- endcapture -%}
+
+      {{ faq_items_markup }}
+    </div>
+  </section>
+
+  {%- capture faq_schema_items -%}
+    {%- assign faq_blocks = faq_items_markup | split: '</details>' -%}
+    {%- assign faq_sep = '' -%}
+    {%- for block in faq_blocks -%}
+      {%- if block contains '<summary>' and block contains 'product-smart-faq__answer' -%}
+        {%- assign q = block | split: '<summary>' | last | split: '</summary>' | first | strip_html | strip -%}
+        {%- assign a = block | split: 'product-smart-faq__answer"><p>' | last | split: '</p>' | first | strip_html | strip -%}
+        {%- if q != blank and a != blank -%}
+          {{ faq_sep }}{"@type":"Question","name":{{ q | json }},"acceptedAnswer":{"@type":"Answer","text":{{ a | json }}}}
+          {%- assign faq_sep = ',' -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if faq_schema_items != blank -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{{ faq_schema_items }}]
+      }
+    </script>
+  {%- endif -%}
+
+  <style>
+    .product-smart-faq{margin-top:clamp(24px,4vw,48px)}
+    .product-smart-faq__wrap{max-width:980px;margin:0 auto;padding:clamp(18px,2.8vw,28px);border:1px solid rgba(17,17,17,.08);border-radius:18px;background:#fff}
+    .product-smart-faq__heading{margin:0 0 12px;font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.2;letter-spacing:-.02em}
+    .product-smart-faq__item{border-top:1px solid rgba(17,17,17,.08)}
+    .product-smart-faq__item:first-of-type{border-top:0}
+    .product-smart-faq__item summary{list-style:none;cursor:pointer;padding:14px 0;font-size:1rem;font-weight:600;line-height:1.5}
+    .product-smart-faq__item summary::-webkit-details-marker{display:none}
+    .product-smart-faq__answer{padding:0 0 14px}
+    .product-smart-faq__answer p{margin:0;color:rgba(20,20,20,.84);font-size:.97rem;line-height:1.65}
+    @media (max-width:749px){
+      .product-smart-faq__item summary{padding:13px 0;font-size:.96rem}
+      .product-smart-faq__answer p{font-size:.94rem}
+    }
+  </style>
+{%- endif -%}
