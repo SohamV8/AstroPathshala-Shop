@@ -444,7 +444,7 @@
       }
 
       :root {
-        --site-bg-image: url('{{ 'bgmain.webp' | asset_url }}');
+        --site-bg-image: linear-gradient(165deg, #fefefc 0%, #f8f2e8 48%, #f3ebe0 100%);
         --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
         --font-body-style: {{ settings.type_body_font.style }};
         --font-body-weight: {{ settings.type_body_font.weight }};
@@ -606,7 +606,6 @@
     {{ 'mobile-layout-rhythm.css' | asset_url | stylesheet_tag }}
     {{ 'premium-cards.css' | asset_url | stylesheet_tag }}
     {%- if template.name == 'index' -%}
-      <link rel="preload" as="image" href="{{ 'home-banner-1.webp' | asset_url }}" fetchpriority="high">
       {{ 'home-showcase.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -617,6 +616,8 @@
       {{ 'component-totals.css' | asset_url | stylesheet_tag }}
       {{ 'component-price.css' | asset_url | stylesheet_tag }}
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+    {%- elsif settings.cart_type == 'notification' -%}
+      {{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
     {%- unless settings.type_body_font.system? -%}
@@ -660,6 +661,10 @@
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPJ3659G" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
@@ -739,16 +744,15 @@
     </script>
 
     <script src="{{ 'lux-search.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'lux-cart.js' | asset_url }}" defer="defer"></script>
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+    {%- elsif settings.cart_type == 'notification' -%}
+      <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   </body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPJ3659G"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 </html>

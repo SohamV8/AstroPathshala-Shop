@@ -8,8 +8,8 @@ class CartDrawer extends HTMLElement {
   }
 
   setHeaderCartIconAccessibility() {
-    const cartLink = document.querySelector('#cart-icon-bubble');
-    if (!cartLink) return;
+    const cartLink = document.querySelector('.lux-icon-btn--cart') || document.querySelector('#cart-icon-bubble');
+    if (!cartLink || cartLink.classList.contains('visually-hidden')) return;
 
     cartLink.setAttribute('role', 'button');
     cartLink.setAttribute('aria-haspopup', 'dialog');
@@ -71,20 +71,27 @@ class CartDrawer extends HTMLElement {
   }
 
   renderContents(parsedState) {
-    this.querySelector('.drawer__inner').classList.contains('is-empty') &&
-      this.querySelector('.drawer__inner').classList.remove('is-empty');
+    this.querySelector('.drawer__inner')?.classList.contains('is-empty') &&
+      this.querySelector('.drawer__inner')?.classList.remove('is-empty');
     this.productId = parsedState.id;
     this.getSectionsToRender().forEach((section) => {
+      const sectionHtml = parsedState.sections?.[section.id];
+      if (!sectionHtml) return;
+
       const sectionElement = section.selector
         ? document.querySelector(section.selector)
         : document.getElementById(section.id);
 
       if (!sectionElement) return;
-      sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+      sectionElement.innerHTML = this.getSectionInnerHTML(sectionHtml, section.selector);
     });
 
+    if (typeof window.syncLuxCartCount === 'function' && typeof parsedState.item_count !== 'undefined') {
+      window.syncLuxCartCount(parsedState.item_count);
+    }
+
     setTimeout(() => {
-      this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
+      this.querySelector('#CartDrawer-Overlay')?.addEventListener('click', this.close.bind(this));
       this.open();
     });
   }

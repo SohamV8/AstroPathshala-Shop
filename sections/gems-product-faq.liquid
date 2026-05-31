@@ -32,6 +32,22 @@
   endif
 -%}
 
+{%- capture smart_faq_key_capture -%}
+  {%- render 'product-faq-key', product: product -%}
+{%- endcapture -%}
+
+{%- liquid
+  assign smart_faq_key = smart_faq_key_capture | strip
+
+  assign show_gems_faq = false
+  if smart_faq_key == blank
+    if gem_key != 'all' or product_lookup_text contains 'gemstone' or product_lookup_text contains 'gem' or product_lookup_text contains 'stone' or product_lookup_text contains 'crystal'
+      assign show_gems_faq = true
+    endif
+  endif
+-%}
+
+{%- if show_gems_faq -%}
 <section
   id="GemsFaq-{{ section.id }}"
   class="gems-faq section-{{ section.id }}"
@@ -162,6 +178,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% stylesheet %}
   .gems-faq {

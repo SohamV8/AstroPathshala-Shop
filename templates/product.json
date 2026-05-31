@@ -148,8 +148,9 @@
         },
         "custom_liquid_9iQBFn": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
-            "custom_liquid": "<div class=\"expert-box\">\n  <div class=\"expert-content\">\n\n    <div class=\"expert-text\">\n      <h2>Need Expert Guidance?</h2>\n      <p>Chat to our Expert – FREE</p>\n    </div>\n\n    <div class=\"expert-buttons\">\n      <a href=\"https://wa.me/919871130487\" class=\"contact-btn\">\n        💬 Chat Now\n      </a>\n\n      <a href=\"tel:9871130487\" class=\"contact-btn\">\n        📞 Call Now\n      </a>\n    </div>\n\n  </div>\n</div>\n\n<style>\n.expert-box{\n  background:#f5f1ea;\n  border:1px solid #d9b25d;\n  border-radius:18px;\n  padding:18px;\n}\n\n.expert-content{\n  display:flex;\n  align-items:center;\n  justify-content:space-between;\n  gap:20px;\n  flex-wrap:wrap;\n}\n\n.phone-icon{\n  width:60px;\n  height:60px;\n  border-radius:50%;\n  background:#f6d8bc;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  font-size:28px;\n  color:#ef7c22;\n}\n\n.expert-text h2{\n  margin:0;\n  font-size:22px;\n  line-height:1.2;\n  color:#222;\n}\n\n.expert-text p{\n  margin:5px 0 0;\n  font-size:14px;\n  color:#888;\n}\n\n.expert-buttons{\n  display:flex;\n  gap:10px; /* side by side */\n}\n\n.contact-btn{\n  background:#fff;\n  border:1px solid #d8d8d8;\n  border-radius:10px;\n  padding:12px 20px;\n  text-decoration:none;\n  color:#444;\n  font-size:16px;\n  font-weight:500;\n  display:flex;\n  align-items:center;\n  gap:8px;\n}\n\n.contact-btn:hover{\n  background:#f3f3f3;\n}\n\n/* Mobile */\n@media(max-width:768px){\n  .expert-content{\n    flex-direction:column;\n    text-align:center;\n  }\n\n  .expert-buttons{\n    width:100%;\n    justify-content:center;\n  }\n}\n</style>"
+            "custom_liquid": ""
           }
         },
         "share": {
@@ -212,6 +213,10 @@
         "padding_bottom": 32
       }
     },
+    "product_smart_faq": {
+      "type": "product-smart-faq",
+      "settings": {}
+    },
     "gems_product_faq": {
       "type": "gems-product-faq",
       "settings": {
@@ -230,13 +235,13 @@
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Related products",
         "heading_size": "h2",
         "products_to_show": 5,
         "columns_desktop": 5,
         "columns_mobile": "2",
         "color_scheme": "scheme-4",
-        "image_ratio": "adapt",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": false,
         "show_vendor": false,
@@ -249,7 +254,7 @@
       "type": "custom-liquid",
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "{% render 'expert-consultation-cta' %}",
+        "custom_liquid": "{% render 'product-consult-compact' %}",
         "color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
@@ -284,9 +289,10 @@
   "order": [
     "main",
     "product_dynamic_banners",
+    "177787383347cadde0",
+    "product_smart_faq",
     "gems_product_faq",
     "related-products",
-    "custom_liquid_DcTDM4",
-    "177787383347cadde0"
+    "custom_liquid_DcTDM4"
   ]
 }

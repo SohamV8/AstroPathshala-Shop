@@ -1,0 +1,57 @@
+{%- liquid
+  assign p_handle = product.handle | downcase
+  assign p_title = product.title | downcase
+  assign p_tags = product.tags | join: ' ' | downcase
+  assign lookup = p_handle | append: ' ' | append: p_title | append: ' ' | append: p_tags
+  assign benefit_key = 'default'
+
+  if lookup contains 'tourmaline'
+    assign benefit_key = 'tourmaline'
+  elsif lookup contains 'chandan' and lookup contains 'mala'
+    assign benefit_key = 'chandan_mala'
+  elsif lookup contains 'mala' or lookup contains 'rudraksha' or lookup contains 'japa'
+    assign benefit_key = 'mala'
+  elsif lookup contains 'elephant' or lookup contains 'rahu' or lookup contains 'lal kitab'
+    assign benefit_key = 'silver_elephant'
+  elsif lookup contains 'pitra'
+    assign benefit_key = 'pitra_dosh'
+  elsif lookup contains 'gemstone' or lookup contains 'gem' or lookup contains 'stone' or lookup contains 'bracelet'
+    assign benefit_key = 'gemstone'
+  endif
+-%}
+
+<section class="pdp-benefits{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" aria-labelledby="PdpBenefits-{{ section.id }}">
+  <h2 id="PdpBenefits-{{ section.id }}" class="pdp-benefits__heading">Why choose this</h2>
+  <ul class="pdp-benefits__grid" role="list">
+    {%- case benefit_key -%}
+      {%- when 'tourmaline' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Grounding support</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Symbolic protection</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Meditation companion</span></li>
+      {%- when 'chandan_mala' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Mantra practice</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Spiritual focus</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Traditional craftsmanship</span></li>
+      {%- when 'silver_elephant' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Lal Kitab significance</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Symbolic Rahu remedy</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Traditional guidance</span></li>
+      {%- when 'pitra_dosh' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Educational understanding</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Traditional remedy guidance</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Clear, practical insights</span></li>
+      {%- when 'mala' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Daily japa support</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Meditation focus</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Devotional use</span></li>
+      {%- when 'gemstone' -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Natural selection</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Spiritual intention</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Everyday wear</span></li>
+      {%- else -%}
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Authentic spiritual products</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Carefully selected items</span></li>
+        <li class="pdp-benefits__card"><span class="pdp-benefits__icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg></span><span class="pdp-benefits__text">Guidance-based recommendations</span></li>
+    {%- endcase -%}
+  </ul>
+</section>

@@ -59,7 +59,7 @@
             autocomplete="name"
             type="text"
             id="ContactForm-name"
-            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            name="contact[name]"
             value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
             placeholder="{{ 'templates.contact.form.name' | t }}"
           >
@@ -106,7 +106,7 @@
           id="ContactForm-phone"
           class="field__input"
           autocomplete="tel"
-          name="contact[{{ 'templates.contact.form.phone' | t }}]"
+          name="contact[phone]"
           pattern="[0-9\-]*"
           value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
           placeholder="{{ 'templates.contact.form.phone' | t }}"
@@ -118,7 +118,7 @@
           rows="10"
           id="ContactForm-body"
           class="text-area field__input"
-          name="contact[{{ 'templates.contact.form.comment' | t }}]"
+          name="contact[body]"
           placeholder="{{ 'templates.contact.form.comment' | t }}"
         >
           {{- form.body -}}

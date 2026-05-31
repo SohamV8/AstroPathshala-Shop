@@ -1,0 +1,35 @@
+{%- comment -%}
+  Premium homepage product card — consistent ratio, typography, hover.
+  @param product {Product} required
+{%- endcomment -%}
+<a href="{{ product.url }}" class="hp-product" aria-label="View {{ product.title | escape }}">
+  <div class="hp-product__media">
+    {%- if product.featured_image -%}
+      {{
+        product.featured_image
+        | image_url: width: 720
+        | image_tag:
+          widths: '240,360,480,720',
+          sizes: '(min-width: 990px) 22vw, 46vw',
+          alt: product.featured_image.alt | default: product.title,
+          loading: 'lazy',
+          class: 'hp-product__img'
+      }}
+    {%- else -%}
+      <span class="hp-product__placeholder" aria-hidden="true"></span>
+    {%- endif -%}
+    <span class="hp-product__overlay" aria-hidden="true">View product</span>
+  </div>
+  <div class="hp-product__body">
+    {%- if product.vendor != blank -%}
+      <p class="hp-product__vendor">{{ product.vendor | escape }}</p>
+    {%- endif -%}
+    <h3 class="hp-product__title">{{ product.title | escape }}</h3>
+    <p class="hp-product__price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="hp-product__price-compare">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+      <span>{{ product.price | money }}</span>
+    </p>
+  </div>
+</a>

@@ -1,0 +1,622 @@
+{{ 'section-home-premium.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'home-premium.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign courses_url = section.settings.courses_url
+  if courses_url == blank
+    capture courses_url
+      render 'lux-academy-page-url'
+    endcapture
+    assign courses_url = courses_url | strip
+  endif
+-%}
+
+<div class="home-premium" data-home-premium aria-label="Astro Pathshala homepage">
+
+  {%- comment -%} 1. HERO {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--hero" id="hp-hero">
+    <div class="home-premium__container">
+      <div class="hp-hero">
+        <div data-reveal>
+          {%- if section.settings.hero_badge != blank -%}
+            <p class="hp-hero__badge">{{ section.settings.hero_badge | escape }}</p>
+          {%- endif -%}
+          <h1 class="home-premium__title home-premium__title--hero">{{ section.settings.hero_title | escape }}</h1>
+          <p class="home-premium__lead">{{ section.settings.hero_subtitle | escape }}</p>
+          <div class="hp-btn-row">
+            <a class="hp-btn hp-btn--primary" href="{{ section.settings.hero_primary_link }}">{{ section.settings.hero_primary_label | escape }}</a>
+            <a class="hp-btn hp-btn--secondary" href="{{ section.settings.hero_secondary_link }}">{{ section.settings.hero_secondary_label | escape }}</a>
+          </div>
+          <ul class="hp-hero__chips" role="list">
+            {%- if section.settings.hero_chip_1 != blank -%}<li class="hp-hero__chip">{% render 'lux-icon', name: 'shield-check', size: 14 %}{{ section.settings.hero_chip_1 | escape }}</li>{%- endif -%}
+            {%- if section.settings.hero_chip_2 != blank -%}<li class="hp-hero__chip">{% render 'lux-icon', name: 'star', size: 14 %}{{ section.settings.hero_chip_2 | escape }}</li>{%- endif -%}
+            {%- if section.settings.hero_chip_3 != blank -%}<li class="hp-hero__chip">{% render 'lux-icon', name: 'map-pin', size: 14 %}{{ section.settings.hero_chip_3 | escape }}</li>{%- endif -%}
+            {%- if section.settings.hero_chip_4 != blank -%}<li class="hp-hero__chip">{% render 'lux-icon', name: 'check-circle', size: 14 %}{{ section.settings.hero_chip_4 | escape }}</li>{%- endif -%}
+          </ul>
+        </div>
+
+        <div class="hp-hero__visual" data-reveal data-reveal-delay="2" data-hero-parallax>
+          <span class="hp-hero__glow" aria-hidden="true"></span>
+          <div class="hp-hero__frame">
+            {%- if section.settings.hero_image != blank -%}
+              {{
+                section.settings.hero_image
+                | image_url: width: 1200
+                | image_tag:
+                  widths: '480,640,840,1080,1200',
+                  sizes: '(min-width: 990px) 44vw, 92vw',
+                  alt: section.settings.hero_image_alt | default: section.settings.hero_title,
+                  loading: 'eager',
+                  fetchpriority: 'high'
+              }}
+            {%- endif -%}
+          </div>
+          {%- if section.settings.hero_accent_image != blank -%}
+            <div class="hp-hero__float hp-hero__float--1" aria-hidden="true">
+              {{ section.settings.hero_accent_image | image_url: width: 400 | image_tag: widths: '200,300,400', alt: '', loading: 'eager' }}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.hero_accent_image_2 != blank -%}
+            <div class="hp-hero__float hp-hero__float--2" aria-hidden="true">
+              {{ section.settings.hero_accent_image_2 | image_url: width: 320 | image_tag: widths: '160,240,320', alt: '', loading: 'lazy' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 2. TRUST STRIP {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--tight home-premium__section--band" id="hp-trust" aria-labelledby="hp-trust-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">{{ section.settings.trust_eyebrow | default: 'Trust & authority' | escape }}</p>
+        <h2 class="home-premium__title" id="hp-trust-heading">{{ section.settings.trust_heading | default: 'Built on two decades of authentic guidance' | escape }}</h2>
+      </div>
+      <div class="hp-trust-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <article class="hp-trust-card" {{ block.shopify_attributes }} data-reveal data-reveal-delay="{{ forloop.index | modulo: 3 }}">
+              <div class="hp-trust-card__icon">{% render 'lux-icon', name: block.settings.icon | default: 'star', size: 18 %}</div>
+              <div class="hp-trust-card__value">{{ block.settings.value | escape }}</div>
+              <div class="hp-trust-card__label">{{ block.settings.stat_label | escape }}</div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 3. SIGNATURE SERVICES {%- endcomment -%}
+  <section class="home-premium__section" id="hp-services" aria-labelledby="hp-services-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">{{ section.settings.services_eyebrow | default: 'Signature ecosystem' | escape }}</p>
+        <h2 class="home-premium__title" id="hp-services-heading">{{ section.settings.services_heading | default: 'Everything you need in one trusted platform' | escape }}</h2>
+        <p class="home-premium__lead">{{ section.settings.services_text | default: 'From structured learning to ethical consultations, remedies, and authentic spiritual products — curated with care.' | escape }}</p>
+      </div>
+      <div class="hp-services-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'service' -%}
+            <a href="{{ block.settings.link }}" class="hp-service" {{ block.shopify_attributes }} data-reveal>
+              <div class="hp-service__media">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 800 | image_tag: widths: '400,600,800', sizes: '(min-width: 1100px) 30vw, 90vw', alt: block.settings.title, loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+              <div class="hp-service__body">
+                <div class="hp-service__icon">{% render 'lux-icon', name: block.settings.icon | default: 'star', size: 20 %}</div>
+                <h3 class="hp-service__title">{{ block.settings.title | escape }}</h3>
+                <p class="hp-service__text">{{ block.settings.text | escape }}</p>
+                <span class="hp-service__link">{{ block.settings.cta_label | default: 'Explore' | escape }} →</span>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 4. CONSULTATION CTA {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--dark" id="hp-consultation" aria-labelledby="hp-consult-heading">
+    <div class="home-premium__container">
+      <div class="hp-consult" data-reveal>
+        <div class="hp-consult__media">
+          {%- if section.settings.consultation_image != blank -%}
+            {{ section.settings.consultation_image | image_url: width: 900 | image_tag: widths: '480,720,900', sizes: '(min-width: 990px) 40vw, 92vw', alt: section.settings.founder_name, loading: 'lazy' }}
+          {%- elsif section.settings.founder_image != blank -%}
+            {{ section.settings.founder_image | image_url: width: 900 | image_tag: widths: '480,720,900', sizes: '(min-width: 990px) 40vw, 92vw', alt: section.settings.founder_name, loading: 'lazy' }}
+          {%- endif -%}
+        </div>
+        <div>
+          <p class="home-premium__eyebrow">{{ section.settings.consultation_eyebrow | default: 'Personal guidance' | escape }}</p>
+          <h2 class="home-premium__title" id="hp-consult-heading">{{ section.settings.consultation_heading | default: 'Speak with experienced astrologers who prioritize clarity over claims' | escape }}</h2>
+          <p class="home-premium__lead">{{ section.settings.consultation_text | escape }}</p>
+          <ol class="hp-consult__steps" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'consultation' -%}
+                <li {{ block.shopify_attributes }}><span class="hp-consult__step-num">{{ forloop.index }}</span><span><strong>{{ block.settings.title | escape }}</strong> — {{ block.settings.text | escape }}</span></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+          <div class="hp-btn-row">
+            {%- if section.settings.consultation_link != blank -%}
+              <a class="hp-btn hp-btn--primary" href="{{ section.settings.consultation_link }}">{{ section.settings.consultation_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.whatsapp_url != blank -%}
+              <a class="hp-btn hp-btn--gold" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener noreferrer">{% render 'lux-icon', name: 'whatsapp', size: 18 %} WhatsApp</a>
+            {%- endif -%}
+            {%- if section.settings.phone_url != blank -%}
+              <a class="hp-btn hp-btn--ghost" href="{{ section.settings.phone_url }}">{% render 'lux-icon', name: 'phone', size: 18 %} Call us</a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 5. CURATED PRODUCT RAILS {%- endcomment -%}
+  <section class="home-premium__section" id="hp-products" aria-labelledby="hp-products-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">Curated discovery</p>
+        <h2 class="home-premium__title" id="hp-products-heading">Handpicked for authentic spiritual practice</h2>
+        <p class="home-premium__lead">Editorial selections — not endless sliders. Each collection is chosen for quality, context, and responsible guidance.</p>
+      </div>
+
+      {%- assign product_rails = 'gem,essentials,remedies' | split: ',' -%}
+      {%- for rail in product_rails -%}
+        {%- liquid
+          assign rail_collection = blank
+          assign rail_heading = blank
+          assign rail_text = blank
+          assign rail_link = blank
+          if rail == 'gem'
+            assign rail_collection = section.settings.gem_collection
+            assign rail_heading = section.settings.gem_heading
+            assign rail_text = section.settings.gem_text
+            assign rail_link = rail_collection.url
+          elsif rail == 'essentials'
+            assign rail_collection = section.settings.essentials_collection
+            assign rail_heading = section.settings.essentials_heading
+            assign rail_text = section.settings.essentials_text
+            assign rail_link = rail_collection.url
+          elsif rail == 'remedies'
+            assign rail_collection = section.settings.remedies_collection
+            if rail_collection == blank
+              assign rail_collection = section.settings.books_collection
+            endif
+            assign rail_heading = section.settings.remedies_heading
+            assign rail_text = section.settings.remedies_text
+            assign rail_link = rail_collection.url
+          endif
+        -%}
+        {%- if rail_collection != blank and rail_collection.products_count > 0 -%}
+          <div class="hp-rail" data-reveal>
+            <div class="hp-rail__head">
+              <div>
+                <h3 class="home-premium__title" style="font-size:clamp(1.25rem,2.5vw,1.65rem);margin-bottom:6px;">{{ rail_heading | escape }}</h3>
+                {%- if rail_text != blank -%}<p class="home-premium__lead" style="font-size:0.92rem;max-width:52ch;">{{ rail_text | escape }}</p>{%- endif -%}
+              </div>
+              {%- if rail_link != blank -%}<a class="hp-rail__link" href="{{ rail_link }}">View all →</a>{%- endif -%}
+            </div>
+            <div class="hp-products">
+              {%- for product in rail_collection.products limit: section.settings.products_per_rail -%}
+                {% render 'home-premium-product-card', product: product %}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- comment -%} 6. EDUCATION / COURSES {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--band" id="hp-courses" aria-labelledby="hp-courses-heading" data-course-filter>
+    <div class="home-premium__container">
+      <div class="home-premium__section-head home-premium__section-head--row" data-reveal>
+        <div>
+          <p class="home-premium__eyebrow">{{ section.settings.courses_eyebrow | default: 'Education' | escape }}</p>
+          <h2 class="home-premium__title" id="hp-courses-heading">{{ section.settings.courses_heading | default: 'Master astrology with structured professional learning' | escape }}</h2>
+          <p class="home-premium__lead">{{ section.settings.courses_text | default: 'Layered curricula designed for beginners through advanced practitioners — with practical chart work and ethical guidance.' | escape }}</p>
+        </div>
+        <a class="hp-btn hp-btn--secondary" href="{{ courses_url }}">View all courses</a>
+      </div>
+      <div class="hp-course-tabs" role="tablist" aria-label="Course categories">
+        <button type="button" class="hp-course-tab is-active" data-course-tab="all" role="tab" aria-selected="true">All paths</button>
+        <button type="button" class="hp-course-tab" data-course-tab="vedic" role="tab" aria-selected="false">Vedic</button>
+        <button type="button" class="hp-course-tab" data-course-tab="lal-kitab" role="tab" aria-selected="false">Lal Kitab</button>
+        <button type="button" class="hp-course-tab" data-course-tab="kp" role="tab" aria-selected="false">KP</button>
+        <button type="button" class="hp-course-tab" data-course-tab="palmistry" role="tab" aria-selected="false">Palmistry</button>
+        <button type="button" class="hp-course-tab" data-course-tab="numerology" role="tab" aria-selected="false">Numerology</button>
+        <button type="button" class="hp-course-tab" data-course-tab="vastu" role="tab" aria-selected="false">Vastu</button>
+      </div>
+      <div class="hp-courses-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'course_card' -%}
+            <article class="hp-course-card" data-course-card data-course-category="{{ block.settings.category | default: 'all' }}" {{ block.shopify_attributes }} data-reveal>
+              <span class="hp-course-card__tag">{{ block.settings.category_label | default: block.settings.title | escape }}</span>
+              <h3 class="hp-course-card__title">{{ block.settings.title | escape }}</h3>
+              <p class="hp-course-card__text">{{ block.settings.description | escape }}</p>
+              {%- if block.settings.link != blank -%}
+                <a class="hp-course-card__cta" href="{{ block.settings.link }}">Start learning {% render 'lux-icon', name: 'chevron-right', size: 14 %}</a>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 7. WHY CHOOSE {%- endcomment -%}
+  <section class="home-premium__section" id="hp-why" aria-labelledby="hp-why-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">{{ section.settings.why_eyebrow | default: 'Why Astro Pathshala' | escape }}</p>
+        <h2 class="home-premium__title" id="hp-why-heading">{{ section.settings.why_heading | default: 'Traditional knowledge. Modern clarity. Ethical guidance.' | escape }}</h2>
+        <p class="home-premium__lead">{{ section.settings.why_text | escape }}</p>
+      </div>
+      <div class="hp-benefits-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'benefit' -%}
+            <article class="hp-benefit" {{ block.shopify_attributes }} data-reveal>
+              <div class="hp-benefit__icon">{% render 'lux-icon', name: block.settings.icon | default: 'shield-check', size: 22 %}</div>
+              <h3 class="hp-benefit__title">{{ block.settings.title | escape }}</h3>
+              <p class="hp-benefit__text">{{ block.settings.text | escape }}</p>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 8. SOCIAL PROOF {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--dark" id="hp-testimonials" aria-labelledby="hp-testimonials-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">Social proof</p>
+        <h2 class="home-premium__title" id="hp-testimonials-heading">Trusted by learners and seekers across India</h2>
+      </div>
+      <div class="hp-testimonials" data-testimonial-carousel data-reveal>
+        <div class="hp-testimonials__track-wrap">
+          <div class="hp-testimonials__track" data-testimonial-track>
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'testimonial' -%}
+                <div class="hp-testimonials__slide" data-testimonial-slide {{ block.shopify_attributes }}>
+                  <blockquote class="hp-testimonial">
+                    <p class="hp-testimonial__quote">"{{ block.settings.quote | escape }}"</p>
+                    <footer>
+                      <p class="hp-testimonial__author">{{ block.settings.author | escape }}</p>
+                      <p class="hp-testimonial__meta">{{ block.settings.meta | escape }}</p>
+                      {%- if block.settings.verified -%}
+                        <span class="hp-testimonial__badge">{% render 'lux-icon', name: 'check-circle', size: 12 %} Verified</span>
+                      {%- endif -%}
+                    </footer>
+                  </blockquote>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        <div class="hp-testimonials__nav">
+          <button type="button" class="hp-testimonials__arrow" data-testimonial-prev aria-label="Previous testimonial">{% render 'lux-icon', name: 'chevron-left', size: 18 %}</button>
+          <div class="hp-testimonials__dots" data-testimonial-dots role="tablist" aria-label="Testimonial pagination"></div>
+          <button type="button" class="hp-testimonials__arrow" data-testimonial-next aria-label="Next testimonial">{% render 'lux-icon', name: 'chevron-right', size: 18 %}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 9. DAILY INSIGHTS / SOCIAL {%- endcomment -%}
+  <section class="home-premium__section" id="hp-social" aria-labelledby="hp-social-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head home-premium__section-head--row" data-reveal>
+        <div>
+          <p class="home-premium__eyebrow">{{ section.settings.social_eyebrow | default: 'Daily insights' | escape }}</p>
+          <h2 class="home-premium__title" id="hp-social-heading">{{ section.settings.social_heading | default: 'Astrology wisdom for everyday life' | escape }}</h2>
+        </div>
+        {%- if section.settings.instagram_url != blank -%}
+          <a class="hp-btn hp-btn--secondary" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer">{% render 'lux-icon', name: 'instagram', size: 18 %} Follow on Instagram</a>
+        {%- endif -%}
+      </div>
+      <div class="hp-social-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'social_post' -%}
+            <a href="{{ block.settings.link | default: section.settings.instagram_url }}" class="hp-social-card" {{ block.shopify_attributes }} data-reveal target="_blank" rel="noopener noreferrer">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: class: 'hp-social-card__img', widths: '300,450,600', sizes: '(min-width: 750px) 25vw, 46vw', alt: block.settings.caption, loading: 'lazy' }}
+              {%- else -%}
+                <span class="hp-social-card__img hp-social-card__placeholder" aria-hidden="true"></span>
+              {%- endif -%}
+              <div class="hp-social-card__overlay">
+                <p class="hp-social-card__caption">{{ block.settings.caption | escape }}</p>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 10. BLOG / KNOWLEDGE HUB {%- endcomment -%}
+  <section class="home-premium__section home-premium__section--band" id="hp-blog" aria-labelledby="hp-blog-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head home-premium__section-head--row" data-reveal>
+        <div>
+          <p class="home-premium__eyebrow">Knowledge hub</p>
+          <h2 class="home-premium__title" id="hp-blog-heading">Guides on gemstones, Lal Kitab, and learning Jyotish</h2>
+        </div>
+        {%- assign hub_blog = section.settings.content_blog -%}
+        {%- if hub_blog != blank -%}
+          <a class="hp-btn hp-btn--secondary" href="{{ hub_blog.url }}">Read all articles</a>
+        {%- endif -%}
+      </div>
+      {%- if hub_blog != blank and hub_blog.articles_count > 0 -%}
+        <div class="hp-blog-grid">
+          {%- for article in hub_blog.articles limit: 3 -%}
+            <a href="{{ article.url }}" class="hp-blog-card" data-reveal>
+              <div class="hp-blog-card__media">
+                {%- if article.image -%}
+                  {{ article.image | image_url: width: 800 | image_tag: widths: '400,600,800', sizes: '(min-width: 1100px) 30vw, 90vw', alt: article.image.alt | default: article.title, loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+              <div class="hp-blog-card__body">
+                <p class="hp-blog-card__meta">{{ hub_blog.title | escape }} · {{ article.published_at | date: '%b %d, %Y' }}</p>
+                <h3 class="hp-blog-card__title">{{ article.title | escape }}</h3>
+                <p class="hp-blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 28 }}</p>
+                <span class="hp-blog-card__read">Read article →</span>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.youtube_link != blank -%}
+        <div class="hp-btn-row" style="margin-top:28px;">
+          <a class="hp-btn hp-btn--ghost" href="{{ section.settings.youtube_link }}" target="_blank" rel="noopener noreferrer">{% render 'lux-icon', name: 'youtube', size: 18 %} Watch on YouTube</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="home-premium__section" id="hp-faq" aria-labelledby="hp-faq-heading">
+    <div class="home-premium__container">
+      <div class="home-premium__section-head" data-reveal>
+        <p class="home-premium__eyebrow">FAQ</p>
+        <h2 class="home-premium__title" id="hp-faq-heading">Questions before you begin</h2>
+      </div>
+      <div class="hp-faq" data-reveal>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question | escape }}</summary>
+              <p>{{ block.settings.answer | escape }}</p>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 11. FINAL CTA {%- endcomment -%}
+  <section class="home-premium__section" id="hp-final" aria-labelledby="hp-final-heading">
+    <div class="home-premium__container">
+      <div class="hp-final" data-reveal>
+        <p class="home-premium__eyebrow">{{ section.settings.final_kicker | escape }}</p>
+        <h2 class="home-premium__title home-premium__title--serif" id="hp-final-heading">{{ section.settings.final_heading | escape }}</h2>
+        <p class="home-premium__lead">{{ section.settings.final_text | escape }}</p>
+        <div class="hp-btn-row">
+          <a class="hp-btn hp-btn--gold" href="{{ section.settings.final_primary_link }}">{{ section.settings.final_primary_label | escape }}</a>
+          {%- if section.settings.whatsapp_url != blank -%}
+            <a class="hp-btn hp-btn--secondary" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener noreferrer">{% render 'lux-icon', name: 'whatsapp', size: 18 %} WhatsApp</a>
+          {%- else -%}
+            <a class="hp-btn hp-btn--secondary" href="{{ section.settings.final_secondary_link }}">{{ section.settings.final_secondary_label | escape }}</a>
+          {%- endif -%}
+        </div>
+        <div class="hp-final__trust">
+          {%- if section.settings.final_trust_1 != blank -%}<span>{{ section.settings.final_trust_1 | escape }}</span>{%- endif -%}
+          {%- if section.settings.final_trust_2 != blank -%}<span>{{ section.settings.final_trust_2 | escape }}</span>{%- endif -%}
+          {%- if section.settings.final_trust_3 != blank -%}<span>{{ section.settings.final_trust_3 | escape }}</span>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} JSON-LD {%- endcomment -%}
+  {%- capture course_schema_items -%}
+    {%- assign sep = '' -%}
+    {%- assign pos = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'course_card' and block.settings.title != blank -%}
+        {%- assign pos = pos | plus: 1 -%}
+        {{ sep }}{"@type":"ListItem","position":{{ pos }},"item":{"@type":"Course","name":{{ block.settings.title | json }},"description":{{ block.settings.description | json }},"url":{{ block.settings.link | json }}}}
+        {%- assign sep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if course_schema_items != blank -%}
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Astrology course categories","itemListElement":[{{ course_schema_items }}]}</script>
+  {%- endif -%}
+
+  {%- capture faq_schema_items -%}
+    {%- assign sep = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank -%}
+        {{ sep }}{"@type":"Question","name":{{ block.settings.question | json }},"acceptedAnswer":{"@type":"Answer","text":{{ block.settings.answer | json }}}}
+        {%- assign sep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if faq_schema_items != blank -%}
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_schema_items }}]}</script>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Home Premium Hub",
+  "tag": "section",
+  "class": "home-premium-section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_badge", "label": "Hero badge", "default": "India's Trusted Astrology Platform" },
+    { "type": "text", "id": "hero_title", "label": "Hero headline", "default": "India's Trusted Platform for Vedic Astrology Learning & Guidance" },
+    { "type": "textarea", "id": "hero_subtitle", "label": "Hero subheadline", "default": "Learn astrology, discover authentic gemstones, explore Lal Kitab remedies, and receive practical spiritual guidance rooted in tradition." },
+    { "type": "text", "id": "hero_primary_label", "label": "Primary CTA label", "default": "Explore Courses" },
+    { "type": "url", "id": "hero_primary_link", "label": "Primary CTA link" },
+    { "type": "text", "id": "hero_secondary_label", "label": "Secondary CTA label", "default": "Book Consultation" },
+    { "type": "url", "id": "hero_secondary_link", "label": "Secondary CTA link" },
+    { "type": "text", "id": "hero_chip_1", "label": "Hero trust chip 1", "default": "20+ years of practice" },
+    { "type": "text", "id": "hero_chip_2", "label": "Hero trust chip 2", "default": "11,000+ learners" },
+    { "type": "text", "id": "hero_chip_3", "label": "Hero trust chip 3", "default": "Gurugram · India" },
+    { "type": "text", "id": "hero_chip_4", "label": "Hero trust chip 4", "default": "Verified guidance" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero main image" },
+    { "type": "image_picker", "id": "hero_accent_image", "label": "Hero accent image (bottom left)" },
+    { "type": "image_picker", "id": "hero_accent_image_2", "label": "Hero accent image (top right)" },
+    { "type": "text", "id": "hero_image_alt", "label": "Hero image alt text", "default": "Gurudev Sunil Vashist — Astro Pathshala" },
+
+    { "type": "header", "content": "Trust strip" },
+    { "type": "text", "id": "trust_eyebrow", "label": "Trust eyebrow", "default": "Trust & authority" },
+    { "type": "text", "id": "trust_heading", "label": "Trust heading", "default": "Built on two decades of authentic guidance" },
+
+    { "type": "header", "content": "Signature services" },
+    { "type": "text", "id": "services_eyebrow", "label": "Services eyebrow", "default": "Signature ecosystem" },
+    { "type": "text", "id": "services_heading", "label": "Services heading", "default": "Everything you need in one trusted platform" },
+    { "type": "textarea", "id": "services_text", "label": "Services intro", "default": "From structured learning to ethical consultations, remedies, and authentic spiritual products — curated with care." },
+
+    { "type": "header", "content": "Consultation" },
+    { "type": "text", "id": "consultation_eyebrow", "label": "Consultation eyebrow", "default": "Personal guidance" },
+    { "type": "text", "id": "consultation_heading", "label": "Consultation heading", "default": "Speak with experienced astrologers who prioritize clarity over claims" },
+    { "type": "textarea", "id": "consultation_text", "label": "Consultation text", "default": "Whether you seek direction in career, relationships, or remedies — our consultations are structured, ethical, and deeply personal." },
+    { "type": "text", "id": "consultation_label", "label": "Consultation CTA label", "default": "Book Consultation" },
+    { "type": "url", "id": "consultation_link", "label": "Consultation link" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp URL" },
+    { "type": "url", "id": "phone_url", "label": "Phone link (tel:)" },
+    { "type": "image_picker", "id": "consultation_image", "label": "Consultation image" },
+    { "type": "image_picker", "id": "founder_image", "label": "Founder fallback image" },
+    { "type": "text", "id": "founder_name", "label": "Founder name", "default": "Gurudev Sunil Vashist" },
+
+    { "type": "header", "content": "Product rails" },
+    { "type": "range", "id": "products_per_rail", "min": 4, "max": 6, "step": 1, "default": 4, "label": "Products per rail" },
+    { "type": "text", "id": "gem_heading", "label": "Gemstones heading", "default": "Bestselling Gemstones" },
+    { "type": "textarea", "id": "gem_text", "label": "Gemstones text", "default": "Certified gemstones with responsible, chart-informed recommendations." },
+    { "type": "collection", "id": "gem_collection", "label": "Gemstones collection" },
+    { "type": "text", "id": "essentials_heading", "label": "Essentials heading", "default": "Spiritual Essentials" },
+    { "type": "textarea", "id": "essentials_text", "label": "Essentials text", "default": "Rudraksha, malas, and daily practice tools selected for authenticity." },
+    { "type": "collection", "id": "essentials_collection", "label": "Spiritual essentials collection" },
+    { "type": "text", "id": "remedies_heading", "label": "Remedies heading", "default": "Recommended Lal Kitab Remedies" },
+    { "type": "textarea", "id": "remedies_text", "label": "Remedies text", "default": "Books and remedial resources aligned with Lal Kitab traditions." },
+    { "type": "collection", "id": "remedies_collection", "label": "Remedies collection" },
+    { "type": "collection", "id": "books_collection", "label": "Books fallback collection" },
+
+    { "type": "header", "content": "Courses" },
+    { "type": "text", "id": "courses_eyebrow", "label": "Courses eyebrow", "default": "Education" },
+    { "type": "text", "id": "courses_heading", "label": "Courses heading", "default": "Master astrology with structured professional learning" },
+    { "type": "textarea", "id": "courses_text", "label": "Courses intro", "default": "Layered curricula designed for beginners through advanced practitioners." },
+    { "type": "url", "id": "courses_url", "label": "All courses URL" },
+
+    { "type": "header", "content": "Why choose us" },
+    { "type": "text", "id": "why_eyebrow", "label": "Why eyebrow", "default": "Why Astro Pathshala" },
+    { "type": "text", "id": "why_heading", "label": "Why heading", "default": "Traditional knowledge. Modern clarity. Ethical guidance." },
+    { "type": "textarea", "id": "why_text", "label": "Why intro", "default": "We combine authentic Vedic teaching with practical, modern presentation — never exaggerated claims." },
+
+    { "type": "header", "content": "Social & content" },
+    { "type": "text", "id": "social_eyebrow", "label": "Social eyebrow", "default": "Daily insights" },
+    { "type": "text", "id": "social_heading", "label": "Social heading", "default": "Astrology wisdom for everyday life" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "blog", "id": "content_blog", "label": "Blog" },
+    { "type": "url", "id": "youtube_link", "label": "YouTube URL" },
+
+    { "type": "header", "content": "Final CTA" },
+    { "type": "text", "id": "final_kicker", "label": "Final kicker", "default": "Begin your transformation" },
+    { "type": "text", "id": "final_heading", "label": "Final heading", "default": "Your astrology journey starts with one clear step" },
+    { "type": "textarea", "id": "final_text", "label": "Final text", "default": "Whether you want to learn, consult, or find the right remedy — our team will guide you with structure and authenticity." },
+    { "type": "text", "id": "final_primary_label", "label": "Final primary CTA", "default": "Start Learning" },
+    { "type": "url", "id": "final_primary_link", "label": "Final primary link" },
+    { "type": "text", "id": "final_secondary_label", "label": "Final secondary CTA", "default": "Talk to an Expert" },
+    { "type": "url", "id": "final_secondary_link", "label": "Final secondary link" },
+    { "type": "text", "id": "final_trust_1", "label": "Final trust line 1", "default": "20+ years experience" },
+    { "type": "text", "id": "final_trust_2", "label": "Final trust line 2", "default": "11,000+ learners" },
+    { "type": "text", "id": "final_trust_3", "label": "Final trust line 3", "default": "Ethical · Authentic · Practical" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Trust stat",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon name", "default": "star", "info": "Lux icon: star, shield-check, users, etc." },
+        { "type": "text", "id": "value", "label": "Value", "default": "11,000+" },
+        { "type": "text", "id": "stat_label", "label": "Label", "default": "Students trained" }
+      ]
+    },
+    {
+      "type": "service",
+      "name": "Service card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "icon", "label": "Icon", "default": "star" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Consultations" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Personal chart readings with ethical, practical guidance." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Explore" }
+      ]
+    },
+    {
+      "type": "course_card",
+      "name": "Course category",
+      "settings": [
+        { "type": "text", "id": "category", "label": "Filter key", "default": "vedic", "info": "vedic, lal-kitab, kp, palmistry, numerology, vastu" },
+        { "type": "text", "id": "category_label", "label": "Category label", "default": "Vedic Astrology" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Vedic Astrology" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Foundational to advanced Jyotish with practical chart analysis." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "consultation",
+      "name": "Consultation step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step title", "default": "Share your birth details" },
+        { "type": "textarea", "id": "text", "label": "Step text", "default": "We review your chart context with care and confidentiality." }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "shield-check" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Authentic guidance" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Rooted in traditional Jyotish — never sensational or exaggerated." }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Structured learning and practical guidance made astrology clear and actionable." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Verified learner" },
+        { "type": "text", "id": "meta", "label": "Location / context", "default": "India" },
+        { "type": "checkbox", "id": "verified", "label": "Show verified badge", "default": true }
+      ]
+    },
+    {
+      "type": "social_post",
+      "name": "Social insight",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Daily astrology insight" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Are your courses beginner friendly?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "Yes. Our structured curriculum supports beginners and advanced learners alike." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Home Premium Hub" }]
+}
+{% endschema %}

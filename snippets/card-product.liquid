@@ -28,10 +28,23 @@
 {%- liquid
   assign aspect = media_aspect_ratio | default: 'portrait'
   assign aspect_ratio = '4 / 5'
+  assign img_display_w = 600
+  assign img_display_h = 750
   if aspect == 'square'
     assign aspect_ratio = '1 / 1'
+    assign img_display_h = 600
   elsif aspect == 'adapt' and card_product.featured_media != blank
-    assign aspect_ratio = card_product.featured_media.aspect_ratio | append: ' / 1'
+    assign raw_ratio = card_product.featured_media.aspect_ratio | default: 1
+    if raw_ratio < 0.72
+      assign aspect_ratio = '3 / 4'
+      assign img_display_h = 800
+    elsif raw_ratio > 1.15
+      assign aspect_ratio = '1 / 1'
+      assign img_display_h = 600
+    else
+      assign aspect_ratio = raw_ratio | append: ' / 1'
+      assign img_display_h = 675
+    endif
   endif
 
   assign card_id = section_id | default: 'card'
@@ -113,8 +126,8 @@
               "
               sizes="(min-width: 1280px) 320px, (min-width: 990px) 26vw, (min-width: 750px) 32vw, 46vw"
               alt="{{ primary_image.alt | default: card_product.title | escape }}"
-              width="{{ primary_image.width }}"
-              height="{{ primary_image.height }}"
+              width="{{ img_display_w }}"
+              height="{{ img_display_h }}"
               loading="{% if lazy_load == false %}eager{% else %}lazy{% endif %}"
               decoding="async"
             >
@@ -131,8 +144,8 @@
                 "
                 sizes="(min-width: 1280px) 320px, (min-width: 990px) 26vw, (min-width: 750px) 32vw, 46vw"
                 alt=""
-                width="{{ secondary_image.width }}"
-                height="{{ secondary_image.height }}"
+                width="{{ img_display_w }}"
+                height="{{ img_display_h }}"
                 loading="lazy"
                 decoding="async"
                 aria-hidden="true"

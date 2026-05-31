@@ -4,44 +4,12 @@
   - Uses handle/title/tag/type keyword matching
   - Renders accessible accordion + FAQPage JSON-LD
 {%- endcomment -%}
-{%- liquid
-  assign p_handle = product.handle | downcase
-  assign p_title = product.title | downcase
-  assign p_type = product.type | downcase
-  assign p_tags = product.tags | join: ' ' | downcase
-  assign faq_key = ''
-
-  if p_handle contains 'crystal-rudraksha-bracelet' or p_title contains 'crystal rudraksha bracelet'
-    assign faq_key = 'crystal_rudraksha_bracelet'
-  elsif p_handle contains 'rudraksha-japa-mala-108' or p_title contains 'rudraksha japa mala'
-    assign faq_key = 'rudraksha_japa_mala'
-  elsif p_handle contains 'chandan-mala' or p_title contains 'chandan mala'
-    assign faq_key = 'chandan_mala'
-  elsif p_handle contains 'original-dhan-yog-bracelet' or p_title contains 'dhan yog bracelet'
-    assign faq_key = 'dhan_yog_bracelet'
-  elsif p_handle contains 'copper-ring' or p_title contains 'copper ring'
-    assign faq_key = 'copper_ring'
-  elsif p_handle contains 'ranga-ring' or p_title contains 'ranga ring'
-    assign faq_key = 'ranga_ring'
-  elsif p_handle contains '7-chakra-karungali-bracelet' or p_title contains 'karungali bracelet' or p_tags contains 'karungali'
-    assign faq_key = 'karungali_bracelet'
-  elsif p_handle contains 'original-tulsi-japa-mala-108-beads' or p_title contains 'tulsi japa mala'
-    assign faq_key = 'tulsi_japa_mala'
-  elsif p_handle contains 'original-moti-mala-108-beads' or p_title contains 'moti mala'
-    assign faq_key = 'moti_mala'
-  elsif p_handle contains 'tiger-eye-bracelet' or p_title contains 'tiger eye bracelet'
-    assign faq_key = 'tiger_eye_bracelet'
-  elsif p_handle contains 'original-sphatik-mala' or p_title contains 'sphatik mala'
-    assign faq_key = 'sphatik_mala'
-  elsif p_handle contains 'natural-pyrite-stone-energy-bracelet' or p_title contains 'pyrite bracelet' or p_title contains 'pyrite stone'
-    assign faq_key = 'pyrite_bracelet'
-  endif
-
-  assign has_faq = false
-  if faq_key != blank
-    assign has_faq = true
-  endif
--%}
+{%- capture faq_key_capture -%}{%- render 'product-faq-key', product: product -%}{%- endcapture -%}
+{%- assign faq_key = faq_key_capture | strip -%}
+{%- assign has_faq = false -%}
+{%- if faq_key != blank -%}
+  {%- assign has_faq = true -%}
+{%- endif -%}
 
 {%- if has_faq -%}
   <section class="product-smart-faq page-width" aria-labelledby="ProductFaqHeading-{{ section.id }}">
@@ -125,6 +93,16 @@
             <details class="product-smart-faq__item"><summary>What affects Pyrite bracelet pricing?</summary><div class="product-smart-faq__answer"><p>Price depends on stone quality, bead grading, craftsmanship, and finishing.</p></div></details>
             <details class="product-smart-faq__item"><summary>Is this a real pyrite crystal bracelet?</summary><div class="product-smart-faq__answer"><p>Yes, it is crafted using genuine pyrite beadwork suitable for daily wear.</p></div></details>
             <details class="product-smart-faq__item"><summary>How should I maintain this bracelet?</summary><div class="product-smart-faq__answer"><p>Keep away from harsh chemicals and moisture, and store in a dry pouch after use.</p></div></details>
+
+          {%- when 'pitra_dosh_guide' -%}
+            <details class="product-smart-faq__item"><summary>What is Pitra Dosh?</summary><div class="product-smart-faq__answer"><p>Pitra Dosh is a traditional astrological concept linked to ancestral karmic patterns. This guide explains it in clear, educational language.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this guide suitable for beginners?</summary><div class="product-smart-faq__answer"><p>Yes. It is written for seekers who want practical understanding without overwhelming jargon.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Does this replace a personal consultation?</summary><div class="product-smart-faq__answer"><p>No. It supports learning and awareness. For personalized guidance, book a consultation with Astro Pathshala.</p></div></details>
+
+          {%- when 'silver_elephant' -%}
+            <details class="product-smart-faq__item"><summary>What is the significance of a silver elephant remedy?</summary><div class="product-smart-faq__answer"><p>In Lal Kitab traditions, silver elephant remedies are often associated with Rahu-related symbolic support and intentional spiritual practice.</p></div></details>
+            <details class="product-smart-faq__item"><summary>How should I use this product?</summary><div class="product-smart-faq__answer"><p>Usage varies by tradition and personal guidance. Review product details and consult an expert if you follow personalized remedy recommendations.</p></div></details>
+            <details class="product-smart-faq__item"><summary>Is this an authentic spiritual product?</summary><div class="product-smart-faq__answer"><p>Yes. Astro Pathshala selects items carefully for devotional and remedy-oriented use.</p></div></details>
         {%- endcase -%}
       {%- endcapture -%}
 

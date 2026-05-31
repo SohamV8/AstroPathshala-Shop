@@ -6,11 +6,15 @@ if (!customElements.get('product-form')) {
         super();
 
         this.form = this.querySelector('form');
-        this.variantIdInput.disabled = false;
+        if (!this.form) return;
+
+        if (this.variantIdInput) this.variantIdInput.disabled = false;
         this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
         this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
-        this.submitButtonText = this.submitButton.querySelector('span');
+        if (!this.submitButton) return;
+
+        this.submitButtonText = this.submitButton.querySelector('span:not(.sold-out-message)');
 
         if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
@@ -19,13 +23,15 @@ if (!customElements.get('product-form')) {
 
       onSubmitHandler(evt) {
         evt.preventDefault();
+        if (!this.form || !this.submitButton) return;
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
         this.handleErrorMessage();
 
         this.submitButton.setAttribute('aria-disabled', true);
         this.submitButton.classList.add('loading');
-        this.querySelector('.loading__spinner').classList.remove('hidden');
+        const spinner = this.querySelector('.loading__spinner');
+        if (spinner) spinner.classList.remove('hidden');
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -57,7 +63,7 @@ if (!customElements.get('product-form')) {
               const soldOutMessage = this.submitButton.querySelector('.sold-out-message');
               if (!soldOutMessage) return;
               this.submitButton.setAttribute('aria-disabled', true);
-              this.submitButtonText.classList.add('hidden');
+              this.submitButtonText?.classList.add('hidden');
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
@@ -83,7 +89,7 @@ if (!customElements.get('product-form')) {
                 () => {
                   setTimeout(() => {
                     CartPerformance.measure("add:paint-updated-sections", () => {
-                      this.cart.renderContents(response);
+                      this.renderCartContents(response);
                     });
                   });
                 },
@@ -92,18 +98,26 @@ if (!customElements.get('product-form')) {
               quickAddModal.hide(true);
             } else {
               CartPerformance.measure("add:paint-updated-sections", () => {
-                this.cart.renderContents(response);
+                this.renderCartContents(response);
               });
+            }
+
+            if (typeof window.syncLuxCartCount === 'function' && typeof response.item_count !== 'undefined') {
+              window.syncLuxCartCount(response.item_count);
             }
           })
           .catch((e) => {
             console.error(e);
+            this.error = true;
+            this.handleErrorMessage(window.cartStrings?.error || 'Unable to add to cart. Please try again.');
           })
           .finally(() => {
+            if (!this.submitButton) return;
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            this.querySelector('.loading__spinner').classList.add('hidden');
+            const spinner = this.querySelector('.loading__spinner');
+            if (spinner) spinner.classList.add('hidden');
 
             CartPerformance.measureFromEvent("add:user-action", evt);
           });
@@ -125,17 +139,36 @@ if (!customElements.get('product-form')) {
       }
 
       toggleSubmitButton(disable = true, text) {
+        if (!this.submitButton) return;
         if (disable) {
           this.submitButton.setAttribute('disabled', 'disabled');
-          if (text) this.submitButtonText.textContent = text;
+          if (text && this.submitButtonText) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          this.submitButtonText.textContent = window.variantStrings.addToCart;
+          if (this.submitButtonText) this.submitButtonText.textContent = window.variantStrings.addToCart;
+        }
+      }
+
+      renderCartContents(response) {
+        if (!this.cart || typeof this.cart.renderContents !== 'function') {
+          if (typeof window.syncLuxCartCount === 'function' && typeof response?.item_count !== 'undefined') {
+            window.syncLuxCartCount(response.item_count);
+          }
+          return;
+        }
+
+        try {
+          this.cart.renderContents(response);
+        } catch (error) {
+          console.error(error);
+          if (typeof window.syncLuxCartCount === 'function' && typeof response?.item_count !== 'undefined') {
+            window.syncLuxCartCount(response.item_count);
+          }
         }
       }
 
       get variantIdInput() {
-        return this.form.querySelector('[name=id]');
+        return this.form?.querySelector('[name=id]');
       }
     }
   );

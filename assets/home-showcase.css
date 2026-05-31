@@ -15,16 +15,16 @@
   --showcase-radius: 22px;
 }
 
-/* ----- Section vertical rhythm (featured-collection uses .collection + section-*-padding) ----- */
+/* ----- Section vertical rhythm — compact, respects theme editor ----- */
 .template-index #MainContent .shopify-section .collection[class*='section-'][class*='padding'] {
-  padding-top: var(--showcase-section-y-mobile);
-  padding-bottom: var(--showcase-section-y-mobile);
+  padding-top: clamp(20px, 3.5vw, 36px);
+  padding-bottom: clamp(20px, 3.5vw, 36px);
 }
 
 @media screen and (min-width: 750px) {
   .template-index #MainContent .shopify-section .collection[class*='section-'][class*='padding'] {
-    padding-top: var(--showcase-section-y-desktop);
-    padding-bottom: var(--showcase-section-y-desktop);
+    padding-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(24px, 3vw, 40px);
   }
 }
 
@@ -141,6 +141,111 @@
     column-gap: var(--showcase-gap-col-lg) !important;
     row-gap: var(--showcase-gap-row-lg) !important;
   }
+}
+
+/* ----- Homepage product grids: strict CSS grid + locked image frames ----- */
+.template-index .collection .product-grid.contains-card--product {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  flex-wrap: unset !important;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.template-index .collection .product-grid.contains-card--product > .grid__item {
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  flex: none !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+}
+
+.template-index .collection .product-grid.contains-card--product > .grid__item:only-child {
+  max-width: none !important;
+  width: auto !important;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .template-index .collection .product-grid.grid--3-col-desktop,
+  .template-index .collection .product-grid.grid--4-col-desktop,
+  .template-index .collection .product-grid.grid--5-col-desktop,
+  .template-index .collection .product-grid.grid--6-col-desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .template-index .collection .product-grid.grid--2-col-desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .template-index .collection .product-grid.grid--3-col-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .template-index .collection .product-grid.grid--4-col-desktop {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .template-index .collection .product-grid.grid--5-col-desktop {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .template-index .collection .product-grid.grid--6-col-desktop {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .template-index .collection .product-grid.grid--2-col-desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.template-index .collection .product-grid .lux-card-wrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.template-index .collection .product-grid .lux-card {
+  height: 100%;
+}
+
+.template-index .collection .product-grid .lux-card__media-frame {
+  width: 100%;
+  max-width: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  aspect-ratio: var(--lux-card-ratio, 1 / 1);
+}
+
+.template-index .collection .product-grid .lux-card__media-link,
+.template-index .collection .product-grid .lux-card__img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.template-index .collection .product-grid .lux-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+.template-index .collection .product-grid .lux-card__body {
+  flex: 1 1 auto;
+}
+
+.template-index .collection .product-grid .lux-card__title.card__heading {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .template-index .collection .grid.product-grid,
@@ -566,6 +671,10 @@
 }
 
 /* ----- Prevent horizontal bleed from grids ----- */
+.template-index #MainContent {
+  overflow-x: clip;
+}
+
 .template-index #MainContent .slider-component,
 .template-index #MainContent .product-grid.contains-card--product {
   max-width: 100%;
@@ -583,5 +692,43 @@
   .template-index .collection-card-wrapper:hover .card__inner {
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ----- Compact benefit columns (text-only, no product cards) ----- */
+.template-index .multicolumn--home .multicolumn-list__item:not(:has(.multicolumn-card__image-wrapper)) .multicolumn-card {
+  padding: clamp(16px, 2.5vw, 22px);
+  min-height: 100%;
+}
+
+.template-index .multicolumn--home .multicolumn-list__item:not(:has(.multicolumn-card__image-wrapper)) .multicolumn-card__info {
+  padding: clamp(16px, 2.5vw, 22px);
+}
+
+/* ----- Consultation CTA band — compact, not oversized ----- */
+.template-index .rich-text--full-width.color-scheme-4 .rich-text__blocks {
+  max-width: min(560px, 100%);
+}
+
+/* ----- Instagram app block spacing ----- */
+.template-index .shopify-section:has(.insta-reels),
+.template-index .shopify-section:has([class*='instareel']) {
+  padding-bottom: clamp(20px, 4vw, 32px);
+}
+
+/* ----- Homepage trust strip rhythm ----- */
+.template-index .trust-strip {
+  margin-block: clamp(12px, 2vw, 20px);
+}
+
+@media screen and (max-width: 749px) {
+  .template-index .trust-strip__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .template-index .trust-strip__item {
+    min-height: auto;
+    padding: 12px;
   }
 }

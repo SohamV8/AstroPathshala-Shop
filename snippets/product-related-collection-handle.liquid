@@ -1,0 +1,29 @@
+{%- comment -%}Returns curated collection handle for related products (empty if none).{%- endcomment -%}
+{%- liquid
+  assign p_handle = product.handle | downcase
+  assign p_title = product.title | downcase
+  assign p_type = product.type | downcase
+  assign p_tags = product.tags | join: ' ' | downcase
+  assign lookup = p_handle | append: ' ' | append: p_title | append: ' ' | append: p_tags | append: ' ' | append: p_type
+  assign related_handle = ''
+
+  if lookup contains 'lal kitab' or lookup contains 'lal-kitab' or lookup contains 'rahu' or lookup contains 'pitra' or lookup contains 'elephant' or lookup contains 'remedy' or lookup contains 'guide' or lookup contains 'report'
+    assign related_handle = 'lal-kitaab-remedies'
+  elsif lookup contains 'mala' or lookup contains 'rudraksha' or lookup contains 'chandan' or lookup contains 'tulsi' or lookup contains 'japa' or lookup contains 'sphatik' or lookup contains 'moti' or lookup contains 'meditation' or lookup contains 'pooja'
+    assign related_handle = 'rudraksha-collection'
+  elsif lookup contains 'gemstone' or lookup contains 'gem' or lookup contains 'tourmaline' or lookup contains 'pyrite' or lookup contains 'zircon' or lookup contains 'amethyst' or lookup contains 'moonstone' or lookup contains 'citrine' or lookup contains 'peridot' or lookup contains 'firoza' or lookup contains 'lapis' or lookup contains 'crystal'
+    assign related_handle = 'gemstone'
+  elsif lookup contains 'ring' or lookup contains 'bracelet' or lookup contains 'accessories'
+    assign related_handle = 'accessories'
+  endif
+
+  if related_handle == blank
+    for coll in product.collections
+      unless coll.handle == 'all' or coll.handle == 'frontpage'
+        assign related_handle = coll.handle
+        break
+      endunless
+    endfor
+  endif
+-%}
+{{- related_handle | strip -}}

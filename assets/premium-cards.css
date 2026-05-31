@@ -73,6 +73,7 @@
   background: var(--lux-card-surface);
   overflow: hidden;
   border-radius: var(--lux-card-radius);
+  contain: layout style paint;
 }
 
 .lux-card__media-link {

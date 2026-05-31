@@ -1,0 +1,28 @@
+{%- liquid
+  assign wa_digits = '919871130487'
+  assign consult_url = '/pages/contact'
+  assign wa_message = 'Hi Astro Pathshala — I need guidance before purchasing this product.' | url_encode
+-%}
+
+<section class="pdp-consult{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" aria-labelledby="PdpConsultHeading">
+  <div class="pdp-consult__inner page-width">
+    <div class="pdp-consult__copy">
+      <p class="pdp-consult__eyebrow">Personal guidance</p>
+      <h2 id="PdpConsultHeading" class="pdp-consult__title">Need guidance before purchasing?</h2>
+      <p class="pdp-consult__text">Speak with Astro Pathshala for product suitability, remedies, and next steps.</p>
+    </div>
+    <div class="pdp-consult__actions">
+      <a
+        class="pdp-consult__btn pdp-consult__btn--wa"
+        href="https://wa.me/{{ wa_digits }}?text={{ wa_message }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp
+      </a>
+      <a class="pdp-consult__btn pdp-consult__btn--book" href="{{ consult_url }}">
+        Book Consultation
+      </a>
+    </div>
+  </div>
+</section>

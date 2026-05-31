@@ -11,6 +11,7 @@
 >
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'section-product-layout.css' | asset_url | stylesheet_tag }}
+  {{ 'section-product-refinement.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
@@ -199,6 +200,7 @@
                   </div>
                 {%- endif -%}
                 {% render 'gemstone-product-description', product: product %}
+                {% render 'product-benefits-compact', product: product, section: section %}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -490,6 +492,7 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {% render 'product-trust-micro' %}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -740,7 +743,6 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
-    {% render 'product-smart-faq', product: product, section: section %}
   </div>
 </product-info>
 

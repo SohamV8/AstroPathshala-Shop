@@ -27,7 +27,8 @@
   transform: none !important;
 }
 
-.related-products.product-recommendations--loaded {
+.related-products.product-recommendations--loaded,
+.related-products--curated {
   animation: rp-fade-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 

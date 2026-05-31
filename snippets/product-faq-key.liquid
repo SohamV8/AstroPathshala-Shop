@@ -1,0 +1,39 @@
+{%- comment -%}Returns smart FAQ key for product (empty string if none).{%- endcomment -%}
+{%- liquid
+  assign p_handle = product.handle | downcase
+  assign p_title = product.title | downcase
+  assign p_type = product.type | downcase
+  assign p_tags = product.tags | join: ' ' | downcase
+  assign faq_key = ''
+
+  if p_handle contains 'crystal-rudraksha-bracelet' or p_title contains 'crystal rudraksha bracelet'
+    assign faq_key = 'crystal_rudraksha_bracelet'
+  elsif p_handle contains 'rudraksha-japa-mala-108' or p_title contains 'rudraksha japa mala'
+    assign faq_key = 'rudraksha_japa_mala'
+  elsif p_handle contains 'chandan-mala' or p_title contains 'chandan mala'
+    assign faq_key = 'chandan_mala'
+  elsif p_handle contains 'original-dhan-yog-bracelet' or p_title contains 'dhan yog bracelet'
+    assign faq_key = 'dhan_yog_bracelet'
+  elsif p_handle contains 'copper-ring' or p_title contains 'copper ring'
+    assign faq_key = 'copper_ring'
+  elsif p_handle contains 'ranga-ring' or p_title contains 'ranga ring'
+    assign faq_key = 'ranga_ring'
+  elsif p_handle contains '7-chakra-karungali-bracelet' or p_title contains 'karungali bracelet' or p_tags contains 'karungali'
+    assign faq_key = 'karungali_bracelet'
+  elsif p_handle contains 'original-tulsi-japa-mala-108-beads' or p_title contains 'tulsi japa mala'
+    assign faq_key = 'tulsi_japa_mala'
+  elsif p_handle contains 'original-moti-mala-108-beads' or p_title contains 'moti mala'
+    assign faq_key = 'moti_mala'
+  elsif p_handle contains 'tiger-eye-bracelet' or p_title contains 'tiger eye bracelet'
+    assign faq_key = 'tiger_eye_bracelet'
+  elsif p_handle contains 'original-sphatik-mala' or p_title contains 'sphatik mala'
+    assign faq_key = 'sphatik_mala'
+  elsif p_handle contains 'natural-pyrite-stone-energy-bracelet' or p_title contains 'pyrite bracelet' or p_title contains 'pyrite stone'
+    assign faq_key = 'pyrite_bracelet'
+  elsif p_handle contains 'pitra' or p_title contains 'pitra dosh'
+    assign faq_key = 'pitra_dosh_guide'
+  elsif p_handle contains 'elephant' or p_title contains 'silver elephant' or p_tags contains 'rahu'
+    assign faq_key = 'silver_elephant'
+  endif
+-%}
+{{- faq_key | strip -}}

@@ -271,7 +271,7 @@
           </a>
         {%- endif -%}
 
-        <a href="{{ routes.cart_url }}" class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--cart" aria-label="Cart, {{ cart.item_count }} items">
+        <a href="{{ routes.cart_url }}" class="lux-icon-btn lux-icon-btn--circle lux-icon-btn--cart" aria-label="Cart{% if cart.item_count > 0 %}, {{ cart.item_count }} items{% endif %}">
           {% render 'lux-icon', name: 'shopping-bag', class: 'lux-icon-btn__svg' %}
           <span class="lux-icon-btn__label">Cart</span>
           {%- if cart.item_count > 0 -%}
@@ -280,6 +280,7 @@
             <span class="lux-cart-count" data-cart-count aria-hidden="true" hidden></span>
           {%- endif -%}
         </a>
+        <div id="cart-icon-bubble" class="visually-hidden" aria-hidden="true" tabindex="-1"></div>
 
         {%- if show_whatsapp -%}
           <a
