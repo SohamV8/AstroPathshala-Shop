@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
@@ -644,3 +645,612 @@
     "featured_blog_yyM4PG"
   ]
 }
+=======
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "home_hero": {
+      "type": "home-hero-banner",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Natural gemstones for protection, healing and success",
+            "link": "shopify://collections/gemstone",
+            "link_new_tab": false
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Rudraksha and spiritual malas",
+            "link": "shopify://collections/rudraksha-collection",
+            "link_new_tab": false
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Astro Pathshala",
+            "link": "",
+            "link_new_tab": false
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "image_alt": "Astro Pathshala",
+            "link": "",
+            "link_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4"
+      ],
+      "settings": {
+        "accessibility_label": "Homepage banner",
+        "auto_rotate": true,
+        "change_slides_speed": 6,
+        "padding_bottom": 0
+      }
+    },
+    "trust_strip_main": {
+      "type": "trust-strip",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "check",
+            "title": "Trusted By",
+            "subtitle": "More than 11000+ people"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "support",
+            "title": "20+ Years Experience",
+            "subtitle": "Deep astrology practice"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "title": "Vedic + Lal Kitab",
+            "subtitle": "Authentic, practical guidance"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "title": "Gurugram Presence",
+            "subtitle": "On-ground consultations"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>20+ years experience | Gurugram based Vedic guidance</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "rich_text_7mBr4z": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_UgLQnz": {
+          "type": "heading",
+          "settings": {
+            "heading": "Astro Pathshala Signature Services",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_UgLQnz"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection1": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "gemstone",
+        "products_to_show": 10,
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-2",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 16
+      }
+    },
+    "rich_text_6nqjYX": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_r3Hbix": {
+          "type": "heading",
+          "settings": {
+            "heading": "Consult, and Transform with Astro Pathshala",
+            "heading_size": "h1"
+          }
+        },
+        "text_wPTJQX": {
+          "type": "text",
+          "settings": {
+            "text": "<p>From Vedic Astrology and Lal Kitab to Numerology, Palmistry, Vastu, Matchmaking, Gemstones, Pooja services, and workshops, our Gurugram team offers practical spiritual guidance for modern life.</p>"
+          }
+        },
+        "button_chztCJ": {
+          "type": "button",
+          "settings": {
+            "button_label": "Book a Consultation",
+            "button_link": "shopify://pages/contact",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_r3Hbix",
+        "text_wPTJQX",
+        "button_chztCJ"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_9wzEVA": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_AxtLyP": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala.webp",
+            "title": "<strong>Astrology Items</strong>",
+            "text": "<p>Structured learning for beginners and advanced seekers.</p>",
+            "link_label": "",
+            "link": "shopify://collections/e-books"
+          }
+        },
+        "column_LYhEeU": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala_1.webp",
+            "title": "<strong>Consultations</strong>",
+            "text": "<p>Personal guidance for career, marriage, and life decisions.</p>",
+            "link_label": "",
+            "link": "shopify://pages/contact"
+          }
+        },
+        "column_iyAci8": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala_3.webp",
+            "title": "<strong>Lal Kitab & Vedic Reports</strong>",
+            "text": "<p>Actionable remedies with traditional astrological wisdom.</p>",
+            "link_label": "",
+            "link": "shopify://collections/lal-kitaab-remedies"
+          }
+        },
+        "column_WYy6KE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala_4.webp",
+            "title": "<strong>Gemstones & Pooja Services</strong>",
+            "text": "<p>Authentic spiritual products and ritual support.</p>",
+            "link_label": "",
+            "link": "shopify://collections/gemstone"
+          }
+        }
+      },
+      "block_order": [
+        "column_AxtLyP",
+        "column_LYhEeU",
+        "column_iyAci8",
+        "column_WYy6KE"
+      ],
+      "name": "Multicolumn 2",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "scheme-4",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_banner_MFnUnC": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_May_4_2026_04_52_14_PM_1.webp",
+        "product_metafield_source": "picker_only",
+        "product_image_fallback": "none",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "scheme-4",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_axkT8Y": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FGYXEB": {
+          "type": "heading",
+          "settings": {
+            "heading": "New Arrivals",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FGYXEB"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection2": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "new-arrivals",
+        "products_to_show": 6,
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 5,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_QNpkCA": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_iPB4Vp": {
+          "type": "heading",
+          "settings": {
+            "heading": "Why Families Choose Astro Pathshala",
+            "heading_size": "h2"
+          }
+        },
+        "text_eK9GCp": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>We combine Vedic Astrology with Lal Kitab methods to offer grounded, ethical, and personalized guidance in consultations, courses, matchmaking, numerology, palmistry, and vastu.</em></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_iPB4Vp",
+        "text_eK9GCp"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn2": {
+      "type": "multicolumn",
+      "blocks": {
+        "column11": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala_5.webp",
+            "title": "<strong>Amethyst</strong>",
+            "text": "",
+            "link_label": "Shop now",
+            "link": "shopify://collections/gemstone"
+          }
+        },
+        "column12": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/astro_pathshala_6.webp",
+            "title": "<strong>Sulemani Hakik</strong>",
+            "text": "",
+            "link_label": "Shop now",
+            "link": "shopify://collections/gemstone"
+          }
+        },
+        "column13": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ZIRCON.webp",
+            "title": "<strong>Zircon</strong>",
+            "text": "",
+            "link_label": "Shop now",
+            "link": "shopify://collections/gemstone"
+          }
+        },
+        "column14": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Peridot_7.webp",
+            "title": "<strong>Peridot</strong>",
+            "text": "",
+            "link_label": "Shop now",
+            "link": "shopify://collections/gemstone"
+          }
+        }
+      },
+      "block_order": [
+        "column11",
+        "column12",
+        "column13",
+        "column14"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "scheme-4",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 12,
+        "padding_bottom": 24
+      }
+    },
+    "177788073682861726": {
+      "type": "apps",
+      "blocks": {
+        "instareel_ig_reels_instagram_reels_feed_9pRVNN": {
+          "type": "shopify://apps/instareel-ig-reels/blocks/instagram-reels-feed/6399ee9c-54c8-4f76-97d7-8f02f7662aa1",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "instareel_ig_reels_instagram_reels_feed_9pRVNN"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "rich_text_RbhKtr": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_hfEXJX": {
+          "type": "heading",
+          "settings": {
+            "heading": "Astro Pathshala Insights & Workshops",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hfEXJX"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_blog_yyM4PG": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "blog": "news",
+        "post_limit": 3,
+        "heading": "",
+        "heading_size": "h2",
+        "columns_desktop": 3,
+        "show_view_all": false,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "lux_testimonials_home": {
+      "type": "lux-testimonials",
+      "blocks": {
+        "testimonial_manpreet": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Maine Astro Pathshala se Zircon liya aur sach mein kamaal ka result mila! Stone bilkul authentic hai aur packaging bahut elegant thi. Highly recommended!",
+            "author": "Manpreet Sharma",
+            "meta": "Verified customer",
+            "product_label": "Zircon gemstone",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "testimonial_ritik": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Lal Kitab remedy items bilkul sahi aur original mile. Ghar mein positive energy aane lagi hai. Astro Pathshala pe full trust hai!",
+            "author": "Ritik Patel",
+            "meta": "Gurugram, India",
+            "product_label": "Lal Kitab remedies",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "testimonial_sunita_a": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Chandi ka hathi ghar ki prosperity ke liye bahut acha maana jaata hai. Quality ekdum top hai aur finish bilkul perfect.",
+            "author": "Sunita Agarwal",
+            "meta": "Jaipur, India",
+            "product_label": "Silver elephant",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "testimonial_sunita_d": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Mujhe bahut time se neend nahi aati thi. Astro Pathshala se Rudraksha Mala li aur 15 din mein fark dikhne laga.",
+            "author": "Sunita Devi",
+            "meta": "Lucknow, India",
+            "product_label": "Rudraksha mala",
+            "rating": 5,
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_manpreet",
+        "testimonial_ritik",
+        "testimonial_sunita_a",
+        "testimonial_sunita_d"
+      ],
+      "settings": {
+        "eyebrow": "Customer stories",
+        "heading": "Trusted by seekers across India",
+        "subheading": "Real experiences with our gemstones, remedies, and spiritual guidance.",
+        "show_summary": true,
+        "average_rating": "4.9",
+        "review_count": "2,400+ verified reviews",
+        "carousel_label": "Featured testimonials",
+        "enable_autoplay": true,
+        "autoplay_seconds": 6,
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "home_hero",
+    "trust_strip_main",
+    "rich_text",
+    "rich_text_7mBr4z",
+    "featured_collection1",
+    "rich_text_6nqjYX",
+    "multicolumn_9wzEVA",
+    "image_banner_MFnUnC",
+    "rich_text_axkT8Y",
+    "featured_collection2",
+    "rich_text_QNpkCA",
+    "multicolumn2",
+    "177788073682861726",
+    "rich_text_RbhKtr",
+    "featured_blog_yyM4PG",
+    "lux_testimonials_home"
+  ]
+}
+>>>>>>> 12b6329b859f01a68384ac3084bb433fe3a32a5a
