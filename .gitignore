@@ -1,9 +1,0 @@
-# Source images and illegal Shopify asset subfolders (use flat academy-* assets)
-source-assets/
-assets/Course/
-assets/Combo/
-assets/Banner/
-
-# Dev-only (not theme files)
-scripts/
-templates/courses.js

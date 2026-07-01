@@ -651,6 +651,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    {% render 'sr-checkout' %}
   </head>
 
   <body class="gradient template-{{ template.name }}{% if academy_show_page %} template-page template-page-astrology-course{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
