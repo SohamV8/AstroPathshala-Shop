@@ -652,7 +652,8 @@
       }
     </script>
     {% render 'sr-checkout' %}
-  </head>
+    <script src="https://unpkg.com/spf-analytics@1.0.0/index.js" defer></script>
+</head>
 
   <body class="gradient template-{{ template.name }}{% if academy_show_page %} template-page template-page-astrology-course{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     {%- if academy_courses_redirect -%}
