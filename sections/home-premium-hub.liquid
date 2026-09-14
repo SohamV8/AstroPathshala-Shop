@@ -77,7 +77,7 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'stat' -%}
             <article class="hp-trust-card" {{ block.shopify_attributes }} data-reveal data-reveal-delay="{{ forloop.index | modulo: 3 }}">
-              <div class="hp-trust-card__icon">{% render 'lux-icon', name: block.settings.icon | default: 'star', size: 18 %}</div>
+              <div class="hp-trust-card__icon">{% render 'lux-icon', name: block.settings.icon, default: 'star', size: 18 %}</div>
               <div class="hp-trust-card__value">{{ block.settings.value | escape }}</div>
               <div class="hp-trust-card__label">{{ block.settings.stat_label | escape }}</div>
             </article>
@@ -105,7 +105,7 @@
                 {%- endif -%}
               </div>
               <div class="hp-service__body">
-                <div class="hp-service__icon">{% render 'lux-icon', name: block.settings.icon | default: 'star', size: 20 %}</div>
+                <div class="hp-service__icon">{% render 'lux-icon', name: block.settings.icon, default: 'star', size: 20 %}</div>
                 <h3 class="hp-service__title">{{ block.settings.title | escape }}</h3>
                 <p class="hp-service__text">{{ block.settings.text | escape }}</p>
                 <span class="hp-service__link">{{ block.settings.cta_label | default: 'Explore' | escape }} →</span>
@@ -260,7 +260,7 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'benefit' -%}
             <article class="hp-benefit" {{ block.shopify_attributes }} data-reveal>
-              <div class="hp-benefit__icon">{% render 'lux-icon', name: block.settings.icon | default: 'shield-check', size: 22 %}</div>
+              <div class="hp-benefit__icon">{% render 'lux-icon', name: block.settings.icon, default: 'shield-check', size: 22 %}</div>
               <h3 class="hp-benefit__title">{{ block.settings.title | escape }}</h3>
               <p class="hp-benefit__text">{{ block.settings.text | escape }}</p>
             </article>
@@ -620,3 +620,25 @@
   "presets": [{ "name": "Home Premium Hub" }]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'lux-icon', name: block.settings.icon | default: 'star', size:
+    18 %}"
+  to: "{% render 'lux-icon', name: block.settings.icon, default: 'star', size: 18
+    %}"
+  position: 4624..4701
+- from: "{% render 'lux-icon', name: block.settings.icon | default: 'star', size:
+    20 %}"
+  to: "{% render 'lux-icon', name: block.settings.icon, default: 'star', size: 20
+    %}"
+  position: 6461..6538
+- from: "{% render 'lux-icon', name: block.settings.icon | default: 'shield-check',
+    size: 22 %}"
+  to: "{% render 'lux-icon', name: block.settings.icon, default: 'shield-check', size:
+    22 %}"
+  position: 16350..16435
+{% endcomment %}

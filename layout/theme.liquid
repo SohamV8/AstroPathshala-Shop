@@ -674,10 +674,7 @@
 
     {% sections 'header-group' %}
 
-    {% render 'lux-search-modal',
-      placeholder: settings.lux_search_placeholder | default: 'Search for courses, gems, blogs, remedies...',
-      trending: settings.lux_search_trending
-    %}
+    {% render 'lux-search-modal', placeholder: settings.lux_search_placeholder, default: 'Search for courses, gems, blogs, remedies...', trending: settings.lux_search_trending %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {%- if academy_courses_redirect -%}
@@ -758,3 +755,19 @@
     {%- endif -%}
   </body>
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'lux-search-modal',
+          placeholder: settings.lux_search_placeholder | default: 'Search for courses, gems, blogs, remedies...',
+          trending: settings.lux_search_trending
+        %}
+  to: "{% render 'lux-search-modal', placeholder: settings.lux_search_placeholder,
+    default: 'Search for courses, gems, blogs, remedies...', trending: settings.lux_search_trending
+    %}"
+  position: 35263..35437
+{% endcomment %}
