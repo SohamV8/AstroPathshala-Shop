@@ -745,7 +745,8 @@
     <script src="{{ 'lux-search.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'lux-cart.js' | asset_url }}" defer="defer"></script>
     {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'shopify-cdn.js' | asset_url }}" defer></script>
+<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {%- if settings.cart_type == 'drawer' -%}
